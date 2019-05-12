@@ -1,0 +1,18 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: Account
+description: account object describes user information
+type: object
+additionalProperties: false
+properties:
+    accountId:
+        description: account id
+        type: integer
+    name:
+        description: account username
+        type: string
+    description:
+        description: user description
+        type: string
+required:
+    - accountId
+    - name

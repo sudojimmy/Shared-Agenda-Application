@@ -1,0 +1,24 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: Group
+description: A group of user accounts
+type: object
+additionalProperties: false
+properties:
+    groupId:
+        description: group id
+        type: integer
+    name:
+        description: group name
+        type: string
+    description:
+        description: description of group 
+        type: string
+    members:
+        description: group members
+        type: array
+        items:
+            type: integer
+required:
+    - groupId
+    - name
+    - members
