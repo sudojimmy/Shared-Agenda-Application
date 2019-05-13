@@ -1,0 +1,4 @@
+<com.dg.eventapp.view.EvtView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/evtItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
