@@ -1,0 +1,4 @@
+rootProject.name = 'SharedAgendaServer'
+include 'service'
+include 'schema'
+
