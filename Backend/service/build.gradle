@@ -14,7 +14,9 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 
-
+final String SYSENV_PORT = System.getenv("PORT")
+final int port = Integer.valueOf(SYSENV_PORT ? SYSENV_PORT : 8080)
+applicationDefaultJvmArgs = ["-Dserver.port=${port}"]
 mainClassName = 'Application'
 
 bootJar {
