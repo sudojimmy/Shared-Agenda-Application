@@ -38,8 +38,8 @@ jsonSchema2Pojo {
   source = files([
           //"${project.projectDir}/src/yaml/types/Role.yaml", XXX required if use $ref
           "${project.projectDir}/src/yaml/types/",
-          "${project.projectDir}/src/yaml/requests/",
-          "${project.projectDir}/src/yaml/responses/"
+//          "${project.projectDir}/src/yaml/requests/",
+//          "${project.projectDir}/src/yaml/responses/"
   ])
 
   // Target directory for generated Java source files. The plugin will add this directory to the
