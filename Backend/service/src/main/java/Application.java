@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 public class Application {
 
     public static void main(String[] args) {
-        // TODO maybe we need to set port number for deploy purpose (80 for heroku)
         SpringApplication.run(Application.class, args);
     }
 }

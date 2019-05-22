@@ -8,6 +8,9 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import types.Account;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
@@ -15,7 +18,10 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public class DataStore {
     public static final String AGENDA_APP_DATABASE = "AGENDA_APP_DATABASE";
+    public static final String COLLECTION_ACCOUNTS = "ACCOUNTS";
+
     private MongoDatabase database;
+    private Map<String, MongoCollection<?>> map = new HashMap<>();
 
     public DataStore() {
         init();
@@ -34,31 +40,32 @@ public class DataStore {
             System.out.println("Failed to connect to MongoDB");
             System.exit(1);
         }
+
+        map.put(COLLECTION_ACCOUNTS, database.getCollection(COLLECTION_ACCOUNTS, Account.class));
     }
 
-    void insert() {
-        MongoCollection<Account> collection = database.getCollection("addr", Account.class);
+    public <T>void insertToCollection(T document, String collectionName) {
+        MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
 
-        Account p = new Account().withName("Jim").withAccountId(255);
-        collection.insertOne(p);
-        System.out.println(collection.countDocuments());
+        collection.insertOne(document);
     }
+
+    public <T>boolean existInCollection(Document document, String collectionName) {
+        MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
+
+        return collection.countDocuments(document) != 0;
+    }
+
+/*
 
     void delete() {
         MongoCollection<Document> collection = database.getCollection("account");
 
         Document document = new Document();
         document.put("key", "val");
-        collection.deleteMany(document);
+        collection.deleteOne(document);
         System.out.println(collection.countDocuments());
     }
+*/
 
-    void find() {
-        MongoCollection<Account> collection = database.getCollection("addr", Account.class);
-
-        Document document = new Document();
-        document.put("accountId", 255);
-        System.out.println(collection.find(document).first());
-        System.out.println(collection.countDocuments());
-    }
 }

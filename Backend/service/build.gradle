@@ -15,7 +15,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 
 final String SYSENV_PORT = System.getenv("PORT")
-final int port = Integer.valueOf(SYSENV_PORT ? SYSENV_PORT : 8080)
+final int port = Integer.valueOf(SYSENV_PORT ? SYSENV_PORT : "8080")
 applicationDefaultJvmArgs = ["-Dserver.port=${port}", "-Xmx300m"]
 mainClassName = 'Application'
 
