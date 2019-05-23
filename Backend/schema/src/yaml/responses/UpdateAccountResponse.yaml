@@ -1,0 +1,11 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: UpdateAccountRequest
+description: update account response
+type: object
+additionalProperties: false
+properties:
+    accountId:
+        description: account id
+        type: string
+required:
+    - accountId
