@@ -1,1 +1,16 @@
 .idea
+.vscode
+Backend/.classpath
+Backend/.project
+Backend/.settings/
+Backend/schema/.classpath
+Backend/schema/.project
+Backend/schema/.settings/
+Backend/schema/bin/
+Backend/service/.classpath
+Backend/service/.project
+Backend/service/.settings/
+Backend/service/bin/
+Frontend/Schedule_Research/EventApp/.project
+Frontend/Schedule_Research/EventApp/.settings/
+
