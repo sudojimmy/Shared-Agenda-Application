@@ -1,5 +1,6 @@
 package controller;
 
+import constant.ApiConstant;
 import org.bson.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class CreateAccountController extends BaseController {
 
         // Step II: check restriction (conflict, or naming rules etc.)
         Document document = new Document();
-        document.put("accountId", request.getAccountId());
+        document.put(ApiConstant.ACCOUNT_ACCOUNT_ID, request.getAccountId());
         if (dataStore.existInCollection(document, DataStore.COLLECTION_ACCOUNTS)) {
             logger.error("AccountId Already Existed!");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
