@@ -1,6 +1,6 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
-title: Account
-description: account object describes user information
+title: CreateAccountRequest
+description: create account request
 type: object
 additionalProperties: false
 properties:
@@ -15,4 +15,4 @@ properties:
         type: string
 required:
     - accountId
-    - nickname
+    - name
