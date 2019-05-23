@@ -14,6 +14,7 @@ curl -i localhost:8080/getAccount -H Content-Type:application/json -X POST --dat
 
 
 ## Current API Endpoints:
+```
 /createAccount:	
 	{
 		"accountId": string,
@@ -32,7 +33,7 @@ curl -i localhost:8080/getAccount -H Content-Type:application/json -X POST --dat
 	{
 		"accountId": string
 	}
-
+```
 
 ## Developing Process
 1. Create .yaml files under /Backend/schema/src/ for java types/request/response object
@@ -45,13 +46,11 @@ curl -i localhost:8080/getAccount -H Content-Type:application/json -X POST --dat
 
 
 ## Controller Example:
-see CreateAccountController
+see [CreateAccountController](https://github.com/sudojimmy/Shared-Agenda-Application/blob/master/Backend/service/src/main/java/controller/CreateAccountController.java)
 
 
 ## Useful Tutorial Document:
-Spring REST server tutorial:
-https://spring.io/guides/gs/rest-service/
+[Spring REST server tutorial](https://spring.io/guides/gs/rest-service/)
 
-Google Authentication:
-https://developers.google.com/identity/sign-in/android/start
+[Google Authentication](https://developers.google.com/identity/sign-in/android/start)
 
