@@ -17,6 +17,8 @@ import types.Group;
 import types.CreateGroupRequest;
 import types.CreateGroupResponse;
 
+import constant.ApiConstant;
+
 @RestController
 public class CreateGroupController extends BaseController {
 
@@ -53,7 +55,7 @@ public class CreateGroupController extends BaseController {
 
         for (String member : members) {
             Document document = new Document();
-            document.put("accountId", member);
+            document.put(ApiConstant.ACCOUNT_ACCOUNT_ID, member);
             if (!dataStore.existInCollection(document, DataStore.COLLECTION_ACCOUNTS)) {
                 logger.error("memberId is not Existed!");
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);

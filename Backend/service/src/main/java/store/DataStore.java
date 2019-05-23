@@ -6,7 +6,7 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
-import org.bson.types.ObjectId;
+import org.bson.conversions.Bson;
 
 import types.Account;
 import types.Group;
@@ -59,6 +59,19 @@ public class DataStore {
         MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
 
         return collection.countDocuments(document) != 0;
+    }
+
+    public <T> T findOneInCollection(Document document, String collectionName) {
+        MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
+
+        return collection.find(document).limit(1).first();
+    }
+
+    public <T>boolean updateInCollection(Bson filter, Bson query, String collectionName) {
+        MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
+
+
+        return collection.updateOne(filter, query).getMatchedCount() == 1;
     }
 
 /*

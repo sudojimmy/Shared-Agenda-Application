@@ -1,0 +1,18 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetAccountRequest
+description: get account request
+type: object
+additionalProperties: false
+properties:
+    accountId:
+        description: account id (globally unique)
+        type: string
+    nickname:
+        description: account nickname entered by user (repeatable)
+        type: string
+    description:
+        description: user description
+        type: string
+required:
+    - accountId
+    - name
