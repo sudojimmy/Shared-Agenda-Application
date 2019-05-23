@@ -1,14 +1,14 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
-title: Group
-description: A group of user accounts
+title: CreateGroupRequest
+description: create group request
 type: object
 additionalProperties: false
 properties:
-    _id:
-        description: group id
-        type: string
     name:
         description: group name
+        type: string
+    ownerid:
+        description: group owner
         type: string
     description:
         description: description of group 
@@ -18,10 +18,7 @@ properties:
         type: array
         items:
             type: string
-    ownerid:
-        description: group owner
-        type: string
 required:
-    - groupId
     - name
+    - ownerid
     - members

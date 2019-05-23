@@ -6,7 +6,10 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.types.ObjectId;
+
 import types.Account;
+import types.Group;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +22,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 public class DataStore {
     public static final String AGENDA_APP_DATABASE = "AGENDA_APP_DATABASE";
     public static final String COLLECTION_ACCOUNTS = "ACCOUNTS";
+    public static final String COLLECTION_GROUPS = "GROUPS";
 
     private MongoDatabase database;
     private Map<String, MongoCollection<?>> map = new HashMap<>();
@@ -42,6 +46,7 @@ public class DataStore {
         }
 
         map.put(COLLECTION_ACCOUNTS, database.getCollection(COLLECTION_ACCOUNTS, Account.class));
+        map.put(COLLECTION_GROUPS, database.getCollection(COLLECTION_GROUPS, Group.class));
     }
 
     public <T>void insertToCollection(T document, String collectionName) {
