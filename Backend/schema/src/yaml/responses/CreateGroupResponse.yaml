@@ -1,0 +1,11 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: CreateGroupRequest
+description: create group response
+type: object
+additionalProperties: false
+properties:
+    groupId:
+        description: group id
+        type: string
+required:
+    - groupId
