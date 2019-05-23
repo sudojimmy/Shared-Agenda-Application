@@ -49,16 +49,14 @@ public class CreateGroupController extends BaseController {
         }
         Set<String> set = new HashSet<String>(members);
 
-        if (set.size() < members.size()) {
-            members = new ArrayList<String>(set);
-        }
+        members = new ArrayList<String>(set);
 
         for (String member : members) {
             Document document = new Document();
             document.put("accountId", member);
             if (!dataStore.existInCollection(document, DataStore.COLLECTION_ACCOUNTS)) {
                 logger.error("memberId is not Existed!");
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         }
 
