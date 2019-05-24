@@ -12,7 +12,7 @@ properties:
     type: string
   type:
     description: work, study, entertainment, appointment, etc
-    "$ref": eventType.yaml
+    "$ref": EventType.yaml
   date:
     description: DD/MM/YYYY
     type: string
@@ -24,13 +24,13 @@ properties:
     type: int
   repeat:
     description: [once, day, week, month, year]
-    "$ref": eventRepeat.yaml
+    "$ref": EventRepeat.yaml
   location:
     description: event occurs location
     type: string
   state:
     description: cancelled, active
-    "$ref": eventState.yaml
+    "$ref": EventState.yaml
   description:
     description: event description
     type: string
