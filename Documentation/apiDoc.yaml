@@ -83,8 +83,8 @@ paths:
           schema:
             $ref: '../Backend/schema/src/yaml/responses/CreateEventResponse.yaml'
         "400":
-          description: "Invalid Parameter: accountId and nickname cannot be null or empty"
+          description: "Invalid Parameter: starterId and eventname and type cannot be null or empty"
         "404":
-          description: "Not Found: target accountId not found in database"
+          description: "Not Found: target starterId not found in database"
 
 
