@@ -15,7 +15,7 @@ curl -i localhost:8080/getAccount -H Content-Type:application/json -X POST --dat
 
 ## Current API Endpoints:
 ```
-/createAccount:	
+/createAccount:
 	{
 		"accountId": string,
 		"nickname": string,
@@ -42,7 +42,7 @@ curl -i localhost:8080/getAccount -H Content-Type:application/json -X POST --dat
 4. Modify database in DataStore.java to extend database usability
 5. cd Backend && ./gradlew clean build run
 6. Now api service should be listen on the default port 8080 or $PORT if set
- 
+
 
 
 ## Controller Example:
