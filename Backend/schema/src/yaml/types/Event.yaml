@@ -4,19 +4,37 @@ description: event object describes event information
 type: object
 additionalProperties: false
 properties:
-  eventId:
-    description: event id (globally unique)
-    type: string
   eventname:
     description: event name entered by user (repeatable)
     type: string
-  description:
-    description: event description
+  starterId:
+    description: the starter user id
     type: string
   type:
     description: work, study, entertainment, appointment, etc
     type: string
+  date:
+    description: DD/MM/YYYY
+    type: Date
+  start:
+    description: the event start time(multiple of quarter)
+    type: int
+  count:
+    description: the total time(multiple of quarter)
+    type: int
+  repeat:
+    description: [once, week, day, year, month]
+    type: enum
+  location:
+    description: event occurs location
+    type: string
+  state:
+    description: cancelled, active
+    type: enum
+  description:
+    description: event description
+    type: string
 required:
-  - eventId
-  - name
+  - eventname
+  - starterId
   - type
