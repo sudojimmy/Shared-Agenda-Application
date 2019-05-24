@@ -1,0 +1,9 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: Event Type
+description: valid Type enum
+enum:
+  - WORK
+  - STUDY
+  - ENTERTAINMENT
+  - APPOINTMENT
+  - OTHER

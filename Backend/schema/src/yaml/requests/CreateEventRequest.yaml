@@ -1,0 +1,40 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: CreateEventRequest
+description: create event request
+type: object
+additionalProperties: false
+properties:
+  eventname:
+    description: event name entered by user (repeatable)
+    type: string
+  starterId:
+    description: the starter user id
+    type: string
+  type:
+    description: work, study, entertainment, appointment, other
+    "$ref": ../types/EventType.yaml
+  date:
+    description: DD/MM/YYYY
+    type: string
+  start:
+    description: the event start time(multiple of quarter)
+    type: int
+  count:
+    description: the total time(multiple of quarter)
+    type: int
+  repeat:
+    description: [once, day, week, month, year]
+    "$ref": ../types/EventRepeat.yaml
+  location:
+    description: event occurs location
+    type: string
+  state:
+    description: cancelled, active
+    "$ref": ../types/EventState.yaml
+  description:
+    description: event description
+    type: string
+required:
+  - eventname
+  - starterId
+  - type
