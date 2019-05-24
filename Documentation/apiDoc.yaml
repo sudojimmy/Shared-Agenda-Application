@@ -67,3 +67,24 @@ paths:
           description: "Invalid Parameter: accountId and nickname cannot be null or empty"
         "404":
           description: "Not Found: target accountId not found in database"
+  createEvent:
+    post:
+      operationId: createEvent
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/CreateEventRequest.yaml'
+      responses:
+        "201":
+          description: CREATE
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/CreateEventResponse.yaml'
+        "400":
+          description: "Invalid Parameter: starterId, eventname and type cannot be null or empty"
+        "404":
+          description: "Not Found: starterId not found in database"
+
+
