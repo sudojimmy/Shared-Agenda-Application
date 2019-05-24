@@ -23,6 +23,7 @@ public class DataStore {
     public static final String AGENDA_APP_DATABASE = "AGENDA_APP_DATABASE";
     public static final String COLLECTION_ACCOUNTS = "ACCOUNTS";
     public static final String COLLECTION_GROUPS = "GROUPS";
+    public static final String COLLECTION_EVENTS = "EVENTS";
 
     private MongoDatabase database;
     private Map<String, MongoCollection<?>> map = new HashMap<>();
