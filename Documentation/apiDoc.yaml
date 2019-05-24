@@ -1,0 +1,69 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Shared Agenda Application
+host: sharedagendaapp.herokuapp.com
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  createAccount:
+    post:
+      operationId: createAccount
+      tags:
+        - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/CreateAccountRequest.yaml'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/CreateAccountResponse.yaml'
+        "400":
+          description: "Invalid Parameter: accountId and nickname cannot be null or empty"
+        "404":
+          description: "Conflict: accountId already exist"
+  getAccount:
+    post:
+      operationId: getAccount
+      tags:
+        - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/GetAccountRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/GetAccountResponse.yaml'
+        "400":
+          description: "Invalid Parameter: accountId cannot be null or empty"
+        "404":
+          description: "Not Found: target accountId not found in database"
+  updateAccount:
+    post:
+      operationId: updateAccount
+      tags:
+        - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/UpdateAccountRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/UpdateAccountResponse.yaml'
+        "400":
+          description: "Invalid Parameter: accountId and nickname cannot be null or empty"
+        "404":
+          description: "Not Found: target accountId not found in database"
