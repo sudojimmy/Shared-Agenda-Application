@@ -13,6 +13,8 @@ import types.CreateEventRequest;
 import types.CreateEventResponse;
 import types.Event;
 
+import static store.DataStore.COLLECTION_EVENTS;
+
 
 @RestController
 public class CreateEventController extends BaseController {
@@ -30,7 +32,7 @@ public class CreateEventController extends BaseController {
             logger.error("Invalid StarterId!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (request.getType() == null || request.getType().isEmpty()) {
+        if (request.getType() == null) {
             logger.error("Invalid Type!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

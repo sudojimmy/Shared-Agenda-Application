@@ -9,6 +9,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 
 import types.Account;
+import types.Event;
 import types.Group;
 
 import java.util.HashMap;
@@ -48,6 +49,8 @@ public class DataStore {
 
         map.put(COLLECTION_ACCOUNTS, database.getCollection(COLLECTION_ACCOUNTS, Account.class));
         map.put(COLLECTION_GROUPS, database.getCollection(COLLECTION_GROUPS, Group.class));
+        map.put(COLLECTION_EVENTS, database.getCollection(COLLECTION_EVENTS, Event.class));
+
     }
 
     public <T>void insertToCollection(T document, String collectionName) {

@@ -12,10 +12,10 @@ properties:
     type: string
   type:
     description: work, study, entertainment, appointment, etc
-    type: string
+    "$ref": eventType.yaml
   date:
     description: DD/MM/YYYY
-    type: Date
+    type: string
   start:
     description: the event start time(multiple of quarter)
     type: int
@@ -23,14 +23,14 @@ properties:
     description: the total time(multiple of quarter)
     type: int
   repeat:
-    description: [once, week, day, year, month]
-    type: enum
+    description: [once, day, week, month, year]
+    "$ref": eventRepeat.yaml
   location:
     description: event occurs location
     type: string
   state:
     description: cancelled, active
-    type: enum
+    "$ref": eventState.yaml
   description:
     description: event description
     type: string

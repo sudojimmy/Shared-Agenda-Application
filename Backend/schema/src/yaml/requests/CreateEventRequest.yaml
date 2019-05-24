@@ -11,8 +11,8 @@ properties:
     description: the starter user id
     type: string
   type:
-    description: work, study, entertainment, appointment, etc
-    type: string
+    description: work, study, entertainment, appointment, other
+    "$ref": ../types/eventType.yaml
   date:
     description: DD/MM/YYYY
     type: string
@@ -24,20 +24,13 @@ properties:
     type: int
   repeat:
     description: [once, day, week, month, year]
-    enum:
-      - ONCE
-      - DAY
-      - WEEK
-      - MONTH
-      - YEAR
+    "$ref": ../types/eventRepeat.yaml
   location:
     description: event occurs location
     type: string
   state:
     description: cancelled, active
-    enum:
-      - CANCELLED
-      - ACTIVE
+    "$ref": ../types/eventState.yaml
   description:
     description: event description
     type: string
