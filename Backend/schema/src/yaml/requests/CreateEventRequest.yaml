@@ -1,0 +1,22 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: CreateEventRequest
+description: create event request
+type: object
+additionalProperties: false
+properties:
+  eventId:
+    description: event id (globally unique)
+    type: string
+  eventname:
+    description: event name entered by user (repeatable)
+    type: string
+  description:
+    description: event description
+    type: string
+  type:
+    description: work, study, entertainment, appointment, etc
+    type: string
+required:
+  - eventId
+  - name
+  - type
