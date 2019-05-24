@@ -71,6 +71,6 @@ public class CreateGroupController extends BaseController {
 
         // Step IV: create response object
         return new ResponseEntity<>(new CreateGroupResponse().withGroupId(id),
-            HttpStatus.OK);
+            HttpStatus.CREATED);
     }
 }

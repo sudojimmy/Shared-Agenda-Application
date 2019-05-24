@@ -48,11 +48,14 @@ public class CreateAccountController extends BaseController {
         }
 
         // Step III: write to Database
-        Account p = new Account().withNickname(request.getNickname()).withAccountId(request.getAccountId());
+        Account p = new Account()
+            .withNickname(request.getNickname())
+            .withAccountId(request.getAccountId())
+            .withDescription(request.getDescription());
         dataStore.insertToCollection(p, DataStore.COLLECTION_ACCOUNTS);
 
         // Step IV: create response object
         return new ResponseEntity<>(new CreateAccountResponse().withAccountId(request.getAccountId()),
-            HttpStatus.OK);
+            HttpStatus.CREATED);
     }
 }
