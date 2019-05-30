@@ -18,10 +18,10 @@ properties:
     type: string
   start:
     description: the event start time(multiple of quarter)
-    type: int
+    type: integer
   count:
     description: the total time(multiple of quarter)
-    type: int
+    type: integer
   repeat:
     description: [once, day, week, month, year]
     "$ref": ../types/EventRepeat.yaml

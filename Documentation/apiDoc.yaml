@@ -86,5 +86,21 @@ paths:
           description: "Invalid Parameter: starterId, eventname and type cannot be null or empty"
         "404":
           description: "Not Found: starterId not found in database"
-
+  getEventList:
+    post:
+      operationId: getEventList
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/GetEventListRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/GetEventListResponse.yaml'
+        "400":
+          description: "Invalid Parameter: eventname cannot be null or empty"
 
