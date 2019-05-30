@@ -1,5 +1,5 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
-title: UpdateAccountRequest
+title: UpdateAccountResponse
 description: update account response
 type: object
 additionalProperties: false

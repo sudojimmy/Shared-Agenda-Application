@@ -48,17 +48,18 @@ public class CreateEventController extends BaseController {
         // Step III: write to Database
         ObjectId groupId = new ObjectId();
         String id = groupId.toString();
-        Event p = new Event().
-                withEventname(request.getEventname()).
-                withStarterId(request.getStarterId()).
-                withType(request.getType()).
-                withStart(request.getStart()).
-                withCount(request.getCount()).
-                withDate(request.getDate()).
-                withLocation(request.getLocation()).
-                withRepeat(request.getRepeat()).
-                withState(request.getState()).
-                withDescription(request.getDescription());
+        Event p = new Event()
+                .withEventId(id)
+                .withEventname(request.getEventname())
+                .withStarterId(request.getStarterId())
+                .withType(request.getType())
+                .withStart(request.getStart())
+                .withCount(request.getCount())
+                .withDate(request.getDate())
+                .withLocation(request.getLocation())
+                .withRepeat(request.getRepeat())
+                .withState(request.getState())
+                .withDescription(request.getDescription());
         dataStore.insertToCollection(p, DataStore.COLLECTION_EVENTS);
 
         // Step IV: create response object

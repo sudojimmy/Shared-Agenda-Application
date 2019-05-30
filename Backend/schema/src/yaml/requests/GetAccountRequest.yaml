@@ -1,6 +1,6 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
-title: CreateAccountRequest
-description: create account request
+title: GetAccountRequest
+description: get account request
 type: object
 additionalProperties: false
 properties:

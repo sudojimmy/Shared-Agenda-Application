@@ -12,6 +12,8 @@ import types.Account;
 import types.Event;
 import types.Group;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,6 +71,18 @@ public class DataStore {
         MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
 
         return collection.find(document).limit(1).first();
+    }
+
+    public <T> Collection<T> findManyInCollection(Document document, String collectionName) {
+        MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
+
+        Collection<T> listT = new ArrayList<T>();
+
+        Iterable<T> iterableListT = collection.find(document);
+        for (T t : iterableListT)
+            listT.add(t);
+
+        return listT;
     }
 
     public <T>boolean updateInCollection(Bson filter, Bson query, String collectionName) {
