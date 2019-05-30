@@ -103,3 +103,4 @@ paths:
             $ref: '../Backend/schema/src/yaml/responses/GetEventListResponse.yaml'
         "400":
           description: "Invalid Parameter: eventname cannot be null or empty"
+
