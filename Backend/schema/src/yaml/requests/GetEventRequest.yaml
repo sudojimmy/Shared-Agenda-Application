@@ -1,0 +1,11 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetEventRequest
+description: get event request
+type: object
+additionalProperties: false
+properties:
+  eventname:
+    description: eventname is not unique, return list of events
+    type: string
+required:
+  - eventname

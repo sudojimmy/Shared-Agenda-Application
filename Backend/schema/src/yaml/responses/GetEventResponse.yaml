@@ -1,0 +1,15 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetEventResponse
+description: get event response
+type: object
+additionalProperties: false
+properties:
+  eventList:
+    type: array
+    items:
+      "$ref": ../types/Event.yaml
+required:
+  - eventId
+  - eventname
+  - starterId
+  - type

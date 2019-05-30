@@ -1,6 +1,6 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
-title: GetAccountRequest
-description: get account request
+title: GetAccountResponse
+description: get account response
 type: object
 additionalProperties: false
 properties:
@@ -15,4 +15,4 @@ properties:
         type: string
 required:
     - accountId
-    - name
+    - nickname
