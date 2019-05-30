@@ -1,6 +1,6 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
-title: GetEventResponse
-description: get event response
+title: GetEventListResponse
+description: get eventlist response
 type: object
 additionalProperties: false
 properties:
@@ -9,7 +9,5 @@ properties:
     items:
       "$ref": ../types/Event.yaml
 required:
-  - eventId
-  - eventname
-  - starterId
-  - type
+  - eventList
+

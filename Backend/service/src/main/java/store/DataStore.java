@@ -73,13 +73,12 @@ public class DataStore {
         return collection.find(document).limit(1).first();
     }
 
-    public <T> Collection<T> findMoreInCollection(Document document, String collectionName) {
+    public <T> Collection<T> findManyInCollection(Document document, String collectionName) {
         MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
 
         Collection<T> listT = new ArrayList<T>();
 
         Iterable<T> iterableListT = collection.find(document);
-
         for (T t : iterableListT)
             listT.add(t);
 
