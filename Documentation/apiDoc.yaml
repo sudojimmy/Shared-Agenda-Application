@@ -122,4 +122,22 @@ paths:
             $ref: '../Backend/schema/src/yaml/responses/GetEventListResponse.yaml'
         "400":
           description: "Invalid Parameter: eventname cannot be null or empty"
-
+  updateEvent:
+    post:
+      operationId: updateEvent
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/UpdateEventRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/UpdateEventResponse.yaml'
+        "400":
+          description: "Invalid Parameter: eventId, eventname, starterId, and type cannot be null or empty"
+        "404":
+          description: "Not Found: target EventId not found in database"

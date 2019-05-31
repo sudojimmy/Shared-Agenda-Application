@@ -1,7 +1,6 @@
 package controller;
 
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.DeleteResult;
 import constant.ApiConstant;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -14,8 +13,9 @@ import store.DataStore;
 import types.UpdateEventRequest;
 import types.UpdateEventResponse;
 import types.Event;
-import org.bson.types.ObjectId;
 
+// TODO find a way to properly update
+import org.bson.types.ObjectId;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 
