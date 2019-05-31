@@ -34,8 +34,8 @@ public class UpdateAccountController extends BaseController {
 
         Bson filter = Filters.eq(ApiConstant.ACCOUNT_ACCOUNT_ID, request.getAccountId());
         Bson query = combine(
-            set(ApiConstant.ACCOUNT_ACCOUNT_NICKNAME, request.getNickname()),
-            set(ApiConstant.ACCOUNT_ACCOUNT_DESCRIPTION, request.getDescription()));
+            set(ApiConstant.ACCOUNT_NICKNAME, request.getNickname()),
+            set(ApiConstant.ACCOUNT_DESCRIPTION, request.getDescription()));
 
         if (!dataStore.updateInCollection(filter, query, DataStore.COLLECTION_ACCOUNTS)) {
             logger.error("Account Id Not Found!");
