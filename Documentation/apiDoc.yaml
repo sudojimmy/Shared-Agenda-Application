@@ -67,6 +67,25 @@ paths:
           description: "Invalid Parameter: accountId and nickname cannot be null or empty"
         "404":
           description: "Not Found: target accountId not found in database"
+  getCalendarEventList:
+    post:
+      operationId: getCalendarEventList
+      tags:
+        - Calendars
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/GetCalendarEventListRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/GetCalendarEventListResponse.yaml'
+        "400":
+          description: "Invalid Parameter: calendarId cannot be null or empty"
+        "404":
+          description: "Not Found: calendar corresponding to calendarId not found in database"
   createEvent:
     post:
       operationId: createEvent
@@ -86,5 +105,58 @@ paths:
           description: "Invalid Parameter: starterId, eventname and type cannot be null or empty"
         "404":
           description: "Not Found: starterId not found in database"
-
-
+  getEventList:
+    post:
+      operationId: getEventList
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/GetEventListRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/GetEventListResponse.yaml'
+        "400":
+          description: "Invalid Parameter: eventname cannot be null or empty"
+  updateEvent:
+    post:
+      operationId: updateEvent
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/UpdateEventRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/UpdateEventResponse.yaml'
+        "400":
+          description: "Invalid Parameter: eventId, eventname, starterId, and type cannot be null or empty"
+        "404":
+          description: "Not Found: target EventId not found in database"
+  createGroup:
+    post:
+      operationId: createGroup
+      tags:
+        - Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/CreateAccountRequest.yaml'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/CreateAccountResponse.yaml'
+        "400":
+          description: "Invalid Parameter: accountId and nickname cannot be null or empty"
+        "404":
+          description: "Conflict: accountId already exist"

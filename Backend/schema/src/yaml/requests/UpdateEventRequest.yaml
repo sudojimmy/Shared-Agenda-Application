@@ -1,9 +1,12 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
-title: CreateEventRequest
-description: create event request
+title: UpdateEventRequest
+description: update event request
 type: object
 additionalProperties: false
 properties:
+  eventId:
+    description: eventId is unique, provided by frontend
+    type: string
   eventname:
     description: event name entered by user (repeatable)
     type: string
@@ -11,7 +14,7 @@ properties:
     description: the starter user id
     type: string
   type:
-    description: work, study, entertainment, appointment, other
+    description: work, study, entertainment, appointment, etc
     "$ref": ../types/EventType.yaml
   date:
     description: DD/MM/YYYY
@@ -35,6 +38,7 @@ properties:
     description: event description
     type: string
 required:
+  - eventId
   - eventname
   - starterId
   - type

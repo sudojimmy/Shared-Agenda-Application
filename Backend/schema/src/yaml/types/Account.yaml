@@ -13,6 +13,10 @@ properties:
     description:
         description: user description
         type: string
+    calendarId:
+        description: calendar Id
+        type: string
 required:
     - accountId
     - nickname
+    - calendarId

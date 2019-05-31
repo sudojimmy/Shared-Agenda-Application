@@ -1,6 +1,7 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
 title: Event Repeat
 description: valid Repeat enum
+type: string
 enum:
   - ONCE
   - DAY
