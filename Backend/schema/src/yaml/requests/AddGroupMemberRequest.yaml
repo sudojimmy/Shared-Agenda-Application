@@ -1,0 +1,20 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: AddGroupMemberRequest
+description: add group member request
+type: object
+additionalProperties: false
+properties:
+    _id:
+        description: group id
+        type: string
+    ownerid:
+        description: group owner
+        type: string
+    members:
+        description: group members
+        type: array
+        items:
+            type: string
+required:
+    - _id
+    - members
