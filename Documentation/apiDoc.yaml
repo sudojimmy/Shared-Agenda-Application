@@ -67,6 +67,25 @@ paths:
           description: "Invalid Parameter: accountId and nickname cannot be null or empty"
         "404":
           description: "Not Found: target accountId not found in database"
+  getCalendarEventList:
+    post:
+      operationId: getCalendarEventList
+      tags:
+        - Calendars
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/GetCalendarEventListRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/GetCalendarEventListResponse.yaml'
+        "400":
+          description: "Invalid Parameter: calendarId cannot be null or empty"
+        "404":
+          description: "Not Found: calendar corresponding to calendarId not found in database"
   createEvent:
     post:
       operationId: createEvent
