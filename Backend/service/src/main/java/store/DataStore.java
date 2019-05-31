@@ -3,6 +3,7 @@ package store;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -88,20 +89,14 @@ public class DataStore {
     public <T>boolean updateInCollection(Bson filter, Bson query, String collectionName) {
         MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
 
-
         return collection.updateOne(filter, query).getMatchedCount() == 1;
     }
 
-/*
 
-    void delete() {
-        MongoCollection<Document> collection = database.getCollection("account");
+    public boolean delete(Bson filter, String collectionName) {
+        MongoCollection<Document> collection = database.getCollection(collectionName);
 
-        Document document = new Document();
-        document.put("key", "val");
-        collection.deleteOne(document);
-        System.out.println(collection.countDocuments());
+        DeleteResult dr = collection.deleteOne(filter);
+        return dr.getDeletedCount() == 1;
     }
-*/
-
 }
