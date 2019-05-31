@@ -9,6 +9,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 
 import types.Account;
+import types.Calendar;
 import types.Event;
 import types.Group;
 
@@ -27,6 +28,7 @@ public class DataStore {
     public static final String COLLECTION_ACCOUNTS = "ACCOUNTS";
     public static final String COLLECTION_GROUPS = "GROUPS";
     public static final String COLLECTION_EVENTS = "EVENTS";
+    public static final String COLLECTION_CALENDARS = "CALENDARS";
 
     private MongoDatabase database;
     private Map<String, MongoCollection<?>> map = new HashMap<>();
@@ -52,6 +54,7 @@ public class DataStore {
         map.put(COLLECTION_ACCOUNTS, database.getCollection(COLLECTION_ACCOUNTS, Account.class));
         map.put(COLLECTION_GROUPS, database.getCollection(COLLECTION_GROUPS, Group.class));
         map.put(COLLECTION_EVENTS, database.getCollection(COLLECTION_EVENTS, Event.class));
+        map.put(COLLECTION_CALENDARS, database.getCollection(COLLECTION_CALENDARS, Calendar.class));
 
     }
 
@@ -78,16 +81,25 @@ public class DataStore {
 
         Collection<T> listT = new ArrayList<T>();
 
-        Iterable<T> iterableListT = collection.find(document);
-        for (T t : iterableListT)
-            listT.add(t);
+        Iterable <T>iterableListT = collection.find(document);
+        iterableListT.forEach(listT::add);
+
+        return listT;
+    }
+
+    public <T> Collection<T> findManyInCollection(Bson filter, String collectionName) {
+        MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
+
+        Collection<T> listT = new ArrayList<T>();
+
+        Iterable <T>iterableListT = collection.find(filter);
+        iterableListT.forEach(listT::add);
 
         return listT;
     }
 
     public <T>boolean updateInCollection(Bson filter, Bson query, String collectionName) {
         MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
-
 
         return collection.updateOne(filter, query).getMatchedCount() == 1;
     }

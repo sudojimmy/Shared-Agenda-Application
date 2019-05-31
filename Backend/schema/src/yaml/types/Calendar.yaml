@@ -1,15 +1,17 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
-title: CreateAccountRequest
-description: create account response
+title: Calendar
+description: calendar object describes user information
 type: object
 additionalProperties: false
 properties:
-    accountId:
-        description: account id
-        type: string
     calendarId:
         description: calendar id
         type: string
+    eventList:
+        description: a list of event id
+        type: array
+        items:
+            type: string
 required:
-    - accountId
     - calendarId
+    - eventList

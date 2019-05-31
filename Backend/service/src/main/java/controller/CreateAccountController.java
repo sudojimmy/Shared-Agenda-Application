@@ -2,6 +2,7 @@ package controller;
 
 import constant.ApiConstant;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import store.DataStore;
 import types.Account;
+import types.Calendar;
 import types.CreateAccountRequest;
 import types.CreateAccountResponse;
+
+import java.util.ArrayList;
 
 
 /* USEFUL DOCUMENTS
@@ -47,15 +51,22 @@ public class CreateAccountController extends BaseController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
+        String calendarId = new ObjectId().toString();
+        Calendar calendar = new Calendar().withCalendarId(calendarId).withEventList(new ArrayList<>());
+        dataStore.insertToCollection(calendar, DataStore.COLLECTION_CALENDARS);
+
         // Step III: write to Database
         Account p = new Account()
             .withNickname(request.getNickname())
             .withAccountId(request.getAccountId())
-            .withDescription(request.getDescription());
+            .withDescription(request.getDescription())
+            .withCalendarId(calendarId);
         dataStore.insertToCollection(p, DataStore.COLLECTION_ACCOUNTS);
 
         // Step IV: create response object
-        return new ResponseEntity<>(new CreateAccountResponse().withAccountId(request.getAccountId()),
+        return new ResponseEntity<>(new CreateAccountResponse()
+            .withAccountId(request.getAccountId())
+            .withCalendarId(calendarId),
             HttpStatus.CREATED);
     }
 }
