@@ -60,15 +60,15 @@ public class UpdateEventController extends BaseController {
         // TODO find a way to properly update
 /*        Bson query = combine(
                 set(ApiConstant.EVENT_EVENT_NAME, request.getEventname()),
-                set(ApiConstant.EVENT_EVENT_STARTERID, request.getStarterId()),
-                set(ApiConstant.EVENT_EVENT_TYPE, request.getType()),
-                set(ApiConstant.EVENT_EVENT_DATE, request.getDate()),
-                set(ApiConstant.EVENT_EVENT_START, request.getStart()),
-                set(ApiConstant.EVENT_EVENT_COUNT, request.getCount()),
-                set(ApiConstant.EVENT_EVENT_REPEAT, request.getRepeat()));
-                set(ApiConstant.EVENT_EVENT_LOCATION, request.getLocation()),
-                set(ApiConstant.EVENT_EVENT_STATE, request.getState()),
-                set(ApiConstant.EVENT_EVENT_DESCRIPTION, request.getDescription()));*/
+                set(ApiConstant.EVENT_STARTER_ID, request.getStarterId()),
+                set(ApiConstant.EVENT_TYPE, request.getType()),
+                set(ApiConstant.EVENT_DATE, request.getDate()),
+                set(ApiConstant.EVENT_START, request.getStart()),
+                set(ApiConstant.EVENT_COUNT, request.getCount()),
+                set(ApiConstant.EVENT_REPEAT, request.getRepeat()));
+                set(ApiConstant.EVENT_LOCATION, request.getLocation()),
+                set(ApiConstant.EVENT_STATE, request.getState()),
+                set(ApiConstant.EVENT_DESCRIPTION, request.getDescription()));*/
 
         if (!dataStore.delete(filter, DataStore.COLLECTION_EVENTS)){
             logger.error("Event Id Not Found!");

@@ -13,13 +13,13 @@ public class ApiConstant {
     // Event
     public static final String EVENT_EVENT_ID = "eventId";
     public static final String EVENT_EVENT_NAME = "eventname";
-    public static final String EVENT_EVENT_STARTERID = "starterId";
-    public static final String EVENT_EVENT_TYPE = "type";
-    public static final String EVENT_EVENT_DATE = "date";
-    public static final String EVENT_EVENT_START = "start";
-    public static final String EVENT_EVENT_COUNT = "count";
-    public static final String EVENT_EVENT_REPEAT = "repeat";
-    public static final String EVENT_EVENT_LOCATION = "location";
-    public static final String EVENT_EVENT_STATE = "state";
-    public static final String EVENT_EVENT_DESCRIPTION = "description";
+    public static final String EVENT_STARTER_ID = "starterId";
+    public static final String EVENT_TYPE = "type";
+    public static final String EVENT_DATE = "date";
+    public static final String EVENT_START = "start";
+    public static final String EVENT_COUNT = "count";
+    public static final String EVENT_REPEAT = "repeat";
+    public static final String EVENT_LOCATION = "location";
+    public static final String EVENT_STATE = "state";
+    public static final String EVENT_DESCRIPTION = "description";
 }
