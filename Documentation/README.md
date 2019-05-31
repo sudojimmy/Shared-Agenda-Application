@@ -1,7 +1,7 @@
 # Generate API
 
 ## Live API Website
-https://sharedagendaapidoc.herokuapp.com/
+https://sharedagendaappdoc.netlify.com/
 
 ## Install Tool
 npm install -g redoc-cli
