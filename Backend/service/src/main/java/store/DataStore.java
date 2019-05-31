@@ -1,6 +1,7 @@
 package store;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
@@ -30,6 +31,8 @@ public class DataStore {
     public static final String COLLECTION_GROUPS = "GROUPS";
     public static final String COLLECTION_EVENTS = "EVENTS";
     public static final String COLLECTION_CALENDARS = "CALENDARS";
+    public static final String DEFAULT_MONGODB_CONNECTION_STRING = "mongodb://localhost:27017";
+    public static final String MONGODB_CONNECTION_STRING_SYS_ENV = "AGENDA_APP_DATABASE_CONN_STR";
 
     private MongoDatabase database;
     private Map<String, MongoCollection<?>> map = new HashMap<>();
@@ -41,7 +44,11 @@ public class DataStore {
     void init() {
         System.out.println("Connecting ... "); // TODO replace all system.xxx with log
         try {
-            MongoClient client = new MongoClient(); // TODO change default ip:port
+            String sys_env_conn_str = System.getenv(MONGODB_CONNECTION_STRING_SYS_ENV); // for Production Environment
+            MongoClientURI uri = new MongoClientURI(sys_env_conn_str != null ?
+                sys_env_conn_str : DEFAULT_MONGODB_CONNECTION_STRING);
+
+            MongoClient client = new MongoClient(uri); // TODO change default ip:port
             System.out.println("Connected");
 
             CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
@@ -68,7 +75,7 @@ public class DataStore {
     public <T>boolean existInCollection(Document document, String collectionName) {
         MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
 
-        return collection.countDocuments(document) != 0;
+        return collection.count(document) != 0;
     }
 
     public <T> T findOneInCollection(Document document, String collectionName) {
