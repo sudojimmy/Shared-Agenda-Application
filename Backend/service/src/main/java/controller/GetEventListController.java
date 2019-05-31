@@ -28,7 +28,7 @@ public class GetEventListController extends BaseController {
         }
 
         Document document = new Document();
-        document.put(ApiConstant.Event_Event_NAME, request.getEventname());
+        document.put(ApiConstant.EVENT_EVENT_NAME, request.getEventname());
         Collection<Event> eventList = dataStore.findManyInCollection(document, DataStore.COLLECTION_EVENTS);
 
         return new ResponseEntity<>(new GetEventListResponse().withEventList(new ArrayList<>(eventList)),HttpStatus.OK);

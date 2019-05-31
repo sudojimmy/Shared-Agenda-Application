@@ -40,7 +40,7 @@ public class GetCalendarEventListController extends BaseController {
         }
 
         ArrayList<Bson>loFilters = new ArrayList<>();
-        calendar.getEventList().forEach(e -> loFilters.add(Filters.eq(ApiConstant.Event_Event_ID, e)));
+        calendar.getEventList().forEach(e -> loFilters.add(Filters.eq(ApiConstant.EVENT_EVENT_ID, e)));
 
         Bson filter = Filters.or(loFilters);
         Collection<Event> collection = dataStore.findManyInCollection(filter, DataStore.COLLECTION_EVENTS);
