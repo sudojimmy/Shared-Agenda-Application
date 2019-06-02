@@ -1,0 +1,17 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: AddGroupMemberResponse
+description: add group member response
+type: object
+additionalProperties: false
+properties:
+    groupId:
+        description: group id
+        type: string
+    members:
+        description: group members not exist
+        type: array
+        items:
+            type: string
+required:
+    - groupId
+
