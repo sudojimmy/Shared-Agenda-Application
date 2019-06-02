@@ -172,8 +172,8 @@ paths:
             schema:
               $ref: '../Backend/schema/src/yaml/requests/AddGroupMemberResponse.yaml'
       responses:
-        "201":
-          description: Created
+        "200":
+          description: Ok
           schema:
             $ref: '../Backend/schema/src/yaml/responses/AddGroupMemberResponse.yaml'
         "400":
