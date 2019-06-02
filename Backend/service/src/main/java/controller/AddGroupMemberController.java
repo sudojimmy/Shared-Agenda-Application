@@ -51,7 +51,7 @@ public class AddGroupMemberController extends BaseController {
 
         // Step II: check restriction (conflict, or naming rules etc.)
         // check if group exist
-        String groupId = request.get_id();
+        ObjectId groupId =new ObjectId(request.get_id());
         Document doc = new Document();
         doc.put(ApiConstant.GROUP_ID, groupId);
         if (!dataStore.existInCollection(doc, DataStore.COLLECTION_GROUPS)) {
@@ -71,7 +71,7 @@ public class AddGroupMemberController extends BaseController {
         }
 
         if (missingMembers.size()>=0) {
-            return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(groupId)
+            return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(request.get_id())
             .withMembers(missingMembers),
             HttpStatus.NOT_FOUND);
         }
@@ -90,7 +90,7 @@ public class AddGroupMemberController extends BaseController {
         dataStore.updateInCollection(filter, query, DataStore.COLLECTION_GROUPS);
 
         // Step IV: create response object
-        return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(groupId),
-            HttpStatus.CREATED);
+        return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(request.get_id()),
+            HttpStatus.OK);
     }
 }
