@@ -1,0 +1,13 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetCalendarEventListByDateResponse
+description: get calendar eventlist by date response
+type: object
+additionalProperties: false
+properties:
+  eventList:
+    type: array
+    items:
+      "$ref": ../types/Event.yaml
+required:
+  - eventList
+

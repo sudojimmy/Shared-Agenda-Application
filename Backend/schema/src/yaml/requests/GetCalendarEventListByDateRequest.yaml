@@ -1,0 +1,15 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetCalendarEventListByDateRequest
+description: get event list by calendar id and date
+type: object
+additionalProperties: false
+properties:
+  calendarId:
+    description: calendar id
+    type: string
+  date:
+    description: the date of the events
+    type: string
+required:
+  - calendarId
+  - date
