@@ -141,6 +141,7 @@ paths:
           description: "Invalid Parameter: eventId, eventname, starterId, and type cannot be null or empty"
         "404":
           description: "Not Found: target EventId not found in database"
+# Group
   createGroup:
     post:
       operationId: createGroup
@@ -150,13 +151,32 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '../Backend/schema/src/yaml/requests/CreateAccountRequest.yaml'
+              $ref: '../Backend/schema/src/yaml/requests/CreateGroupResponse.yaml'
       responses:
         "201":
           description: Created
           schema:
-            $ref: '../Backend/schema/src/yaml/responses/CreateAccountResponse.yaml'
+            $ref: '../Backend/schema/src/yaml/responses/CreateGroupResponse.yaml'
         "400":
-          description: "Invalid Parameter: accountId and nickname cannot be null or empty"
+          description: "Invalid Parameter: name, memberids and ownerid cannot be null or empty"
         "404":
-          description: "Conflict: accountId already exist"
+          description: "Not Found: memberids or ownerid do not exist"
+  AddGroupMember:
+    post:
+      operationId: AddGroupMember
+      tags:
+        - Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/AddGroupMemberResponse.yaml'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/AddGroupMemberResponse.yaml'
+        "400":
+          description: "Invalid Parameter: groupid and memberids cannot be null or empty"
+        "404":
+          description: "Not Found: memberids or groupid do not exist"
