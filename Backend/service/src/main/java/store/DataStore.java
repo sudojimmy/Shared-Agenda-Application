@@ -45,7 +45,6 @@ public class DataStore {
         System.out.println("Connecting ... "); // TODO replace all system.xxx with log
         try {
             String sys_env_conn_str = System.getenv(MONGODB_CONNECTION_STRING_SYS_ENV); // for Production Environment
-            System.out.println(sys_env_conn_str);
             MongoClientURI uri = new MongoClientURI(sys_env_conn_str != null ?
                 sys_env_conn_str : DEFAULT_MONGODB_CONNECTION_STRING);
 
