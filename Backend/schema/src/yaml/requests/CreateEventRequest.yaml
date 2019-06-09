@@ -4,6 +4,9 @@ description: create event request
 type: object
 additionalProperties: false
 properties:
+  accountId:
+    description: caller Id
+    type: string
   eventname:
     description: event name entered by user (repeatable)
     type: string

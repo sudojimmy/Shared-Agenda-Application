@@ -4,6 +4,9 @@ description: update event request
 type: object
 additionalProperties: false
 properties:
+  accountId:
+    description: caller Id
+    type: string
   eventId:
     description: eventId is unique, provided by frontend
     type: string
