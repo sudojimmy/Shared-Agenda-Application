@@ -21,9 +21,9 @@ import java.util.Collection;
 @RestController
 public class GetCalendarEventListByDateController extends BaseController {
 
-    @PostMapping("/getCalendarEventByDateList")
+    @PostMapping("/getCalendarEventListByDate")
     public ResponseEntity<GetCalendarEventListByDateResponse> handle(@RequestBody GetCalendarEventListByDateRequest request) {
-        logger.info("getCalendarEventByDateList: " + request);
+        logger.info("getCalendarEventListByDate: " + request);
 
         if (request.getCalendarId() == null || request.getCalendarId().isEmpty()) {
             logger.error("Invalid calendar Id!");
