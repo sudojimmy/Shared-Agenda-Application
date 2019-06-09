@@ -42,9 +42,12 @@ public class GetCalendarEventListController extends BaseController {
         ArrayList<Bson>loFilters = new ArrayList<>();
         calendar.getEventList().forEach(e -> loFilters.add(Filters.eq(ApiConstant.EVENT_EVENT_ID, e)));
 
-        Bson filter = Filters.or(loFilters);
-        Collection<Event> collection = dataStore.findManyInCollection(filter, DataStore.COLLECTION_EVENTS);
-        ArrayList<Event> eventList = new ArrayList<>(collection);
+        ArrayList<Event> eventList = new ArrayList<>();
+        if (!loFilters.isEmpty()) {
+            Bson filter = Filters.or(loFilters);
+            Collection<Event> collection = dataStore.findManyInCollection(filter, DataStore.COLLECTION_EVENTS);
+            eventList = new ArrayList<>(collection);
+        }
 
         return new ResponseEntity<>(new GetCalendarEventListResponse()
             .withEventList(new ArrayList<>(eventList)),HttpStatus.OK);
