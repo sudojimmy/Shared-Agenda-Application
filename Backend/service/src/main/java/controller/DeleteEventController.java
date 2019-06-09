@@ -56,10 +56,10 @@ public class DeleteEventController extends BaseController {
                 logger.error("Event Id Not Found!");
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-        } else{
-            // only remove the event from accountId's calendar
-            deleteEventIdFromCalendar(event.getEventId(), account.getCalendarId());
         }
+
+        // remove the event from accountId's calendar
+        deleteEventIdFromCalendar(event.getEventId(), account.getCalendarId());
 
         return new ResponseEntity<>(new DeleteEventResponse()
                 .withEventId(event.getEventId()),

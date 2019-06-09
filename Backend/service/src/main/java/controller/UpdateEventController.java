@@ -32,26 +32,32 @@ public class UpdateEventController extends BaseController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
+            logger.error("Invalid EventId!");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (request.getEventname() == null || request.getEventname().isEmpty()) {
             logger.error("Invalid Event Name!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        if (request.getStarterId() == null || request.getStarterId().isEmpty()) {
-            logger.error("Invalid Starter(Account) Id!");
+        if (request.getType() == null) {
+            logger.error("Invalid Event type!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         // check startId is a valid accountId
         Document document = new Document();
-        document.put(ApiConstant.ACCOUNT_ACCOUNT_ID, request.getStarterId());
-        if (!dataStore.existInCollection(document, DataStore.COLLECTION_ACCOUNTS)) {
-            logger.error("StarterId is not an existed accountId!");
+        document.put(ApiConstant.EVENT_EVENT_ID, request.getEventId());
+        Event event = dataStore.findOneInCollection(document, DataStore.COLLECTION_EVENTS);
+        if (event == null) {
+            logger.error("The event is not an existed event!");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        if (request.getType() == null) {
-            logger.error("Invalid Event type!");
+        if(!request.getAccountId().equals(event.getStarterId())){
+            logger.error("Only Event owner can update event!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -78,7 +84,7 @@ public class UpdateEventController extends BaseController {
         Event p = new Event()
                 .withEventId(request.getEventId())
                 .withEventname(request.getEventname())
-                .withStarterId(request.getStarterId())
+                .withStarterId(event.getStarterId())
                 .withType(request.getType())
                 .withStart(request.getStart())
                 .withCount(request.getCount())

@@ -13,9 +13,6 @@ properties:
   eventname:
     description: event name entered by user (repeatable)
     type: string
-  starterId:
-    description: the starter user id
-    type: string
   type:
     description: work, study, entertainment, appointment, etc
     "$ref": ../types/EventType.yaml
@@ -42,6 +39,6 @@ properties:
     type: string
 required:
   - eventId
+  - accountId
   - eventname
-  - starterId
   - type
