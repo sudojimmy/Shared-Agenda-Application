@@ -141,6 +141,25 @@ paths:
           description: "Invalid Parameter: eventId, eventname, starterId, and type cannot be null or empty"
         "404":
           description: "Not Found: target EventId not found in database"
+  deleteEvent:
+    post:
+      operationId: deleteEvent
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/DeleteEventRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/DeleteEventResponse.yaml'
+        "400":
+          description: "Invalid Parameter: eventId and accountId cannot be null or empty"
+        "404":
+          description: "Not Found: target eventId or accountId not found in database"
 # Group
   createGroup:
     post:
@@ -151,7 +170,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '../Backend/schema/src/yaml/requests/CreateGroupResponse.yaml'
+              $ref: '../Backend/schema/src/yaml/requests/CreateGroupRequest.yaml'
       responses:
         "201":
           description: Created
@@ -170,7 +189,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '../Backend/schema/src/yaml/requests/AddGroupMemberResponse.yaml'
+              $ref: '../Backend/schema/src/yaml/requests/AddGroupMemberRequest.yaml'
       responses:
         "200":
           description: Ok

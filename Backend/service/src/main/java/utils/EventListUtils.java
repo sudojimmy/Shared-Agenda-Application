@@ -22,6 +22,8 @@ public class EventListUtils {
     }
 
     public static ArrayList<Event> getEventListFromCalendar(Calendar calendar) {
+        if (calendar.getEventList().isEmpty()) { return new ArrayList<>(); }
+
         Bson filter = calendarToEventFilter(calendar);
 
         Collection<Event> collection = dataStore.findManyInCollection(filter, DataStore.COLLECTION_EVENTS);
@@ -29,6 +31,8 @@ public class EventListUtils {
     }
 
     public static ArrayList<Event> getEventListFromCalendarWithCond(Calendar calendar, Bson cond) {
+        if (calendar.getEventList().isEmpty()) { return new ArrayList<>(); }
+
         Bson filter = Filters.and(calendarToEventFilter(calendar), cond);
         Collection<Event> collection = dataStore.findManyInCollection(filter, DataStore.COLLECTION_EVENTS);
         return new ArrayList<>(collection);
