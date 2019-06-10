@@ -2,7 +2,6 @@ package controller;
 
 import com.mongodb.client.model.Filters;
 import constant.ApiConstant;
-import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
@@ -11,12 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import store.DataStore;
-import types.Account;
-import types.Calendar;
-import types.CreateEventRequest;
-import types.CreateEventResponse;
-import types.Event;
+import types.*;
 import utils.AccountUtils;
+import utils.CalendarUtils;
 
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
@@ -75,9 +71,7 @@ public class CreateEventController extends BaseController {
     }
 
     private void addEventIdToCalendar(String eventId, String calendarId) {
-        Document calendarDoc = new Document();
-        calendarDoc.put(ApiConstant.CALENDAR_CALENDAR_ID, calendarId);
-        Calendar calendar = dataStore.findOneInCollection(calendarDoc, DataStore.COLLECTION_CALENDARS);
+        Calendar calendar = CalendarUtils.getCalendar(calendarId);
         calendar.getEventList().add(eventId);
 
         Bson filter = Filters.eq(ApiConstant.CALENDAR_CALENDAR_ID, calendarId);
