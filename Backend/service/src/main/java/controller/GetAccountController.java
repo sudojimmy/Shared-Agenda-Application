@@ -30,6 +30,7 @@ public class GetAccountController extends BaseController {
 
         return new ResponseEntity<>(new GetAccountResponse()
             .withAccountId(account .getAccountId())
+            .withCalendarId(account.getCalendarId())
             .withDescription(account.getDescription())
             .withNickname(account.getNickname()),
             HttpStatus.OK);
