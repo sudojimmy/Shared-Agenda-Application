@@ -170,7 +170,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '../Backend/schema/src/yaml/requests/CreateGroupResponse.yaml'
+              $ref: '../Backend/schema/src/yaml/requests/CreateGroupRequest.yaml'
       responses:
         "201":
           description: Created
@@ -189,7 +189,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '../Backend/schema/src/yaml/requests/AddGroupMemberResponse.yaml'
+              $ref: '../Backend/schema/src/yaml/requests/AddGroupMemberRequest.yaml'
       responses:
         "200":
           description: Ok
