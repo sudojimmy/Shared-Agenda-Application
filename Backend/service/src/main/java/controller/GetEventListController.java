@@ -1,19 +1,16 @@
 package controller;
 
-import constant.ApiConstant;
-import org.bson.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import store.DataStore;
 import types.Event;
 import types.GetEventListRequest;
 import types.GetEventListResponse;
+import utils.EventListUtils;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 @RestController
 public class GetEventListController extends BaseController {
@@ -27,10 +24,7 @@ public class GetEventListController extends BaseController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Document document = new Document();
-        document.put(ApiConstant.EVENT_EVENT_NAME, request.getEventname());
-        Collection<Event> eventList = dataStore.findManyInCollection(document, DataStore.COLLECTION_EVENTS);
-
-        return new ResponseEntity<>(new GetEventListResponse().withEventList(new ArrayList<>(eventList)),HttpStatus.OK);
+        ArrayList<Event> eventList = EventListUtils.getEventListByName(request.getEventname());
+        return new ResponseEntity<>(new GetEventListResponse().withEventList(eventList),HttpStatus.OK);
     }
 }

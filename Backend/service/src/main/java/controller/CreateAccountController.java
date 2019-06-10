@@ -1,8 +1,5 @@
 package controller;
 
-import constant.ApiConstant;
-import org.bson.Document;
-import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,11 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import store.DataStore;
 import types.Account;
-import types.Calendar;
 import types.CreateAccountRequest;
 import types.CreateAccountResponse;
-
-import java.util.ArrayList;
+import utils.AccountUtils;
+import utils.CalendarUtils;
 
 
 /* USEFUL DOCUMENTS
@@ -44,16 +40,12 @@ public class CreateAccountController extends BaseController {
         }
 
         // Step II: check restriction (conflict, or naming rules etc.)
-        Document document = new Document();
-        document.put(ApiConstant.ACCOUNT_ACCOUNT_ID, request.getAccountId());
-        if (dataStore.existInCollection(document, DataStore.COLLECTION_ACCOUNTS)) {
+        if (AccountUtils.checkAccountExist(request.getAccountId())) {
             logger.error("AccountId Already Existed!");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-        String calendarId = new ObjectId().toString();
-        Calendar calendar = new Calendar().withCalendarId(calendarId).withEventList(new ArrayList<>());
-        dataStore.insertToCollection(calendar, DataStore.COLLECTION_CALENDARS);
+        String calendarId = CalendarUtils.createCalendarToDatabase().getCalendarId();
 
         // Step III: write to Database
         Account p = new Account()

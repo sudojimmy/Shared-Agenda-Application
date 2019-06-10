@@ -1,16 +1,14 @@
 package controller;
 
-import constant.ApiConstant;
-import org.bson.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import store.DataStore;
 import types.Account;
 import types.GetAccountRequest;
 import types.GetAccountResponse;
+import utils.AccountUtils;
 
 @RestController
 public class GetAccountController extends BaseController {
@@ -24,9 +22,7 @@ public class GetAccountController extends BaseController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Document document = new Document();
-        document.put(ApiConstant.ACCOUNT_ACCOUNT_ID, request.getAccountId());
-        Account account = dataStore.findOneInCollection(document, DataStore.COLLECTION_ACCOUNTS);
+        Account account = AccountUtils.getAccount(request.getAccountId());
         if (account  == null) {
             logger.error("Account Id Not Found!");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

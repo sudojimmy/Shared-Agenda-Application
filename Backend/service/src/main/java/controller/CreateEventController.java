@@ -16,6 +16,7 @@ import types.Calendar;
 import types.CreateEventRequest;
 import types.CreateEventResponse;
 import types.Event;
+import utils.AccountUtils;
 
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
@@ -43,16 +44,13 @@ public class CreateEventController extends BaseController {
         }
 
         // Step II: check restriction (conflict, or naming rules etc.)
-        Document document = new Document();
-        document.put(ApiConstant.ACCOUNT_ACCOUNT_ID, request.getStarterId());
-        Account account = dataStore.findOneInCollection(document, DataStore.COLLECTION_ACCOUNTS);
+        Account account = AccountUtils.getAccount(request.getStarterId());
         if (account == null) {
             logger.error("StarterId is not Existed!");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         // Step III: write to Database
-
         String eventId = new ObjectId().toString();
 
         addEventIdToCalendar(eventId, account.getCalendarId());
