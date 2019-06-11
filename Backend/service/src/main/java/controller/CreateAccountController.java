@@ -1,8 +1,6 @@
 package controller;
 
 import constant.ApiConstant;
-import org.bson.Document;
-import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,11 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import store.DataStore;
 import types.Account;
-import types.Calendar;
 import types.CreateAccountRequest;
 import types.CreateAccountResponse;
-
-import java.util.ArrayList;
+import utils.AccountUtils;
+import utils.CalendarUtils;
 
 
 /* USEFUL DOCUMENTS
@@ -34,26 +31,16 @@ public class CreateAccountController extends BaseController {
         logger.info("CreateAccount: " + request);
 
         // Step I: check parameters TODO move to parent class, need a better solution
-        if (request.getNickname() == null || request.getNickname().isEmpty()) {
-            logger.error("Invalid Nickname!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
-            logger.error("Invalid AccountId!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        assertPropertyValid(request.getNickname(), ApiConstant.ACCOUNT_NICKNAME);
+        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         // Step II: check restriction (conflict, or naming rules etc.)
-        Document document = new Document();
-        document.put(ApiConstant.ACCOUNT_ACCOUNT_ID, request.getAccountId());
-        if (dataStore.existInCollection(document, DataStore.COLLECTION_ACCOUNTS)) {
+        if (AccountUtils.checkAccountExist(request.getAccountId())) {
             logger.error("AccountId Already Existed!");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-        String calendarId = new ObjectId().toString();
-        Calendar calendar = new Calendar().withCalendarId(calendarId).withEventList(new ArrayList<>());
-        dataStore.insertToCollection(calendar, DataStore.COLLECTION_CALENDARS);
+        String calendarId = CalendarUtils.createCalendarToDatabase().getCalendarId();
 
         // Step III: write to Database
         Account p = new Account()
