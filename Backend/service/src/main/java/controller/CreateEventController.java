@@ -1,21 +1,15 @@
 package controller;
 
-import com.mongodb.client.model.Filters;
-import constant.ApiConstant;
-import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import store.DataStore;
-import types.*;
+import types.Account;
+import types.CreateEventRequest;
+import types.CreateEventResponse;
 import utils.AccountUtils;
-import utils.CalendarUtils;
-
-import static com.mongodb.client.model.Updates.combine;
-import static com.mongodb.client.model.Updates.set;
+import utils.EventListUtils;
 
 
 @RestController
@@ -47,37 +41,24 @@ public class CreateEventController extends BaseController {
         }
 
         // Step III: write to Database
-        String eventId = new ObjectId().toString();
+        String eventId = EventListUtils.createEventToDatabase(
+                null,
+                request.getEventname(),
+                request.getStarterId(),
+                request.getType(),
+                request.getStart(),
+                request.getCount(),
+                request.getDate(),
+                request.getLocation(),
+                request.getRepeat(),
+                request.getState(),
+                request.getDescription()
+        );
 
-        addEventIdToCalendar(eventId, account.getCalendarId());
-
-        Event p = new Event()
-                .withEventId(eventId)
-                .withEventname(request.getEventname())
-                .withStarterId(request.getStarterId())
-                .withType(request.getType())
-                .withStart(request.getStart())
-                .withCount(request.getCount())
-                .withDate(request.getDate())
-                .withLocation(request.getLocation())
-                .withRepeat(request.getRepeat())
-                .withState(request.getState())
-                .withDescription(request.getDescription());
-        dataStore.insertToCollection(p, DataStore.COLLECTION_EVENTS);
+        EventListUtils.addEventIdToCalendar(eventId, account.getCalendarId());
 
         // Step IV: create response object
         return new ResponseEntity<>(new CreateEventResponse().withEventId(eventId),
                 HttpStatus.CREATED);
-    }
-
-    private void addEventIdToCalendar(String eventId, String calendarId) {
-        Calendar calendar = CalendarUtils.getCalendar(calendarId);
-        calendar.getEventList().add(eventId);
-
-        Bson filter = Filters.eq(ApiConstant.CALENDAR_CALENDAR_ID, calendarId);
-        Bson query = combine(
-            set(ApiConstant.CALENDAR_EVENT_LIST, calendar.getEventList()));
-
-        dataStore.updateInCollection(filter, query, DataStore.COLLECTION_CALENDARS);
     }
 }

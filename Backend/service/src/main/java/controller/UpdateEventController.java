@@ -1,23 +1,16 @@
 package controller;
 
-import com.mongodb.client.model.Filters;
-import constant.ApiConstant;
-import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import store.DataStore;
+import types.Event;
 import types.UpdateEventRequest;
 import types.UpdateEventResponse;
-import types.Event;
+import utils.EventListUtils;
 
 // TODO find a way to properly update
-import org.bson.types.ObjectId;
-import static com.mongodb.client.model.Updates.combine;
-import static com.mongodb.client.model.Updates.set;
 
 
 @RestController
@@ -33,7 +26,7 @@ public class UpdateEventController extends BaseController {
         }
 
         if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
-            logger.error("Invalid EventId!");
+            logger.error("Invalid AccountId!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -48,9 +41,7 @@ public class UpdateEventController extends BaseController {
         }
 
         // check startId is a valid accountId
-        Document document = new Document();
-        document.put(ApiConstant.EVENT_EVENT_ID, request.getEventId());
-        Event event = dataStore.findOneInCollection(document, DataStore.COLLECTION_EVENTS);
+        Event event = EventListUtils.getEventListById(request.getEventId());
         if (event == null) {
             logger.error("The event is not an existed event!");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -60,8 +51,6 @@ public class UpdateEventController extends BaseController {
             logger.error("Only Event owner can update event!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        Bson filter = Filters.eq(ApiConstant.EVENT_EVENT_ID, request.getEventId());
 
         // TODO find a way to properly update
 /*        Bson query = combine(
@@ -76,24 +65,24 @@ public class UpdateEventController extends BaseController {
                 set(ApiConstant.EVENT_STATE, request.getState()),
                 set(ApiConstant.EVENT_DESCRIPTION, request.getDescription()));*/
 
-        if (!dataStore.delete(filter, DataStore.COLLECTION_EVENTS)){
+        if (!EventListUtils.deleteEvent(request.getEventId())){
             logger.error("Event Id Not Found!");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Event p = new Event()
-                .withEventId(request.getEventId())
-                .withEventname(request.getEventname())
-                .withStarterId(event.getStarterId())
-                .withType(request.getType())
-                .withStart(request.getStart())
-                .withCount(request.getCount())
-                .withDate(request.getDate())
-                .withLocation(request.getLocation())
-                .withRepeat(request.getRepeat())
-                .withState(request.getState())
-                .withDescription(request.getDescription());
-        dataStore.insertToCollection(p, DataStore.COLLECTION_EVENTS);
+        EventListUtils.createEventToDatabase(
+                request.getEventId(),
+                request.getEventname(),
+                event.getStarterId(),
+                request.getType(),
+                request.getStart(),
+                request.getCount(),
+                request.getDate(),
+                request.getLocation(),
+                request.getRepeat(),
+                request.getState(),
+                request.getDescription()
+        );
 
         // TODO find a way to properly update
         /*if (!dataStore.updateInCollection(filter, query, DataStore.COLLECTION_EVENTS)) {

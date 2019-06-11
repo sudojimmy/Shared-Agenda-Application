@@ -6,18 +6,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import types.Event;
-import types.GetEventListRequest;
-import types.GetEventListResponse;
+import types.GetEventListByNameRequest;
+import types.GetEventListByNameResponse;
 import utils.EventListUtils;
 
 import java.util.ArrayList;
 
 @RestController
-public class GetEventListController extends BaseController {
+public class GetEventListByNameController extends BaseController {
 
-    @PostMapping("/getEventList")
-    public ResponseEntity<GetEventListResponse> handle(@RequestBody GetEventListRequest request) {
-        logger.info("GetEventList: " + request);
+    @PostMapping("/getEventListByName")
+    public ResponseEntity<GetEventListByNameResponse> handle(@RequestBody GetEventListByNameRequest request) {
+        logger.info("GetEventListByName: " + request);
 
         if (request.getEventname() == null || request.getEventname().isEmpty()) {
             logger.error("Invalid event name!");
@@ -25,6 +25,6 @@ public class GetEventListController extends BaseController {
         }
 
         ArrayList<Event> eventList = EventListUtils.getEventListByName(request.getEventname());
-        return new ResponseEntity<>(new GetEventListResponse().withEventList(eventList),HttpStatus.OK);
+        return new ResponseEntity<>(new GetEventListByNameResponse().withEventList(eventList),HttpStatus.OK);
     }
 }
