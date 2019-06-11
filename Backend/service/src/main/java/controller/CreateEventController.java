@@ -1,5 +1,6 @@
 package controller;
 
+import constant.ApiConstant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,25 +21,13 @@ public class CreateEventController extends BaseController {
         logger.info("CreateEvent: " + request);
 
         // Step I: check parameters
-        if (request.getEventname() == null || request.getEventname().isEmpty()) {
-            logger.error("Invalid Eventname!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        if (request.getStarterId() == null || request.getStarterId().isEmpty()) {
-            logger.error("Invalid StarterId!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        if (request.getType() == null) {
-            logger.error("Invalid Type!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        assertPropertyValid(request.getEventname(), ApiConstant.EVENT_EVENT_NAME);
+        assertPropertyValid(request.getStarterId(), ApiConstant.EVENT_STARTER_ID);
+        assertPropertyValid(request.getType(), ApiConstant.EVENT_EVENT_NAME);
 
         // Step II: check restriction (conflict, or naming rules etc.)
         Account account = AccountUtils.getAccount(request.getStarterId());
-        if (account == null) {
-            logger.error("StarterId is not Existed!");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        assertDatabaseObjectFound(account, ApiConstant.EVENT_STARTER_ID);
 
         // Step III: write to Database
         String eventId = EventListUtils.createEventToDatabase(

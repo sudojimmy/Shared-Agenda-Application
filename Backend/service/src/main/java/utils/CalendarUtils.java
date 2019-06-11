@@ -18,7 +18,7 @@ public class CalendarUtils {
         return calendar;
     }
 
-    public static Calendar getCalendar(String calendarId) {
+    public static Calendar getCalendar(final String calendarId) {
         Document document = new Document();
         document.put(ApiConstant.CALENDAR_CALENDAR_ID, calendarId);
         return dataStore.findOneInCollection(document, DataStore.COLLECTION_CALENDARS);

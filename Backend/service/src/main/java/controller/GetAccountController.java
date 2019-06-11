@@ -1,5 +1,6 @@
 package controller;
 
+import constant.ApiConstant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,16 +18,10 @@ public class GetAccountController extends BaseController {
     public ResponseEntity<GetAccountResponse> handle(@RequestBody GetAccountRequest request) {
         logger.info("GetAccount: " + request);
 
-        if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
-            logger.error("Invalid AccountId!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         Account account = AccountUtils.getAccount(request.getAccountId());
-        if (account  == null) {
-            logger.error("Account Id Not Found!");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         return new ResponseEntity<>(new GetAccountResponse()
             .withAccountId(account .getAccountId())

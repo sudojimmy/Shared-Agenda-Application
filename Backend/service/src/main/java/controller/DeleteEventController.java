@@ -1,5 +1,6 @@
 package controller;
 
+import constant.ApiConstant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,28 +20,15 @@ public class DeleteEventController extends BaseController {
     public ResponseEntity<DeleteEventResponse> handle(@RequestBody DeleteEventRequest request) {
         logger.info("DeleteEvent: " + request);
 
-        if (request.getEventId() == null || request.getEventId().isEmpty()) {
-            logger.error("Invalid EventId!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
-            logger.error("Invalid AccountId!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        assertPropertyValid(request.getEventId(), ApiConstant.EVENT_EVENT_ID);
+        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         // check accountId is a valid accountId
         Account account = AccountUtils.getAccount(request.getAccountId());
-        if (account == null) {
-            logger.error("accountId(caller) is not an existed accountId!");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         Event event = EventListUtils.getEventListById(request.getEventId());
-        if (event  == null) {
-            logger.error("Event Id Not Found!");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        assertDatabaseObjectFound(event, ApiConstant.EVENT_EVENT_ID);
 
         if(request.getAccountId().equals(event.getStarterId())){
             // delete the event from DB

@@ -1,5 +1,6 @@
 package controller;
 
+import constant.ApiConstant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,16 +19,10 @@ public class GetCalendarEventListController extends BaseController {
     public ResponseEntity<GetCalendarEventListResponse> handle(@RequestBody GetCalendarEventListRequest request) {
         logger.info("getCalendarEventList: " + request);
 
-        if (request.getCalendarId() == null || request.getCalendarId().isEmpty()) {
-            logger.error("Invalid calendar Id!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        assertPropertyValid(request.getCalendarId(), ApiConstant.CALENDAR_CALENDAR_ID);
 
         Calendar calendar = CalendarUtils.getCalendar(request.getCalendarId());
-        if (calendar == null) {
-            logger.error("Calendar Id Not Exist!");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        assertDatabaseObjectFound(calendar, ApiConstant.CALENDAR_CALENDAR_ID);
 
         return new ResponseEntity<>(new GetCalendarEventListResponse()
             .withEventList(EventListUtils.getEventListFromCalendar(calendar)),HttpStatus.OK);

@@ -23,14 +23,8 @@ public class UpdateAccountController extends BaseController {
     public ResponseEntity<UpdateAccountResponse> handle(@RequestBody UpdateAccountRequest request) {
         logger.info("UpdateAccount: " + request);
 
-        if (request.getNickname() == null || request.getNickname().isEmpty()) {
-            logger.error("Invalid Nickname!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
-            logger.error("Invalid AccountId!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        assertPropertyValid(request.getNickname(), ApiConstant.ACCOUNT_NICKNAME);
+        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         Bson filter = Filters.eq(ApiConstant.ACCOUNT_ACCOUNT_ID, request.getAccountId());
         Bson query = combine(

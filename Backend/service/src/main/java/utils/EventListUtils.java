@@ -42,19 +42,19 @@ public class EventListUtils {
         return eventId;
     }
 
-    public static Event getEventListById(String eventId) {
+    public static Event getEventListById(final String eventId) {
         Document document = new Document();
         document.put(ApiConstant.EVENT_EVENT_ID, eventId);
         return dataStore.findOneInCollection(document, DataStore.COLLECTION_EVENTS);
     }
 
-    public static ArrayList<Event> getEventListByName(String eventname) {
+    public static ArrayList<Event> getEventListByName(final String eventname) {
         Document document = new Document();
         document.put(ApiConstant.EVENT_EVENT_NAME, eventname);
         return new ArrayList<>(dataStore.findManyInCollection(document, DataStore.COLLECTION_EVENTS));
     }
 
-    public static ArrayList<Event> getEventListFromCalendar(Calendar calendar) {
+    public static ArrayList<Event> getEventListFromCalendar(final Calendar calendar) {
         if (calendar.getEventList().isEmpty()) { return new ArrayList<>(); }
 
         Bson filter = calendarToEventFilter(calendar);
@@ -63,7 +63,7 @@ public class EventListUtils {
         return new ArrayList<>(collection);
     }
 
-    public static ArrayList<Event> getEventListFromCalendarWithCond(Calendar calendar, Bson cond) {
+    public static ArrayList<Event> getEventListFromCalendarWithCond(final Calendar calendar, final Bson cond) {
         if (calendar.getEventList().isEmpty()) { return new ArrayList<>(); }
 
         Bson filter = Filters.and(calendarToEventFilter(calendar), cond);
@@ -71,12 +71,12 @@ public class EventListUtils {
         return new ArrayList<>(collection);
     }
 
-    public static boolean deleteEvent(String eventId) {
+    public static boolean deleteEvent(final String eventId) {
         Bson filter = Filters.eq(ApiConstant.EVENT_EVENT_ID, eventId);
         return dataStore.delete(filter, DataStore.COLLECTION_EVENTS);
     }
 
-    public static void addEventIdToCalendar(String eventId, String calendarId) {
+    public static void addEventIdToCalendar(final String eventId, final String calendarId) {
         Calendar calendar = CalendarUtils.getCalendar(calendarId);
         calendar.getEventList().add(eventId);
 
@@ -87,7 +87,7 @@ public class EventListUtils {
         dataStore.updateInCollection(filter, query, DataStore.COLLECTION_CALENDARS);
     }
 
-    public static void deleteEventIdFromCalendar(String eventId, String calendarId) {
+    public static void deleteEventIdFromCalendar(final String eventId, final String calendarId) {
         Calendar calendar = CalendarUtils.getCalendar(calendarId);
         calendar.getEventList().remove(eventId);
 
@@ -97,7 +97,7 @@ public class EventListUtils {
         dataStore.updateInCollection(filter, query, DataStore.COLLECTION_CALENDARS);
     }
 
-    private static Bson calendarToEventFilter(Calendar calendar) {
+    private static Bson calendarToEventFilter(final Calendar calendar) {
         ArrayList<Bson>loFilters = new ArrayList<>();
         calendar.getEventList().forEach(e -> loFilters.add(Filters.eq(ApiConstant.EVENT_EVENT_ID, e)));
         return Filters.or(loFilters);

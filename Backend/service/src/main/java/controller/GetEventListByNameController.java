@@ -1,5 +1,6 @@
 package controller;
 
+import constant.ApiConstant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,10 +20,7 @@ public class GetEventListByNameController extends BaseController {
     public ResponseEntity<GetEventListByNameResponse> handle(@RequestBody GetEventListByNameRequest request) {
         logger.info("GetEventListByName: " + request);
 
-        if (request.getEventname() == null || request.getEventname().isEmpty()) {
-            logger.error("Invalid event name!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        assertPropertyValid(request.getEventname(), ApiConstant.EVENT_EVENT_NAME);
 
         ArrayList<Event> eventList = EventListUtils.getEventListByName(request.getEventname());
         return new ResponseEntity<>(new GetEventListByNameResponse().withEventList(eventList),HttpStatus.OK);

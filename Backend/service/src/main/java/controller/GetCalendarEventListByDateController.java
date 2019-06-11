@@ -24,17 +24,11 @@ public class GetCalendarEventListByDateController extends BaseController {
     public ResponseEntity<GetCalendarEventListByDateResponse> handle(@RequestBody GetCalendarEventListByDateRequest request) {
         logger.info("getCalendarEventListByDate: " + request);
 
-        if (request.getCalendarId() == null || request.getCalendarId().isEmpty()) {
-            logger.error("Invalid calendar Id!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        assertPropertyValid(request.getCalendarId(), ApiConstant.CALENDAR_CALENDAR_ID);
+        assertPropertyValid(request.getDate(), ApiConstant.EVENT_DATE);
 
         Calendar calendar = CalendarUtils.getCalendar(request.getCalendarId());
-        if (calendar == null) {
-            logger.error("Calendar Id Not Exist!");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
+        assertDatabaseObjectFound(calendar, ApiConstant.CALENDAR_CALENDAR_ID);
 
         Bson dateFilter = Filters.eq(ApiConstant.EVENT_DATE, request.getDate());
         ArrayList<Event> eventList = EventListUtils.getEventListFromCalendarWithCond(calendar, dateFilter);

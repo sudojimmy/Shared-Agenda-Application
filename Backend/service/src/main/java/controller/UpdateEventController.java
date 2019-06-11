@@ -1,5 +1,6 @@
 package controller;
 
+import constant.ApiConstant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,32 +21,14 @@ public class UpdateEventController extends BaseController {
     public ResponseEntity<UpdateEventResponse> handle(@RequestBody UpdateEventRequest request) {
         logger.info("UpdateEvent: " + request);
 
-        if (request.getEventId() == null || request.getEventId().isEmpty()) {
-            logger.error("Invalid EventId!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
-            logger.error("Invalid AccountId!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (request.getEventname() == null || request.getEventname().isEmpty()) {
-            logger.error("Invalid Event Name!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (request.getType() == null) {
-            logger.error("Invalid Event type!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        assertPropertyValid(request.getEventId(), ApiConstant.EVENT_EVENT_ID);
+        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
+        assertPropertyValid(request.getEventname(), ApiConstant.EVENT_EVENT_NAME);
+        assertPropertyValid(request.getType(), ApiConstant.EVENT_TYPE);
 
         // check startId is a valid accountId
         Event event = EventListUtils.getEventListById(request.getEventId());
-        if (event == null) {
-            logger.error("The event is not an existed event!");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        assertDatabaseObjectFound(event, ApiConstant.EVENT_TYPE);
 
         if(!request.getAccountId().equals(event.getStarterId())){
             logger.error("Only Event owner can update event!");

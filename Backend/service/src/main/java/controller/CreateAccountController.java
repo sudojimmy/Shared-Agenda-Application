@@ -1,5 +1,6 @@
 package controller;
 
+import constant.ApiConstant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,14 +31,8 @@ public class CreateAccountController extends BaseController {
         logger.info("CreateAccount: " + request);
 
         // Step I: check parameters TODO move to parent class, need a better solution
-        if (request.getNickname() == null || request.getNickname().isEmpty()) {
-            logger.error("Invalid Nickname!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
-            logger.error("Invalid AccountId!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        assertPropertyValid(request.getNickname(), ApiConstant.ACCOUNT_NICKNAME);
+        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         // Step II: check restriction (conflict, or naming rules etc.)
         if (AccountUtils.checkAccountExist(request.getAccountId())) {
