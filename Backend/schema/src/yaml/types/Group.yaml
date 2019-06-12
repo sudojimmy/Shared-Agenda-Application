@@ -4,7 +4,7 @@ description: A group of user accounts
 type: object
 additionalProperties: false
 properties:
-    _id:
+    groupId:
         description: group id
         type: string
     name:

@@ -28,12 +28,12 @@ import static com.mongodb.client.model.Updates.set;
 @RestController
 public class AddGroupMemberController extends BaseController {
 
-    @PostMapping("/Group/AddMember")
+    @PostMapping("/group/addMember")
     public ResponseEntity<AddGroupMemberResponse> handle(@RequestBody AddGroupMemberRequest request) {
         logger.info("AddGroupMember: " + request);
 
         // Step I: check parameters TODO move to parent class, need a better solution
-        if (request.get_id() == null || request.get_id().isEmpty()) {
+        if (request.getGroupId() == null || request.getGroupId().isEmpty()) {
             logger.error("Invalid group!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -51,14 +51,6 @@ public class AddGroupMemberController extends BaseController {
 
         // Step II: check restriction (conflict, or naming rules etc.)
         // check if group exist
-        ObjectId groupId =new ObjectId(request.get_id());
-        Document doc = new Document();
-        doc.put(ApiConstant.GROUP_ID, groupId);
-        if (!dataStore.existInCollection(doc, DataStore.COLLECTION_GROUPS)) {
-            logger.error("groupId does not exist");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
 
         List<String> addMembers = request.getMembers();
         List<String> missingMembers = new ArrayList<String>();
@@ -70,10 +62,17 @@ public class AddGroupMemberController extends BaseController {
             }
         }
 
-        if (missingMembers.size()>=0) {
-            return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(request.get_id())
+        if (missingMembers.size()>0) {
+            return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(request.getGroupId())
             .withMembers(missingMembers),
             HttpStatus.NOT_FOUND);
+        }
+
+        Document doc = new Document();
+        doc.put(ApiConstant.GROUP_ID, request.getGroupId());
+        if (!dataStore.existInCollection(doc, DataStore.COLLECTION_GROUPS)) {
+            logger.error("groupId does not exist");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         Group group = dataStore.findOneInCollection(doc, DataStore.COLLECTION_GROUPS);
@@ -83,14 +82,14 @@ public class AddGroupMemberController extends BaseController {
         Set<String> set = new HashSet<String>(existedMembers);
         List<String> updateMembers = new ArrayList<String>(set); 
 
-        Bson filter = Filters.eq(ApiConstant.GROUP_ID, groupId);
+        Bson filter = Filters.eq(ApiConstant.GROUP_ID, request.getGroupId());
         Bson query = combine(
             set(ApiConstant.GROUP_MEMBERS, updateMembers));
 
         dataStore.updateInCollection(filter, query, DataStore.COLLECTION_GROUPS);
 
         // Step IV: create response object
-        return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(request.get_id()),
+        return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(request.getGroupId()),
             HttpStatus.OK);
     }
 }

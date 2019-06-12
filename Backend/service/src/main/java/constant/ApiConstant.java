@@ -24,6 +24,6 @@ public class ApiConstant {
     public static final String EVENT_DESCRIPTION = "description";
 
     // Group
-    public static final String GROUP_ID = "_id";
+    public static final String GROUP_ID = "groupId";
     public static final String GROUP_MEMBERS = "members";
 }
