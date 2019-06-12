@@ -7,7 +7,7 @@ properties:
     name:
         description: group name
         type: string
-    ownerid:
+    ownerId:
         description: group owner
         type: string
     description:
@@ -20,5 +20,5 @@ properties:
             type: string
 required:
     - name
-    - ownerid
+    - ownerId
     - members

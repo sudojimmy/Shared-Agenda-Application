@@ -4,10 +4,10 @@ description: add group member request
 type: object
 additionalProperties: false
 properties:
-    _id:
+    groupId:
         description: group id
         type: string
-    ownerid:
+    ownerId:
         description: group owner
         type: string
     members:
@@ -16,5 +16,5 @@ properties:
         items:
             type: string
 required:
-    - _id
+    - groupId
     - members
