@@ -37,14 +37,14 @@ public class CreateGroupController extends BaseController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        if (request.getOwnerid()== null || request.getOwnerid().isEmpty()) {
+        if (request.getOwnerId()== null || request.getOwnerId().isEmpty()) {
             logger.error("Invalid ownerid");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         // Step II: check restriction (conflict, or naming rules etc.)
         List<String> members = request.getMembers();
-        String owner = request.getOwnerid();
+        String owner = request.getOwnerId();
 
         if (!members.contains(owner)) {
             members.add(owner);
@@ -65,7 +65,7 @@ public class CreateGroupController extends BaseController {
         // Step III: write to Database
         ObjectId groupId = new ObjectId();
         String id = groupId.toString();
-        Group p = new Group().withName(request.getName()).with_id(id)
+        Group p = new Group().withName(request.getName()).withGroupId(id)
         .withMembers(members);      
         dataStore.insertToCollection(p, DataStore.COLLECTION_GROUPS);
 

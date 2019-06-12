@@ -9,7 +9,6 @@ import com.mongodb.client.model.Filters;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +32,7 @@ public class AddGroupMemberController extends BaseController {
         logger.info("AddGroupMember: " + request);
 
         // Step I: check parameters TODO move to parent class, need a better solution
-        if (request.get_id() == null || request.get_id().isEmpty()) {
+        if (request.getGroupId() == null || request.getGroupId().isEmpty()) {
             logger.error("Invalid group!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -51,7 +50,7 @@ public class AddGroupMemberController extends BaseController {
 
         // Step II: check restriction (conflict, or naming rules etc.)
         // check if group exist
-        ObjectId groupId =new ObjectId(request.get_id());
+        String groupId = request.getGroupId();
         Document doc = new Document();
         doc.put(ApiConstant.GROUP_ID, groupId);
         if (!dataStore.existInCollection(doc, DataStore.COLLECTION_GROUPS)) {
@@ -70,8 +69,8 @@ public class AddGroupMemberController extends BaseController {
             }
         }
 
-        if (missingMembers.size()>=0) {
-            return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(request.get_id())
+        if (missingMembers.size()>0) {
+            return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(groupId)
             .withMembers(missingMembers),
             HttpStatus.NOT_FOUND);
         }
@@ -90,7 +89,7 @@ public class AddGroupMemberController extends BaseController {
         dataStore.updateInCollection(filter, query, DataStore.COLLECTION_GROUPS);
 
         // Step IV: create response object
-        return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(request.get_id()),
+        return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(groupId),
             HttpStatus.OK);
     }
 }
