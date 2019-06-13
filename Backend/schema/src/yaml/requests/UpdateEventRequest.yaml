@@ -37,8 +37,12 @@ properties:
   description:
     description: event description
     type: string
+  public:
+    description: true for Public, o/w false
+    type: boolean
 required:
   - eventId
   - accountId
   - eventname
   - type
+  - public

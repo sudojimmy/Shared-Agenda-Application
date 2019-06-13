@@ -160,6 +160,25 @@ paths:
           description: "Invalid Parameter: eventId and accountId cannot be null or empty"
         "404":
           description: "Not Found: target eventId or accountId not found in database"
+  joinEvent:
+    post:
+      operationId: joinEvent
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/JoinEventRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/JoinEventResponse.yaml'
+        "400":
+          description: "Invalid Parameter: eventId, accountId cannot be null or empty, public need be true"
+        "404":
+          description: "Not Found: target eventId or accountId not found in database"
 # Group
   createGroup:
     post:

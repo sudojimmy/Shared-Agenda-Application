@@ -20,7 +20,7 @@ public class EventListUtils {
     public static String createEventToDatabase(String eventId, final String eventname, final String starterId,
                                                final Event.Type type, final int start, final int count,
                                                final String date, final String location, final Event.Repeat repeat,
-                                               final Event.State state, final String description) {
+                                               final Event.State state, final String description, boolean isPublic) {
         if (eventId == null) {
             eventId = new ObjectId().toString();
         }
