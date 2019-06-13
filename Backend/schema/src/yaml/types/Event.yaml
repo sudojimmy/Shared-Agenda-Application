@@ -37,11 +37,11 @@ properties:
   description:
     description: event description
     type: string
-  isPublic:
+  public:
     description: true for Public, o/w false
     type: boolean
 required:
   - eventname
   - starterId
   - type
-  - isPublic
+  - public

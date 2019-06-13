@@ -65,7 +65,7 @@ public class UpdateEventController extends BaseController {
                 request.getRepeat(),
                 request.getState(),
                 request.getDescription(),
-                request.isIsPublic()
+                request.isPublic()
         );
 
         // TODO find a way to properly update

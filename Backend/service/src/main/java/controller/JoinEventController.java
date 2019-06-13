@@ -28,7 +28,7 @@ public class JoinEventController extends BaseController {
         Event event = EventListUtils.getEventListById(request.getEventId());
         assertDatabaseObjectFound(event, ApiConstant.EVENT_EVENT_ID);
 
-        if(!event.isIsPublic()){
+        if(!event.isPublic()){
             invalidProperty("Can only join public event");
         }
 
