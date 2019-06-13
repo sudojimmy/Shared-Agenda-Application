@@ -41,7 +41,8 @@ public class CreateEventController extends BaseController {
                 request.getLocation(),
                 request.getRepeat(),
                 request.getState(),
-                request.getDescription()
+                request.getDescription(),
+                request.isIsPublic()
         );
 
         EventListUtils.addEventIdToCalendar(eventId, account.getCalendarId());

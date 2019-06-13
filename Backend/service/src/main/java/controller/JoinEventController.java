@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import types.*;
 import utils.AccountUtils;
 import utils.EventListUtils;
@@ -26,6 +27,10 @@ public class JoinEventController extends BaseController {
 
         Event event = EventListUtils.getEventListById(request.getEventId());
         assertDatabaseObjectFound(event, ApiConstant.EVENT_EVENT_ID);
+
+        if(!event.isIsPublic()){
+            invalidProperty("Can only join public event");
+        }
 
         EventListUtils.addEventIdToCalendar(request.getEventId(), account.getCalendarId());
 

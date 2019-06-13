@@ -28,7 +28,7 @@ public abstract class BaseController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, errMsg);
     }
 
-    private void invalidProperty(final String propName) {
+    public void invalidProperty(final String propName) {
         String errMsg = String.format("Invalid %s!", propName);
         logger.error(errMsg);
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errMsg);
