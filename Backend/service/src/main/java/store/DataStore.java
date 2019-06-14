@@ -28,9 +28,9 @@ public class DataStore {
     public static final String COLLECTION_GROUPS = "GROUPS";
     public static final String COLLECTION_EVENTS = "EVENTS";
     public static final String COLLECTION_CALENDARS = "CALENDARS";
-    public static final String COLLECTION_MESSAGEQUEUES = "MESSAGEQUEUES";
+    public static final String COLLECTION_MESSAGEQUEUES = "MESSAGE_QUEUES";
     public static final String COLLECTION_MESSAGES = "MESSAGES";
-    public static final String COLLECTION_EVENTMESSAGES = "EVENTMESSAGES";
+    public static final String COLLECTION_EVENTMESSAGES = "EVENT_MESSAGES";
     public static final String DEFAULT_MONGODB_CONNECTION_STRING = "mongodb://localhost:27017";
     public static final String MONGODB_CONNECTION_STRING_SYS_ENV = "AGENDA_APP_DATABASE_CONN_STR";
 

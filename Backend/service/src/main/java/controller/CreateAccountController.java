@@ -46,16 +46,17 @@ public class CreateAccountController extends BaseController {
 
         // Step III: write to Database
         Account p = new Account()
-            .withNickname(request.getNickname())
-            .withAccountId(request.getAccountId())
-            .withDescription(request.getDescription())
-            .withCalendarId(calendarId).withMessageQueueId(messageQueueId);
+                .withNickname(request.getNickname())
+                .withAccountId(request.getAccountId())
+                .withDescription(request.getDescription())
+                .withCalendarId(calendarId)
+                .withMessageQueueId(messageQueueId);
         dataStore.insertToCollection(p, DataStore.COLLECTION_ACCOUNTS);
 
         // Step IV: create response object
         return new ResponseEntity<>(new CreateAccountResponse()
-            .withAccountId(request.getAccountId())
-            .withCalendarId(calendarId),
-            HttpStatus.CREATED);
+                .withAccountId(request.getAccountId())
+                .withCalendarId(calendarId),
+                HttpStatus.CREATED);
     }
 }

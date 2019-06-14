@@ -37,6 +37,8 @@ public class InviteEventController extends BaseController {
             invalidProperty("sendId need equal to starterId to invite");
         }
 
+        // TODO check friendship
+
         String messageId = EventMessageUtils.createEventMessageToDatabase(
                 null,
                 ER.getEventname(),
