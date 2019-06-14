@@ -12,6 +12,7 @@ import types.CreateAccountRequest;
 import types.CreateAccountResponse;
 import utils.AccountUtils;
 import utils.CalendarUtils;
+import utils.MessageQueueUtils;
 
 
 /* USEFUL DOCUMENTS
@@ -41,19 +42,21 @@ public class CreateAccountController extends BaseController {
         }
 
         String calendarId = CalendarUtils.createCalendarToDatabase().getCalendarId();
+        String messageQueueId = MessageQueueUtils.createMessageQueueToDatabase().getMessageQueueId();
 
         // Step III: write to Database
         Account p = new Account()
-            .withNickname(request.getNickname())
-            .withAccountId(request.getAccountId())
-            .withDescription(request.getDescription())
-            .withCalendarId(calendarId);
+                .withNickname(request.getNickname())
+                .withAccountId(request.getAccountId())
+                .withDescription(request.getDescription())
+                .withCalendarId(calendarId)
+                .withMessageQueueId(messageQueueId);
         dataStore.insertToCollection(p, DataStore.COLLECTION_ACCOUNTS);
 
         // Step IV: create response object
         return new ResponseEntity<>(new CreateAccountResponse()
-            .withAccountId(request.getAccountId())
-            .withCalendarId(calendarId),
-            HttpStatus.CREATED);
+                .withAccountId(request.getAccountId())
+                .withCalendarId(calendarId),
+                HttpStatus.CREATED);
     }
 }

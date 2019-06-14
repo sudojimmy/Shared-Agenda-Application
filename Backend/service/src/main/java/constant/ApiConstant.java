@@ -27,4 +27,20 @@ public class ApiConstant {
     // Group
     public static final String GROUP_ID = "groupId";
     public static final String GROUP_MEMBERS = "members";
+
+    // MessageQueue
+    public static final String MESSAGEQUEUE_MESSAGEQUEUE_ID = "messageQueueId";
+    public static final String MESSAGEQUEUE_MESSAGE_LIST = "messageList";
+
+    // EventMessage
+    public static final String EVENT_SENDER_ID = "senderId";
+    public static final String EVENT_RECEIVER_ID = "receiverId";
+    public static final String EVENT_EVENT = "event";
+
+    // Message
+    public static final String MESSAGE_MESSAGE_ID = "messageId";
+    public static final String MESSAGE_TYPE_EVENT = "EVENT";
+    public static final String MESSAGE_TYPE_FRIEND = "FRIEND";
+    public static final String MESSAGE_TYPE_RESPONSE = "RESPONSE";
+
 }
