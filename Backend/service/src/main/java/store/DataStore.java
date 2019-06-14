@@ -20,9 +20,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
-
+import static org.bson.codecs.configuration.CodecRegistries.*;
 
 
 public class DataStore {
@@ -52,8 +50,12 @@ public class DataStore {
             System.out.println("Connected");
 
             CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
-                fromProviders(PojoCodecProvider.builder().automatic(true).build()));
-            database = client.getDatabase(AGENDA_APP_DATABASE).withCodecRegistry(pojoCodecRegistry);
+                fromProviders(PojoCodecProvider.builder().automatic(true).build()),
+                    fromCodecs(new EventRepeatTypeCodec()),
+                    fromCodecs(new EventTypeTypeCodec()));
+
+            database = client.getDatabase(AGENDA_APP_DATABASE)
+                    .withCodecRegistry(pojoCodecRegistry);
         } catch (Exception e) {
             System.out.println("Failed to connect to MongoDB");
             System.exit(1);

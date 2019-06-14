@@ -6,10 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import types.Account;
-import types.CancelEventRequest;
-import types.CancelEventResponse;
-import types.Event;
+import types.*;
 import utils.AccountUtils;
 import utils.EventListUtils;
 
@@ -50,7 +47,7 @@ public class CancelEventController extends BaseController {
                 event.getDate(),
                 event.getLocation(),
                 event.getRepeat(),
-                Event.State.CANCELLED,
+                EventState.CANCELLED,
                 event.getDescription(),
                 event.isPublic()
         );

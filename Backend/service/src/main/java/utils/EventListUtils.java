@@ -6,8 +6,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import store.DataStore;
-import types.Calendar;
-import types.Event;
+import types.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,9 +17,9 @@ import static controller.BaseController.dataStore;
 
 public class EventListUtils {
     public static String createEventToDatabase(String eventId, final String eventname, final String starterId,
-                                               final Event.Type type, final int start, final int count,
-                                               final String date, final String location, final Event.Repeat repeat,
-                                               final Event.State state, final String description, boolean isPublic) {
+                                               final EventType type, final int start, final int count,
+                                               final String date, final String location, final EventRepeat repeat,
+                                               final EventState state, final String description, final boolean isPublic) {
         if (eventId == null) {
             eventId = new ObjectId().toString();
         }
@@ -36,7 +35,8 @@ public class EventListUtils {
                 .withLocation(location)
                 .withRepeat(repeat)
                 .withState(state)
-                .withDescription(description);
+                .withDescription(description)
+                .with_public(isPublic);
 
         dataStore.insertToCollection(p, DataStore.COLLECTION_EVENTS);
         return eventId;
