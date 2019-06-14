@@ -32,12 +32,7 @@ public class CancelEventController extends BaseController {
             invalidProperty("Only owner can cancel the event");
         }
 
-        if (!EventListUtils.deleteEvent(request.getEventId())){
-            logger.error("Event Id Not Found!");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        EventListUtils.createEventToDatabase(
+        EventListUtils.updateEventInDatabase(
                 request.getEventId(),
                 event.getEventname(),
                 event.getStarterId(),

@@ -49,13 +49,13 @@ public class DataStore {
             MongoClient client = new MongoClient(uri); // TODO change default ip:port
             System.out.println("Connected");
 
-            CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
-                fromProviders(PojoCodecProvider.builder().automatic(true).build()),
+            CodecRegistry pojoCodecRegistry = fromRegistries(
+                    MongoClient.getDefaultCodecRegistry(),
+                    fromProviders(PojoCodecProvider.builder().automatic(true).build()),
                     fromCodecs(new EventRepeatTypeCodec()),
                     fromCodecs(new EventTypeTypeCodec()));
 
-            database = client.getDatabase(AGENDA_APP_DATABASE)
-                    .withCodecRegistry(pojoCodecRegistry);
+            database = client.getDatabase(AGENDA_APP_DATABASE).withCodecRegistry(pojoCodecRegistry);
         } catch (Exception e) {
             System.out.println("Failed to connect to MongoDB");
             System.exit(1);

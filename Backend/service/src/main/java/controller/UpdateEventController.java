@@ -1,21 +1,15 @@
 package controller;
 
-import com.mongodb.client.model.Filters;
 import constant.ApiConstant;
-import org.bson.conversions.Bson;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import store.DataStore;
 import types.Event;
 import types.UpdateEventRequest;
 import types.UpdateEventResponse;
 import utils.EventListUtils;
-
-import static com.mongodb.client.model.Updates.combine;
-import static com.mongodb.client.model.Updates.set;
 
 // TODO find a way to properly update
 
@@ -41,22 +35,22 @@ public class UpdateEventController extends BaseController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Bson query = combine(
-                set(ApiConstant.EVENT_EVENT_NAME, request.getEventname()),
-                set(ApiConstant.EVENT_STARTER_ID, event.getStarterId()),
-                set(ApiConstant.EVENT_TYPE, request.getType()),
-                set(ApiConstant.EVENT_DATE, request.getDate()),
-                set(ApiConstant.EVENT_START, request.getStart()),
-                set(ApiConstant.EVENT_COUNT, request.getCount()),
-                set(ApiConstant.EVENT_REPEAT, request.getRepeat()),
-                set(ApiConstant.EVENT_LOCATION, request.getLocation()),
-                set(ApiConstant.EVENT_STATE, request.getState()),
-                set(ApiConstant.EVENT_DESCRIPTION, request.getDescription()),
-                set(ApiConstant.EVENT_PUBLIC, request.isPublic()));
+        boolean updated = EventListUtils.updateEventInDatabase(
+                request.getEventId(),
+                request.getEventname(),
+                event.getStarterId(),
+                request.getType(),
+                request.getStart(),
+                request.getCount(),
+                request.getDate(),
+                request.getLocation(),
+                request.getRepeat(),
+                request.getState(),
+                request.getDescription(),
+                request.isPublic()
+        );
 
-
-        Bson filter = Filters.eq(ApiConstant.EVENT_EVENT_ID, request.getEventId());
-        if (!dataStore.updateInCollection(filter, query, DataStore.COLLECTION_EVENTS)) {
+        if (!updated) {
             logger.error("Event Id Not Found!");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

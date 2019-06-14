@@ -42,6 +42,29 @@ public class EventListUtils {
         return eventId;
     }
 
+    public static boolean updateEventInDatabase(String eventId, final String eventname, final String starterId,
+                                               final EventType type, final int start, final int count,
+                                               final String date, final String location, final EventRepeat repeat,
+                                               final EventState state, final String description, final boolean isPublic) {
+
+        Bson query = combine(
+                set(ApiConstant.EVENT_EVENT_NAME, eventname),
+                set(ApiConstant.EVENT_STARTER_ID, starterId),
+                set(ApiConstant.EVENT_TYPE, type),
+                set(ApiConstant.EVENT_DATE, date),
+                set(ApiConstant.EVENT_START, start),
+                set(ApiConstant.EVENT_COUNT, count),
+                set(ApiConstant.EVENT_REPEAT, repeat),
+                set(ApiConstant.EVENT_LOCATION, location),
+                set(ApiConstant.EVENT_STATE, state),
+                set(ApiConstant.EVENT_DESCRIPTION, description),
+                set(ApiConstant.EVENT_PUBLIC, isPublic));
+
+
+        Bson filter = Filters.eq(ApiConstant.EVENT_EVENT_ID, eventId);
+        return dataStore.updateInCollection(filter, query, DataStore.COLLECTION_EVENTS);
+    }
+
     public static Event getEventListById(final String eventId) {
         Document document = new Document();
         document.put(ApiConstant.EVENT_EVENT_ID, eventId);
