@@ -29,4 +29,9 @@ public class MessageQueueUtils {
         document.put(ApiConstant.MESSAGEQUEUE_MESSAGEQUEUE_ID, messageQueueId);
         return dataStore.findOneInCollection(document, DataStore.COLLECTION_MESSAGEQUEUES);
     }
+
+    public static ArrayList<Message> getMessageList(final String messageQueueId){
+        MessageQueue messageQueue = getMessageQueue(messageQueueId);
+        return new ArrayList<>(messageQueue.getMessageList());
+    }
 }
