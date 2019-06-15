@@ -1,0 +1,29 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetGroupResponse
+description: get group response
+type: object
+additionalProperties: false
+properties:
+    groupId:
+        description: group id (globally unique)
+        type: string
+    name:
+        description: group name entered by user (repeatable)
+        type: string
+    members:
+        description: group members
+        type: array
+        items:
+            type: string
+    ownerId:
+        description: owner id
+        type: string
+    description:
+        description: description of group 
+        type: string
+
+required:
+    - groupId
+    - name
+    - members
+    - ownerId
