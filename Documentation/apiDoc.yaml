@@ -217,6 +217,26 @@ paths:
           description: "Invalid Parameter: senderId, receiverId and event cannot be null or empty, senderId need equal to starterId"
         "404":
           description: "Not Found: target senderId or receiverId not found in database"
+# MessageQueue
+  getMessageQueue:
+    post:
+      operationId: getMessageQueue
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/GetMessageQueueRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/GetMessageQueueResponse.yaml'
+        "400":
+          description: "Invalid Parameter: messageQueueId cannot be null or empty"
+        "404":
+          description: "Not Found: target messageQueueId not found in database"
 # Group
   createGroup:
     post:
