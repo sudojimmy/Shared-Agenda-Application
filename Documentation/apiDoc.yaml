@@ -237,9 +237,9 @@ paths:
           description: "Invalid Parameter: name, memberids and ownerid cannot be null or empty"
         "404":
           description: "Not Found: memberids or ownerid do not exist"
-  AddGroupMember:
+  group/addMember:
     post:
-      operationId: Group/addMember
+      operationId: group/addMember
       tags:
         - Groups
       requestBody:

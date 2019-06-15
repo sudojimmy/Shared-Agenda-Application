@@ -29,7 +29,7 @@ import static com.mongodb.client.model.Updates.set;
 @RestController
 public class AddGroupMemberController extends BaseController {
 
-    @PostMapping("/Group/addMember")
+    @PostMapping("/group/addMember")
     public ResponseEntity<AddGroupMemberResponse> handle(@RequestBody AddGroupMemberRequest request) {
         logger.info("AddGroupMember: " + request);
 
