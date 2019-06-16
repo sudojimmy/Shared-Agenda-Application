@@ -45,7 +45,9 @@ public class CreateGroupController extends BaseController {
         members = new ArrayList<String>(set);
 
         for (String member : members) {
-            AccountUtils.checkAccountExist(member);
+            if (!AccountUtils.checkAccountExist(member)) {
+                invalidProperty(ApiConstant.GROUP_MEMBERS);
+            }
         }
 
         // Step III: write to Database

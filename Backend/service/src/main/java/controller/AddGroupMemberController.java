@@ -42,7 +42,9 @@ public class AddGroupMemberController extends BaseController {
         if (!GroupUtils.validateGroupOwner(request.getGroupId(), request.getOwnerId())){
             invalidProperty(ApiConstant.GROUP_OWNER_ID);
         }
-        GroupUtils.checkGroupExist(request.getGroupId());
+        if (!GroupUtils.checkGroupExist(request.getGroupId())) {
+            invalidProperty(ApiConstant.GROUP_ID);
+        }
 
         List<String> addMembers = request.getMembers();
         List<String> missingMembers = new ArrayList<String>();
