@@ -18,6 +18,7 @@ import types.CreateGroupRequest;
 import types.CreateGroupResponse;
 
 import constant.ApiConstant;
+import utils.AccountUtils;
 
 @RestController
 public class CreateGroupController extends BaseController {
@@ -27,20 +28,10 @@ public class CreateGroupController extends BaseController {
         logger.info("CreateGroup: " + request);
 
         // Step I: check parameters TODO move to parent class, need a better solution
-        if (request.getName() == null || request.getName().isEmpty()) {
-            logger.error("Invalid name!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        assertPropertyValid(request.getName(), ApiConstant.GROUP_NAME);
+        assertPropertyValid(request.getOwnerId(), ApiConstant.GROUP_ID);
+        assertPropertyValid(request.getMembers(), ApiConstant.GROUP_MEMBERS);
 
-        if (request.getMembers() == null || request.getMembers().isEmpty()) {
-            logger.error("Invalid members!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (request.getOwnerId()== null || request.getOwnerId().isEmpty()) {
-            logger.error("Invalid ownerid");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
         // Step II: check restriction (conflict, or naming rules etc.)
         List<String> members = request.getMembers();
@@ -54,19 +45,14 @@ public class CreateGroupController extends BaseController {
         members = new ArrayList<String>(set);
 
         for (String member : members) {
-            Document document = new Document();
-            document.put(ApiConstant.ACCOUNT_ACCOUNT_ID, member);
-            if (!dataStore.existInCollection(document, DataStore.COLLECTION_ACCOUNTS)) {
-                logger.error("memberId is not Existed!");
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+            AccountUtils.checkAccountExist(member);
         }
 
         // Step III: write to Database
         ObjectId groupId = new ObjectId();
         String id = groupId.toString();
         Group p = new Group().withName(request.getName()).withGroupId(id)
-        .withMembers(members);      
+        .withMembers(members).withOwnerId(owner);      
         dataStore.insertToCollection(p, DataStore.COLLECTION_GROUPS);
 
         // Step IV: create response object

@@ -20,6 +20,8 @@ import types.AddGroupMemberRequest;
 import types.AddGroupMemberResponse;
 
 import constant.ApiConstant;
+import utils.AccountUtils;
+import utils.GroupUtils;
 
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
@@ -27,69 +29,51 @@ import static com.mongodb.client.model.Updates.set;
 @RestController
 public class AddGroupMemberController extends BaseController {
 
-    @PostMapping("/Group/AddMember")
+    @PostMapping("/group/addMember")
     public ResponseEntity<AddGroupMemberResponse> handle(@RequestBody AddGroupMemberRequest request) {
         logger.info("AddGroupMember: " + request);
 
         // Step I: check parameters TODO move to parent class, need a better solution
-        if (request.getGroupId() == null || request.getGroupId().isEmpty()) {
-            logger.error("Invalid group!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (request.getMembers() == null || request.getMembers().isEmpty()) {
-            logger.error("Invalid members!");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        assertPropertyValid(request.getGroupId(), ApiConstant.GROUP_ID);
+        assertPropertyValid(request.getMembers(), ApiConstant.GROUP_MEMBERS);
+        assertPropertyValid(request.getOwnerId(), ApiConstant.GROUP_OWNER_ID);
 
         // todo add permission check
-        // if (request.getOwnerid()== null || request.getOwnerid().isEmpty()) {
-        //     logger.error("Invalid ownerid");
-        //     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        // }
-
-        // Step II: check restriction (conflict, or naming rules etc.)
-        // check if group exist
-        String groupId = request.getGroupId();
-        Document doc = new Document();
-        doc.put(ApiConstant.GROUP_ID, groupId);
-        if (!dataStore.existInCollection(doc, DataStore.COLLECTION_GROUPS)) {
-            logger.error("groupId does not exist");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (!GroupUtils.validateGroupOwner(request.getGroupId(), request.getOwnerId())){
+            invalidProperty(ApiConstant.GROUP_OWNER_ID);
         }
-
+        GroupUtils.checkGroupExist(request.getGroupId());
 
         List<String> addMembers = request.getMembers();
         List<String> missingMembers = new ArrayList<String>();
         for (String member : addMembers) {
-            Document document = new Document();
-            document.put(ApiConstant.ACCOUNT_ACCOUNT_ID, member);
-            if (!dataStore.existInCollection(document, DataStore.COLLECTION_ACCOUNTS)) {
-                missingMembers.add(member);
+            if (!AccountUtils.checkAccountExist(member)) {
+                missingMembers.add(member);                
             }
         }
 
         if (missingMembers.size()>0) {
-            return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(groupId)
+            return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(request.getGroupId())
             .withMembers(missingMembers),
             HttpStatus.NOT_FOUND);
         }
 
-        Group group = dataStore.findOneInCollection(doc, DataStore.COLLECTION_GROUPS);
+        Group group = GroupUtils.getGroup(request.getGroupId());
+        assertDatabaseObjectFound(group, ApiConstant.GROUP_ID);
         List<String> existedMembers = group.getMembers();
         // Step III: write to Database
         existedMembers.addAll(addMembers);
         Set<String> set = new HashSet<String>(existedMembers);
         List<String> updateMembers = new ArrayList<String>(set); 
 
-        Bson filter = Filters.eq(ApiConstant.GROUP_ID, groupId);
+        Bson filter = Filters.eq(ApiConstant.GROUP_ID, request.getGroupId());
         Bson query = combine(
             set(ApiConstant.GROUP_MEMBERS, updateMembers));
 
         dataStore.updateInCollection(filter, query, DataStore.COLLECTION_GROUPS);
 
         // Step IV: create response object
-        return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(groupId),
+        return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(request.getGroupId()),
             HttpStatus.OK);
     }
 }

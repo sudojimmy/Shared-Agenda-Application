@@ -27,6 +27,9 @@ public class ApiConstant {
     // Group
     public static final String GROUP_ID = "groupId";
     public static final String GROUP_MEMBERS = "members";
+    public static final String GROUP_NAME = "name";
+    public static final String GROUP_OWNER_ID = "ownerId";
+    
 
     // MessageQueue
     public static final String MESSAGEQUEUE_MESSAGEQUEUE_ID = "messageQueueId";

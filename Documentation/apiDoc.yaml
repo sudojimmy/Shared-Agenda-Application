@@ -237,9 +237,9 @@ paths:
           description: "Invalid Parameter: name, memberids and ownerid cannot be null or empty"
         "404":
           description: "Not Found: memberids or ownerid do not exist"
-  AddGroupMember:
+  group/addMember:
     post:
-      operationId: AddGroupMember
+      operationId: group/addMember
       tags:
         - Groups
       requestBody:
@@ -256,3 +256,22 @@ paths:
           description: "Invalid Parameter: groupid and memberids cannot be null or empty"
         "404":
           description: "Not Found: memberids or groupid do not exist"
+  GetGroup:
+    post:
+      operationId: getGroup
+      tags:
+        - Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/GetGroupRequest.yaml'
+      responses:
+        "200":
+          description: Ok
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/GetGroupResponse.yaml'
+        "400":
+          description: "Invalid Parameter: groupid cannot be null or empty"
+        "404":
+          description: "Not Found: groupid do not exist"
