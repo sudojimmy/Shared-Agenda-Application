@@ -256,6 +256,25 @@ paths:
           description: "Invalid Parameter: groupid and memberids cannot be null or empty"
         "404":
           description: "Not Found: memberids or groupid do not exist"
+  group/removeMember:
+    post:
+      operationId: group/removeMember
+      tags:
+        - Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/RemoveGroupMemberRequest.yaml'
+      responses:
+        "200":
+          description: Ok
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/RemoveGroupMemberResponse.yaml'
+        "400":
+          description: "Invalid Parameter: groupid and memberids cannot be null or empty"
+        "404":
+          description: "Not Found: memberids or groupid do not exist"
   GetGroup:
     post:
       operationId: getGroup
