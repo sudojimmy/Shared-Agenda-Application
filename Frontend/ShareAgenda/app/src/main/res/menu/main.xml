@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/nav_grp1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/ic_menu_calendar"
+            android:title="@string/menu_calendar" />
+        <item
+            android:id="@+id/nav_weekCalendar"
+            android:icon="@drawable/ic_menu_weekly_24dp"
+            android:title="@string/menu_weekCalendar" />
+    </group>
+    <group
+        android:id="@+id/nav_grp2"
+        android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_groups"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/menu_groups" />
+            <item
+                android:id="@+id/nav_friends"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/menu_friends" />
+    </group>
+    <group
+        android:id="@+id/nav_grp3"
+        android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_publicEvents"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu_publicEvents" />
+            <item
+                android:id="@+id/nav_groupEvents"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu_groupEvents" />
+            <item
+                android:id="@+id/nav_events"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/menu_events" />
+    </group>
+    <group
+        android:id="@+id/nav_grp4"
+        android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="@string/menu_profile" />
+    </group>
+</menu>
