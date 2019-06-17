@@ -17,6 +17,7 @@
 
     <!-- activity title -->
     <string name="title_weekly_calendar">Weekly Calendar</string>
+    <string name="title_profile">Profile</string>
     <string name="title_requests">Requests</string>
     <string name="title_friends_calendar">Friends Events</string>
 </resources>

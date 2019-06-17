@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.activity.CalendarActivity;
 import com.cosin.shareagenda.activity.GroupEventsActivity;
+import com.cosin.shareagenda.activity.ProfileActivity;
 import com.cosin.shareagenda.activity.WeeklyActivity;
 
 public class HandleMenu {
@@ -39,7 +40,10 @@ public class HandleMenu {
         } else if (id == R.id.nav_events) {
 
         } else if (id == R.id.nav_profile) {
-
+            if (!"ProfileActivity".equals(context.getClass().getSimpleName())) {
+                Intent intent = new Intent(context, ProfileActivity.class);
+                context.startActivity(intent);
+            }
         }
     }
 }

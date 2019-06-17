@@ -1,6 +1,5 @@
 package com.cosin.shareagenda.activity;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 
 import com.cosin.shareagenda.R;
