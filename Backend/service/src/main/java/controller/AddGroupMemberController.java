@@ -41,10 +41,15 @@ public class AddGroupMemberController extends BaseController {
         // todo add permission check
         if (!GroupUtils.validateGroupOwner(request.getGroupId(), request.getOwnerId())){
             invalidProperty(ApiConstant.GROUP_OWNER_ID);
+<<<<<<< HEAD
         }
         if (!GroupUtils.checkGroupExist(request.getGroupId())) {
             invalidProperty(ApiConstant.GROUP_ID);
         }
+=======
+        }
+        GroupUtils.checkGroupExist(request.getGroupId());
+>>>>>>> master
 
         List<String> addMembers = request.getMembers();
         List<String> missingMembers = new ArrayList<String>();

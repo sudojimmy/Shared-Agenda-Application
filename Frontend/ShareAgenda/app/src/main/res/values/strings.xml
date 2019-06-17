@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">ShareAgenda</string>
+
+    <!-- navigation -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- menu label -->
+    <string name="menu_calendar">My Calendar</string>
+    <string name="menu_weekCalendar">Weekly Calendar</string>
+    <string name="menu_groups">Groups</string>
+    <string name="menu_friends">Friends</string>
+    <string name="menu_publicEvents">Public Events</string>
+    <string name="menu_groupEvents">Group Events</string>
+    <string name="menu_events">My Events</string>
+    <string name="menu_profile">Profile</string>
+
+    <!-- activity title -->
+    <string name="title_weekly_calendar">Weekly Calendar</string>
+    <string name="title_requests">Requests</string>
+    <string name="title_friends_calendar">Friends Events</string>
+</resources>
