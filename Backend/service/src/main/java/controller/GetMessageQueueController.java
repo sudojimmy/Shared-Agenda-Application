@@ -20,6 +20,7 @@ public class GetMessageQueueController extends BaseController {
     public ResponseEntity<GetMessageQueueResponse> handle(@RequestBody GetMessageQueueRequest request) {
         logger.info("GetMessageQueue: " + request);
 
+        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
         assertPropertyValid(request.getMessageQueueId(), ApiConstant.MESSAGEQUEUE_MESSAGEQUEUE_ID);
 
         ArrayList<Message> messageList = MessageQueueUtils.getMessageList(request.getMessageQueueId());
