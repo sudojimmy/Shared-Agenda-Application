@@ -1,17 +1,14 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
-title: CreateGroupRequest
-description: create group request
+title: AddGroupMemberRequest
+description: add group member request
 type: object
 additionalProperties: false
 properties:
-    name:
-        description: group name
+    groupId:
+        description: group id
         type: string
     ownerId:
         description: group owner
-        type: string
-    description:
-        description: description of group 
         type: string
     members:
         description: group members
@@ -19,6 +16,5 @@ properties:
         items:
             type: string
 required:
-    - name
-    - ownerId
+    - groupId
     - members

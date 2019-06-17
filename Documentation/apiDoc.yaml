@@ -105,21 +105,21 @@ paths:
           description: "Invalid Parameter: starterId, eventname and type cannot be null or empty"
         "404":
           description: "Not Found: starterId not found in database"
-  getEventList:
+  getEventListByName:
     post:
-      operationId: getEventList
+      operationId: getEventListByName
       tags:
         - Events
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '../Backend/schema/src/yaml/requests/GetEventListRequest.yaml'
+              $ref: '../Backend/schema/src/yaml/requests/GetEventListByNameRequest.yaml'
       responses:
         "200":
           description: OK
           schema:
-            $ref: '../Backend/schema/src/yaml/responses/GetEventListResponse.yaml'
+            $ref: '../Backend/schema/src/yaml/responses/GetEventListByNameResponse.yaml'
         "400":
           description: "Invalid Parameter: eventname cannot be null or empty"
   updateEvent:
@@ -141,3 +141,99 @@ paths:
           description: "Invalid Parameter: eventId, eventname, starterId, and type cannot be null or empty"
         "404":
           description: "Not Found: target EventId not found in database"
+  deleteEvent:
+    post:
+      operationId: deleteEvent
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/DeleteEventRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/DeleteEventResponse.yaml'
+        "400":
+          description: "Invalid Parameter: eventId and accountId cannot be null or empty"
+        "404":
+          description: "Not Found: target eventId or accountId not found in database"
+  joinEvent:
+    post:
+      operationId: joinEvent
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/JoinEventRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/JoinEventResponse.yaml'
+        "400":
+          description: "Invalid Parameter: eventId, accountId cannot be null or empty, public need be true"
+        "404":
+          description: "Not Found: target eventId or accountId not found in database"
+  cancelEvent:
+    post:
+      operationId: cancelEvent
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/CancelEventRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/CancelEventResponse.yaml'
+        "400":
+          description: "Invalid Parameter: eventId, accountId cannot be null or empty, accountId need be the starterId"
+        "404":
+          description: "Not Found: target eventId or accountId not found in database"
+# Group
+  createGroup:
+    post:
+      operationId: createGroup
+      tags:
+        - Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/CreateGroupRequest.yaml'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/CreateGroupResponse.yaml'
+        "400":
+          description: "Invalid Parameter: name, memberids and ownerid cannot be null or empty"
+        "404":
+          description: "Not Found: memberids or ownerid do not exist"
+  AddGroupMember:
+    post:
+      operationId: AddGroupMember
+      tags:
+        - Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/AddGroupMemberRequest.yaml'
+      responses:
+        "200":
+          description: Ok
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/AddGroupMemberResponse.yaml'
+        "400":
+          description: "Invalid Parameter: groupid and memberids cannot be null or empty"
+        "404":
+          description: "Not Found: memberids or groupid do not exist"

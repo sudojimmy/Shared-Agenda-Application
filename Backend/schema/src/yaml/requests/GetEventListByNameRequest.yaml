@@ -1,6 +1,6 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
-title: GetEventListRequest
-description: get eventlist request
+title: GetEventListByNameRequest
+description: get eventlist by name request
 type: object
 additionalProperties: false
 properties:

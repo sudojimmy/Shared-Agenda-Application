@@ -4,14 +4,14 @@ description: update event request
 type: object
 additionalProperties: false
 properties:
+  accountId:
+    description: caller Id
+    type: string
   eventId:
     description: eventId is unique, provided by frontend
     type: string
   eventname:
     description: event name entered by user (repeatable)
-    type: string
-  starterId:
-    description: the starter user id
     type: string
   type:
     description: work, study, entertainment, appointment, etc
@@ -37,8 +37,12 @@ properties:
   description:
     description: event description
     type: string
+  public:
+    description: true for Public, o/w false
+    type: boolean
 required:
   - eventId
+  - accountId
   - eventname
-  - starterId
   - type
+  - public

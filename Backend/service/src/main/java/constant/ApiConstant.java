@@ -22,4 +22,9 @@ public class ApiConstant {
     public static final String EVENT_LOCATION = "location";
     public static final String EVENT_STATE = "state";
     public static final String EVENT_DESCRIPTION = "description";
+    public static final String EVENT_PUBLIC = "public";
+
+    // Group
+    public static final String GROUP_ID = "groupId";
+    public static final String GROUP_MEMBERS = "members";
 }
