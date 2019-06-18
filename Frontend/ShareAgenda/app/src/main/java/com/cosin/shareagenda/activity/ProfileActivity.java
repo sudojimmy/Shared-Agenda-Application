@@ -24,7 +24,6 @@ public class ProfileActivity extends MainTitleActivity {
     @Override
     protected void initView() {
         super.initView();
-        setContentView(R.layout.activity_profile);
         profileName = findViewById(R.id.profile_text);
         profileEmail = findViewById(R.id.profile_email);
         profileImage = findViewById(R.id.profile_image);
