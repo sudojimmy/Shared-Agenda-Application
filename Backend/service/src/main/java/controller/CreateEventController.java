@@ -11,6 +11,7 @@ import types.CreateEventRequest;
 import types.CreateEventResponse;
 import utils.AccountUtils;
 import utils.EventListUtils;
+import utils.ExceptionUtils;
 
 
 @RestController
@@ -21,13 +22,13 @@ public class CreateEventController extends BaseController {
         logger.info("CreateEvent: " + request);
 
         // Step I: check parameters
-        assertPropertyValid(request.getEventname(), ApiConstant.EVENT_EVENT_NAME);
-        assertPropertyValid(request.getStarterId(), ApiConstant.EVENT_STARTER_ID);
-        assertPropertyValid(request.getType(), ApiConstant.EVENT_EVENT_NAME);
+        ExceptionUtils.assertPropertyValid(request.getEventname(), ApiConstant.EVENT_EVENT_NAME);
+        ExceptionUtils.assertPropertyValid(request.getStarterId(), ApiConstant.EVENT_STARTER_ID);
+        ExceptionUtils.assertPropertyValid(request.getType(), ApiConstant.EVENT_EVENT_NAME);
 
         // Step II: check restriction (conflict, or naming rules etc.)
         Account account = AccountUtils.getAccount(request.getStarterId());
-        assertDatabaseObjectFound(account, ApiConstant.EVENT_STARTER_ID);
+        ExceptionUtils.assertDatabaseObjectFound(account, ApiConstant.EVENT_STARTER_ID);
 
         // Step III: write to Database
         String eventId = EventListUtils.createEventToDatabase(

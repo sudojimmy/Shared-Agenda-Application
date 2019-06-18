@@ -12,6 +12,7 @@ import types.CreateAccountRequest;
 import types.CreateAccountResponse;
 import utils.AccountUtils;
 import utils.CalendarUtils;
+import utils.ExceptionUtils;
 import utils.MessageQueueUtils;
 
 
@@ -32,8 +33,8 @@ public class CreateAccountController extends BaseController {
         logger.info("CreateAccount: " + request);
 
         // Step I: check parameters TODO move to parent class, need a better solution
-        assertPropertyValid(request.getNickname(), ApiConstant.ACCOUNT_NICKNAME);
-        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
+        ExceptionUtils.assertPropertyValid(request.getNickname(), ApiConstant.ACCOUNT_NICKNAME);
+        ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         // Step II: check restriction (conflict, or naming rules etc.)
         if (AccountUtils.checkAccountExist(request.getAccountId())) {

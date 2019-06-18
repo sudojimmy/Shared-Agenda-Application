@@ -11,6 +11,7 @@ import types.GetCalendarEventListRequest;
 import types.GetCalendarEventListResponse;
 import utils.CalendarUtils;
 import utils.EventListUtils;
+import utils.ExceptionUtils;
 
 @RestController
 public class GetCalendarEventListController extends BaseController {
@@ -19,10 +20,10 @@ public class GetCalendarEventListController extends BaseController {
     public ResponseEntity<GetCalendarEventListResponse> handle(@RequestBody GetCalendarEventListRequest request) {
         logger.info("getCalendarEventList: " + request);
 
-        assertPropertyValid(request.getCalendarId(), ApiConstant.CALENDAR_CALENDAR_ID);
+        ExceptionUtils.assertPropertyValid(request.getCalendarId(), ApiConstant.CALENDAR_CALENDAR_ID);
 
         Calendar calendar = CalendarUtils.getCalendar(request.getCalendarId());
-        assertDatabaseObjectFound(calendar, ApiConstant.CALENDAR_CALENDAR_ID);
+        ExceptionUtils.assertDatabaseObjectFound(calendar, ApiConstant.CALENDAR_CALENDAR_ID);
 
         return new ResponseEntity<>(new GetCalendarEventListResponse()
             .withEventList(EventListUtils.getEventListFromCalendar(calendar)),HttpStatus.OK);

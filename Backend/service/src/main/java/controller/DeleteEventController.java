@@ -12,6 +12,7 @@ import types.DeleteEventResponse;
 import types.Event;
 import utils.AccountUtils;
 import utils.EventListUtils;
+import utils.ExceptionUtils;
 
 @RestController
 public class DeleteEventController extends BaseController {
@@ -20,15 +21,15 @@ public class DeleteEventController extends BaseController {
     public ResponseEntity<DeleteEventResponse> handle(@RequestBody DeleteEventRequest request) {
         logger.info("DeleteEvent: " + request);
 
-        assertPropertyValid(request.getEventId(), ApiConstant.EVENT_EVENT_ID);
-        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
+        ExceptionUtils.assertPropertyValid(request.getEventId(), ApiConstant.EVENT_EVENT_ID);
+        ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         // check accountId is a valid accountId
         Account account = AccountUtils.getAccount(request.getAccountId());
-        assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
+        ExceptionUtils.assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         Event event = EventListUtils.getEventListById(request.getEventId());
-        assertDatabaseObjectFound(event, ApiConstant.EVENT_EVENT_ID);
+        ExceptionUtils.assertDatabaseObjectFound(event, ApiConstant.EVENT_EVENT_ID);
 
         if(request.getAccountId().equals(event.getStarterId())){
             // delete the event from DB

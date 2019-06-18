@@ -20,21 +20,21 @@ public class InviteEventController extends BaseController {
         logger.info("InviteEvent: " + request);
 
         // Step I: check parameters
-        assertPropertyValid(request.getSenderId(), ApiConstant.EVENT_SENDER_ID);
-        assertPropertyValid(request.getReceiverId(), ApiConstant.EVENT_RECEIVER_ID);
-        assertPropertyValid(request.getEvent(), ApiConstant.EVENT_EVENT);
+        ExceptionUtils.assertPropertyValid(request.getSenderId(), ApiConstant.EVENT_SENDER_ID);
+        ExceptionUtils.assertPropertyValid(request.getReceiverId(), ApiConstant.EVENT_RECEIVER_ID);
+        ExceptionUtils.assertPropertyValid(request.getEvent(), ApiConstant.EVENT_EVENT);
 
         // Step II: check restriction (conflict, or naming rules etc.)
         Account accountSender = AccountUtils.getAccount(request.getSenderId());
-        assertDatabaseObjectFound(accountSender, ApiConstant.EVENT_SENDER_ID);
+        ExceptionUtils.assertDatabaseObjectFound(accountSender, ApiConstant.EVENT_SENDER_ID);
         Account account = AccountUtils.getAccount(request.getReceiverId());
-        assertDatabaseObjectFound(account, ApiConstant.EVENT_RECEIVER_ID);
+        ExceptionUtils.assertDatabaseObjectFound(account, ApiConstant.EVENT_RECEIVER_ID);
 
         // Step III: write to Database
         CreateEventRequest ER = request.getEvent();
 
         if(!request.getSenderId().equals(ER.getStarterId())){
-            invalidProperty("sendId need equal to starterId to invite");
+            ExceptionUtils.invalidProperty("sendId need equal to starterId to invite");
         }
 
         // TODO check friendship

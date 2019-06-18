@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import types.*;
 import utils.AccountUtils;
 import utils.EventListUtils;
+import utils.ExceptionUtils;
 
 @RestController
 public class CancelEventController extends BaseController {
@@ -17,19 +18,19 @@ public class CancelEventController extends BaseController {
     public ResponseEntity<CancelEventResponse> handle(@RequestBody CancelEventRequest request) {
         logger.info("CancelEvent: " + request);
 
-        assertPropertyValid(request.getEventId(), ApiConstant.EVENT_EVENT_ID);
-        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
+        ExceptionUtils.assertPropertyValid(request.getEventId(), ApiConstant.EVENT_EVENT_ID);
+        ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         // check accountId is a valid accountId
         Account account = AccountUtils.getAccount(request.getAccountId());
-        assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
+        ExceptionUtils.assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         Event event = EventListUtils.getEventListById(request.getEventId());
-        assertDatabaseObjectFound(event, ApiConstant.EVENT_EVENT_ID);
+        ExceptionUtils.assertDatabaseObjectFound(event, ApiConstant.EVENT_EVENT_ID);
 
         if(!request.getAccountId().equals(event.getStarterId())){
             // no permission to cancel the event
-            invalidProperty("Only owner can cancel the event");
+            ExceptionUtils.invalidProperty("Only owner can cancel the event");
         }
 
         EventListUtils.updateEventInDatabase(

@@ -10,6 +10,7 @@ import types.Account;
 import types.GetAccountRequest;
 import types.GetAccountResponse;
 import utils.AccountUtils;
+import utils.ExceptionUtils;
 
 @RestController
 public class GetAccountController extends BaseController {
@@ -18,10 +19,10 @@ public class GetAccountController extends BaseController {
     public ResponseEntity<GetAccountResponse> handle(@RequestBody GetAccountRequest request) {
         logger.info("GetAccount: " + request);
 
-        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
+        ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         Account account = AccountUtils.getAccount(request.getAccountId());
-        assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
+        ExceptionUtils.assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         return new ResponseEntity<>(new GetAccountResponse()
             .withAccountId(account .getAccountId())

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import store.DataStore;
 import types.UpdateAccountRequest;
 import types.UpdateAccountResponse;
+import utils.ExceptionUtils;
 
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
@@ -23,8 +24,8 @@ public class UpdateAccountController extends BaseController {
     public ResponseEntity<UpdateAccountResponse> handle(@RequestBody UpdateAccountRequest request) {
         logger.info("UpdateAccount: " + request);
 
-        assertPropertyValid(request.getNickname(), ApiConstant.ACCOUNT_NICKNAME);
-        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
+        ExceptionUtils.assertPropertyValid(request.getNickname(), ApiConstant.ACCOUNT_NICKNAME);
+        ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         Bson filter = Filters.eq(ApiConstant.ACCOUNT_ACCOUNT_ID, request.getAccountId());
         Bson query = combine(

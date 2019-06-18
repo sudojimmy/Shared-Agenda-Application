@@ -17,18 +17,18 @@ public class JoinEventController extends BaseController {
     public ResponseEntity<JoinEventResponse> handle(@RequestBody JoinEventRequest request) {
         logger.info("JoinEvent: " + request);
 
-        assertPropertyValid(request.getEventId(), ApiConstant.EVENT_EVENT_ID);
-        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
+        ExceptionUtils.assertPropertyValid(request.getEventId(), ApiConstant.EVENT_EVENT_ID);
+        ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         // check accountId is a valid accountId
         Account account = AccountUtils.getAccount(request.getAccountId());
-        assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
+        ExceptionUtils.assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         Event event = EventListUtils.getEventListById(request.getEventId());
-        assertDatabaseObjectFound(event, ApiConstant.EVENT_EVENT_ID);
+        ExceptionUtils.assertDatabaseObjectFound(event, ApiConstant.EVENT_EVENT_ID);
 
         if(!event.isPublic()){
-            invalidProperty("Can only join public event");
+            ExceptionUtils.invalidProperty("Can only join public event");
         }
 
         EventListUtils.addEventIdToCalendar(request.getEventId(), account.getCalendarId());

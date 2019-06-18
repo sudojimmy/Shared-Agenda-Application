@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,7 @@ import types.CreateGroupResponse;
 
 import constant.ApiConstant;
 import utils.AccountUtils;
+import utils.ExceptionUtils;
 
 @RestController
 public class CreateGroupController extends BaseController {
@@ -28,9 +28,9 @@ public class CreateGroupController extends BaseController {
         logger.info("CreateGroup: " + request);
 
         // Step I: check parameters TODO move to parent class, need a better solution
-        assertPropertyValid(request.getName(), ApiConstant.GROUP_NAME);
-        assertPropertyValid(request.getOwnerId(), ApiConstant.GROUP_ID);
-        assertPropertyValid(request.getMembers(), ApiConstant.GROUP_MEMBERS);
+        ExceptionUtils.assertPropertyValid(request.getName(), ApiConstant.GROUP_NAME);
+        ExceptionUtils.assertPropertyValid(request.getOwnerId(), ApiConstant.GROUP_ID);
+        ExceptionUtils.assertPropertyValid(request.getMembers(), ApiConstant.GROUP_MEMBERS);
 
 
         // Step II: check restriction (conflict, or naming rules etc.)
@@ -46,7 +46,7 @@ public class CreateGroupController extends BaseController {
 
         for (String member : members) {
             if (!AccountUtils.checkAccountExist(member)) {
-                invalidProperty(ApiConstant.GROUP_MEMBERS);
+                ExceptionUtils.invalidProperty(ApiConstant.GROUP_MEMBERS);
             }
         }
 
