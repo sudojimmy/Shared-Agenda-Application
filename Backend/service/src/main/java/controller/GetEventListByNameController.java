@@ -10,6 +10,7 @@ import types.Event;
 import types.GetEventListByNameRequest;
 import types.GetEventListByNameResponse;
 import utils.EventListUtils;
+import utils.ExceptionUtils;
 
 import java.util.ArrayList;
 

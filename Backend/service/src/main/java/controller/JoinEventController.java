@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import types.*;
 import utils.AccountUtils;
 import utils.EventListUtils;
+import utils.ExceptionUtils;
 
 @RestController
 public class JoinEventController extends BaseController {

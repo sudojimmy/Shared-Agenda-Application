@@ -21,12 +21,9 @@ public class GetGroupController extends BaseController {
 
         ExceptionUtils.assertPropertyValid(request.getGroupId(), ApiConstant.GROUP_ID);
 
-        if (!GroupUtils.checkGroupExist(request.getGroupId())) {
-            ExceptionUtils.invalidProperty(ApiConstant.GROUP_ID);
-        }
+        GroupUtils.checkGroupExist(request.getGroupId());
 
         Group group = GroupUtils.getGroup(request.getGroupId());
-        ExceptionUtils.assertDatabaseObjectFound(group, ApiConstant.GROUP_ID);
 
         return new ResponseEntity<>(new GetGroupResponse()
             .withGroupId(group.getGroupId())
