@@ -17,6 +17,8 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import static com.cosin.shareagenda.config.SystemConfig.SERVER_CLIENT_ID;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "AndroidClarified";
     public static  GoogleSignInClient googleSignInClient;
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         googleSignInButton = findViewById(R.id.sign_in_button);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("777979546332-7bo83bshkf9vkvon4fd005d47ngo1jq7.apps.googleusercontent.com")
+                .requestIdToken(SERVER_CLIENT_ID)
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -61,9 +63,8 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Toast.makeText(this, "Result Code" + resultCode, Toast.LENGTH_SHORT).show();
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK)
+        if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case 101:
                     try {
@@ -78,5 +79,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
             }
+        } else {
+            Toast.makeText(this, "Result Code" + resultCode, Toast.LENGTH_SHORT).show(); // TODO remove this
+        }
     }
 }

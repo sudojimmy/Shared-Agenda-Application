@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends MainTitleActivity {
     public static final String GOOGLE_ACCOUNT = "google_account";
-    private TextView profileName, profileEmail;
+    private TextView profileName, profileEmail, profileUserId;
     private ImageView profileImage;
     private Button signOut;
 
@@ -26,6 +26,7 @@ public class ProfileActivity extends MainTitleActivity {
         super.initView();
         profileName = findViewById(R.id.profile_text);
         profileEmail = findViewById(R.id.profile_email);
+        profileUserId = findViewById(R.id.profile_user_id);
         profileImage = findViewById(R.id.profile_image);
         signOut = findViewById(R.id.sign_out);
         signOut.setOnClickListener(new View.OnClickListener() {
@@ -58,8 +59,8 @@ public class ProfileActivity extends MainTitleActivity {
 
         profileName.setText(googleSignInAccount.getDisplayName());
         profileEmail.setText(googleSignInAccount.getEmail());
+        profileUserId.setText(googleSignInAccount.getId());
 
-        Toast.makeText(this, googleSignInAccount.getId(), Toast.LENGTH_SHORT).show();
         Toast.makeText(this, googleSignInAccount.getIdToken(), Toast.LENGTH_SHORT).show();
     }
 
