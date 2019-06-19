@@ -4,6 +4,7 @@ import constant.ApiConstant;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import store.DataStore;
+import types.Message;
 import types.MessageQueue;
 
 import java.util.ArrayList;
