@@ -10,6 +10,7 @@ import types.Event;
 import types.GetEventListByNameRequest;
 import types.GetEventListByNameResponse;
 import utils.EventListUtils;
+import utils.ExceptionUtils;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ public class GetEventListByNameController extends BaseController {
     public ResponseEntity<GetEventListByNameResponse> handle(@RequestBody GetEventListByNameRequest request) {
         logger.info("GetEventListByName: " + request);
 
-        assertPropertyValid(request.getEventname(), ApiConstant.EVENT_EVENT_NAME);
+        ExceptionUtils.assertPropertyValid(request.getEventname(), ApiConstant.EVENT_EVENT_NAME);
 
         ArrayList<Event> eventList = EventListUtils.getEventListByName(request.getEventname());
         return new ResponseEntity<>(new GetEventListByNameResponse().withEventList(eventList),HttpStatus.OK);

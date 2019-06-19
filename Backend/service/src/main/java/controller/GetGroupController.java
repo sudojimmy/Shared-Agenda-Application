@@ -9,22 +9,21 @@ import org.springframework.web.bind.annotation.RestController;
 import types.Group;
 import types.GetGroupRequest;
 import types.GetGroupResponse;
-import utils.AccountUtils;
+import utils.ExceptionUtils;
 import utils.GroupUtils;
 
 @RestController
 public class GetGroupController extends BaseController {
 
     @PostMapping("/getGroup")
-    public ResponseEntity<GetGroupResponse> handle(@RequestBody GetGroupResponse request) {
+    public ResponseEntity<GetGroupResponse> handle(@RequestBody GetGroupRequest request) {
         logger.info("getGroup: " + request);
 
-        assertPropertyValid(request.getGroupId(), ApiConstant.GROUP_ID);
+        ExceptionUtils.assertPropertyValid(request.getGroupId(), ApiConstant.GROUP_ID);
 
         GroupUtils.checkGroupExist(request.getGroupId());
 
         Group group = GroupUtils.getGroup(request.getGroupId());
-        assertDatabaseObjectFound(group, ApiConstant.GROUP_ID);
 
         return new ResponseEntity<>(new GetGroupResponse()
             .withGroupId(group.getGroupId())

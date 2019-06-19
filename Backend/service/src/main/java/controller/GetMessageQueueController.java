@@ -10,6 +10,7 @@ import types.Account;
 import types.GetMessageQueueRequest;
 import types.GetMessageQueueResponse;
 import types.Message;
+import utils.ExceptionUtils;
 import utils.MessageQueueUtils;
 
 import java.util.ArrayList;
@@ -23,12 +24,12 @@ public class GetMessageQueueController extends BaseController {
     public ResponseEntity<GetMessageQueueResponse> handle(@RequestBody GetMessageQueueRequest request) {
         logger.info("GetMessageQueue: " + request);
 
-        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
-        assertPropertyValid(request.getMessageQueueId(), ApiConstant.MESSAGEQUEUE_MESSAGEQUEUE_ID);
+        ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
+        ExceptionUtils.assertPropertyValid(request.getMessageQueueId(), ApiConstant.MESSAGEQUEUE_MESSAGEQUEUE_ID);
 
         Account targetAccout = getAccount(request.getAccountId());
         if(!request.getMessageQueueId().equals(targetAccout.getMessageQueueId())){
-            invalidProperty("Can only get own's MessageQueue");
+            ExceptionUtils.invalidProperty("Can only get own's MessageQueue");
         }
 
         ArrayList<Message> messageList = MessageQueueUtils.getMessageList(request.getMessageQueueId());

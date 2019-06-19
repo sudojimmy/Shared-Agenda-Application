@@ -3,22 +3,19 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.bson.Document;
-import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import store.DataStore;
-import types.Group;
 import types.CreateGroupRequest;
 import types.CreateGroupResponse;
 
 import constant.ApiConstant;
 import utils.AccountUtils;
+import utils.ExceptionUtils;
+import utils.GroupUtils;
 
 @RestController
 public class CreateGroupController extends BaseController {
@@ -27,36 +24,25 @@ public class CreateGroupController extends BaseController {
     public ResponseEntity<CreateGroupResponse> handle(@RequestBody CreateGroupRequest request) {
         logger.info("CreateGroup: " + request);
 
-        // Step I: check parameters TODO move to parent class, need a better solution
-        assertPropertyValid(request.getName(), ApiConstant.GROUP_NAME);
-        assertPropertyValid(request.getOwnerId(), ApiConstant.GROUP_ID);
-        assertPropertyValid(request.getMembers(), ApiConstant.GROUP_MEMBERS);
+        ExceptionUtils.assertPropertyValid(request.getName(), ApiConstant.GROUP_NAME);
+        ExceptionUtils.assertPropertyValid(request.getOwnerId(), ApiConstant.GROUP_ID);
+        ExceptionUtils.assertPropertyValid(request.getMembers(), ApiConstant.GROUP_MEMBERS);
 
-
-        // Step II: check restriction (conflict, or naming rules etc.)
-        List<String> members = request.getMembers();
+        List<String> createMembers = request.getMembers();
         String owner = request.getOwnerId();
 
-        if (!members.contains(owner)) {
-            members.add(owner);
-        }
-        Set<String> set = new HashSet<String>(members);
-
-        members = new ArrayList<String>(set);
-
-        for (String member : members) {
-            AccountUtils.checkAccountExist(member);
+        if (!createMembers.contains(owner)) {
+            createMembers.add(owner);
         }
 
-        // Step III: write to Database
-        ObjectId groupId = new ObjectId();
-        String id = groupId.toString();
-        Group p = new Group().withName(request.getName()).withGroupId(id)
-        .withMembers(members).withOwnerId(owner);      
-        dataStore.insertToCollection(p, DataStore.COLLECTION_GROUPS);
+        List<String> members = new ArrayList<>(
+            new HashSet<>(createMembers));
 
-        // Step IV: create response object
-        return new ResponseEntity<>(new CreateGroupResponse().withGroupId(id),
+        AccountUtils.checkAccountsExist(members);
+
+        String groupId = GroupUtils.createGroupToDatabase(request.getName(),request.getOwnerId(),members);
+
+        return new ResponseEntity<>(new CreateGroupResponse().withGroupId(groupId),
             HttpStatus.CREATED);
     }
 }

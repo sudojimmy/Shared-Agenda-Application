@@ -10,6 +10,7 @@ import types.Event;
 import types.UpdateEventRequest;
 import types.UpdateEventResponse;
 import utils.EventListUtils;
+import utils.ExceptionUtils;
 
 // TODO find a way to properly update
 
@@ -21,14 +22,14 @@ public class UpdateEventController extends BaseController {
     public ResponseEntity<UpdateEventResponse> handle(@RequestBody UpdateEventRequest request) {
         logger.info("UpdateEvent: " + request);
 
-        assertPropertyValid(request.getEventId(), ApiConstant.EVENT_EVENT_ID);
-        assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
-        assertPropertyValid(request.getEventname(), ApiConstant.EVENT_EVENT_NAME);
-        assertPropertyValid(request.getType(), ApiConstant.EVENT_TYPE);
+        ExceptionUtils.assertPropertyValid(request.getEventId(), ApiConstant.EVENT_EVENT_ID);
+        ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
+        ExceptionUtils.assertPropertyValid(request.getEventname(), ApiConstant.EVENT_EVENT_NAME);
+        ExceptionUtils.assertPropertyValid(request.getType(), ApiConstant.EVENT_TYPE);
 
         // check startId is a valid accountId
         Event event = EventListUtils.getEventListById(request.getEventId());
-        assertDatabaseObjectFound(event, ApiConstant.EVENT_TYPE);
+        ExceptionUtils.assertDatabaseObjectFound(event, ApiConstant.EVENT_TYPE);
 
         if(!request.getAccountId().equals(event.getStarterId())){
             logger.error("Only Event owner can update event!");

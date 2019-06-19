@@ -15,6 +15,7 @@ import types.GetCalendarEventListByDateRequest;
 import types.GetCalendarEventListByDateResponse;
 import utils.CalendarUtils;
 import utils.EventListUtils;
+import utils.ExceptionUtils;
 
 import java.util.ArrayList;
 
@@ -25,11 +26,11 @@ public class GetCalendarEventListByDateController extends BaseController {
     public ResponseEntity<GetCalendarEventListByDateResponse> handle(@RequestBody GetCalendarEventListByDateRequest request) {
         logger.info("getCalendarEventListByDate: " + request);
 
-        assertPropertyValid(request.getCalendarId(), ApiConstant.CALENDAR_CALENDAR_ID);
-        assertPropertyValid(request.getDate(), ApiConstant.EVENT_DATE);
+        ExceptionUtils.assertPropertyValid(request.getCalendarId(), ApiConstant.CALENDAR_CALENDAR_ID);
+        ExceptionUtils.assertPropertyValid(request.getDate(), ApiConstant.EVENT_DATE);
 
         Calendar calendar = CalendarUtils.getCalendar(request.getCalendarId());
-        assertDatabaseObjectFound(calendar, ApiConstant.CALENDAR_CALENDAR_ID);
+        ExceptionUtils.assertDatabaseObjectFound(calendar, ApiConstant.CALENDAR_CALENDAR_ID);
 
         Bson dateFilter = Filters.eq(ApiConstant.EVENT_DATE, request.getDate());
         ArrayList<Event> eventList = EventListUtils.getEventListFromCalendarWithCond(calendar, dateFilter);
