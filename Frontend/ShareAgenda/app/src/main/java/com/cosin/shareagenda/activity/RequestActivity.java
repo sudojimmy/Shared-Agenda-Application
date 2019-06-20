@@ -1,10 +1,6 @@
 package com.cosin.shareagenda.activity;
 
-import android.support.v4.view.GravityCompat;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import com.cosin.shareagenda.R;
 

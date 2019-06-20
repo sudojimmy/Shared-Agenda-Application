@@ -4,17 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
-import com.cosin.shareagenda.activity.MainActivity;
+import com.cosin.shareagenda.activity.OldMainActivity;
 import com.cosin.shareagenda.activity.RequestActivity;
 
 import butterknife.BindView;
@@ -78,7 +76,7 @@ public class TitleBar extends Toolbar {
         a.recycle();
     }
 
-    public void setContext(final MainActivity context) {
+    public void setContext(final OldMainActivity context) {
         leftButtonImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
