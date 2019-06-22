@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         } else {
-            Toast.makeText(this, "Result Code" + resultCode, Toast.LENGTH_SHORT).show(); // TODO remove this
+            Toast.makeText(this, "Request Cdoe: "+requestCode+"  Result Code:" + resultCode, Toast.LENGTH_SHORT).show(); // TODO remove this
         }
     }
 }
