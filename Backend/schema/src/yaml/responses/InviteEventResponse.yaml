@@ -1,0 +1,12 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: InviteEvent Response
+description: invite event object
+type: object
+additionalProperties: false
+properties:
+  messageId:
+    description: message Id
+    type: string
+required:
+  - messageId
+

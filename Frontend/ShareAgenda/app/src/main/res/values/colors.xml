@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00b0ff</color>
+    <color name="colorPrimaryLight">#00eeff</color>
+    <color name="colorPrimaryDark">#0081cb</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="navigbg">#F0FFFF</color>
+    <color name="evtBar0">#E6F4F4</color>
+    <color name="evtBar2">#EEE</color>
+    <color name="evtBlock">#BADAD3</color>
+    <color name="evtTime">#444</color>
+    <color name="evtName">#208080</color>
+    <color name="evtLine">#000</color>
+
+    <color name="black_overlay">#66000000</color>
+    <color name="friends_calendar_label">#80aaeedd</color>
+    <color name="friends_calendar_bg">#fffffff0</color>
+
+    <color name="circleBoarder">#50FFFFFF</color>
+    <color name="solidCircle">#AAFFFFFF</color>
+    <color name="gradStart">#63C9FF</color>
+    <color name="gradEnd">#67EFC8</color>
+    <color name="white">#FFFFFF</color>
+</resources>

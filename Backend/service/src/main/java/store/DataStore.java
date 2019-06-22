@@ -10,19 +10,14 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 
-import types.Account;
-import types.Calendar;
-import types.Event;
-import types.Group;
+import types.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
-
+import static org.bson.codecs.configuration.CodecRegistries.*;
 
 
 public class DataStore {
@@ -31,6 +26,9 @@ public class DataStore {
     public static final String COLLECTION_GROUPS = "GROUPS";
     public static final String COLLECTION_EVENTS = "EVENTS";
     public static final String COLLECTION_CALENDARS = "CALENDARS";
+    public static final String COLLECTION_MESSAGEQUEUES = "MESSAGE_QUEUES";
+    public static final String COLLECTION_MESSAGES = "MESSAGES";
+    public static final String COLLECTION_EVENTMESSAGES = "EVENT_MESSAGES";
     public static final String DEFAULT_MONGODB_CONNECTION_STRING = "mongodb://localhost:27017";
     public static final String MONGODB_CONNECTION_STRING_SYS_ENV = "AGENDA_APP_DATABASE_CONN_STR";
 
@@ -51,8 +49,12 @@ public class DataStore {
             MongoClient client = new MongoClient(uri); // TODO change default ip:port
             System.out.println("Connected");
 
-            CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
-                fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+            CodecRegistry pojoCodecRegistry = fromRegistries(
+                    MongoClient.getDefaultCodecRegistry(),
+                    fromProviders(PojoCodecProvider.builder().automatic(true).build()),
+                    fromCodecs(new EventRepeatTypeCodec()),
+                    fromCodecs(new EventTypeTypeCodec()));
+
             database = client.getDatabase(AGENDA_APP_DATABASE).withCodecRegistry(pojoCodecRegistry);
         } catch (Exception e) {
             System.out.println("Failed to connect to MongoDB");
@@ -63,6 +65,9 @@ public class DataStore {
         map.put(COLLECTION_GROUPS, database.getCollection(COLLECTION_GROUPS, Group.class));
         map.put(COLLECTION_EVENTS, database.getCollection(COLLECTION_EVENTS, Event.class));
         map.put(COLLECTION_CALENDARS, database.getCollection(COLLECTION_CALENDARS, Calendar.class));
+        map.put(COLLECTION_EVENTMESSAGES, database.getCollection(COLLECTION_EVENTMESSAGES, EventMessage.class));
+        map.put(COLLECTION_MESSAGES, database.getCollection(COLLECTION_MESSAGES, Message.class));
+        map.put(COLLECTION_MESSAGEQUEUES, database.getCollection(COLLECTION_MESSAGEQUEUES, MessageQueue.class));
 
     }
 

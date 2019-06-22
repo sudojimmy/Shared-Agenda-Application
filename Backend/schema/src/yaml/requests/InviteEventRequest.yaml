@@ -1,0 +1,20 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: InviteEvent Request
+description: invite event object
+type: object
+additionalProperties: false
+properties:
+  senderId:
+    description: sender Id
+    type: string
+  receiverId:
+    description: receiver Id
+    type: string
+  event:
+    description: create event request
+    "$ref": CreateEventRequest.yaml
+required:
+  - senderId
+  - receiverId
+  - event
+

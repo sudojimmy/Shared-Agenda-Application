@@ -1,0 +1,13 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: MessageQueue Response
+description: get queue of message response
+type: object
+additionalProperties: false
+properties:
+  messageList:
+    description: a list of message object
+    type: array
+    items:
+      "$ref": ../types/Message.yaml
+required:
+  - messageList

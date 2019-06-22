@@ -1,0 +1,11 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetGroupRequest
+description: get group request
+type: object
+additionalProperties: false
+properties:
+    groupId:
+        description: group id (globally unique)
+        type: string
+required:
+    - groupId

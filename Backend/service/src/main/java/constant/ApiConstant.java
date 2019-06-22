@@ -22,4 +22,28 @@ public class ApiConstant {
     public static final String EVENT_LOCATION = "location";
     public static final String EVENT_STATE = "state";
     public static final String EVENT_DESCRIPTION = "description";
+    public static final String EVENT_PUBLIC = "public";
+
+    // Group
+    public static final String GROUP_ID = "groupId";
+    public static final String GROUP_MEMBERS = "members";
+    public static final String GROUP_NAME = "name";
+    public static final String GROUP_OWNER_ID = "ownerId";
+    
+
+    // MessageQueue
+    public static final String MESSAGEQUEUE_MESSAGEQUEUE_ID = "messageQueueId";
+    public static final String MESSAGEQUEUE_MESSAGE_LIST = "messageList";
+
+    // EventMessage
+    public static final String EVENT_SENDER_ID = "senderId";
+    public static final String EVENT_RECEIVER_ID = "receiverId";
+    public static final String EVENT_EVENT = "event";
+
+    // Message
+    public static final String MESSAGE_MESSAGE_ID = "messageId";
+    public static final String MESSAGE_TYPE_EVENT = "EVENT";
+    public static final String MESSAGE_TYPE_FRIEND = "FRIEND";
+    public static final String MESSAGE_TYPE_RESPONSE = "RESPONSE";
+
 }

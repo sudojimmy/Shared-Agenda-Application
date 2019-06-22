@@ -14,3 +14,6 @@ Backend/service/bin/
 Frontend/Schedule_Research/EventApp/.project
 Frontend/Schedule_Research/EventApp/.settings/
 Backend/service/src/main/main.iml
+Backend/buildBackend
+Frontend/ShareAgenda/.project
+Frontend/ShareAgenda/.settings/
