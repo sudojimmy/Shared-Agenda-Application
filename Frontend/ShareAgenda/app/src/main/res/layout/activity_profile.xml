@@ -75,6 +75,28 @@
             tools:text="example@gmail.com"
             android:layout_centerHorizontal="true"
             />
+        <TextView
+            android:textSize="14sp"
+            android:id="@+id/profile_nickname"
+            android:layout_below="@id/profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_margin="10dp"
+            tools:text="nickname"
+            android:layout_centerHorizontal="true"
+            />
+        <TextView
+            android:textSize="14sp"
+            android:id="@+id/profile_description"
+            android:layout_below="@id/profile_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_margin="10dp"
+            tools:text="description"
+            android:layout_centerHorizontal="true"
+            />
     </RelativeLayout>
     <Button
         android:layout_width="140dp"

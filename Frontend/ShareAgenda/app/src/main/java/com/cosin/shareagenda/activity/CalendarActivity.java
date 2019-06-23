@@ -27,7 +27,7 @@ public class CalendarActivity extends MainTitleActivity
 
     @Override
     protected  String titleName() {
-        SimpleDateFormat sdf=new SimpleDateFormat("d/M/yyyy EEEE");
+        SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy EEEE"); // stored in model.
         return sdf.format(new Date());
     }
 

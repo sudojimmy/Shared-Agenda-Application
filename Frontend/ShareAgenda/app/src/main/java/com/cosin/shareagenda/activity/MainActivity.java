@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cosin.shareagenda.R;
+import com.cosin.shareagenda.model.ApiClient;
+import com.cosin.shareagenda.model.Model;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -18,12 +20,15 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import org.apache.http.HttpStatus;
+
+import types.Account;
+
 import static com.cosin.shareagenda.config.SystemConfig.SERVER_CLIENT_ID;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "AndroidClarified";
     public static  GoogleSignInClient googleSignInClient;
-    public static  GoogleSignInAccount googleSignInAccount;
     private SignInButton googleSignInButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +62,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void onLoggedIn(GoogleSignInAccount googleSignInAccount) {
-        Intent intent = new Intent(this, ProfileActivity.class);
-//        intent.putExtra(ProfileActivity.GOOGLE_ACCOUNT, googleSignInAccount);
-        MainActivity.googleSignInAccount = googleSignInAccount; // TODO need to be change later
+        Model.model.setGoogleSignInAccount(googleSignInAccount);
 
-        startActivity(intent);
-        finish();
+        Intent intent = null;
+        try {
+            Account user = ApiClient.getAccount(googleSignInAccount.getEmail());
+            Model.model.setUser(user);
+            intent = new Intent(this, ProfileActivity.class);
+        } catch (com.cosin.shareagenda.model.ApiException e) {
+            if (e.getCode() == HttpStatus.SC_NOT_FOUND) {
+                intent = new Intent(this, SignUpActivity.class);
+            } else {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (intent != null) {
+            startActivity(intent);
+            finish();
+        }
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
