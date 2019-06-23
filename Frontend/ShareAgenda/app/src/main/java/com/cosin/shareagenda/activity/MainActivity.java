@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         googleSignInButton = findViewById(R.id.sign_in_button);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(SERVER_CLIENT_ID)
-                .requestEmail()
+                .requestEmail()g
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
         googleSignInButton.setOnClickListener(new View.OnClickListener() {

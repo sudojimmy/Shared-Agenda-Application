@@ -10,6 +10,10 @@ properties:
     calendarId:
         description: calendar id
         type: string
+    messageQueueId:
+        description: messageQueue Id
+        type: string
 required:
     - accountId
     - calendarId
+    - messageQueueId

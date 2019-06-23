@@ -25,10 +25,11 @@ public class GetAccountController extends BaseController {
         ExceptionUtils.assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         return new ResponseEntity<>(new GetAccountResponse()
-            .withAccountId(account .getAccountId())
-            .withCalendarId(account.getCalendarId())
-            .withDescription(account.getDescription())
-            .withNickname(account.getNickname()),
-            HttpStatus.OK);
+                .withAccountId(account.getAccountId())
+                .withCalendarId(account.getCalendarId())
+                .withDescription(account.getDescription())
+                .withNickname(account.getNickname())
+                .withMessageQueueId(account.getMessageQueueId()),
+                HttpStatus.OK);
     }
 }
