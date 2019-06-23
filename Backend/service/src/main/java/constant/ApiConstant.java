@@ -46,4 +46,7 @@ public class ApiConstant {
     public static final String MESSAGE_TYPE_FRIEND = "FRIEND";
     public static final String MESSAGE_TYPE_RESPONSE = "RESPONSE";
 
+    // Google Auth
+    public static final String GOOGLE_TOKEN = "google-token";
+
 }

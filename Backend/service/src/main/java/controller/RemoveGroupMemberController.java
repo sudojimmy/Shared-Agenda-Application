@@ -3,6 +3,9 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +24,11 @@ import utils.GroupUtils;
 public class RemoveGroupMemberController extends BaseController {
 
     @PostMapping("/group/removeMember")
-    public ResponseEntity<RemoveGroupMemberResponse> handle(@RequestBody RemoveGroupMemberRequest request) {
-        logger.info("AddGroupMember: " + request);
+    public ResponseEntity<RemoveGroupMemberResponse> handle(@RequestBody RemoveGroupMemberRequest request, HttpServletRequest servletRequest) {
+        logger.info("RemoveGroupMember: " + request);
+        // Todo add account check 
+        String sessionId = getSessionAccountId(servletRequest);
+        System.out.println(sessionId);
 
         ExceptionUtils.assertPropertyValid(request.getGroupId(), ApiConstant.GROUP_ID);
         ExceptionUtils.assertPropertyValid(request.getMembers(), ApiConstant.GROUP_MEMBERS);
