@@ -26,6 +26,7 @@ public class LaunchActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
+                        //Intent intent = new Intent(LaunchActivity.this, SignUpActivity.class);  //TODO Delete this
                         startActivity(intent);
                         LaunchActivity.this.finish();
                     }

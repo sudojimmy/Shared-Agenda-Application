@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cosin.shareagenda.R;
+import com.cosin.shareagenda.model.Model;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends MainTitleActivity {
     public static final String GOOGLE_ACCOUNT = "google_account";
-    private TextView profileName, profileEmail, profileUserId;
+    private TextView profileName, profileEmail, profileUserId, profileDescription, profileNickname;
     private ImageView profileImage;
     private Button signOut;
 
@@ -28,6 +28,8 @@ public class ProfileActivity extends MainTitleActivity {
         profileEmail = findViewById(R.id.profile_email);
         profileUserId = findViewById(R.id.profile_user_id);
         profileImage = findViewById(R.id.profile_image);
+        profileNickname = findViewById(R.id.profile_nickname);
+        profileDescription = findViewById(R.id.profile_description);
         signOut = findViewById(R.id.sign_out);
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,21 +49,22 @@ public class ProfileActivity extends MainTitleActivity {
                 });
             }
         });
+
         setDataOnView();
     }
 
     private void setDataOnView() {
-//        GoogleSignInAccount googleSignInAccount = getIntent().getParcelableExtra(GOOGLE_ACCOUNT);
-        GoogleSignInAccount googleSignInAccount = MainActivity.googleSignInAccount; // TODO need to change later
+        GoogleSignInAccount googleSignInAccount = Model.model.getGoogleSignInAccount();
 
         Picasso.with(this).load(googleSignInAccount.getPhotoUrl()).centerInside().fit().into(profileImage);
-
 
         profileName.setText(googleSignInAccount.getDisplayName());
         profileEmail.setText(googleSignInAccount.getEmail());
         profileUserId.setText(googleSignInAccount.getId());
+        profileDescription.setText(Model.model.getUser().getDescription());
+        profileNickname.setText(Model.model.getUser().getNickname());
 
-        Toast.makeText(this, googleSignInAccount.getIdToken(), Toast.LENGTH_SHORT).show();
+        System.out.println(googleSignInAccount.getIdToken());
     }
 
     @Override
