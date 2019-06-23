@@ -13,7 +13,7 @@ import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.util.AppHelper;
 import com.cosin.shareagenda.util.HandleMenu;
 
-public class OldMainActivity extends AppCompatActivity
+public class BaseMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     protected DrawerLayout drawer;
     public NavigationView navigationView;

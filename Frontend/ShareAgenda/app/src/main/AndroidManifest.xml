@@ -27,7 +27,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".activity.MainTitleActivity" />
-        <activity android:name=".activity.OldMainActivity" />
+        <activity android:name=".activity.BaseMainActivity" />
         <activity android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.ProfileActivity"
