@@ -57,7 +57,8 @@ public class CreateAccountController extends BaseController {
         // Step IV: create response object
         return new ResponseEntity<>(new CreateAccountResponse()
                 .withAccountId(request.getAccountId())
-                .withCalendarId(calendarId),
+                .withCalendarId(calendarId)
+                .withMessageQueueId(messageQueueId),
                 HttpStatus.CREATED);
     }
 }
