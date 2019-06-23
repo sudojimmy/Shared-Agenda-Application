@@ -16,6 +16,8 @@ import types.CreateAccountResponse;
 import types.GetAccountRequest;
 
 import static com.cosin.shareagenda.config.SystemConfig.SHARED_AGENDA_API_URL;
+import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_ACCOUNT;
+import static com.cosin.shareagenda.model.ApiEndpoint.GET_ACCOUNT;
 
 public class ApiClient {
     public static final MediaType MEDOA_JSON = MediaType.parse("application/json; charset=utf-8");
@@ -24,7 +26,7 @@ public class ApiClient {
 
     public static Account getAccount(String accountId) throws ApiException {
         GetAccountRequest getAccountRequest = new GetAccountRequest().withAccountId(accountId);
-        String body = post("getAccount", gson.toJson(getAccountRequest));
+        String body = post(GET_ACCOUNT, gson.toJson(getAccountRequest));
         return gson.fromJson(body, Account.class);
     }
 
@@ -33,7 +35,7 @@ public class ApiClient {
                 .withAccountId(getAccountId())
                 .withNickname(nickname)
                 .withDescription(description);
-        String body = post("createAccount", gson.toJson(createAccountRequest));
+        String body = post(CREATE_ACCOUNT, gson.toJson(createAccountRequest));
         System.out.println(body);
         return gson.fromJson(body, CreateAccountResponse.class);
     }
