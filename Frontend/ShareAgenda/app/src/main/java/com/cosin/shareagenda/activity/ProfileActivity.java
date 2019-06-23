@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cosin.shareagenda.R;
+import com.cosin.shareagenda.model.ApiClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -62,6 +63,10 @@ public class ProfileActivity extends MainTitleActivity {
         profileUserId.setText(googleSignInAccount.getId());
 
         Toast.makeText(this, googleSignInAccount.getIdToken(), Toast.LENGTH_SHORT).show();
+
+        // This is an example of how to make request
+        // XXX: PLEASE remove this after
+        Toast.makeText(this, ApiClient.getAccount("jimmmmmmmmy").getNickname(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
