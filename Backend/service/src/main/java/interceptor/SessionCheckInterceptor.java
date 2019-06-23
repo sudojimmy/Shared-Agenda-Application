@@ -1,8 +1,5 @@
 package interceptor;
 
-import java.io.IOException;
-import java.util.Collections;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,15 +14,12 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import constant.ApiConstant;
-import utils.AccountUtils;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.LowLevelHttpRequest;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 
 @Component
 public class SessionCheckInterceptor implements HandlerInterceptor {
@@ -40,10 +34,7 @@ public class SessionCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("In Interceptor");
 
-        // HttpSession session = request.getSession();
-        // session.setAttribute(ApiConstant.ACCOUNT_ACCOUNT_ID,"123456");
         String idTokenString = request.getHeader(ApiConstant.GOOGLE_TOKEN);
         if (idTokenString == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Invalid Token");

@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.google.api.client.http.HttpRequest;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,8 +27,8 @@ public class RemoveGroupMemberController extends BaseController {
     public ResponseEntity<RemoveGroupMemberResponse> handle(@RequestBody RemoveGroupMemberRequest request, HttpServletRequest servletRequest) {
         logger.info("RemoveGroupMember: " + request);
         // Todo add account check 
-        // String id = (String)servletRequest.getSession().getAttribute(ApiConstant.ACCOUNT_ACCOUNT_ID);
-        // System.out.println(id);
+        String sessionId = getSessionAccountId(servletRequest);
+        System.out.println(sessionId);
 
         ExceptionUtils.assertPropertyValid(request.getGroupId(), ApiConstant.GROUP_ID);
         ExceptionUtils.assertPropertyValid(request.getMembers(), ApiConstant.GROUP_MEMBERS);
@@ -55,11 +53,4 @@ public class RemoveGroupMemberController extends BaseController {
         return new ResponseEntity<>(new RemoveGroupMemberResponse().withGroupId(request.getGroupId()),
             HttpStatus.OK);
     }
-
-    // @PostMapping("/group/removeMember")
-    // private String getAccountId(HttpServletRequest request){
-
-    //     String accountId = (String)request.getSession().getAttribute(ApiConstant.ACCOUNT_ACCOUNT_ID);
-    //     return accountId;
-    // } 
 }

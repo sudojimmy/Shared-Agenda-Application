@@ -47,7 +47,6 @@ public class ApiConstant {
     public static final String MESSAGE_TYPE_RESPONSE = "RESPONSE";
 
     // Google Auth
-    public static final String GOOGLE_CLIENT_ID = "ID";
     public static final String GOOGLE_TOKEN = "google-token";
 
 }
