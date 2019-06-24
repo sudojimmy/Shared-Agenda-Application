@@ -1,19 +1,22 @@
 package com.cosin.shareagenda.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
+import android.util.Log;
+import android.view.View;
 import android.support.v4.view.GravityCompat;
+import android.view.MenuItem;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
-import com.cosin.shareagenda.util.AppHelper;
-import com.cosin.shareagenda.util.HandleMenu;
 
-public class OldMainActivity extends AppCompatActivity
+import com.cosin.shareagenda.util.HandleMenu;
+import com.cosin.shareagenda.util.AppHelper;
+
+public abstract class OldMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     protected DrawerLayout drawer;
     public NavigationView navigationView;
@@ -44,22 +47,14 @@ public class OldMainActivity extends AppCompatActivity
         initView();
     }
 
-    // could be override in derived class
-    protected  String titleName() {
-        return "";
-    }
+    // need be override in derived class
+    protected abstract void loadContentView();
 
     // need be override in derived class
-    protected void loadContentView() {
-    }
+    protected abstract void loadData();
 
     // need be override in derived class
-    protected void loadData() {
-    }
-
-    // need be override in derived class
-    protected void initView() {
-    }
+    protected abstract void initView();
 
     public void openDrawer() {
         drawer.openDrawer(GravityCompat.START);

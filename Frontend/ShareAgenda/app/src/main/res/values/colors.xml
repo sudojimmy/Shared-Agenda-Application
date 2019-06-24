@@ -5,16 +5,20 @@
     <color name="colorPrimaryDark">#0081cb</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="navigbg">#F0FFFF</color>
+    <color name="navigbg">#EAFFF8</color>
     <color name="evtBar0">#E6F4F4</color>
     <color name="evtBar2">#EEE</color>
-    <color name="evtBlock">#BADAD3</color>
+    <color name="evtBlock">#B4DAD4</color>
+    <color name="evtBlock2">#B0D4D0</color>
     <color name="evtTime">#444</color>
     <color name="evtName">#208080</color>
     <color name="evtLine">#000</color>
 
-    <color name="black_overlay">#66000000</color>
-    <color name="friends_calendar_label">#80aaeedd</color>
+    <color name="black_overlay">#969696</color>
+    <color name="bg_green_white">#F4FFF8</color>
+    <color name="moon_white">#D8ECF2</color>
+    <color name="txt_black">#000</color>
+    <color name="friends_calendar_label">#D4F8EE</color>
     <color name="friends_calendar_bg">#fffffff0</color>
 
     <color name="circleBoarder">#50FFFFFF</color>

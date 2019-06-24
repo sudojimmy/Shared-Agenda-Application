@@ -1,11 +1,11 @@
 package com.cosin.shareagenda.activity;
 
 import android.content.res.Resources;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,16 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
-import com.cosin.shareagenda.adapter.EventAdapter;
 import com.cosin.shareagenda.adapter.FriendsEventAdapter;
 import com.cosin.shareagenda.entity.FriendEvent;
 import com.cosin.shareagenda.util.GenData;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class GroupEventsActivity extends MainTitleActivity {
+public class FriendsEventsActivity extends MainTitleActivity {
     private List<FriendEvent> friendEvts;
 
     @Override
@@ -33,7 +31,7 @@ public class GroupEventsActivity extends MainTitleActivity {
     @Override
     protected void loadContentView() {
         LayoutInflater inflater = getLayoutInflater();
-        inflater.inflate(R.layout.activity_group_events, coordinatorLayout);
+        inflater.inflate(R.layout.activity_friends_events, coordinatorLayout);
     }
 
     @Override
