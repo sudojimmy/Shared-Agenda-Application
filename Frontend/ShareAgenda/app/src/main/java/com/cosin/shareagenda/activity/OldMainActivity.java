@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
-import com.cosin.shareagenda.util.AppHelper;
+import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.HandleMenu;
+
+import types.Account;
 
 public class OldMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,10 +35,13 @@ public class OldMainActivity extends AppCompatActivity
 
         // init navigationView
         navigationView.setNavigationItemSelectedListener(this);
-        if (AppHelper.getUserInfo() != null) {
+        Account user = Model.model.getUser();
+        if (user != null) {
             View headerView = navigationView.getHeaderView(0);
             TextView username = headerView.findViewById(R.id.username);
-            username.setText(AppHelper.getUserInfo().getNickname());
+            TextView poster = headerView.findViewById(R.id.tv_poster);
+            username.setText(user.getNickname());
+            poster.setText(user.getDescription());
         }
 
         loadData();
