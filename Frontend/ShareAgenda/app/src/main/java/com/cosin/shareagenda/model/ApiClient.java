@@ -1,21 +1,15 @@
 package com.cosin.shareagenda.model;
 
-import com.google.api.client.http.HttpStatusCodes;
+import com.cosin.shareagenda.access.net.NetLoader;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
-import types.Account;
 import types.CreateAccountRequest;
-import types.CreateAccountResponse;
 import types.GetAccountRequest;
 
-import static com.cosin.shareagenda.config.SystemConfig.SHARED_AGENDA_API_URL;
 import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_ACCOUNT;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_ACCOUNT;
 
@@ -24,48 +18,27 @@ public class ApiClient {
     static OkHttpClient client = new OkHttpClient();
     static Gson gson = new Gson();
 
-    public static Account getAccount(String accountId) throws ApiException {
+    public static void getAccount(String accountId, Callback callback) {
         GetAccountRequest getAccountRequest = new GetAccountRequest().withAccountId(accountId);
-        String body = post(GET_ACCOUNT, gson.toJson(getAccountRequest));
-        return gson.fromJson(body, Account.class);
+        makePostRequest(GET_ACCOUNT, gson.toJson(getAccountRequest), callback);
     }
 
-    public static CreateAccountResponse createAccount(String nickname, String description) throws ApiException {
+    public static void createAccount(String nickname, String description, Callback callback) {
         CreateAccountRequest createAccountRequest = new CreateAccountRequest()
                 .withAccountId(getAccountId())
                 .withNickname(nickname)
                 .withDescription(description);
-        String body = post(CREATE_ACCOUNT, gson.toJson(createAccountRequest));
-        System.out.println(body);
-        return gson.fromJson(body, CreateAccountResponse.class);
+        makePostRequest(CREATE_ACCOUNT, gson.toJson(createAccountRequest), callback);
     }
 
     private static String getAccountId() {
         return Model.model.getGoogleSignInAccount().getEmail();
     }
 
-    public static String post(String endpoint, String json) throws ApiException {
-        try {
-            return makePostRequest(endpoint, json);
-        } catch (IOException e) {
-            e.printStackTrace(); // TODO better way to handle this. ex. network exception ?
-            return null;
-        }
-    }
-
-    private static String makePostRequest(String endpoint, String json) throws IOException, ApiException {
+    private static void makePostRequest(String endpoint, String json, Callback callback) {
         RequestBody body = RequestBody.create(MEDOA_JSON, json);
-        Request request = new Request.Builder()
-                .url(SHARED_AGENDA_API_URL + endpoint)
-                .post(body)
-                .addHeader("google-token", getUserToken())
-                .build();
-        Response response = client.newCall(request).execute();
-        int rc = response.code();
-        if (!HttpStatusCodes.isSuccess(rc)) {
-            throw new ApiException(response.message(), rc);
-        }
-        return response.body().string();
+        new NetLoader(endpoint, body, getUserToken())
+                .PostRequest(callback);
     }
 
     private static String getUserToken() {

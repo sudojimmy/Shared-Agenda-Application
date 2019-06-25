@@ -11,6 +11,7 @@ import okhttp3.RequestBody;
 public class NetLoader {
     private String accesssName;
     private RequestBody requestBody;
+    private String googleToken;
 
     public NetLoader(String accessName) {
         this.accesssName = SystemConfig.SHARED_AGENDA_API_URL + accessName;
@@ -21,15 +22,25 @@ public class NetLoader {
         this.requestBody = requestBody;
     }
 
+    public NetLoader(String accessName, RequestBody requestBody, String googleToken) {
+        this.accesssName = SystemConfig.SHARED_AGENDA_API_URL + accessName;
+        this.requestBody = requestBody;
+        this.googleToken = googleToken;
+    }
+
     public void setRequestBody(RequestBody requestBody) {
         this.requestBody = requestBody;
     }
 
     public void PostRequest(Callback callback) {
-        Request request = new Request.Builder()
-                .url(this.accesssName)
-                .post(this.requestBody)
-                .build();
+        Request.Builder requestBuilder = new Request.Builder()
+                .url(accesssName)
+                .post(requestBody);
+        if (googleToken != null) {
+            requestBuilder.addHeader("google-token", googleToken);
+        }
+
+        Request request = requestBuilder.build();
         OkHttpClient client = new OkHttpClient();
         Call call = client.newCall(request);
         call.enqueue(callback);
