@@ -3,7 +3,7 @@ package com.cosin.shareagenda.activity;
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.view.TitleBar;
 
-public class MainTitleActivity extends BaseMainActivity {
+public class MainTitleActivity extends OldMainActivity {
 
     @Override
     protected void initView() {

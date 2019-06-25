@@ -46,17 +46,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent signInIntent = googleSignInClient.getSignInIntent();
-
-                        try {
-                            // The Task returned from this call is always completed, no need to attach
-                            // a listener.
-                            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(signInIntent);
-                            GoogleSignInAccount account = task.getResult(ApiException.class);
-                            onLoggedIn(account);
-                        } catch (ApiException e) {
-                            // The ApiException status code indicates the detailed failure reason.
-                            Log.w(TAG, "*************888888*****signInResult:failed code=" + e.getStatusCode());
-                        }
+                startActivityForResult(signInIntent, 101);
             }
         });
     }
@@ -95,23 +85,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-////        if (resultCode == Activity.RESULT_OK) {
-//            switch (requestCode) {
-//                case 101:
-//                    try {
-//                        // The Task returned from this call is always completed, no need to attach
-//                        // a listener.
-//                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//                        GoogleSignInAccount account = task.getResult(ApiException.class);
-//                        onLoggedIn(account);
-//                    } catch (ApiException e) {
-//                        // The ApiException status code indicates the detailed failure reason.
-//                        Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-//                    }
-//                    break;
-//            }
-//        } else {
-//            Toast.makeText(this, "Request Cdoe: "+requestCode+"  Result Code:" + resultCode, Toast.LENGTH_SHORT).show(); // TODO remove this
-//        }
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case 101:
+                    try {
+                        // The Task returned from this call is always completed, no need to attach
+                        // a listener.
+                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                        GoogleSignInAccount account = task.getResult(ApiException.class);
+                        onLoggedIn(account);
+                    } catch (ApiException e) {
+                        // The ApiException status code indicates the detailed failure reason.
+                        Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+                    }
+                    break;
+            }
+        } else {
+            Toast.makeText(this, "Request Cdoe: "+requestCode+"  Result Code:" + resultCode, Toast.LENGTH_SHORT).show(); // TODO remove this
+        }
     }
 }

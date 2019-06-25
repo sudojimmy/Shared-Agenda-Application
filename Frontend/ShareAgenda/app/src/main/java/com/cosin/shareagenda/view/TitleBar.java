@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
-import com.cosin.shareagenda.activity.BaseMainActivity;
+import com.cosin.shareagenda.activity.OldMainActivity;
 import com.cosin.shareagenda.activity.RequestActivity;
 
 import butterknife.BindView;
@@ -76,7 +76,7 @@ public class TitleBar extends Toolbar {
         a.recycle();
     }
 
-    public void setContext(final BaseMainActivity context) {
+    public void setContext(final OldMainActivity context) {
         leftButtonImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
