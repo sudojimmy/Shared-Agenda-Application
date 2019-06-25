@@ -1,11 +1,9 @@
 package com.cosin.shareagenda.activity;
 
-import android.os.Bundle;
-
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.view.TitleBar;
 
-public abstract class MainTitleActivity extends OldMainActivity {
+public abstract class MainTitleActivity extends BaseActivity {
 
     @Override
     protected void initView() {
