@@ -14,7 +14,7 @@
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.OldMainActivity">
+        tools:context=".activity.BaseActivity">
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

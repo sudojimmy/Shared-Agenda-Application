@@ -15,7 +15,7 @@ import com.cosin.shareagenda.util.HandleMenu;
 
 import types.Account;
 
-public abstract class OldMainActivity extends AppCompatActivity
+public abstract class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     protected DrawerLayout drawer;
     public NavigationView navigationView;
