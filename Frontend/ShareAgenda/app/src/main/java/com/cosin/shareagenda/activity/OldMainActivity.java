@@ -1,20 +1,19 @@
 package com.cosin.shareagenda.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.support.v4.view.GravityCompat;
-import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
-
+import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.HandleMenu;
-import com.cosin.shareagenda.util.AppHelper;
+
+import types.Account;
 
 public abstract class OldMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,10 +35,13 @@ public abstract class OldMainActivity extends AppCompatActivity
 
         // init navigationView
         navigationView.setNavigationItemSelectedListener(this);
-        if (AppHelper.getUserInfo() != null) {
+        Account user = Model.model.getUser();
+        if (user != null) {
             View headerView = navigationView.getHeaderView(0);
             TextView username = headerView.findViewById(R.id.username);
-            username.setText(AppHelper.getUserInfo().getNickname());
+            TextView poster = headerView.findViewById(R.id.tv_poster);
+            username.setText(user.getNickname());
+            poster.setText(user.getDescription());
         }
 
         loadData();
@@ -69,7 +71,6 @@ public abstract class OldMainActivity extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

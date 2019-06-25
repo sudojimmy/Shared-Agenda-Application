@@ -21,9 +21,11 @@
     <color name="friends_calendar_label">#D4F8EE</color>
     <color name="friends_calendar_bg">#fffffff0</color>
 
+    <color name="heading">#3797cf</color>
     <color name="circleBoarder">#50FFFFFF</color>
     <color name="solidCircle">#AAFFFFFF</color>
     <color name="gradStart">#63C9FF</color>
     <color name="gradEnd">#67EFC8</color>
     <color name="white">#FFFFFF</color>
+    <color name="grey">#E5E5E5</color>
 </resources>

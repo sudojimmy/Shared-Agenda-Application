@@ -2,11 +2,12 @@ package com.cosin.shareagenda.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.model.ApiClient;
 import com.cosin.shareagenda.model.Model;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.api.client.http.HttpStatusCodes;
 import com.google.gson.Gson;
 
@@ -30,6 +33,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText etNickName;
     private EditText etDescription;
     private Button btnSignUpSubmit;
+    private Button btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
         etNickName = findViewById(R.id.etNickName);
         etDescription = findViewById(R.id.etDescription);
         btnSignUpSubmit = findViewById(R.id.btnSignUp);
+        btnBack = findViewById(R.id.btnBack);
 
         Activity activity = this;
         btnSignUpSubmit.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +52,20 @@ public class SignUpActivity extends AppCompatActivity {
                 String name = etNickName.getText().toString();
                 String description = etDescription.getText().toString();
                 ApiClient.createAccount(name, description, new SigninCallback());
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        //On Succesfull signout we navigate the user back to LoginActivity
+                        Intent intent = new Intent(activity, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                });
             }
         });
     }
