@@ -48,6 +48,7 @@ public class ApiClient {
         try {
             return makePostRequest(endpoint, json);
         } catch (IOException e) {
+            e.printStackTrace(); // TODO better way to handle this. ex. network exception ?
             return null;
         }
     }

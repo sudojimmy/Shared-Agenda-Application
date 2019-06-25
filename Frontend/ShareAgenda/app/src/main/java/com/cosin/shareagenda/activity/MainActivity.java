@@ -68,19 +68,22 @@ public class MainActivity extends AppCompatActivity {
         try {
             Account user = ApiClient.getAccount(googleSignInAccount.getEmail());
             Model.model.setUser(user);
+            if (user == null) {
+                Toast.makeText(this, "Network Error!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             intent = new Intent(this, ProfileActivity.class);
         } catch (com.cosin.shareagenda.model.ApiException e) {
             if (e.getCode() == HttpStatus.SC_NOT_FOUND) {
                 intent = new Intent(this, SignUpActivity.class);
             } else {
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
             }
         }
 
-        if (intent != null) {
-            startActivity(intent);
-            finish();
-        }
+        startActivity(intent);
+        finish();
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
