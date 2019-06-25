@@ -1,9 +1,11 @@
 package com.cosin.shareagenda.activity;
 
+import android.os.Bundle;
+
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.view.TitleBar;
 
-public class MainTitleActivity extends OldMainActivity {
+public abstract class MainTitleActivity extends OldMainActivity {
 
     @Override
     protected void initView() {
@@ -11,5 +13,18 @@ public class MainTitleActivity extends OldMainActivity {
         TitleBar titlebar = findViewById(R.id.titlebar);
         titlebar.setContext(this);
         titlebar.setTitleText(titleName());
+    }
+
+    // could be override in derived class
+    protected abstract String titleName();
+
+    protected void changeTitle(String title) {
+        TitleBar titlebar = findViewById(R.id.titlebar);
+        titlebar.setTitleText(title);
+    }
+
+    protected void titlebarHideRightButton() {
+        TitleBar titlebar = findViewById(R.id.titlebar);
+        titlebar.hideRightImage();
     }
 }

@@ -1,23 +1,19 @@
 package com.cosin.shareagenda.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class FriendEvent implements Serializable {
+    private Date day;
     private String friendName;
-    private String date;
-    private List<FriendEventItem> events;
+    private List<SimpleEventEntity> events;
 
-    public FriendEvent(String friendName, String date) {
+    public FriendEvent(Date day, String friendName, List<SimpleEventEntity> events) {
+        this.day = day;
         this.friendName = friendName;
-        this.date = date;
-    }
-
-    public FriendEvent(String friendName, String date, List<FriendEventItem> events) {
-        this.friendName = friendName;
-        this.date = date;
         this.events = events;
     }
 
@@ -25,27 +21,25 @@ public class FriendEvent implements Serializable {
         return friendName;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateDM() {
+        SimpleDateFormat sdf = new SimpleDateFormat("d/M");
+        return sdf.format(day);
     }
 
-    public List<FriendEventItem> getEvents() {
+    public List<SimpleEventEntity> getEvents() {
         return events;
     }
 
-    public void setEvents(List<FriendEventItem> events) {
-        this.events = events;
+    public boolean isToday() {
+        Calendar cal = Calendar.getInstance();
+        Calendar todayC = Calendar.getInstance();
+        todayC.setTime(new Date());
+        cal.setTime(day);
+        return todayC.get(Calendar.DAY_OF_YEAR) == cal.get(Calendar.DAY_OF_YEAR) &&
+                todayC.get(Calendar.YEAR) == cal.get(Calendar.YEAR);
     }
 
-    public boolean checkQuarterInEvent(int quarter) {
-        if (events == null || events.size() == 0)
-            return false;
-        Iterator<FriendEventItem> it = events.iterator();
-        while (it.hasNext()) {
-            FriendEventItem evt = it.next();
-            if (quarter >= evt.getQuarter() && quarter < evt.getQuarter() + evt.getDuring())
-                return true;
-        }
-        return false;
+    public Date getDate() {
+        return day;
     }
 }

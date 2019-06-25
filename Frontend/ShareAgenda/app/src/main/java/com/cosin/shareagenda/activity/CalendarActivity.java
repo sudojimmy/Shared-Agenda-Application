@@ -10,25 +10,26 @@ import android.widget.Toast;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.adapter.EventAdapter;
+import com.cosin.shareagenda.config.SystemConfig;
 import com.cosin.shareagenda.entity.EventEntity;
 import com.cosin.shareagenda.util.GenData;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class CalendarActivity extends MainTitleActivity
         implements GestureDetector.OnGestureListener {
+    protected Calendar cal;
     private List<EventEntity> eventList;
-    private float MIN_DX = 300;
-    private float MIN_VX = 150;
 
     GestureDetector gestureDetector;
 
     @Override
     protected  String titleName() {
-        SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy EEEE"); // stored in model.
-        return sdf.format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("d/M/yyyy EEEE");
+        return sdf.format(cal.getTime());
     }
 
     @Override
@@ -40,7 +41,16 @@ public class CalendarActivity extends MainTitleActivity
     @Override
     protected void loadData() {
         //
+        cal = Calendar.getInstance();
+        cal.setTime(new Date());
+
         eventList = GenData.putEventList();
+    }
+
+    protected void refreshData(int d) {
+        //
+        cal.add(Calendar.DATE, d);
+        eventList = GenData.getEventList();
     }
 
     @Override
@@ -56,6 +66,18 @@ public class CalendarActivity extends MainTitleActivity
         gestureDetector = new GestureDetector(this);
     }
 
+    protected void refreshView() {
+        // title
+        SimpleDateFormat sdf = new SimpleDateFormat("d/M/yyyy EEEE");
+        changeTitle(sdf.format(cal.getTime()));
+
+        // event panel
+        RecyclerView recyclerView = findViewById(R.id.recycle_view);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(llm);
+        recyclerView.setAdapter(new EventAdapter(eventList));
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent event){
         super.dispatchTouchEvent(event);
@@ -65,12 +87,14 @@ public class CalendarActivity extends MainTitleActivity
     @Override
     public boolean onFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
         Log.d("AAA",String.format("DX= %f  VX= %f",me2.getX()-me1.getX(),velocityX));
-        if (Math.abs(velocityX) > MIN_VX) {
-            if (me2.getX() - me1.getX() > MIN_DX) {
-                Toast.makeText(this,"Right",Toast.LENGTH_SHORT).show();
+        if (Math.abs(velocityX) > SystemConfig.FLY_MIN_VX) {
+            if (me2.getX() - me1.getX() > SystemConfig.FLY_MIN_DX) {
+                refreshData(-1);
+                refreshView();
             }
-            else if (me1.getX() - me2.getX() > MIN_DX) {
-                Toast.makeText(this,"Left",Toast.LENGTH_SHORT).show();
+            else if (me1.getX() - me2.getX() > SystemConfig.FLY_MIN_DX) {
+                refreshData(1);
+                refreshView();
             }
         }
 
