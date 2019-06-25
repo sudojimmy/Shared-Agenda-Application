@@ -1,8 +1,8 @@
 package com.cosin.shareagenda.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.util.AppHelper;
@@ -26,7 +26,6 @@ public class LaunchActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
-                        //Intent intent = new Intent(LaunchActivity.this, SignUpActivity.class);  //TODO Delete this
                         startActivity(intent);
                         LaunchActivity.this.finish();
                     }

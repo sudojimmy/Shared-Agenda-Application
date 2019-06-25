@@ -10,10 +10,11 @@
     <dimen name="friends_events_time_height">40dp</dimen>
     <dimen name="friends_events_height">24dp</dimen>
     <dimen name="friends_events_text_height">12dp</dimen>
-    <dimen name="friends_label_text_size">6sp</dimen>
+    <dimen name="friends_label_text_size">5sp</dimen>
     <dimen name="event_line_height">24dp</dimen>
     <dimen name="event_text_time_size">12dp</dimen>
     <dimen name="event_text_size">14dp</dimen>
     <dimen name="event_left_margin">8px</dimen>
-
+    <dimen name="weekly_label_text_size">4sp</dimen>
+    <dimen name="week_event_text_size">12dp</dimen>
 </resources>

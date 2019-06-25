@@ -15,7 +15,7 @@ import com.cosin.shareagenda.util.HandleMenu;
 
 import types.Account;
 
-public class OldMainActivity extends AppCompatActivity
+public abstract class OldMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     protected DrawerLayout drawer;
     public NavigationView navigationView;
@@ -49,22 +49,14 @@ public class OldMainActivity extends AppCompatActivity
         initView();
     }
 
-    // could be override in derived class
-    protected  String titleName() {
-        return "";
-    }
+    // need be override in derived class
+    protected abstract void loadContentView();
 
     // need be override in derived class
-    protected void loadContentView() {
-    }
+    protected abstract void loadData();
 
     // need be override in derived class
-    protected void loadData() {
-    }
-
-    // need be override in derived class
-    protected void initView() {
-    }
+    protected abstract void initView();
 
     public void openDrawer() {
         drawer.openDrawer(GravityCompat.START);
@@ -79,7 +71,6 @@ public class OldMainActivity extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

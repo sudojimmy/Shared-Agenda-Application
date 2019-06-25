@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll_content2"
+    android:id="@+id/ll_content"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.WeeklyActivity">
+    tools:context=".activity.GroupEventsActivity">
 
     <com.cosin.shareagenda.view.TitleBar
         android:id="@+id/titlebar"
@@ -14,7 +14,7 @@
         />
 
     <LinearLayout
-        android:id="@+id/ll_weekLabel"
+        android:id="@+id/ll_feLabel"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@color/friends_calendar_label"
@@ -25,9 +25,8 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
-
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_week"
+        android:id="@+id/recycle_ge"
         android:orientation="vertical"
         android:background="@color/bg_green_white"
         android:layout_width="match_parent"
