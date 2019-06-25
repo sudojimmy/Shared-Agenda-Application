@@ -10,10 +10,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
-import com.cosin.shareagenda.util.AppHelper;
+import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.HandleMenu;
 
-public class OldMainActivity extends AppCompatActivity
+import types.Account;
+
+public abstract class OldMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     protected DrawerLayout drawer;
     public NavigationView navigationView;
@@ -33,10 +35,13 @@ public class OldMainActivity extends AppCompatActivity
 
         // init navigationView
         navigationView.setNavigationItemSelectedListener(this);
-        if (AppHelper.getUserInfo() != null) {
+        Account user = Model.model.getUser();
+        if (user != null) {
             View headerView = navigationView.getHeaderView(0);
             TextView username = headerView.findViewById(R.id.username);
-            username.setText(AppHelper.getUserInfo().getNickname());
+            TextView poster = headerView.findViewById(R.id.tv_poster);
+            username.setText(user.getNickname());
+            poster.setText(user.getDescription());
         }
 
         loadData();
@@ -44,22 +49,14 @@ public class OldMainActivity extends AppCompatActivity
         initView();
     }
 
-    // could be override in derived class
-    protected  String titleName() {
-        return "";
-    }
+    // need be override in derived class
+    protected abstract void loadContentView();
 
     // need be override in derived class
-    protected void loadContentView() {
-    }
+    protected abstract void loadData();
 
     // need be override in derived class
-    protected void loadData() {
-    }
-
-    // need be override in derived class
-    protected void initView() {
-    }
+    protected abstract void initView();
 
     public void openDrawer() {
         drawer.openDrawer(GravityCompat.START);
@@ -74,7 +71,6 @@ public class OldMainActivity extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cosin.shareagenda.R;
+import com.cosin.shareagenda.config.SystemConfig;
 import com.cosin.shareagenda.entity.EventEntity;
 import com.cosin.shareagenda.entity.FriendEvent;
+import com.cosin.shareagenda.util.AppHelper;
+import com.cosin.shareagenda.util.CalendarEventBiz;
 import com.cosin.shareagenda.view.EventView;
 import com.cosin.shareagenda.view.FriendsEventsView;
 
@@ -40,10 +43,10 @@ public class FriendsEventAdapter extends RecyclerView.Adapter<FriendsEventAdapte
 
     @Override
     public void onBindViewHolder(FriendsEventAdapter.ViewHolder viewHolder, int position) {
-        int quarter = 36 + position;
+        int quarter = SystemConfig.SATRT_QAURTER + position;
         boolean[] ev = new boolean[friendEvts.size()];
         for (int i = 0; i < friendEvts.size(); i++) {
-            ev[i] = friendEvts.get(i).checkQuarterInEvent(quarter);
+            ev[i] = CalendarEventBiz.checkQuarterInEvent(quarter, friendEvts.get(i));
         }
 
         viewHolder.eventView.setCld(quarter, ev);
@@ -51,6 +54,6 @@ public class FriendsEventAdapter extends RecyclerView.Adapter<FriendsEventAdapte
 
     @Override
     public int getItemCount() {
-        return 84 - 36 + 1;
+        return SystemConfig.END_QUARTER - SystemConfig.SATRT_QAURTER + 1;
     }
 }

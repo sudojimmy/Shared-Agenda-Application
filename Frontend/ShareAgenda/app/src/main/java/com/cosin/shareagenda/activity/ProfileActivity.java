@@ -16,8 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends MainTitleActivity {
-    public static final String GOOGLE_ACCOUNT = "google_account";
-    private TextView profileName, profileEmail, profileUserId, profileDescription, profileNickname;
+    private TextView profileName, profileEmail, profileDescription, profileNickname;
     private ImageView profileImage;
     private Button signOut;
 
@@ -26,7 +25,6 @@ public class ProfileActivity extends MainTitleActivity {
         super.initView();
         profileName = findViewById(R.id.profile_text);
         profileEmail = findViewById(R.id.profile_email);
-        profileUserId = findViewById(R.id.profile_user_id);
         profileImage = findViewById(R.id.profile_image);
         profileNickname = findViewById(R.id.profile_nickname);
         profileDescription = findViewById(R.id.profile_description);
@@ -60,7 +58,6 @@ public class ProfileActivity extends MainTitleActivity {
 
         profileName.setText(googleSignInAccount.getDisplayName());
         profileEmail.setText(googleSignInAccount.getEmail());
-        profileUserId.setText(googleSignInAccount.getId());
         profileDescription.setText(Model.model.getUser().getDescription());
         profileNickname.setText(Model.model.getUser().getNickname());
 

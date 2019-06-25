@@ -24,7 +24,12 @@ public class AppHelper {
         return (int)(spValue * fontScale + 0.5f);
     }
 
+    public static boolean isNullOrEmpty(String string) {
+        return string == null || string.isEmpty();
+    }
+
     public static UserEntity getUserInfo() {
         return AgendaApplication.getUserInfo();
     }
+
 }
