@@ -26,6 +26,8 @@
     <color name="solidCircle">#AAFFFFFF</color>
     <color name="gradStart">#63C9FF</color>
     <color name="gradEnd">#67EFC8</color>
+    <color name="success">#73cc73</color>
+
     <color name="white">#FFFFFF</color>
     <color name="grey">#E5E5E5</color>
 </resources>
