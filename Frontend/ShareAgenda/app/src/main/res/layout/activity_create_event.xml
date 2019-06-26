@@ -7,7 +7,7 @@
 
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/createButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
@@ -17,15 +17,19 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/eventName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:ems="10"
         android:hint="Have Meeting"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -35,7 +39,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="28dp"
-        android:text="TextView"
+        android:text="EventName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Event\nName" />
@@ -44,200 +48,114 @@
         android:id="@+id/editText7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:ems="10"
         android:hint="University"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintStart_toStartOf="@+id/radioGroup" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/repeatDropDown" />
     <!--app:layout_constraintStart_toStartOf="@+id/radioGroup2"-->
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        android:layout_marginTop="40dp"
+        android:text="Location"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
         tools:text="Location" />
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="47dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="40dp"
+        android:text="Type"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:text="Type" />
 
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/radioGroup1"
-        android:layout_width="411dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="@+id/editText2"
-        app:layout_constraintTop_toBottomOf="@+id/editText2">
-
-        <RadioButton
-            android:id="@+id/radioButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="STUDY"
-            app:layout_constraintStart_toStartOf="@+id/editText2"
-            app:layout_constraintTop_toBottomOf="@+id/editText2" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WORK"
-            app:layout_constraintStart_toStartOf="@+id/radioButton1"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton1" />
-
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ENTERTAINMENT"
-            app:layout_constraintEnd_toEndOf="@+id/radioButton2"
-            app:layout_constraintStart_toEndOf="@+id/radioButton2"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton2" />
-
-        <RadioButton
-            android:id="@+id/radioButton4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="APPOINTMENT"
-            app:layout_constraintStart_toStartOf="@+id/radioButton3"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton3" />
-
-        <RadioButton
-            android:id="@+id/radioButton5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OTHERS"
-            app:layout_constraintStart_toStartOf="@+id/radioButton4"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton4" />
-    </RadioGroup>
-
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginBottom="26dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/textView8"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="52dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="40dp"
+        android:text="Date"
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
         tools:text="Date" />
 
 
     <EditText
-        android:id="@+id/editText8"
+        android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="1998/06/09"
         android:inputType="date"
-        app:layout_constraintStart_toStartOf="@+id/radioGroup"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup1" />
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/typeDropDown" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="26dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="229dp"
-        android:layout_marginBottom="228dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/editText9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        android:layout_marginTop="36dp"
+        android:text="Repeat"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
         tools:text="Repeat" />
 
-
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/radioGroup"
-        android:layout_width="259dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginBottom="45dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/editText7"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toTopOf="@+id/editText8">
-
-        <RadioButton
-            android:id="@+id/radioButton6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ONCE"
-            tools:layout_editor_absoluteX="110dp"
-            tools:layout_editor_absoluteY="254dp" />
-
-        <RadioButton
-            android:id="@+id/radioButton7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DAILY"
-            tools:layout_editor_absoluteX="110dp"
-            tools:layout_editor_absoluteY="286dp" />
-
-        <RadioButton
-            android:id="@+id/radioButton8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WEEKLY"
-            tools:layout_editor_absoluteX="110dp"
-            tools:layout_editor_absoluteY="318dp" />
-
-        <RadioButton
-            android:id="@+id/radioButton9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MONTHLY"
-            tools:layout_editor_absoluteX="110dp"
-            tools:layout_editor_absoluteY="350dp" />
-
-        <RadioButton
-            android:id="@+id/radioButton10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="YEARLY"
-            tools:layout_editor_absoluteX="110dp"
-            tools:layout_editor_absoluteY="382dp" />
-    </RadioGroup>
 
     <EditText
         android:id="@+id/editText9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="No Study No Fxxx Life..."
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/editText7"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/editText7" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="209dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginBottom="210dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editText7"
-        app:layout_constraintTop_toBottomOf="@+id/editText8"
+        android:layout_marginTop="44dp"
+        android:text="Description"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
         tools:text="Description" />
+
+    <Spinner
+        android:id="@+id/repeatDropDown"
+        android:layout_width="216dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/datePicker" />
+
+    <Spinner
+        android:id="@+id/typeDropDown"
+        android:layout_width="216dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/eventName" />
 </android.support.constraint.ConstraintLayout>

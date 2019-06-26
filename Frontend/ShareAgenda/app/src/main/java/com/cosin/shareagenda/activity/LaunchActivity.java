@@ -25,7 +25,7 @@ public class LaunchActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LaunchActivity.this, CreateEventAcitivty.class);
                         startActivity(intent);
                         LaunchActivity.this.finish();
                     }
