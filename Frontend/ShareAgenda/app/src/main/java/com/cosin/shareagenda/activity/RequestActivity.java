@@ -8,19 +8,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
+import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.access.net.NetLoader;
 import com.cosin.shareagenda.entity.UserEntity;
 import com.cosin.shareagenda.entity.net.TestResult;
 import com.cosin.shareagenda.util.AppHelper;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class RequestActivity extends MainTitleActivity implements View.OnClickListener {
     @SuppressLint("HandlerLeak")
@@ -29,7 +25,7 @@ public class RequestActivity extends MainTitleActivity implements View.OnClickLi
         public void handleMessage(Message msg) {
             TextView tv = findViewById(R.id.textView);
             switch (msg.what) {
-                case 1:
+                case CallbackHandler.SUCCESS:
                     try {
                         Gson gson = new Gson();
                         TestResult result = gson.fromJson((String)msg.obj, TestResult.class);
@@ -44,7 +40,7 @@ public class RequestActivity extends MainTitleActivity implements View.OnClickLi
                         e.printStackTrace();
                     }
                     break;
-                case 2:
+                case CallbackHandler.EXECUTE_FAILURE:
                     tv.setText("Network Error: " + (String) msg.obj);
                     break;
             }
@@ -91,24 +87,8 @@ public class RequestActivity extends MainTitleActivity implements View.OnClickLi
                         .add("user", gson.toJson(test))
                         .build();
                 new NetLoader("test", requestBody)
-                        .PostRequest(new RequestActivity.CallbackHandler());
+                        .PostRequest(new CallbackHandler(handler));
                 break;
-        }
-    }
-
-    class CallbackHandler implements Callback {
-        @Override
-        public void onFailure(Call call, IOException e) {
-            Message msg = handler.obtainMessage(2);
-            msg.obj = e.getMessage();
-            handler.sendMessage(msg);
-        }
-
-        @Override
-        public void onResponse(Call call, Response response) throws IOException {
-            Message msg = handler.obtainMessage(1);
-            msg.obj = response.body().string();
-            handler.sendMessage(msg);
         }
     }
 }
