@@ -42,6 +42,12 @@ public class NetLoader {
 
         Request request = requestBuilder.build();
         OkHttpClient client = new OkHttpClient();
+
+        System.out.println("=========================================");
+        System.out.println(request);
+        System.out.println(googleToken);
+        System.out.println();
+        System.out.println("=========================================");
         Call call = client.newCall(request);
         call.enqueue(callback);
     }
