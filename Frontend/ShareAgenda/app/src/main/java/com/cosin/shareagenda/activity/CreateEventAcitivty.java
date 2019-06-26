@@ -1,7 +1,6 @@
 package com.cosin.shareagenda.activity;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -17,6 +16,8 @@ import com.cosin.shareagenda.R;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CreateEventAcitivty extends AppCompatActivity {
@@ -27,8 +28,8 @@ public class CreateEventAcitivty extends AppCompatActivity {
     private EditText repeat;
     private EditText datePicker;
     private Button createButton;
-
     private String startDate;
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
     private SlideDateTimeListener listener = new SlideDateTimeListener() {
 
@@ -38,6 +39,7 @@ public class CreateEventAcitivty extends AppCompatActivity {
             startDate = date.toString();
             // Do something with the date. This Date object contains
             // the date and time that the user has selected.
+            datePicker.setText(dateFormat.format(date));
         }
 
         @Override
@@ -116,6 +118,8 @@ public class CreateEventAcitivty extends AppCompatActivity {
                         .show();
             }
         });
+        Date date = new Date();
+        datePicker.setText(dateFormat.format(date));
 
         eventName.addTextChangedListener(new TextWatcher() {
 
