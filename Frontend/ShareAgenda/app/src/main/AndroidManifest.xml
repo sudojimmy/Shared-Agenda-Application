@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SignUpActivity"></activity>
+        <activity
+            android:name=".activity.SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.CalendarActivity"
             android:launchMode="singleTask"
@@ -26,8 +28,6 @@
         <activity
             android:name=".activity.RequestActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.MainTitleActivity" />
-        <activity android:name=".activity.BaseActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
