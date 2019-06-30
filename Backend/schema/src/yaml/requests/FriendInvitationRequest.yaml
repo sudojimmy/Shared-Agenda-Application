@@ -1,0 +1,22 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: FriendInvitationRequest
+description: friend invitation request
+type: object
+additionalProperties: false
+properties:
+    sender:
+        description: sender account id
+        type: string
+    receiver:
+        description: receiver accouny id
+        type: string
+    status:
+        description: invitation status
+        type: string
+    responseMessageId:
+        description: the message id that the invitation response to 
+        type: string
+required:
+    - sender
+    - receiver
+    - status

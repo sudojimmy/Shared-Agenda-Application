@@ -19,6 +19,9 @@ properties:
     messageQueueId:
         description: messageQueue Id
         type: string
+    friendQueueId:
+        desciption: friendQueue Id
+        type: string
 required:
     - accountId
     - nickname

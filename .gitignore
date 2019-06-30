@@ -17,3 +17,7 @@ Backend/service/src/main/main.iml
 Backend/buildBackend
 Frontend/ShareAgenda/.project
 Frontend/ShareAgenda/.settings/
+Frontend/ShareAgenda/app/.classpath
+Frontend/ShareAgenda/app/.project
+Frontend/ShareAgenda/app/.settings/
+
