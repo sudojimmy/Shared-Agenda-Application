@@ -1,7 +1,9 @@
 package utils;
 
+import com.mongodb.client.model.Filters;
 import constant.ApiConstant;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import store.DataStore;
 import types.*;
@@ -54,5 +56,11 @@ public class EventMessageUtils {
         Document document = new Document();
         document.put(ApiConstant.MESSAGE_MESSAGE_ID, messageId);
         return dataStore.findOneInCollection(document, DataStore.COLLECTION_EVENTMESSAGES);
+    }
+
+
+    public static boolean deleteEventMessage(final String eventmessageId) {
+        Bson filter = Filters.eq(ApiConstant.MESSAGE_MESSAGE_ID, eventmessageId);
+        return dataStore.delete(filter, DataStore.COLLECTION_EVENTMESSAGES);
     }
 }

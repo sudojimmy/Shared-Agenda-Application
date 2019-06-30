@@ -38,6 +38,17 @@ public class ReplyEventInvitationController extends BaseController {
                 request.getStatus(),
                 request.getDescription());
 
+        // remove the eventMessage from reply's sender messageQ
+        Account replyUser = AccountUtils.getAccount(replyMessage.getSenderId());
+        MessageQueueUtils.deleteMessageFromMessageQueue(eventMessage.getMessageId(), replyUser.getMessageQueueId());
+
+        // create Event Object to DB
+        EventListUtils.createEventToDatabase(eventMessage.getEvent());
+
+        // delete EventMessage Obj from DB
+        EventMessageUtils.deleteEventMessage(eventMessage.getMessageId());
+
+
         // Step IV: create response object
         return new ResponseEntity<>(new ReplyEventInvitationResponse().withReplyId(replyMessage.getReplyId()),
                 HttpStatus.CREATED);
