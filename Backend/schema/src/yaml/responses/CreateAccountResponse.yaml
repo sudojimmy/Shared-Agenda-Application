@@ -13,7 +13,11 @@ properties:
     messageQueueId:
         description: messageQueue Id
         type: string
+    friendQueueId:
+        description: friendQueue Id
+        type: string
 required:
     - accountId
     - calendarId
     - messageQueueId
+    - friendQueueId

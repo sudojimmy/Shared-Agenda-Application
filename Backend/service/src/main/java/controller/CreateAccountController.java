@@ -13,6 +13,7 @@ import types.CreateAccountResponse;
 import utils.AccountUtils;
 import utils.CalendarUtils;
 import utils.ExceptionUtils;
+import utils.FriendQueueUtils;
 import utils.MessageQueueUtils;
 
 
@@ -44,21 +45,23 @@ public class CreateAccountController extends BaseController {
 
         String calendarId = CalendarUtils.createCalendarToDatabase().getCalendarId();
         String messageQueueId = MessageQueueUtils.createMessageQueueToDatabase().getMessageQueueId();
-
+        String friendQueueId = FriendQueueUtils.createFriendQueueToDatabase().getFriendQueueId();
         // Step III: write to Database
         Account p = new Account()
                 .withNickname(request.getNickname())
                 .withAccountId(request.getAccountId())
                 .withDescription(request.getDescription())
                 .withCalendarId(calendarId)
-                .withMessageQueueId(messageQueueId);
+                .withMessageQueueId(messageQueueId)
+                .withFriendQueueId(friendQueueId);
         dataStore.insertToCollection(p, DataStore.COLLECTION_ACCOUNTS);
 
         // Step IV: create response object
         return new ResponseEntity<>(new CreateAccountResponse()
                 .withAccountId(request.getAccountId())
                 .withCalendarId(calendarId)
-                .withMessageQueueId(messageQueueId),
+                .withMessageQueueId(messageQueueId)
+                .withFriendQueueId(friendQueueId),
                 HttpStatus.CREATED);
     }
 }

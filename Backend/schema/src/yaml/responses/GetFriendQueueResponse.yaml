@@ -1,0 +1,13 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetFriendQueue Response
+description: get queue of friend response
+type: object
+additionalProperties: false
+properties:
+  friendList:
+    description: a list of account Id
+    type: array
+    items:
+      type: string
+required:
+  - friendList
