@@ -55,6 +55,7 @@ public class DataStore {
                     MongoClient.getDefaultCodecRegistry(),
                     fromProviders(PojoCodecProvider.builder().automatic(true).build()),
                     fromCodecs(new EventRepeatTypeCodec()),
+                    fromCodecs(new ReplyStatusTypeCodec()),
                     fromCodecs(new EventTypeTypeCodec()));
 
             database = client.getDatabase(AGENDA_APP_DATABASE).withCodecRegistry(pojoCodecRegistry);

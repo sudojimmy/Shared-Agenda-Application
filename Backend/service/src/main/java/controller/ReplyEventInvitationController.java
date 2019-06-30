@@ -21,7 +21,7 @@ public class ReplyEventInvitationController extends BaseController {
         // Step I: check parameters
         ExceptionUtils.assertPropertyValid(request.getMessageId(), ApiConstant.MESSAGE_MESSAGE_ID);
         ExceptionUtils.assertPropertyValid(request.getStatus(), ApiConstant.REPLY_STATUS);
-        ExceptionUtils.assertPropertyValid(request.getDescription(), ApiConstant.REPLY_DESCRIPTION);
+        //ExceptionUtils.assertPropertyValid(request.getDescription(), ApiConstant.REPLY_DESCRIPTION);
 
         // Step II: check restriction (conflict, or naming rules etc.)
         Message message = MessageUtils.getMessage(request.getMessageId());
