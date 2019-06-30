@@ -7,6 +7,9 @@ properties:
   replyId:
     description: reply id (globally unique)
     type: string
+  type:
+    description: event, friend
+    "$ref": MessageType.yaml
   senderId:
     description: sender account id
     type: string

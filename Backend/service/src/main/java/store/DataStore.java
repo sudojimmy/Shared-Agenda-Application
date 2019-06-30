@@ -56,6 +56,7 @@ public class DataStore {
                     fromProviders(PojoCodecProvider.builder().automatic(true).build()),
                     fromCodecs(new EventRepeatTypeCodec()),
                     fromCodecs(new ReplyStatusTypeCodec()),
+                    fromCodecs(new MessageTypeTypeCodec()),
                     fromCodecs(new EventTypeTypeCodec()));
 
             database = client.getDatabase(AGENDA_APP_DATABASE).withCodecRegistry(pojoCodecRegistry);

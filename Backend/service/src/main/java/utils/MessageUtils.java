@@ -9,19 +9,20 @@ import org.bson.types.ObjectId;
 import store.DataStore;
 import types.Message;
 import types.MessageQueue;
+import types.*;
 
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 import static controller.BaseController.dataStore;
 
 public class MessageUtils {
-    public static Message createMessageToDatabase(String messageId, String type) {
+    public static Message createMessageToDatabase(String messageId, final MessageType type) {
         Message message = new Message().withMessageId(messageId).withType(type);
         dataStore.insertToCollection(message, DataStore.COLLECTION_MESSAGES);
         return message;
     }
 
-    public static void generateMessageToMessageQueue(final String type, final String messageQueueId) {
+    public static void generateMessageToMessageQueue(final MessageType type, final String messageQueueId) {
         String messageId = new ObjectId().toString();
         createMessageToDatabase(messageId, type);
         addMessageIdToMessageQueue(messageId, messageQueueId);

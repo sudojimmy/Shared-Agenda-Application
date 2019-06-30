@@ -42,8 +42,19 @@ public class ReplyEventInvitationController extends BaseController {
         Account replyUser = AccountUtils.getAccount(replyMessage.getSenderId());
         MessageQueueUtils.deleteMessageFromMessageQueue(eventMessage.getMessageId(), replyUser.getMessageQueueId());
 
-        // create Event Object to DB
-        EventListUtils.createEventToDatabase(eventMessage.getEvent());
+
+        if(request.getStatus().equals(ReplyStatus.ACCEPT)){
+            // create Event Object to DB
+            String eventId = EventListUtils.createEventToDatabase(eventMessage.getEvent());
+
+            // add event to the invited account
+            EventListUtils.addEventIdToCalendar(eventId, replyUser.getCalendarId());
+
+            // add event to the inviting account
+            Account inviteUser = AccountUtils.getAccount(replyMessage.getReceiverId());
+            EventListUtils.addEventIdToCalendar(eventId, inviteUser.getCalendarId());
+        }
+
 
         // delete EventMessage Obj from DB
         EventMessageUtils.deleteEventMessage(eventMessage.getMessageId());

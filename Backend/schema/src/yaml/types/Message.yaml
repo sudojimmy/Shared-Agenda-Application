@@ -9,7 +9,7 @@ properties:
     type: string
   type:
     description: event/friend/response
-    type: string
+    "$ref": MessageType.yaml
   senderId:
     description: sender Id
     type: string
