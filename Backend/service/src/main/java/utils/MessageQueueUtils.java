@@ -1,7 +1,9 @@
 package utils;
 
+import com.mongodb.client.model.Filters;
 import constant.ApiConstant;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import store.DataStore;
 import types.Message;
@@ -9,6 +11,8 @@ import types.MessageQueue;
 
 import java.util.ArrayList;
 
+import static com.mongodb.client.model.Updates.combine;
+import static com.mongodb.client.model.Updates.set;
 import static controller.BaseController.dataStore;
 
 public class MessageQueueUtils {
@@ -29,5 +33,15 @@ public class MessageQueueUtils {
     public static ArrayList<Message> getMessageList(final String messageQueueId){
         MessageQueue messageQueue = getMessageQueue(messageQueueId);
         return new ArrayList<>(messageQueue.getMessageList());
+    }
+
+    public static void deleteMessageFromMessageQueue(final String messageId, final String messageQueueId) {
+        MessageQueue messageQueue = MessageQueueUtils.getMessageQueue(messageQueueId);
+        messageQueue.getMessageList().remove(messageId);
+
+        Bson filter = Filters.eq(ApiConstant.MESSAGEQUEUE_MESSAGEQUEUE_ID, messageQueueId);
+        Bson query = combine(set(ApiConstant.MESSAGEQUEUE_MESSAGE_LIST, messageQueue.getMessageList()));
+
+        dataStore.updateInCollection(filter, query, DataStore.COLLECTION_MESSAGEQUEUES);
     }
 }

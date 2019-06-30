@@ -1,6 +1,7 @@
 package controller;
 
 import constant.ApiConstant;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +41,9 @@ public class InviteEventController extends BaseController {
 
         // TODO check friendship
 
+        ReplyStatus replyStatus = ReplyStatus.valueOf("PENDING");
+        String replyId = new ObjectId().toString();
+        // Note: reply's receiver and sender is opposite way of invitation
         String messageId = EventMessageUtils.createEventMessageToDatabase(
                 null,
                 ER.getEventname(),
@@ -52,12 +56,23 @@ public class InviteEventController extends BaseController {
                 ER.getRepeat(),
                 ER.getState(),
                 ER.getDescription(),
-                ER.isPublic()).getMessageId();
+                replyId,
+                request.getReceiverId(),
+                request.getSenderId(),
+                replyStatus,
+                "")
+                .getMessageId();
 
         MessageUtils.createMessageToDatabase(messageId, ApiConstant.MESSAGE_TYPE_EVENT);
+        MessageUtils.createMessageToDatabase(replyId, ApiConstant.MESSAGE_TYPE_RESPONSE);
+
         String messageQueueId = account.getMessageQueueId();
 
+        // add the Message(eventMessage) to messageQueue
         MessageUtils.addMessageIdToMessageQueue(messageId, messageQueueId);
+
+        // add the Message(replyMessage) to messageQueue
+        MessageUtils.addMessageIdToMessageQueue(replyId, messageQueueId);
 
         // Step IV: create response object
         return new ResponseEntity<>(new InviteEventResponse().withMessageId(messageId),

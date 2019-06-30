@@ -1,0 +1,27 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: ReplyMessage
+description: Reply object describes Accept/decline information
+type: object
+additionalProperties: false
+properties:
+  replyId:
+    description: reply id (globally unique)
+    type: string
+  senderId:
+    description: sender account id
+    type: string
+  receiverId:
+    description: receiver account id
+    type: string
+  status:
+    description: accept, decline, pending
+    "$ref": ReplyStatus.yaml
+  description:
+    description: user description
+    type: string
+required:
+  - replyId
+  - senderId
+  - receiverId
+  - status
+  - description

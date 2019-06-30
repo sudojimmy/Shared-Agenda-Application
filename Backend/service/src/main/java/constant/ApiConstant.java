@@ -53,6 +53,13 @@ public class ApiConstant {
     // Google Auth
     public static final String GOOGLE_TOKEN = "google-token";
 
+    // Reply
+    public static final String REPLY_REPLY_ID = "replyId";
+    public static final String REPLY_SENDER_ID = "senderId";
+    public static final String REPLY_RECEIVER_ID = "receiverId";
+    public static final String REPLY_STATUS = "status";
+    public static final String REPLY_DESCRIPTION = "description";
+
     //Friend Invitation
     public static final String INVITATION_SENDER = "sender";
     public static final String INVITATION_RECEIVER = "recevier";
@@ -61,5 +68,6 @@ public class ApiConstant {
     public static final String INVITATION_STATUS_ACCEPTED = "accepted";
     public static final String INVITATION_STATUS_DECLINED = "declined";
     public static final String INVITATION_RESPONSE_MESSAGE_ID = "responseMessageId";
+
 
 }

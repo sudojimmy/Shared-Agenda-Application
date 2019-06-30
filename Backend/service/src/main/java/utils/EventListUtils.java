@@ -42,6 +42,11 @@ public class EventListUtils {
         return eventId;
     }
 
+    public static String createEventToDatabase(final Event event) {
+        dataStore.insertToCollection(event, DataStore.COLLECTION_EVENTS);
+        return event.getEventId();
+    }
+
     public static boolean updateEventInDatabase(String eventId, final String eventname, final String starterId,
                                                final EventType type, final int start, final int count,
                                                final String date, final String location, final EventRepeat repeat,

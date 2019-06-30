@@ -37,6 +37,7 @@ jsonSchema2Pojo {
   // Location of the JSON Schema file(s). This may refer to a single file or a directory of files.
   source = files([
           "${project.projectDir}/src/yaml/types/EventType.yaml",
+          "${project.projectDir}/src/yaml/types/ReplyStatus.yaml",
           "${project.projectDir}/src/yaml/types/EventState.yaml",
           "${project.projectDir}/src/yaml/types/EventRepeat.yaml",
           "${project.projectDir}/src/yaml/types/",
