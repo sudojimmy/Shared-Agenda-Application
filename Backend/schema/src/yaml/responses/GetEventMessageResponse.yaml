@@ -1,0 +1,10 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: Get event Message Response
+description: get Event Message response
+type: object
+additionalProperties: false
+properties:
+  eventMessage:
+    "$ref": ../types/EventMessage.yaml
+required:
+  - eventMessage

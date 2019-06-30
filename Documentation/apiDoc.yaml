@@ -256,6 +256,25 @@ paths:
           description: "Invalid Parameter: messageId and status cannot be null or empty, senderId need equal to starterId"
         "404":
           description: "Not Found: target messageId not found in database"
+  getEventMessage:
+    post:
+      operationId: getEventMessage
+      tags:
+        - Message
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/GetEventMessageRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/GetEventMessageResponse.yaml'
+        "400":
+          description: "Invalid Parameter: messageId cannot be null or empty, senderId need equal to starterId"
+        "404":
+          description: "Not Found: target messageId not found in database"
 # Group
   createGroup:
     post:
