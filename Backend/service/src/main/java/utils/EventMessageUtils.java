@@ -21,13 +21,7 @@ public class EventMessageUtils {
                                                             final String location,
                                                             final EventRepeat repeat,
                                                             final EventState state,
-                                                            final String description,
-                                                            final String replyId,
-                                                            final MessageType replyType,
-                                                            final String senderId,
-                                                            final String receiverId,
-                                                            final ReplyStatus status,
-                                                            final String replydescription) {
+                                                            final String description) {
         if (eventId == null) {
             eventId = new ObjectId().toString();
         }
@@ -47,14 +41,7 @@ public class EventMessageUtils {
 
         String eventmessageId = new ObjectId().toString();
 
-        ReplyMessageUtils.createReplyMessageToDatabase(
-                replyId,
-                replyType,
-                senderId,
-                receiverId,
-                status,
-                replydescription);
-        EventMessage eventmessage = new EventMessage().withMessageId(eventmessageId).withReplyId(replyId).withEvent(p);
+        EventMessage eventmessage = new EventMessage().withMessageId(eventmessageId).withEvent(p);
         dataStore.insertToCollection(eventmessage, DataStore.COLLECTION_EVENTMESSAGES);
         return eventmessage;
     }

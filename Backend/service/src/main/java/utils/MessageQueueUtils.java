@@ -55,4 +55,9 @@ public class MessageQueueUtils {
         }
         return null;
     }
+
+    public static Message getMessageFromMessageQueueId(String messageId, String messageQueueId) {
+        MessageQueue messageQueue = MessageQueueUtils.getMessageQueue(messageQueueId);
+        return getMessageFromMessageQueue(messageId, messageQueue);
+    }
 }
