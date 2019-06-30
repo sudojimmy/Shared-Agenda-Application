@@ -29,7 +29,8 @@ public class GetAccountController extends BaseController {
                 .withCalendarId(account.getCalendarId())
                 .withDescription(account.getDescription())
                 .withNickname(account.getNickname())
-                .withMessageQueueId(account.getMessageQueueId()),
+                .withMessageQueueId(account.getMessageQueueId())
+                .withFriendQueueId(account.getFriendQueueId()),
                 HttpStatus.OK);
     }
 }

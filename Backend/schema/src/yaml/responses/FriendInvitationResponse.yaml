@@ -1,0 +1,9 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: FriendInvitationResponse
+description: friend invitation response
+type: object
+additionalProperties: false
+properties:
+    messageId:
+        description: receiver message queue id
+        type: string

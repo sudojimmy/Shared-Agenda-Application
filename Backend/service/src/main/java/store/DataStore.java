@@ -30,6 +30,7 @@ public class DataStore {
     public static final String COLLECTION_MESSAGES = "MESSAGES";
     public static final String COLLECTION_EVENTMESSAGES = "EVENT_MESSAGES";
     public static final String COLLECTION_REPLYS = "REPLYS";
+    public static final String COLLECTION_FRIENDQUEUES = "FRIEND_QUEUES";
     public static final String DEFAULT_MONGODB_CONNECTION_STRING = "mongodb://localhost:27017";
     public static final String MONGODB_CONNECTION_STRING_SYS_ENV = "AGENDA_APP_DATABASE_CONN_STR";
 
@@ -70,6 +71,7 @@ public class DataStore {
         map.put(COLLECTION_REPLYS, database.getCollection(COLLECTION_REPLYS, ReplyMessage.class));
         map.put(COLLECTION_MESSAGES, database.getCollection(COLLECTION_MESSAGES, Message.class));
         map.put(COLLECTION_MESSAGEQUEUES, database.getCollection(COLLECTION_MESSAGEQUEUES, MessageQueue.class));
+        map.put(COLLECTION_FRIENDQUEUES, database.getCollection(COLLECTION_FRIENDQUEUES, FriendQueue.class));
 
     }
 

@@ -1,0 +1,11 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetFriendQueue Request
+description: get queue of friend request
+type: object
+additionalProperties: false
+properties:
+  accountId:
+    description: account id (globally unique)
+    type: string
+required:
+  - accountId

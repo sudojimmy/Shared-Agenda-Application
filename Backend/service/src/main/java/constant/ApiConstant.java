@@ -35,6 +35,10 @@ public class ApiConstant {
     public static final String MESSAGEQUEUE_MESSAGEQUEUE_ID = "messageQueueId";
     public static final String MESSAGEQUEUE_MESSAGE_LIST = "messageList";
 
+    // FriendQueue
+    public static final String FRIENDQUEUE_FRIENDQUEUE_ID = "friendQueueId";
+    public static final String FRIENDQUEUE_FRIEND_LIST = "friendList";
+
     // EventMessage
     public static final String EVENT_SENDER_ID = "senderId";
     public static final String EVENT_RECEIVER_ID = "receiverId";
@@ -55,5 +59,15 @@ public class ApiConstant {
     public static final String REPLY_RECEIVER_ID = "receiverId";
     public static final String REPLY_STATUS = "status";
     public static final String REPLY_DESCRIPTION = "description";
+
+    //Friend Invitation
+    public static final String INVITATION_SENDER = "sender";
+    public static final String INVITATION_RECEIVER = "recevier";
+    public static final String INVITATION_STATUS = "status";
+    public static final String INVITATION_STATUS_ACTIVE = "active";
+    public static final String INVITATION_STATUS_ACCEPTED = "accepted";
+    public static final String INVITATION_STATUS_DECLINED = "declined";
+    public static final String INVITATION_RESPONSE_MESSAGE_ID = "responseMessageId";
+
 
 }
