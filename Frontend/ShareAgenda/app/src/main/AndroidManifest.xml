@@ -35,6 +35,9 @@
             android:name=".activity.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+        android:name=".activity.CreateEventAcitivty"
+        android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activity.LaunchActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

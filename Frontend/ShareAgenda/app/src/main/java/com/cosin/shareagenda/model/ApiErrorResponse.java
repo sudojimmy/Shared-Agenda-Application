@@ -7,6 +7,10 @@ public class ApiErrorResponse {
     private String message;
     private String path;
 
+    public ApiErrorResponse(int status, String message) {
+        this.status = status;
+        this.message = message;
+    }
     public String getTimestamp() {
         return timestamp;
     }
