@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import types.FriendInvitationResponse;
 import types.Account;
-import types.Message;
 import types.FriendInvitationRequest;
 
 import constant.ApiConstant;
@@ -48,10 +47,6 @@ public class FriendInvitationController extends BaseController {
         if (request.getStatus().equals(ApiConstant.INVITATION_STATUS_ACCEPTED)) {
             FriendQueueUtils.addFriendToFriendQueue(sender.getAccountId(), receiver.getFriendQueueId());
             FriendQueueUtils.addFriendToFriendQueue(receiver.getAccountId(), sender.getFriendQueueId());
-          //     ExceptionUtils.assertPropertyValid(request.getResponseMessageId(), ApiConstant.INVITATION_RESPONSE_MESSAGE_ID);
-        //     Message responseMessage = MessageUtils.getMessage(request.getResponseMessageId());
-        //     ExceptionUtils.assertDatabaseObjectFound(responseMessage, ApiConstant.INVITATION_RESPONSE_MESSAGE_ID);
-        //     MessageUtils.removeMessageIdMessageQueue(responseMessage.getMessageId(), sender.getMessageQueueId());
         } 
         MessageUtils.generateMessageToMessageQueue(request.getStatus(),receiver.getMessageQueueId());
 

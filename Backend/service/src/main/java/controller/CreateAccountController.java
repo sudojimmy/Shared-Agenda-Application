@@ -60,7 +60,8 @@ public class CreateAccountController extends BaseController {
         return new ResponseEntity<>(new CreateAccountResponse()
                 .withAccountId(request.getAccountId())
                 .withCalendarId(calendarId)
-                .withMessageQueueId(messageQueueId),
+                .withMessageQueueId(messageQueueId)
+                .withFriendQueueId(friendQueueId),
                 HttpStatus.CREATED);
     }
 }
