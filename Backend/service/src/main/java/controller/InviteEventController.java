@@ -26,8 +26,8 @@ public class InviteEventController extends BaseController {
         ExceptionUtils.assertPropertyValid(request.getEvent(), ApiConstant.EVENT_EVENT);
 
         // Step II: check restriction (conflict, or naming rules etc.)
-        Account accountSender = AccountUtils.getAccount(request.getSenderId());
-        Account account = AccountUtils.getAccount(request.getReceiverId());
+        Account accountSender = AccountUtils.getAccount(request.getSenderId(),ApiConstant.EVENT_SENDER_ID);
+        Account account = AccountUtils.getAccount(request.getReceiverId(),ApiConstant.EVENT_RECEIVER_ID);
 
         // Step III: write to Database
         CreateEventRequest ER = request.getEvent();

@@ -25,7 +25,7 @@ public class GetFriendQueueController extends BaseController {
 
         ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
-        Account account = getAccount(request.getAccountId());
+        Account account = getAccount(request.getAccountId(),ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         ArrayList<String> friendList = FriendQueueUtils.getFriendList(account.getFriendQueueId());
 

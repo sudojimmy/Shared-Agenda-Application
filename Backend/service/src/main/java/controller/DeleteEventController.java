@@ -25,7 +25,7 @@ public class DeleteEventController extends BaseController {
         ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         // check accountId is a valid accountId
-        Account account = AccountUtils.getAccount(request.getAccountId());
+        Account account = AccountUtils.getAccount(request.getAccountId(),ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         Event event = EventListUtils.getEventListById(request.getEventId());
         ExceptionUtils.assertDatabaseObjectFound(event, ApiConstant.EVENT_EVENT_ID);
