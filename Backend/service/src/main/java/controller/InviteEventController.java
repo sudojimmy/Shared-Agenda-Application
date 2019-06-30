@@ -27,8 +27,8 @@ public class InviteEventController extends BaseController {
         ExceptionUtils.assertPropertyValid(request.getEvent(), ApiConstant.EVENT_EVENT);
 
         // Step II: check restriction (conflict, or naming rules etc.)
-        Account accountSender = AccountUtils.getAccount(request.getSenderId(),ApiConstant.EVENT_SENDER_ID);
-        Account account = AccountUtils.getAccount(request.getReceiverId(),ApiConstant.EVENT_RECEIVER_ID);
+        Account accountSender = AccountUtils.getAccount(request.getSenderId(), ApiConstant.EVENT_SENDER_ID);
+        Account account = AccountUtils.getAccount(request.getReceiverId(), ApiConstant.EVENT_RECEIVER_ID);
 
         // Step III: write to Database
         CreateEventRequest ER = request.getEvent();
@@ -55,22 +55,30 @@ public class InviteEventController extends BaseController {
                 ER.getState(),
                 ER.getDescription(),
                 replyId,
+                MessageType.EVENT,
                 request.getReceiverId(),
                 request.getSenderId(),
                 replyStatus,
                 "")
                 .getMessageId();
 
-        MessageUtils.createMessageToDatabase(messageId, ApiConstant.MESSAGE_TYPE_EVENT);
-        MessageUtils.createMessageToDatabase(replyId, ApiConstant.MESSAGE_TYPE_RESPONSE);
+        Message message = new Message()
+                .withMessageId(messageId)
+                .withType(MessageType.EVENT)
+                .withSenderId(request.getSenderId());
+        Message reply = new Message()
+                .withMessageId(replyId)
+                .withType(MessageType.RESPONSE)
+                .withSenderId(request.getReceiverId());
 
         String messageQueueId = account.getMessageQueueId();
+        String messageQueueIdSender = accountSender.getMessageQueueId();
 
         // add the Message(eventMessage) to messageQueue
-        MessageUtils.addMessageIdToMessageQueue(messageId, messageQueueId);
+        MessageUtils.addMessageIdToMessageQueue(message, messageQueueId);
 
         // add the Message(replyMessage) to messageQueue
-        MessageUtils.addMessageIdToMessageQueue(replyId, messageQueueId);
+        MessageUtils.addMessageIdToMessageQueue(reply, messageQueueIdSender);
 
         // Step IV: create response object
         return new ResponseEntity<>(new InviteEventResponse().withMessageId(messageId),

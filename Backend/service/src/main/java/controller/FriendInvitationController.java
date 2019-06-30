@@ -46,7 +46,7 @@ public class FriendInvitationController extends BaseController {
             FriendQueueUtils.addFriendToFriendQueue(sender.getAccountId(), receiver.getFriendQueueId());
             FriendQueueUtils.addFriendToFriendQueue(receiver.getAccountId(), sender.getFriendQueueId());
         } 
-        MessageUtils.generateMessageToMessageQueue(request.getStatus(),receiver.getMessageQueueId());
+        MessageUtils.generateMessageToMessageQueue(request.getStatus(),receiver.getMessageQueueId(), request.getSender());
 
 
 

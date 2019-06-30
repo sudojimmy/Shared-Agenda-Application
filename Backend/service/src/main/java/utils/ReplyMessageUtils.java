@@ -14,6 +14,7 @@ import static controller.BaseController.dataStore;
 
 public class ReplyMessageUtils {
     public static ReplyMessage createReplyMessageToDatabase(final String replyId,
+                                                            final MessageType type,
                                                             final String senderId,
                                                             final String receiverId,
                                                             final ReplyStatus status,
@@ -23,6 +24,7 @@ public class ReplyMessageUtils {
                 .withSenderId(senderId)
                 .withReceiverId(receiverId)
                 .withStatus(status)
+                .withType(type)
                 .withDescription(description);
 
         dataStore.insertToCollection(reply, DataStore.COLLECTION_REPLYS);

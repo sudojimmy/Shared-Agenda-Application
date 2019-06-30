@@ -23,6 +23,7 @@ public class EventMessageUtils {
                                                             final EventState state,
                                                             final String description,
                                                             final String replyId,
+                                                            final MessageType replyType,
                                                             final String senderId,
                                                             final String receiverId,
                                                             final ReplyStatus status,
@@ -46,7 +47,13 @@ public class EventMessageUtils {
 
         String eventmessageId = new ObjectId().toString();
 
-        ReplyMessageUtils.createReplyMessageToDatabase(replyId, senderId, receiverId, status, replydescription);
+        ReplyMessageUtils.createReplyMessageToDatabase(
+                replyId,
+                replyType,
+                senderId,
+                receiverId,
+                status,
+                replydescription);
         EventMessage eventmessage = new EventMessage().withMessageId(eventmessageId).withReplyId(replyId).withEvent(p);
         dataStore.insertToCollection(eventmessage, DataStore.COLLECTION_EVENTMESSAGES);
         return eventmessage;

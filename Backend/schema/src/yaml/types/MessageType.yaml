@@ -1,0 +1,8 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: Message type
+description: valid message type enum
+type: string
+enum:
+  - EVENT
+  - FRIEND
+  - RESPONSE
