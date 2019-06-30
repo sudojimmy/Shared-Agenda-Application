@@ -31,9 +31,11 @@ public class AccountUtils {
         }
     }
 
-    public static Account getAccount(final String accountId) {
+    public static Account getAccount(final String accountId, final String propType) {
         Document document = new Document();
         document.put(ApiConstant.ACCOUNT_ACCOUNT_ID, accountId);
-        return dataStore.findOneInCollection(document, DataStore.COLLECTION_ACCOUNTS);
+        Account account = dataStore.findOneInCollection(document, DataStore.COLLECTION_ACCOUNTS);
+        ExceptionUtils.assertDatabaseObjectFound(account, propType);
+        return account;
     }
 }

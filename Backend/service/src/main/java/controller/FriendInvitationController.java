@@ -38,17 +38,15 @@ public class FriendInvitationController extends BaseController {
             ExceptionUtils.invalidProperty(errMsg);
         }
 
-        Account sender = AccountUtils.getAccount(request.getSender());
-        ExceptionUtils.assertDatabaseObjectFound(sender, ApiConstant.INVITATION_SENDER);
+        Account sender = AccountUtils.getAccount(request.getSender(), ApiConstant.INVITATION_SENDER);
 
-        Account receiver = AccountUtils.getAccount(request.getReceiver());
-        ExceptionUtils.assertDatabaseObjectFound(receiver, ApiConstant.INVITATION_RECEIVER);
+        Account receiver = AccountUtils.getAccount(request.getReceiver(),ApiConstant.INVITATION_RECEIVER);
 
         if (request.getStatus().equals(ApiConstant.INVITATION_STATUS_ACCEPTED)) {
             FriendQueueUtils.addFriendToFriendQueue(sender.getAccountId(), receiver.getFriendQueueId());
             FriendQueueUtils.addFriendToFriendQueue(receiver.getAccountId(), sender.getFriendQueueId());
         } 
-        MessageUtils.generateMessageToMessageQueue(request.getStatus(),receiver.getMessageQueueId());
+        MessageUtils.generateMessageToMessageQueue(request.getStatus(),receiver.getMessageQueueId(), request.getSender());
 
 
 

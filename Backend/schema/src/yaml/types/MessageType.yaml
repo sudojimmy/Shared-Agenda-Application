@@ -5,3 +5,4 @@ type: string
 enum:
   - EVENT
   - FRIEND
+  - RESPONSE

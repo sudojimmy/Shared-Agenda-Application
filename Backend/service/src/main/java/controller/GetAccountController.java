@@ -21,8 +21,7 @@ public class GetAccountController extends BaseController {
 
         ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
-        Account account = AccountUtils.getAccount(request.getAccountId());
-        ExceptionUtils.assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
+        Account account = AccountUtils.getAccount(request.getAccountId(),ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         return new ResponseEntity<>(new GetAccountResponse()
                 .withAccountId(account.getAccountId())

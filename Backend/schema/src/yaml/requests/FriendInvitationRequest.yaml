@@ -12,7 +12,7 @@ properties:
         type: string
     status:
         description: invitation status
-        type: string
+        "$ref": ../types/MessageType.yaml
     responseMessageId:
         description: the message id that the invitation response to 
         type: string

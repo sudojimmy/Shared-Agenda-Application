@@ -27,10 +27,8 @@ public class InviteEventController extends BaseController {
         ExceptionUtils.assertPropertyValid(request.getEvent(), ApiConstant.EVENT_EVENT);
 
         // Step II: check restriction (conflict, or naming rules etc.)
-        Account accountSender = AccountUtils.getAccount(request.getSenderId());
-        ExceptionUtils.assertDatabaseObjectFound(accountSender, ApiConstant.EVENT_SENDER_ID);
-        Account account = AccountUtils.getAccount(request.getReceiverId());
-        ExceptionUtils.assertDatabaseObjectFound(account, ApiConstant.EVENT_RECEIVER_ID);
+        Account accountSender = AccountUtils.getAccount(request.getSenderId(), ApiConstant.EVENT_SENDER_ID);
+        Account account = AccountUtils.getAccount(request.getReceiverId(), ApiConstant.EVENT_RECEIVER_ID);
 
         // Step III: write to Database
         CreateEventRequest ER = request.getEvent();
@@ -57,14 +55,15 @@ public class InviteEventController extends BaseController {
                 ER.getState(),
                 ER.getDescription(),
                 replyId,
+                MessageType.EVENT,
                 request.getReceiverId(),
                 request.getSenderId(),
                 replyStatus,
                 "")
                 .getMessageId();
 
-        MessageUtils.createMessageToDatabase(messageId, ApiConstant.MESSAGE_TYPE_EVENT);
-        MessageUtils.createMessageToDatabase(replyId, ApiConstant.MESSAGE_TYPE_RESPONSE);
+        MessageUtils.createMessageToDatabase(messageId, MessageType.EVENT, request.getSenderId());
+        MessageUtils.createMessageToDatabase(replyId, MessageType.RESPONSE, request.getReceiverId());
 
         String messageQueueId = account.getMessageQueueId();
         String messageQueueIdSender = accountSender.getMessageQueueId();

@@ -27,7 +27,7 @@ public class GetMessageQueueController extends BaseController {
         ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
         ExceptionUtils.assertPropertyValid(request.getMessageQueueId(), ApiConstant.MESSAGEQUEUE_MESSAGEQUEUE_ID);
 
-        Account targetAccout = getAccount(request.getAccountId());
+        Account targetAccout = getAccount(request.getAccountId(),ApiConstant.ACCOUNT_ACCOUNT_ID);
         if(!request.getMessageQueueId().equals(targetAccout.getMessageQueueId())){
             ExceptionUtils.invalidProperty("Can only get own's MessageQueue");
         }

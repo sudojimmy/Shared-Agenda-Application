@@ -16,15 +16,15 @@ import static com.mongodb.client.model.Updates.set;
 import static controller.BaseController.dataStore;
 
 public class MessageUtils {
-    public static Message createMessageToDatabase(String messageId, final MessageType type) {
-        Message message = new Message().withMessageId(messageId).withType(type);
+    public static Message createMessageToDatabase(String messageId, final MessageType type, String senderId) {
+        Message message = new Message().withMessageId(messageId).withType(type).withSenderId(senderId);
         dataStore.insertToCollection(message, DataStore.COLLECTION_MESSAGES);
         return message;
     }
 
-    public static void generateMessageToMessageQueue(final MessageType type, final String messageQueueId) {
+    public static void generateMessageToMessageQueue(final MessageType type, final String messageQueueId, String senderId) {
         String messageId = new ObjectId().toString();
-        createMessageToDatabase(messageId, type);
+        createMessageToDatabase(messageId, type, senderId);
         addMessageIdToMessageQueue(messageId, messageQueueId);
     }
 

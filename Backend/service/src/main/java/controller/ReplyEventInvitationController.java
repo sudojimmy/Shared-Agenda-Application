@@ -39,7 +39,7 @@ public class ReplyEventInvitationController extends BaseController {
                 request.getDescription());
 
         // remove the eventMessage from reply's sender messageQ
-        Account replyUser = AccountUtils.getAccount(replyMessage.getSenderId());
+        Account replyUser = AccountUtils.getAccount(replyMessage.getSenderId(), ApiConstant.REPLY_SENDER_ID);
         MessageQueueUtils.deleteMessageFromMessageQueue(eventMessage.getMessageId(), replyUser.getMessageQueueId());
 
 
@@ -51,7 +51,7 @@ public class ReplyEventInvitationController extends BaseController {
             EventListUtils.addEventIdToCalendar(eventId, replyUser.getCalendarId());
 
             // add event to the inviting account
-            Account inviteUser = AccountUtils.getAccount(replyMessage.getReceiverId());
+            Account inviteUser = AccountUtils.getAccount(replyMessage.getReceiverId(), ApiConstant.REPLY_RECEIVER_ID);
             EventListUtils.addEventIdToCalendar(eventId, inviteUser.getCalendarId());
         }
 
