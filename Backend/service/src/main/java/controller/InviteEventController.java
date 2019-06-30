@@ -62,17 +62,23 @@ public class InviteEventController extends BaseController {
                 "")
                 .getMessageId();
 
-        MessageUtils.createMessageToDatabase(messageId, MessageType.EVENT, request.getSenderId());
-        MessageUtils.createMessageToDatabase(replyId, MessageType.RESPONSE, request.getReceiverId());
+        Message message = new Message()
+                .withMessageId(messageId)
+                .withType(MessageType.EVENT)
+                .withSenderId(request.getSenderId());
+        Message reply = new Message()
+                .withMessageId(replyId)
+                .withType(MessageType.RESPONSE)
+                .withSenderId(request.getReceiverId());
 
         String messageQueueId = account.getMessageQueueId();
         String messageQueueIdSender = accountSender.getMessageQueueId();
 
         // add the Message(eventMessage) to messageQueue
-        MessageUtils.addMessageIdToMessageQueue(messageId, messageQueueId);
+        MessageUtils.addMessageIdToMessageQueue(message, messageQueueId);
 
         // add the Message(replyMessage) to messageQueue
-        MessageUtils.addMessageIdToMessageQueue(replyId, messageQueueIdSender);
+        MessageUtils.addMessageIdToMessageQueue(reply, messageQueueIdSender);
 
         // Step IV: create response object
         return new ResponseEntity<>(new InviteEventResponse().withMessageId(messageId),

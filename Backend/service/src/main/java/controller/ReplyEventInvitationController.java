@@ -23,13 +23,11 @@ public class ReplyEventInvitationController extends BaseController {
         ExceptionUtils.assertPropertyValid(request.getStatus(), ApiConstant.REPLY_STATUS);
         //ExceptionUtils.assertPropertyValid(request.getDescription(), ApiConstant.REPLY_DESCRIPTION);
 
-        // Step II: check restriction (conflict, or naming rules etc.)
-        Message message = MessageUtils.getMessage(request.getMessageId());
-        ExceptionUtils.assertDatabaseObjectFound(message, ApiConstant.MESSAGE_MESSAGE_ID);
-
         // Step III: update replyMessage
         EventMessage eventMessage = EventMessageUtils.getEventMessage(request.getMessageId());
+        ExceptionUtils.assertDatabaseObjectFound(eventMessage, ApiConstant.MESSAGE_MESSAGE_ID);
         ReplyMessage replyMessage = ReplyMessageUtils.getReplyMessage(eventMessage.getReplyId());
+        ExceptionUtils.assertDatabaseObjectFound(replyMessage, ApiConstant.MESSAGE_MESSAGE_ID);
 
         boolean updated = ReplyMessageUtils.updateReplyMessageInDatabase(
                 replyMessage.getReplyId(),

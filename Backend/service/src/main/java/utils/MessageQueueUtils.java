@@ -37,11 +37,22 @@ public class MessageQueueUtils {
 
     public static void deleteMessageFromMessageQueue(final String messageId, final String messageQueueId) {
         MessageQueue messageQueue = MessageQueueUtils.getMessageQueue(messageQueueId);
-        messageQueue.getMessageList().remove(messageId);
+        Message message = getMessageFromMessageQueue(messageId, messageQueue);
+        // TODO NullPtr Check!
+        messageQueue.getMessageList().remove(message);
 
         Bson filter = Filters.eq(ApiConstant.MESSAGEQUEUE_MESSAGEQUEUE_ID, messageQueueId);
         Bson query = combine(set(ApiConstant.MESSAGEQUEUE_MESSAGE_LIST, messageQueue.getMessageList()));
 
         dataStore.updateInCollection(filter, query, DataStore.COLLECTION_MESSAGEQUEUES);
+    }
+
+    private static Message getMessageFromMessageQueue(String messageId, MessageQueue messageQueue) {
+        for (Message e : messageQueue.getMessageList()) {
+            if (e.getMessageId().equals(messageId)) {
+                return e;
+            }
+        }
+        return null;
     }
 }
