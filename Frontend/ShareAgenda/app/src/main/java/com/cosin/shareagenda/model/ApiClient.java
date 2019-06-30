@@ -16,7 +16,7 @@ import static com.cosin.shareagenda.model.ApiEndpoint.GET_ACCOUNT;
 public class ApiClient {
     public static final MediaType MEDOA_JSON = MediaType.parse("application/json; charset=utf-8");
     static OkHttpClient client = new OkHttpClient();
-    static Gson gson = new Gson();
+    private static Gson gson = new Gson();
 
     public static void getAccount(String accountId, Callback callback) {
         GetAccountRequest getAccountRequest = new GetAccountRequest().withAccountId(accountId);

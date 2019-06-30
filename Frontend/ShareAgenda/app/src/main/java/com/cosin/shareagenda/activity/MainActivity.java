@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cosin.shareagenda.R;
+import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.model.ApiClient;
+import com.cosin.shareagenda.model.ApiErrorResponse;
 import com.cosin.shareagenda.model.Model;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -24,14 +26,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.api.client.http.HttpStatusCodes;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 import types.Account;
 import types.GetAccountResponse;
 
+import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 import static com.cosin.shareagenda.config.SystemConfig.SERVER_CLIENT_ID;
 
 public class MainActivity extends AppCompatActivity {
@@ -70,55 +68,44 @@ public class MainActivity extends AppCompatActivity {
     private void onLoggedIn(GoogleSignInAccount googleSignInAccount) {
         Model.model.setGoogleSignInAccount(googleSignInAccount);
 
-        ApiClient.getAccount(googleSignInAccount.getEmail(), new SigninCallback());
+        ApiClient.getAccount(googleSignInAccount.getEmail(), new CallbackHandler(handler));
     }
 
     Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message message) {
-            if (message.what == HttpStatusCodes.STATUS_CODE_NOT_FOUND) {
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                startActivity(intent);
-                finish();
-                return;
-            }
-            Toast.makeText(MainActivity.this, (String)message.obj, Toast.LENGTH_SHORT).show();
-        }
-    };
-
-    class SigninCallback implements Callback {
-        @Override
-        public void onFailure(Call call, IOException e) {
-            Message msg = handler.obtainMessage();
-            msg.obj = e.getMessage();
-            handler.sendMessage(msg);
-        }
-
-        @Override
-        public void onResponse(Call call, Response response) throws IOException {
-            int rc = response.code();
-            if (!HttpStatusCodes.isSuccess(rc)) {
-                Message msg = handler.obtainMessage(rc);
-                msg.obj = rc + response.message();
-                handler.sendMessage(msg);
-                return;
-            }
-
-            String body = response.body().string();
             final Gson gson = new Gson();
-            GetAccountResponse resp = gson.fromJson(body, GetAccountResponse.class);
-            Model.model.setUser(new Account()
-                    .withAccountId(resp.getAccountId())
-                    .withCalendarId(resp.getCalendarId())
-                    .withDescription(resp.getDescription())
-                    .withMessageQueueId(resp.getMessageQueueId())
-                    .withNickname(resp.getNickname()));
+            Intent intent;
+            switch (message.what) {
+                case SUCCESS:
+                    String body = (String) message.obj;
+                    GetAccountResponse resp = gson.fromJson(body, GetAccountResponse.class);
+                    Model.model.setUser(new Account()
+                            .withAccountId(resp.getAccountId())
+                            .withCalendarId(resp.getCalendarId())
+                            .withDescription(resp.getDescription())
+                            .withMessageQueueId(resp.getMessageQueueId())
+                            .withNickname(resp.getNickname()));
 
-            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    break;
+                case CallbackHandler.HTTP_FAILURE:
+                    ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
+                    if (errorResponse.getStatus() == HttpStatusCodes.STATUS_CODE_NOT_FOUND) {
+                        intent = new Intent(MainActivity.this, SignUpActivity.class);
+                    } else {
+                        Toast.makeText(MainActivity.this, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    break;
+                default:
+                    Toast.makeText(MainActivity.this, (String)message.obj, Toast.LENGTH_SHORT).show();
+                    return;
+            }
             startActivity(intent);
             finish();
         }
-    }
+    };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -139,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         } else {
-            Toast.makeText(this, "Request Cdoe: "+requestCode+"  Result Code:" + resultCode, Toast.LENGTH_SHORT).show(); // TODO remove this
+            Toast.makeText(this, "Result Code:" + resultCode, Toast.LENGTH_SHORT).show(); // TODO remove this
         }
     }
 }
