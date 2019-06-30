@@ -28,7 +28,6 @@ public class CreateEventController extends BaseController {
 
         // Step II: check restriction (conflict, or naming rules etc.)
         Account account = AccountUtils.getAccount(request.getStarterId());
-        ExceptionUtils.assertDatabaseObjectFound(account, ApiConstant.EVENT_STARTER_ID);
 
         // Step III: write to Database
         String eventId = EventListUtils.createEventToDatabase(

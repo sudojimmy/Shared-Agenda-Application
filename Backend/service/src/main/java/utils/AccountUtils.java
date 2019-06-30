@@ -34,6 +34,8 @@ public class AccountUtils {
     public static Account getAccount(final String accountId) {
         Document document = new Document();
         document.put(ApiConstant.ACCOUNT_ACCOUNT_ID, accountId);
-        return dataStore.findOneInCollection(document, DataStore.COLLECTION_ACCOUNTS);
+        Account account = dataStore.findOneInCollection(document, DataStore.COLLECTION_ACCOUNTS);
+        ExceptionUtils.assertDatabaseObjectFound(account, ApiConstant.ACCOUNT_ACCOUNT_ID);
+        return account;
     }
 }

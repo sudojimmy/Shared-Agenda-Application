@@ -39,10 +39,8 @@ public class FriendInvitationController extends BaseController {
         }
 
         Account sender = AccountUtils.getAccount(request.getSender());
-        ExceptionUtils.assertDatabaseObjectFound(sender, ApiConstant.INVITATION_SENDER);
 
         Account receiver = AccountUtils.getAccount(request.getReceiver());
-        ExceptionUtils.assertDatabaseObjectFound(receiver, ApiConstant.INVITATION_RECEIVER);
 
         if (request.getStatus().equals(ApiConstant.INVITATION_STATUS_ACCEPTED)) {
             FriendQueueUtils.addFriendToFriendQueue(sender.getAccountId(), receiver.getFriendQueueId());
