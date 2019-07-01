@@ -1,0 +1,11 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: Get event Message Request
+description: get Event Message request
+type: object
+additionalProperties: false
+properties:
+  messageId:
+    description: messageId
+    type: string
+required:
+  - messageId
