@@ -37,13 +37,15 @@ public class FriendQueueUtils {
 
     public static void addFriendToFriendQueue(final String friendId, final String friendQueueId) {
         FriendQueue friendQueue = getFriendQueue(friendQueueId);
-        friendQueue.getFriendList().add(friendId);
+        if (!friendQueue.getFriendList().contains(friendId)) {
+            friendQueue.getFriendList().add(friendId);
 
-        Bson filter = Filters.eq(ApiConstant.FRIENDQUEUE_FRIEND_QUEUE_ID, friendQueueId);
-        Bson query = combine(
-                set(ApiConstant.FRIENDQUEUE_FRIEND_LIST, friendQueue.getFriendList()));
+            Bson filter = Filters.eq(ApiConstant.FRIENDQUEUE_FRIEND_QUEUE_ID, friendQueueId);
+            Bson query = combine(
+                    set(ApiConstant.FRIENDQUEUE_FRIEND_LIST, friendQueue.getFriendList()));
 
-        dataStore.updateInCollection(filter, query, DataStore.COLLECTION_FRIENDQUEUES);
+            dataStore.updateInCollection(filter, query, DataStore.COLLECTION_FRIENDQUEUES);
+        }
     }
 
     public static boolean isFriend(Account account, String friendId) {
