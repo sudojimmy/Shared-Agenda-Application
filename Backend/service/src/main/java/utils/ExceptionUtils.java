@@ -49,4 +49,12 @@ public class ExceptionUtils {
         exceptionLogger.error(errMsg);
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errMsg);
     }
+
+    public static void assertNoPendingFriendInvitation(final Account receiver, final String senderId) {
+        if (MessageQueueUtils.existFriendRequest(receiver.getMessageQueueId(), senderId)) {
+            String errMsg = "Invalid! Existing Pending Friend Request!";
+            exceptionLogger.error(errMsg);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errMsg);
+        }
+    }
 }
