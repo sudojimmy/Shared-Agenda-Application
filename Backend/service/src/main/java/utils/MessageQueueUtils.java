@@ -6,8 +6,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import store.DataStore;
-import types.Message;
-import types.MessageQueue;
+import types.*;
 
 import java.util.ArrayList;
 
@@ -58,6 +57,48 @@ public class MessageQueueUtils {
 
     public static Message getMessageFromMessageQueueId(String messageId, String messageQueueId) {
         MessageQueue messageQueue = MessageQueueUtils.getMessageQueue(messageQueueId);
-        return getMessageFromMessageQueue(messageId, messageQueue);
+        final Message message = getMessageFromMessageQueue(messageId, messageQueue);
+        if (message == null) {
+            ExceptionUtils.invalidProperty(ApiConstant.MESSAGE_MESSAGE_ID);
+        }
+        return message;
+    }
+
+    public static boolean existFriendRequest(final String messageQueueId, final String senderId) {
+        for (Message msg : getMessageList(messageQueueId)) {
+            if (msg.getType().equals(MessageType.FRIEND) && msg.getSenderId().equals(senderId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void notifyAccounts(final Account sender, final Account receiver, final MessageType type, final String messageId) {
+        String replyId = ReplyMessageUtils.createReplyMessageToDatabase(
+                type,
+                receiver.getAccountId(),    // The sender/receiver in reply msg is reversed comparing to original msg
+                sender.getAccountId(),
+                ReplyStatus.valueOf("PENDING"),
+                "");            // currently not support to add description
+
+        Message message = new Message()
+                .withMessageId(messageId)
+                .withType(type)
+                .withSenderId(sender.getAccountId())
+                .withReplyId(replyId); // only receiver's msg contains replyId
+
+        Message reply = new Message()
+                .withMessageId(replyId)
+                .withType(MessageType.RESPONSE)
+                .withSenderId(receiver.getAccountId());
+
+        String receiverMessageQueueId = receiver.getMessageQueueId();
+        String senderMessageQueueId = sender.getMessageQueueId();
+
+        // add the Message(eventMessage) to messageQueue
+        MessageUtils.addMessageIdToMessageQueue(message, receiverMessageQueueId);
+
+        // add the Message(replyMessage) to messageQueue
+        MessageUtils.addMessageIdToMessageQueue(reply, senderMessageQueueId);
     }
 }
