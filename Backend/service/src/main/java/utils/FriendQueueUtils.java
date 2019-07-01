@@ -1,18 +1,18 @@
 package utils;
 
+import com.mongodb.client.model.Filters;
 import constant.ApiConstant;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import store.DataStore;
+import types.Account;
 import types.FriendQueue;
 
 import java.util.ArrayList;
 
-import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
-
 import static controller.BaseController.dataStore;
 
 public class FriendQueueUtils {
@@ -44,5 +44,9 @@ public class FriendQueueUtils {
                 set(ApiConstant.FRIENDQUEUE_FRIEND_LIST, friendQueue.getFriendList()));
 
         dataStore.updateInCollection(filter, query, DataStore.COLLECTION_FRIENDQUEUES);
+    }
+
+    public static boolean isFriend(Account account, String friendId) {
+        return getFriendList(account.getFriendQueueId()).contains(friendId);
     }
 }

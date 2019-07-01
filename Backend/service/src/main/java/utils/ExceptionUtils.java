@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import types.Account;
 
 public class ExceptionUtils {
 
@@ -19,6 +20,22 @@ public class ExceptionUtils {
 
     public static void assertDatabaseObjectFound(final Object o, final String propName) {
         if (o == null) { ExceptionUtils.objectNotFound(propName); }
+    }
+
+    public static void assertFriendship(final Account account, final String friendId) {
+        if (!FriendQueueUtils.isFriend(account, friendId)) {
+            String errMsg = String.format("Invalid! %s and %s are NOT friends!", account.getAccountId(), friendId);
+            exceptionLogger.error(errMsg);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errMsg);
+        }
+    }
+
+    public static void assertNoFriendship(final Account account, final String friendId) {
+        if (FriendQueueUtils.isFriend(account, friendId)) {
+            String errMsg = String.format("Invalid! %s and %s are ALREADY friends!", account.getAccountId(), friendId);
+            exceptionLogger.error(errMsg);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errMsg);
+        }
     }
 
     public static void objectNotFound(final String propName) {

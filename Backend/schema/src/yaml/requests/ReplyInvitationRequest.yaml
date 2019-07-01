@@ -1,6 +1,6 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
-title: Reply Event Request
-description: reply event request object
+title: Reply Invitation Request
+description: reply invitation request object
 type: object
 additionalProperties: false
 properties:

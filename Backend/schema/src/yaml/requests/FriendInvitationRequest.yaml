@@ -4,19 +4,12 @@ description: friend invitation request
 type: object
 additionalProperties: false
 properties:
-    sender:
+    senderId:
         description: sender account id
         type: string
-    receiver:
+    receiverId:
         description: receiver accouny id
         type: string
-    status:
-        description: invitation status
-        "$ref": ../types/MessageType.yaml
-    responseMessageId:
-        description: the message id that the invitation response to
-        type: string
 required:
-    - sender
-    - receiver
-    - status
+    - senderId
+    - receiverId

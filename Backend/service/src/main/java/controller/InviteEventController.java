@@ -33,7 +33,7 @@ public class InviteEventController extends BaseController {
             ExceptionUtils.invalidProperty("sendId need equal to starterId to invite");
         }
 
-        // TODO check friendship
+        ExceptionUtils.assertFriendship(accountSender, account.getAccountId());
 
         String replyId = ReplyMessageUtils.createReplyMessageToDatabase(
                 MessageType.EVENT,
