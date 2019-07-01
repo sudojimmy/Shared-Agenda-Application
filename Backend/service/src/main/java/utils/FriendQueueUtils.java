@@ -26,7 +26,7 @@ public class FriendQueueUtils {
 
     public static FriendQueue getFriendQueue(final String friendQueueId) {
         Document document = new Document();
-        document.put(ApiConstant.FRIENDQUEUE_FRIENDQUEUE_ID, friendQueueId);
+        document.put(ApiConstant.FRIENDQUEUE_FRIEND_QUEUE_ID, friendQueueId);
         return dataStore.findOneInCollection(document, DataStore.COLLECTION_FRIENDQUEUES);
     }
 
@@ -39,7 +39,7 @@ public class FriendQueueUtils {
         FriendQueue friendQueue = getFriendQueue(friendQueueId);
         friendQueue.getFriendList().add(friendId);
 
-        Bson filter = Filters.eq(ApiConstant.FRIENDQUEUE_FRIENDQUEUE_ID, friendQueueId);
+        Bson filter = Filters.eq(ApiConstant.FRIENDQUEUE_FRIEND_QUEUE_ID, friendQueueId);
         Bson query = combine(
                 set(ApiConstant.FRIENDQUEUE_FRIEND_LIST, friendQueue.getFriendList()));
 

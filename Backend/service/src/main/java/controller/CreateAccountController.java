@@ -14,6 +14,7 @@ import utils.AccountUtils;
 import utils.CalendarUtils;
 import utils.ExceptionUtils;
 import utils.FriendQueueUtils;
+import utils.GroupQueueUtils;
 import utils.MessageQueueUtils;
 
 
@@ -46,6 +47,7 @@ public class CreateAccountController extends BaseController {
         String calendarId = CalendarUtils.createCalendarToDatabase().getCalendarId();
         String messageQueueId = MessageQueueUtils.createMessageQueueToDatabase().getMessageQueueId();
         String friendQueueId = FriendQueueUtils.createFriendQueueToDatabase().getFriendQueueId();
+        String groupQueueId = GroupQueueUtils.createGroupQueueToDatabase().getGroupQueueId();
         // Step III: write to Database
         Account p = new Account()
                 .withNickname(request.getNickname())
@@ -53,7 +55,8 @@ public class CreateAccountController extends BaseController {
                 .withDescription(request.getDescription())
                 .withCalendarId(calendarId)
                 .withMessageQueueId(messageQueueId)
-                .withFriendQueueId(friendQueueId);
+                .withFriendQueueId(friendQueueId)
+                .withGroupQueueId(groupQueueId);
         dataStore.insertToCollection(p, DataStore.COLLECTION_ACCOUNTS);
 
         // Step IV: create response object
@@ -61,7 +64,8 @@ public class CreateAccountController extends BaseController {
                 .withAccountId(request.getAccountId())
                 .withCalendarId(calendarId)
                 .withMessageQueueId(messageQueueId)
-                .withFriendQueueId(friendQueueId),
+                .withFriendQueueId(friendQueueId)
+                .withGroupQueueId(groupQueueId),
                 HttpStatus.CREATED);
     }
 }

@@ -15,6 +15,7 @@ import types.CreateGroupResponse;
 import constant.ApiConstant;
 import utils.AccountUtils;
 import utils.ExceptionUtils;
+import utils.GroupQueueUtils;
 import utils.GroupUtils;
 
 @RestController
@@ -41,6 +42,8 @@ public class CreateGroupController extends BaseController {
         AccountUtils.checkAccountsExist(members);
 
         String groupId = GroupUtils.createGroupToDatabase(request.getName(),request.getOwnerId(),members);
+
+        GroupQueueUtils.addGroupToMemebersGroupQueue(groupId, members);
 
         return new ResponseEntity<>(new CreateGroupResponse().withGroupId(groupId),
             HttpStatus.CREATED);

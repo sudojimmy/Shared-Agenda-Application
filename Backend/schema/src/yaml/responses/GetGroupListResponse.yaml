@@ -1,0 +1,13 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetGroupList Response
+description: get List of groupId response
+type: object
+additionalProperties: false
+properties:
+  groupList:
+    description: a list of group Id
+    type: array
+    items:
+      type: string
+required:
+  - groupList
