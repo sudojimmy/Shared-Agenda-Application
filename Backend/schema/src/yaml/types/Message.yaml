@@ -13,6 +13,9 @@ properties:
   senderId:
     description: sender Id
     type: string
+  replyId:
+    description: the reply message id
+    type: string
 required:
   - messageId
   - type

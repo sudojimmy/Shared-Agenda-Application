@@ -1,17 +1,13 @@
 package controller;
 
 import constant.ApiConstant;
-import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import types.*;
-import utils.AccountUtils;
-import utils.EventMessageUtils;
-import utils.ExceptionUtils;
-import utils.MessageUtils;
+import utils.*;
 
 
 @RestController
@@ -37,10 +33,15 @@ public class InviteEventController extends BaseController {
             ExceptionUtils.invalidProperty("sendId need equal to starterId to invite");
         }
 
-        // TODO check friendship
+        ExceptionUtils.assertFriendship(accountSender, account.getAccountId());
 
-        ReplyStatus replyStatus = ReplyStatus.valueOf("PENDING");
-        String replyId = new ObjectId().toString();
+        String replyId = ReplyMessageUtils.createReplyMessageToDatabase(
+                MessageType.EVENT,
+                request.getReceiverId(),    // The sender/receiver in reply msg is reversed comparing to original msg
+                request.getSenderId(),
+                ReplyStatus.valueOf("PENDING"),
+                "");            // currently not support to add description
+
         // Note: reply's receiver and sender is opposite way of invitation
         String messageId = EventMessageUtils.createEventMessageToDatabase(
                 null,
@@ -53,19 +54,15 @@ public class InviteEventController extends BaseController {
                 ER.getLocation(),
                 ER.getRepeat(),
                 ER.getState(),
-                ER.getDescription(),
-                replyId,
-                MessageType.EVENT,
-                request.getReceiverId(),
-                request.getSenderId(),
-                replyStatus,
-                "")
+                ER.getDescription())
                 .getMessageId();
 
         Message message = new Message()
                 .withMessageId(messageId)
                 .withType(MessageType.EVENT)
-                .withSenderId(request.getSenderId());
+                .withSenderId(request.getSenderId())
+                .withReplyId(replyId); // only receiver's msg contains replyId
+
         Message reply = new Message()
                 .withMessageId(replyId)
                 .withType(MessageType.RESPONSE)

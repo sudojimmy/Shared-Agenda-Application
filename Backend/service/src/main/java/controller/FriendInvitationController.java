@@ -1,56 +1,63 @@
 package controller;
 
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import types.FriendInvitationResponse;
-import types.Account;
-import types.FriendInvitationRequest;
+import types.*;
 
 import constant.ApiConstant;
-import utils.AccountUtils;
-import utils.MessageUtils;
-import utils.ExceptionUtils;
-import utils.FriendQueueUtils;
+import utils.*;
 
 @RestController
 public class FriendInvitationController extends BaseController {
 
-    @PostMapping("/friendInvitation")
+    @PostMapping("/inviteFriend")
     public ResponseEntity<FriendInvitationResponse> handle(@RequestBody FriendInvitationRequest request) {
-        logger.info("FriendInvitation: " + request);
+        logger.info("InviteFriend: " + request);
 
-        ExceptionUtils.assertPropertyValid(request.getSender(), ApiConstant.INVITATION_SENDER);
-        ExceptionUtils.assertPropertyValid(request.getReceiver(), ApiConstant.INVITATION_RECEIVER);
-        ExceptionUtils.assertPropertyValid(request.getStatus(), ApiConstant.INVITATION_STATUS);
+        ExceptionUtils.assertPropertyValid(request.getSenderId(), ApiConstant.INVITATION_SENDER);
+        ExceptionUtils.assertPropertyValid(request.getReceiverId(), ApiConstant.INVITATION_RECEIVER);
 
-        if (!(request.getStatus().equals(ApiConstant.INVITATION_STATUS_ACCEPTED) ||
-        request.getStatus().equals(ApiConstant.INVITATION_STATUS_ACTIVE) ||
-        request.getStatus().equals(ApiConstant.INVITATION_STATUS_DECLINED))
-        ) {
-            ExceptionUtils.invalidProperty(ApiConstant.INVITATION_STATUS);
-        }
-        
-        if (request.getSender().equals(request.getReceiver())) {
+        if (request.getSenderId().equals(request.getReceiverId())) {
             String errMsg = "sender id and receiver id";
             ExceptionUtils.invalidProperty(errMsg);
         }
 
-        Account sender = AccountUtils.getAccount(request.getSender(), ApiConstant.INVITATION_SENDER);
+        Account sender = AccountUtils.getAccount(request.getSenderId(), ApiConstant.INVITATION_SENDER);
+        ExceptionUtils.assertNoFriendship(sender, request.getReceiverId());
+        Account receiver = AccountUtils.getAccount(request.getReceiverId(),ApiConstant.INVITATION_RECEIVER);
 
-        Account receiver = AccountUtils.getAccount(request.getReceiver(),ApiConstant.INVITATION_RECEIVER);
+        String replyId = ReplyMessageUtils.createReplyMessageToDatabase(
+                MessageType.FRIEND,
+                request.getReceiverId(),    // The sender/receiver in reply msg is reversed comparing to original msg
+                request.getSenderId(),
+                ReplyStatus.valueOf("PENDING"),
+                "");            // currently not support to add description
 
-        if (request.getStatus().equals(ApiConstant.INVITATION_STATUS_ACCEPTED)) {
-            FriendQueueUtils.addFriendToFriendQueue(sender.getAccountId(), receiver.getFriendQueueId());
-            FriendQueueUtils.addFriendToFriendQueue(receiver.getAccountId(), sender.getFriendQueueId());
-        } 
-        MessageUtils.generateMessageToMessageQueue(request.getStatus(),receiver.getMessageQueueId(), request.getSender());
+        Message message = new Message()
+                .withMessageId(new ObjectId().toString())
+                .withType(MessageType.FRIEND)
+                .withSenderId(request.getSenderId())
+                .withReplyId(replyId); // only receiver's msg contains replyId
 
+        Message reply = new Message()
+                .withMessageId(replyId)
+                .withType(MessageType.RESPONSE)
+                .withSenderId(request.getReceiverId());
 
+        String messageQueueId = receiver.getMessageQueueId();
+        String messageQueueIdSender = sender.getMessageQueueId();
 
-        return new ResponseEntity<>(new FriendInvitationResponse(),
+        // add the Message(eventMessage) to messageQueue
+        MessageUtils.addMessageIdToMessageQueue(message, messageQueueId);
+
+        // add the Message(replyMessage) to messageQueue
+        MessageUtils.addMessageIdToMessageQueue(reply, messageQueueIdSender);
+
+        return new ResponseEntity<>(new FriendInvitationResponse().withMessageId(message.getMessageId()),
         HttpStatus.OK);
     }
 }

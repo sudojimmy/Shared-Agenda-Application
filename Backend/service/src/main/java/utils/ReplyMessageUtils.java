@@ -4,23 +4,24 @@ import com.mongodb.client.model.Filters;
 import constant.ApiConstant;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import store.DataStore;
-import types.*;
-
+import types.MessageType;
+import types.ReplyMessage;
+import types.ReplyStatus;
 
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 import static controller.BaseController.dataStore;
 
 public class ReplyMessageUtils {
-    public static ReplyMessage createReplyMessageToDatabase(final String replyId,
-                                                            final MessageType type,
-                                                            final String senderId,
-                                                            final String receiverId,
-                                                            final ReplyStatus status,
-                                                            final String description) {
+    public static String createReplyMessageToDatabase(final MessageType type,
+                                                      final String senderId,
+                                                      final String receiverId,
+                                                      final ReplyStatus status,
+                                                      final String description) {
         ReplyMessage reply = new ReplyMessage()
-                .withReplyId(replyId)
+                .withReplyId(new ObjectId().toString())
                 .withSenderId(senderId)
                 .withReceiverId(receiverId)
                 .withStatus(status)
@@ -28,7 +29,7 @@ public class ReplyMessageUtils {
                 .withDescription(description);
 
         dataStore.insertToCollection(reply, DataStore.COLLECTION_REPLYS);
-        return reply;
+        return reply.getReplyId();
     }
 
     public static ReplyMessage getReplyMessage(final String replyId) {
