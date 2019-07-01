@@ -57,4 +57,13 @@ public class EventMessageUtils {
         Bson filter = Filters.eq(ApiConstant.MESSAGE_MESSAGE_ID, eventmessageId);
         return dataStore.delete(filter, DataStore.COLLECTION_EVENTMESSAGES);
     }
+
+    // @return true if EventMessage already in DataBase and false otherwise
+    public static void checkEventMessageExist(final String messageId) {
+        Document document = new Document();
+        document.put(ApiConstant.MESSAGE_MESSAGE_ID, messageId);
+        if(!dataStore.existInCollection(document, DataStore.COLLECTION_EVENTMESSAGES)) {
+            ExceptionUtils.invalidProperty(ApiConstant.MESSAGE_MESSAGE_ID);
+        }
+    }
 }
