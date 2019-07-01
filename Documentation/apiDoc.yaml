@@ -246,12 +246,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '../Backend/schema/src/yaml/requests/ReplyEventInvitationRequest.yaml'
+              $ref: '../Backend/schema/src/yaml/requests/ReplyInvitationRequest.yaml'
       responses:
         "200":
           description: OK
           schema:
-            $ref: '../Backend/schema/src/yaml/responses/ReplyEventInvitationResponse.yaml'
+            $ref: '../Backend/schema/src/yaml/responses/ReplyInvitationResponse.yaml'
         "400":
           description: "Invalid Parameter: messageId and status cannot be null or empty, senderId need equal to starterId"
         "404":
@@ -352,3 +352,22 @@ paths:
           description: "Invalid Parameter: groupid cannot be null or empty"
         "404":
           description: "Not Found: groupid do not exist"
+  GetGrouList:
+    post:
+      operationId: getGroupList
+      tags:
+        - Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/GetGroupListRequest.yaml'
+      responses:
+        "200":
+          description: Ok
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/GetGroupListResponse.yaml'
+        "400":
+          description: "Invalid Parameter: accountid cannot be null or empty"
+        "404":
+          description: "Not Found: accountid do not exist"

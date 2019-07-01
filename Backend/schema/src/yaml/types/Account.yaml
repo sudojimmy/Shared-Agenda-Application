@@ -22,8 +22,13 @@ properties:
     friendQueueId:
         desciption: friendQueue Id
         type: string
+    groupQueueId:
+        desciption: groupQueue Id
+        type: string
 required:
     - accountId
     - nickname
     - calendarId
     - messageQueueId
+    - friendQueueId
+    - groupQueueId

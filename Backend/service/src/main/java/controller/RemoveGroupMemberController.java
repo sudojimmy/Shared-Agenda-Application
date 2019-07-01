@@ -18,6 +18,7 @@ import types.RemoveGroupMemberResponse;
 import constant.ApiConstant;
 import utils.AccountUtils;
 import utils.ExceptionUtils;
+import utils.GroupQueueUtils;
 import utils.GroupUtils;
 
 @RestController
@@ -49,6 +50,8 @@ public class RemoveGroupMemberController extends BaseController {
             new HashSet<>(existedMembers));
 
         GroupUtils.updateGroupMembers(group.getGroupId(), updateMembers);
+
+        GroupQueueUtils.removeGroupFromMemebersGroupQueue(group.getGroupId(), members);
 
         return new ResponseEntity<>(new RemoveGroupMemberResponse().withGroupId(request.getGroupId()),
             HttpStatus.OK);

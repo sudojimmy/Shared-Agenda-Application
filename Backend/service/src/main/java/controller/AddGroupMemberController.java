@@ -16,6 +16,7 @@ import types.AddGroupMemberResponse;
 import constant.ApiConstant;
 import utils.AccountUtils;
 import utils.ExceptionUtils;
+import utils.GroupQueueUtils;
 import utils.GroupUtils;
 
 @RestController
@@ -30,8 +31,8 @@ public class AddGroupMemberController extends BaseController {
         ExceptionUtils.assertPropertyValid(request.getOwnerId(), ApiConstant.GROUP_OWNER_ID);
 
         // todo add permission check
-        GroupUtils.validateGroupOwner(request.getGroupId(), request.getOwnerId());
         GroupUtils.checkGroupExist(request.getGroupId());
+        GroupUtils.validateGroupOwner(request.getGroupId(), request.getOwnerId());
 
         AccountUtils.checkAccountsExist(request.getMembers());
 
@@ -42,6 +43,7 @@ public class AddGroupMemberController extends BaseController {
         List<String> updateMembers = new ArrayList<>(
             new HashSet<>(members));
         GroupUtils.updateGroupMembers(request.getGroupId(), updateMembers);
+        GroupQueueUtils.addGroupToMemebersGroupQueue(request.getGroupId(),members);
 
         // Step IV: create response object
         return new ResponseEntity<>(new AddGroupMemberResponse().withGroupId(request.getGroupId()),

@@ -29,7 +29,8 @@ public class GetAccountController extends BaseController {
                 .withDescription(account.getDescription())
                 .withNickname(account.getNickname())
                 .withMessageQueueId(account.getMessageQueueId())
-                .withFriendQueueId(account.getFriendQueueId()),
+                .withFriendQueueId(account.getFriendQueueId())
+                .withGroupQueueId(account.getGroupQueueId()),
                 HttpStatus.OK);
     }
 }

@@ -1,0 +1,11 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetGroupList Request
+description: get list of group request
+type: object
+additionalProperties: false
+properties:
+  accountId:
+    description: account id (globally unique)
+    type: string
+required:
+  - accountId
