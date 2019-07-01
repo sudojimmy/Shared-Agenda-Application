@@ -352,7 +352,7 @@ paths:
           description: "Invalid Parameter: groupid cannot be null or empty"
         "404":
           description: "Not Found: groupid do not exist"
-  GetGrouListp:
+  GetGrouList:
     post:
       operationId: getGroupList
       tags:

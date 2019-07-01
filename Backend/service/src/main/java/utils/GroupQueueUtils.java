@@ -39,27 +39,28 @@ public class GroupQueueUtils {
     public static void addGroupToGroupQueue(final String groupId, final String groupQueueId) {
         GroupQueue groupQueue = getGroupQueue(groupQueueId);
         if (!groupQueue.getGroupList().contains(groupId)) {
-            groupQueue.getGroupList().add(groupId);
-
-            Bson filter = Filters.eq(ApiConstant.GROUPQUEUE_GROUP_QUEUE_ID, groupQueueId);
-            Bson query = combine(
-                    set(ApiConstant.GROUPQUEUE_GROUP_LIST, groupQueue.getGroupList()));
-
-            dataStore.updateInCollection(filter, query, DataStore.COLLECTION_GROUPQUEUES);
+            List<String> groupList = groupQueue.getGroupList();
+            groupList.add(groupId);
+            updateGroupListToGroupQueue(groupList,groupQueueId);
         }
     }
 
     public static void removeGroupFromGroupQueue(final String groupId, final String groupQueueId) {
         GroupQueue groupQueue = getGroupQueue(groupQueueId);
         if (groupQueue.getGroupList().contains(groupId)) {
-            groupQueue.getGroupList().remove(groupId);
-
-            Bson filter = Filters.eq(ApiConstant.GROUPQUEUE_GROUP_QUEUE_ID, groupQueueId);
-            Bson query = combine(
-                    set(ApiConstant.GROUPQUEUE_GROUP_LIST, groupQueue.getGroupList()));
-
-            dataStore.updateInCollection(filter, query, DataStore.COLLECTION_GROUPQUEUES);
+            List<String> groupList = groupQueue.getGroupList();
+            groupList.remove(groupId);
+            updateGroupListToGroupQueue(groupList,groupQueueId);
         }
+    }
+
+    public static void updateGroupListToGroupQueue(final List<String> groupList, final String groupQueueId) {
+    
+        Bson filter = Filters.eq(ApiConstant.GROUPQUEUE_GROUP_QUEUE_ID, groupQueueId);
+        Bson query = combine(
+                set(ApiConstant.GROUPQUEUE_GROUP_LIST, groupList));
+
+        dataStore.updateInCollection(filter, query, DataStore.COLLECTION_GROUPQUEUES);
     }
 
     public static void addGroupToMemebersGroupQueue(final String groupId, final List<String> members) {
