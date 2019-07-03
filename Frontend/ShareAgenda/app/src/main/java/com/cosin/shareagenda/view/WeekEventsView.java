@@ -29,6 +29,7 @@ public class WeekEventsView extends FriendsEventsView implements View.OnTouchLis
     private TextPaint mTextPaint;
     private float mEvtTextHeight;
     private int LocationX;
+    private ItemViewListener listener;
 
     public WeekEventsView(Context context) {
         super(context);
@@ -52,6 +53,21 @@ public class WeekEventsView extends FriendsEventsView implements View.OnTouchLis
         this.name = name;
     }
 
+    public void setListener(ItemViewListener listener) {
+        this.listener = listener;
+    }
+
+    public String getItemCalendar() {
+        int w = (LocationX - timeWidth) / eventWidth;
+        //int h = quarter / 4;
+        //int m = quarter % 4;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(firstDay);
+        cal.add(Calendar.DATE, w);
+        SimpleDateFormat sdfDate = new SimpleDateFormat("d/M/yyyy|EEEE|");
+        return sdfDate.format(cal.getTime()) + quarter;
+    }
+
     @Override
     protected void init(AttributeSet attrs, int defStyle) {
         super.init(attrs, defStyle);
@@ -61,7 +77,7 @@ public class WeekEventsView extends FriendsEventsView implements View.OnTouchLis
         mTextPaint = new TextPaint();
         mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
-        mTextPaint.setTextSize(resources.getDimension(R.dimen.week_event_text_size));
+        mTextPaint.setTextSize(resources.getDimension(R.dimen.event_text_time_size));
         mTextPaint.setColor(resources.getColor(R.color.txt_black));
 
         mEvtTextHeight = resources.getDimension(R.dimen.week_event_text_size);
@@ -99,12 +115,7 @@ public class WeekEventsView extends FriendsEventsView implements View.OnTouchLis
 
     @Override
     public boolean onLongClick(View view) {
-        int w = (LocationX - timeWidth) / eventWidth;
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(firstDay);
-        cal.add(Calendar.DATE, w);
-        SimpleDateFormat sdf = new SimpleDateFormat("d/M EEEE");
-        Toast.makeText(getContext(), String.format("w= %s  t= %s",sdf.format(cal.getTime()),getTimeString()), Toast.LENGTH_SHORT).show();
+        listener.dealwithItem(getItemCalendar());
         return true;
     }
 }

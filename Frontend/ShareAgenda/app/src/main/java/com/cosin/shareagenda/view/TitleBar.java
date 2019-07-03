@@ -13,7 +13,8 @@ import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.activity.BaseActivity;
-import com.cosin.shareagenda.activity.CreateEventAcitivty;
+import com.cosin.shareagenda.activity.WeeklyFriendActivity;
+import com.cosin.shareagenda.entity.UserEntity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,7 +69,8 @@ public class TitleBar extends Toolbar {
         rightButtonImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), CreateEventAcitivty.class);
+                Intent intent = new Intent(v.getContext(), WeeklyFriendActivity.class);
+                intent.putExtra("user", new UserEntity("2","Joan"));
                 v.getContext().startActivity(intent);
             }
         });

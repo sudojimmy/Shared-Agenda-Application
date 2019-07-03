@@ -9,6 +9,7 @@ public class AgendaApplication extends Application {
     private static Context context;
     private static AgendaApplication instance;
     private static UserEntity userInfo = null;
+    private static String description;
 
     @Override
     public void onCreate() {
@@ -35,4 +36,13 @@ public class AgendaApplication extends Application {
     public static void setUserInfo(UserEntity userInfo) {
         AgendaApplication.userInfo = userInfo;
     }
+
+    public static String getUserDescription() {
+        return description;
+    }
+
+    public static void setUserDescription(String desc) {
+        AgendaApplication.description = desc;
+    }
+
 }

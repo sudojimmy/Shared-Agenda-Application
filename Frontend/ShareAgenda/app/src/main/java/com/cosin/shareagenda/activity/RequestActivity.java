@@ -1,8 +1,11 @@
 package com.cosin.shareagenda.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -53,9 +56,8 @@ public class RequestActivity extends MainTitleActivity implements View.OnClickLi
     }
 
     @Override
-    protected void loadContentView() {
-        LayoutInflater inflater = getLayoutInflater();
-        inflater.inflate(R.layout.activity_request, coordinatorLayout);
+    protected int getContentView() {
+        return R.layout.activity_request;
     }
 
     @Override
@@ -78,7 +80,7 @@ public class RequestActivity extends MainTitleActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_post1:
-                UserEntity user = new UserEntity("3","florie","ASD");
+                UserEntity user = new UserEntity("3","florie");
                 TestResult test = new TestResult();
                 test.setUser(user);
                 Gson gson = new Gson();
@@ -90,5 +92,16 @@ public class RequestActivity extends MainTitleActivity implements View.OnClickLi
                         .PostRequest(new CallbackHandler(handler));
                 break;
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.d("AAA","RequestActivity1");
+        Intent intent = getIntent();
+        UserEntity friend = (UserEntity) intent.getSerializableExtra("account");
+        Log.d("AAA RequestActivity",friend.getNickname());
+        super.onCreate(savedInstanceState);
+        Log.d("AAA","RequestActivity2");
+
     }
 }

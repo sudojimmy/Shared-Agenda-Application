@@ -4,6 +4,7 @@ import com.cosin.shareagenda.config.SystemConfig;
 import com.cosin.shareagenda.entity.EventEntity;
 import com.cosin.shareagenda.entity.FriendEvent;
 import com.cosin.shareagenda.entity.SimpleEventEntity;
+import com.cosin.shareagenda.entity.UserEntity;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -139,6 +140,7 @@ public class GenData {
         return aryFriendsEvent;
     }
 
+    // need cache
     public static List<FriendEvent> getNextWeeklyEvents() {
         List<FriendEvent> aryFriendsEvent = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("d/M/yyyy");
@@ -183,5 +185,14 @@ public class GenData {
             e.printStackTrace();
         }
         return aryFriendsEvent;
+    }
+
+    public static List<UserEntity> loadFriends() {
+        List<UserEntity> friends = new ArrayList<>();
+        friends.add(new UserEntity("1","Alice"));
+        friends.add(new UserEntity("1","Times"));
+        friends.add(new UserEntity("1","Latino"));
+        friends.add(new UserEntity("1","Grace"));
+        return friends;
     }
 }

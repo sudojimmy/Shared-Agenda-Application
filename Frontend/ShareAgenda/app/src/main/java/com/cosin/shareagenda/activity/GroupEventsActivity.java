@@ -31,9 +31,8 @@ public class GroupEventsActivity extends MainTitleActivity {
     }
 
     @Override
-    protected void loadContentView() {
-        LayoutInflater inflater = getLayoutInflater();
-        inflater.inflate(R.layout.activity_group_events, coordinatorLayout);
+    protected int getContentView() {
+        return R.layout.activity_group_events;
     }
 
     @Override

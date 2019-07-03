@@ -33,9 +33,8 @@ public class CalendarActivity extends MainTitleActivity
     }
 
     @Override
-    protected void loadContentView() {
-        LayoutInflater inflater = getLayoutInflater();
-        inflater.inflate(R.layout.action_1, coordinatorLayout);
+    protected int getContentView() {
+        return R.layout.action_1;
     }
 
     @Override
