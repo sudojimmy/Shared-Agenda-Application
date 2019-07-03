@@ -12,6 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.GroupsActivity"></activity>
+        <activity
+            android:name=".activity.ContactsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.WeeklyFriendActivity"
             android:theme="@style/AppTheme.NoActionBar" />
