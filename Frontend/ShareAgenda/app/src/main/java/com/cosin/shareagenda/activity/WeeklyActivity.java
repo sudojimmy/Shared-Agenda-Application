@@ -1,38 +1,41 @@
 package com.cosin.shareagenda.activity;
 
 import android.content.res.Resources;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cosin.shareagenda.R;
-import com.cosin.shareagenda.adapter.FriendsEventAdapter;
 import com.cosin.shareagenda.adapter.WeeklyEventAdapter;
+import com.cosin.shareagenda.config.AgendaApplication;
 import com.cosin.shareagenda.config.SystemConfig;
+import com.cosin.shareagenda.dialog.DialogReceiver;
+import com.cosin.shareagenda.dialog.SendEventRequestDialog;
 import com.cosin.shareagenda.entity.FriendEvent;
+import com.cosin.shareagenda.entity.UserEntity;
 import com.cosin.shareagenda.util.GenData;
+import com.cosin.shareagenda.view.ItemViewListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class WeeklyActivity extends MainTitleActivity
-        implements GestureDetector.OnGestureListener {
+        implements GestureDetector.OnGestureListener, ItemViewListener, DialogReceiver {
+    protected UserEntity user;
     protected Calendar cal;
-    private List<FriendEvent> weekEvts;
-    private int[] ids = {R.id.week_label0, R.id.week_label1, R.id.week_label2,
+    protected List<FriendEvent> weekEvts;
+    protected int[] ids = {R.id.week_label0, R.id.week_label1, R.id.week_label2,
             R.id.week_label3, R.id.week_label4, R.id.week_label5, R.id.week_label6};
+    protected String eventDate;
+    protected String eventQuarter;
 
     GestureDetector gestureDetector;
 
@@ -43,18 +46,23 @@ public class WeeklyActivity extends MainTitleActivity
     }
 
     @Override
-    protected void loadContentView() {
-        LayoutInflater inflater = getLayoutInflater();
-        inflater.inflate(R.layout.activity_weekly, coordinatorLayout);
+    protected int getContentView() {
+        return R.layout.activity_weekly;
     }
 
     @Override
     protected void loadData() {
+        setUser();
+
         //
         cal = Calendar.getInstance();
         cal.setTime(new Date());
 
         weekEvts = GenData.getWeeklyEvents();
+    }
+
+    protected void setUser() {
+        user = AgendaApplication.getUserInfo();
     }
 
     protected void refreshData(int d) {
@@ -84,7 +92,7 @@ public class WeeklyActivity extends MainTitleActivity
             tv.setLayoutParams(lp);
             tv.setGravity(Gravity.CENTER);
             tv.setText(e.getDateDM() + "\n" + e.getFriendName());
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, resources.getDimension(R.dimen.weekly_label_text_size));
+            tv.setTextSize(getResources().getDimension(R.dimen.weekly_label_text_size));
             if (e.isToday())
                 tv.setTextColor(resources.getColor(R.color.colorAccent));
             else
@@ -96,7 +104,7 @@ public class WeeklyActivity extends MainTitleActivity
         RecyclerView recyclerView = findViewById(R.id.recycle_week);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
-        recyclerView.setAdapter(new WeeklyEventAdapter(weekEvts));
+        recyclerView.setAdapter(new WeeklyEventAdapter(weekEvts, this));
 
         gestureDetector = new GestureDetector(this);
     }
@@ -117,7 +125,7 @@ public class WeeklyActivity extends MainTitleActivity
         RecyclerView recyclerView = findViewById(R.id.recycle_week);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
-        recyclerView.setAdapter(new WeeklyEventAdapter(weekEvts));
+        recyclerView.setAdapter(new WeeklyEventAdapter(weekEvts, this));
     }
 
     @Override
@@ -168,5 +176,26 @@ public class WeeklyActivity extends MainTitleActivity
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    @Override
+    public void dealwithItem(Object item) {
+        String[] ret = ((String)item).split("\\|");
+        eventDate = ret[0];
+        eventQuarter = ret[2];
+        int q = Integer.parseInt(ret[2]);
+        int h, m;
+        h = q / 4;
+        m = (q % 4) * 15;
+
+        new SendEventRequestDialog(this,
+                user.getNickname(),
+                eventDate + "   " + ret[1],
+                String.format("%d : %02d", h, m)).show();
+    }
+
+    @Override
+    public void receive(Object ret) {
+        Toast.makeText(this,"Sent",Toast.LENGTH_SHORT).show();
     }
 }

@@ -20,4 +20,5 @@
     <string name="title_profile">Profile</string>
     <string name="title_requests">Requests</string>
     <string name="title_friends_calendar">Friends Events</string>
+    <string name="title_search_friends">Search Friends</string>
 </resources>

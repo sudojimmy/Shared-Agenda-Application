@@ -9,13 +9,14 @@ import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.config.SystemConfig;
 import com.cosin.shareagenda.entity.FriendEvent;
 import com.cosin.shareagenda.util.CalendarEventBiz;
-import com.cosin.shareagenda.view.FriendsEventsView;
+import com.cosin.shareagenda.view.ItemViewListener;
 import com.cosin.shareagenda.view.WeekEventsView;
 
 import java.util.List;
 
 public class WeeklyEventAdapter extends RecyclerView.Adapter<WeeklyEventAdapter.ViewHolder> {
     private List<FriendEvent> weekEvts;
+    private ItemViewListener listener;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         WeekEventsView eventView;
@@ -26,8 +27,9 @@ public class WeeklyEventAdapter extends RecyclerView.Adapter<WeeklyEventAdapter.
         }
     }
 
-    public WeeklyEventAdapter(List<FriendEvent> weeklyEvts) {
+    public WeeklyEventAdapter(List<FriendEvent> weeklyEvts, ItemViewListener listener) {
         this.weekEvts = weeklyEvts;
+        this.listener = listener;
     }
 
     @Override
@@ -59,6 +61,7 @@ public class WeeklyEventAdapter extends RecyclerView.Adapter<WeeklyEventAdapter.
         }
 
         viewHolder.eventView.setCld(weekEvts.get(0).getDate(), quarter, ev, name);
+        viewHolder.eventView.setListener(listener);
     }
 
     @Override

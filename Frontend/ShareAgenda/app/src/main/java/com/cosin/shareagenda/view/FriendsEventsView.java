@@ -62,7 +62,7 @@ public class FriendsEventsView extends View implements View.OnLongClickListener 
         Resources resources = getContext().getResources();
         timeWidth = (int)resources.getDimension(R.dimen.friends_events_time);
         eventHigh = (int)resources.getDimension(R.dimen.friends_events_height);
-        mTextHeight = (int)resources.getDimension(R.dimen.friends_events_text_height);
+        mTextHeight = (int)resources.getDimension(R.dimen.event_text_time_size);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setTextAlign(Paint.Align.LEFT);

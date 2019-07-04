@@ -70,9 +70,8 @@ public class ProfileActivity extends MainTitleActivity {
     }
 
     @Override
-    protected void loadContentView() {
-        LayoutInflater inflater = getLayoutInflater();
-        inflater.inflate(R.layout.activity_profile, coordinatorLayout);
+    protected int getContentView() {
+        return R.layout.activity_profile;
     }
 
     @Override
