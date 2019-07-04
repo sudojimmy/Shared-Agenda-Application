@@ -1,8 +1,17 @@
 package com.cosin.shareagenda.activity;
 
+<<<<<<< HEAD
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+=======
+import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
+>>>>>>> 976fb93b2bfed9b299239c58a3db8716e9bbaed3
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.adapter.ContactsAdapter;
@@ -39,13 +48,31 @@ public class ContactsActivity extends MainTitleActivity {
     @Override
     protected void initView() {
         super.initView();
+<<<<<<< HEAD
         RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
         rvContacts.setHasFixedSize(true);
 
+=======
+
+        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
+        rvContacts.setHasFixedSize(true);
+>>>>>>> 976fb93b2bfed9b299239c58a3db8716e9bbaed3
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvContacts.setLayoutManager(layoutManager);
         ContactsAdapter conAdapter = new ContactsAdapter(this, contactList);
         rvContacts.setAdapter(conAdapter);
+<<<<<<< HEAD
+=======
+
+        LinearLayout ll = findViewById(R.id.llSearch);
+        ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ContactsActivity.this, SearchFriendsActivity.class);
+                startActivity(intent);
+            }
+        });
+>>>>>>> 976fb93b2bfed9b299239c58a3db8716e9bbaed3
     }
 
     @Override

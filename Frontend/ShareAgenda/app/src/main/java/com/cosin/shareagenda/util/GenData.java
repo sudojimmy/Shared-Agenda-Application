@@ -3,6 +3,7 @@ package com.cosin.shareagenda.util;
 import com.cosin.shareagenda.config.SystemConfig;
 import com.cosin.shareagenda.entity.EventEntity;
 import com.cosin.shareagenda.entity.FriendEvent;
+import com.cosin.shareagenda.entity.GroupEntity;
 import com.cosin.shareagenda.entity.SimpleEventEntity;
 import com.cosin.shareagenda.entity.UserEntity;
 
@@ -195,4 +196,16 @@ public class GenData {
         friends.add(new UserEntity("1","Grace"));
         return friends;
     }
+<<<<<<< HEAD
+=======
+
+    public static List<GroupEntity> loadGroups() {
+        List<GroupEntity> groups= new ArrayList<>();
+        groups.add(new GroupEntity("1","Physics"));
+        groups.add(new GroupEntity("2","Cosin"));
+        groups.add(new GroupEntity("3","Rabin"));
+        groups.add(new GroupEntity("4","Titanium"));
+        return groups;
+    }
+>>>>>>> 976fb93b2bfed9b299239c58a3db8716e9bbaed3
 }

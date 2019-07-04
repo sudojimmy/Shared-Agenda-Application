@@ -53,7 +53,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'org.apache.commons:commons-lang3:3.9'
-    implementation'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.github.longegit:android-SlideDateTimePicker:1.1.1'
 }
 
