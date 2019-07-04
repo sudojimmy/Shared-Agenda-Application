@@ -1,0 +1,15 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: DeleteFriendRequest
+description: delete friend request
+type: object
+additionalProperties: false
+properties:
+    accountId:
+        description: account id
+        type: string
+    friendId:
+        description: friend account id
+        type: string
+required:
+    - accountId
+    - friendId

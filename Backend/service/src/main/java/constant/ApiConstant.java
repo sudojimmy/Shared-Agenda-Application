@@ -35,6 +35,9 @@ public class ApiConstant {
     public static final String MESSAGEQUEUE_MESSAGEQUEUE_ID = "messageQueueId";
     public static final String MESSAGEQUEUE_MESSAGE_LIST = "messageList";
 
+    // Friend
+    public static final String FRIEND_FRIEND_ID = "friendId";
+
     // FriendQueue
     public static final String FRIENDQUEUE_FRIEND_QUEUE_ID = "friendQueueId";
     public static final String FRIENDQUEUE_FRIEND_LIST = "friendList";
