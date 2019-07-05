@@ -1,27 +1,23 @@
 package com.cosin.shareagenda.activity;
 
-<<<<<<< HEAD
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-=======
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
->>>>>>> 976fb93b2bfed9b299239c58a3db8716e9bbaed3
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.adapter.ContactsAdapter;
+import com.cosin.shareagenda.entity.ContactEntity;
 import com.cosin.shareagenda.entity.UserEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactsActivity extends MainTitleActivity {
 
-    ArrayList<UserEntity> contactList;
+    ArrayList<ContactEntity> contactList;
 
     @Override
     protected int getContentView() {
@@ -30,7 +26,7 @@ public class ContactsActivity extends MainTitleActivity {
 
     @Override
     protected void loadData() {
-        contactList = new ArrayList<UserEntity>();
+        contactList = new ArrayList<ContactEntity>();
         contactList.add(new UserEntity("1", "Jimmy"));
         contactList.add(new UserEntity("2", "Alice"));
         contactList.add(new UserEntity("3", "Ricki"));
@@ -48,21 +44,13 @@ public class ContactsActivity extends MainTitleActivity {
     @Override
     protected void initView() {
         super.initView();
-<<<<<<< HEAD
-        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
-        rvContacts.setHasFixedSize(true);
 
-=======
-
-        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
+        RecyclerView rvContacts = findViewById(R.id.rvContacts);
         rvContacts.setHasFixedSize(true);
->>>>>>> 976fb93b2bfed9b299239c58a3db8716e9bbaed3
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvContacts.setLayoutManager(layoutManager);
         ContactsAdapter conAdapter = new ContactsAdapter(this, contactList);
         rvContacts.setAdapter(conAdapter);
-<<<<<<< HEAD
-=======
 
         LinearLayout ll = findViewById(R.id.llSearch);
         ll.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +60,6 @@ public class ContactsActivity extends MainTitleActivity {
                 startActivity(intent);
             }
         });
->>>>>>> 976fb93b2bfed9b299239c58a3db8716e9bbaed3
     }
 
     @Override

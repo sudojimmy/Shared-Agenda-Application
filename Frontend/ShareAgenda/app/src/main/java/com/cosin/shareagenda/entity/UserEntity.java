@@ -2,7 +2,7 @@ package com.cosin.shareagenda.entity;
 
 import java.io.Serializable;
 
-public class UserEntity implements Serializable {
+public class UserEntity implements Serializable, ContactEntity {
     private String id;
     private String nickname;
     //private String token;
@@ -16,8 +16,14 @@ public class UserEntity implements Serializable {
         this.nickname = nickname;
     }
 
+    @Override
     public String getId() {
         return id;
+    }
+
+    @Override
+    public String getName() {
+        return nickname;
     }
 
     public void setId(String id) {

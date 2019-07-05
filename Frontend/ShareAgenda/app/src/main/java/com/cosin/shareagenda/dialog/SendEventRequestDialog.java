@@ -26,8 +26,8 @@ public class SendEventRequestDialog extends BaseDialog {
     @Override
     protected void initView() {
         ((TextView)findViewById(R.id.tvUserName)).setText(userName);
-        ((TextView)findViewById(R.id.tvDate)).setText("Date        " + date);
-        ((TextView)findViewById(R.id.tvTime)).setText("Time        " + time);
+        ((TextView)findViewById(R.id.tvDate)).setText(date);
+        ((TextView)findViewById(R.id.tvTime)).setText(time);
 
         Button btn = findViewById(R.id.btnSendEventRequest);
         btn.setOnClickListener(onClickListener);
@@ -35,6 +35,7 @@ public class SendEventRequestDialog extends BaseDialog {
 
     @Override
     protected Object dealwithRet() {
-        return null;
+        // no selected item in this dialog
+        return true;
     }
 }

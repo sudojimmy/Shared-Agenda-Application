@@ -21,11 +21,7 @@ public class WeeklyFriendActivity extends WeeklyActivity {
 
     @Override
     protected String titleName() {
-        if (user == null) {
-            return super.titleName();
-        } else {
-            return user.getNickname();
-        }
+        return user.getNickname();
     }
 
     @Override
@@ -36,6 +32,8 @@ public class WeeklyFriendActivity extends WeeklyActivity {
 
     @Override
     public void receive(Object ret) {
-        Toast.makeText(this,"Sent",Toast.LENGTH_SHORT).show();
+        // go create event and send request
+        Intent intent = new Intent(this, CreateEventAcitivty.class);
+        this.startActivity(intent);
     }
 }

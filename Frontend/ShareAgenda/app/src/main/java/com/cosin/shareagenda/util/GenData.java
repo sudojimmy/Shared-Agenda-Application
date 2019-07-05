@@ -1,6 +1,7 @@
 package com.cosin.shareagenda.util;
 
 import com.cosin.shareagenda.config.SystemConfig;
+import com.cosin.shareagenda.entity.ContactEntity;
 import com.cosin.shareagenda.entity.EventEntity;
 import com.cosin.shareagenda.entity.FriendEvent;
 import com.cosin.shareagenda.entity.GroupEntity;
@@ -190,22 +191,25 @@ public class GenData {
 
     public static List<UserEntity> loadFriends() {
         List<UserEntity> friends = new ArrayList<>();
-        friends.add(new UserEntity("1","Alice"));
-        friends.add(new UserEntity("1","Times"));
-        friends.add(new UserEntity("1","Latino"));
-        friends.add(new UserEntity("1","Grace"));
+        friends.add(new UserEntity("1","Alice Brown"));
+        friends.add(new UserEntity("1","Timesfs gdv"));
+        friends.add(new UserEntity("1","Latino dsdv"));
+        friends.add(new UserEntity("1","Pai Kandou"));
+        friends.add(new UserEntity("1","Grace Dgfgf"));
+        friends.add(new UserEntity("1","Grace sffdggd"));
+        friends.add(new UserEntity("1","Grace itggfdf"));
+        friends.add(new UserEntity("1","Grace dxgbfh"));
+        friends.add(new UserEntity("1","Grace ecfresgtdtyybhf"));
+        friends.add(new UserEntity("1","Grace dfsrvrttt"));
         return friends;
     }
-<<<<<<< HEAD
-=======
 
-    public static List<GroupEntity> loadGroups() {
-        List<GroupEntity> groups= new ArrayList<>();
+    public static List<ContactEntity> loadGroups() {
+        List<ContactEntity> groups= new ArrayList<>();
         groups.add(new GroupEntity("1","Physics"));
         groups.add(new GroupEntity("2","Cosin"));
         groups.add(new GroupEntity("3","Rabin"));
         groups.add(new GroupEntity("4","Titanium"));
         return groups;
     }
->>>>>>> 976fb93b2bfed9b299239c58a3db8716e9bbaed3
 }

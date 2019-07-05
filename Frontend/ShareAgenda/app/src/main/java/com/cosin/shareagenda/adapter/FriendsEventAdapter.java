@@ -14,12 +14,15 @@ import com.cosin.shareagenda.util.AppHelper;
 import com.cosin.shareagenda.util.CalendarEventBiz;
 import com.cosin.shareagenda.view.EventView;
 import com.cosin.shareagenda.view.FriendsEventsView;
+import com.cosin.shareagenda.view.ItemViewListener;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class FriendsEventAdapter extends RecyclerView.Adapter<FriendsEventAdapter.ViewHolder> {
     private List<FriendEvent> friendEvts;
+    private ItemViewListener listener;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         FriendsEventsView eventView;
@@ -30,7 +33,17 @@ public class FriendsEventAdapter extends RecyclerView.Adapter<FriendsEventAdapte
         }
     }
 
-    public FriendsEventAdapter(List<FriendEvent> friendEvts) {
+    public FriendsEventAdapter(List<FriendEvent> friendEvts, ItemViewListener listener) {
+        this.friendEvts = friendEvts;
+        this.listener = listener;
+    }
+
+    public FriendsEventAdapter(ItemViewListener listener) {
+        this.friendEvts = new ArrayList<>();
+        this.listener = listener;
+    }
+
+    public void setFriendEvts(List<FriendEvent> friendEvts) {
         this.friendEvts = friendEvts;
     }
 
@@ -50,6 +63,7 @@ public class FriendsEventAdapter extends RecyclerView.Adapter<FriendsEventAdapte
         }
 
         viewHolder.eventView.setCld(quarter, ev);
+        viewHolder.eventView.setListener(listener);
     }
 
     @Override

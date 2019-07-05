@@ -26,6 +26,7 @@ public class EventView extends View implements View.OnClickListener {
     private int timeWidth;
     private int evtName;
     private int leftMargin;
+    private ItemViewListener listener;
 
     public EventView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -40,6 +41,10 @@ public class EventView extends View implements View.OnClickListener {
     public void setEvent(EventEntity event) {
         this.event = event;
         mHigh = mUnit * event.getCount();
+    }
+
+    public void setListener(ItemViewListener listener) {
+        this.listener = listener;
     }
 
     private void init() {
@@ -132,7 +137,9 @@ public class EventView extends View implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (event.getType() != 0) {
+        if (event.getType() == 0) {
+            listener.dealwithItem(event.getQuarter());
+        } else {
             Toast.makeText(getContext(), event.getLocation(), Toast.LENGTH_SHORT).show();
         }
     }

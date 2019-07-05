@@ -8,6 +8,7 @@ import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.activity.CalendarActivity;
 import com.cosin.shareagenda.activity.ContactsActivity;
 import com.cosin.shareagenda.activity.GroupEventsActivity;
+import com.cosin.shareagenda.activity.GroupsActivity;
 import com.cosin.shareagenda.activity.ProfileActivity;
 import com.cosin.shareagenda.activity.WeeklyActivity;
 
@@ -18,7 +19,7 @@ public class HandleMenu {
     static final Map<Integer, Class> activity_map = new HashMap<Integer, Class>() {{
         put( R.id.nav_calendar, CalendarActivity.class);
         put( R.id.nav_weekCalendar, WeeklyActivity.class);
-        put( R.id.nav_groups, GroupEventsActivity.class);
+        put( R.id.nav_groups, GroupsActivity.class);
         put( R.id.nav_friends, ContactsActivity.class);
 //        put( R.id.nav_publicEvents, ProfileActivity.class);
 //        put( R.id.nav_groupEvents, ProfileActivity.class);
