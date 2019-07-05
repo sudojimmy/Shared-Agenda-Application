@@ -64,7 +64,7 @@ public class WeekEventsView extends FriendsEventsView implements View.OnTouchLis
         Calendar cal = Calendar.getInstance();
         cal.setTime(firstDay);
         cal.add(Calendar.DATE, w);
-        SimpleDateFormat sdfDate = new SimpleDateFormat("d/M/yyyy|EEEE|");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("d / M  yyyy|  EEEE|");
         return sdfDate.format(cal.getTime()) + quarter;
     }
 

@@ -3,6 +3,8 @@ package com.cosin.shareagenda.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.adapter.SearchFriendsAdapter;
@@ -21,7 +23,7 @@ public class SearchFriendsActivity extends MainTitleActivity {
 
     @Override
     protected void loadData() {
-        friends = GenData.loadFriends();
+        //friends = GenData.loadFriends();
     }
 
     @Override
@@ -37,6 +39,19 @@ public class SearchFriendsActivity extends MainTitleActivity {
         RecyclerView recyclerView = findViewById(R.id.rvFriendsAdd);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
-        recyclerView.setAdapter(new SearchFriendsAdapter(friends));
+        SearchFriendsAdapter searchFriendsAdapter = new SearchFriendsAdapter();
+        recyclerView.setAdapter(searchFriendsAdapter);
+
+        ImageButton imgBtn = findViewById(R.id.imgBtnSearch);
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*fetch edit*/
+
+                friends = GenData.loadFriends();
+                searchFriendsAdapter.setFriends(friends);
+                searchFriendsAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

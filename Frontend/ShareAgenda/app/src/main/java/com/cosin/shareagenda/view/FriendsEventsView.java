@@ -24,6 +24,7 @@ import java.util.Locale;
  * TODO: document your custom view class.
  */
 public class FriendsEventsView extends View implements View.OnLongClickListener {
+    private ItemViewListener listener;
     protected int quarter;
     protected boolean[] evt;
 
@@ -56,6 +57,10 @@ public class FriendsEventsView extends View implements View.OnLongClickListener 
     public void setCld(int quarter, boolean[] evt) {
         this.quarter = quarter;
         this.evt = evt;
+    }
+
+    public void setListener(ItemViewListener listener) {
+        this.listener = listener;
     }
 
     protected void init(AttributeSet attrs, int defStyle) {
@@ -138,7 +143,7 @@ public class FriendsEventsView extends View implements View.OnLongClickListener 
 
     @Override
     public boolean onLongClick(View view) {
-        Toast.makeText(getContext(), getTimeString(), Toast.LENGTH_SHORT).show();
+        listener.dealwithItem(quarter);
         return true;
     }
 }

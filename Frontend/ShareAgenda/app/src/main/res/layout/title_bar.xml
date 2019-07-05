@@ -27,7 +27,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="24dp"
             android:layout_weight="1"
-            android:textColor="#ccc"
+            android:textColor="#eee"
             android:textSize="@dimen/toolbar_text" />
 
         <ImageView

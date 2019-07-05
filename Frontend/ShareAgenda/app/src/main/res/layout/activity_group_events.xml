@@ -14,7 +14,6 @@
         />
 
     <LinearLayout
-        android:id="@+id/ll_feLabel"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@color/friends_calendar_label"
@@ -23,6 +22,14 @@
         <Space
             android:layout_width="@dimen/friends_events_time"
             android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_feLabel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        </LinearLayout>
 
     </LinearLayout>
     <android.support.v7.widget.RecyclerView

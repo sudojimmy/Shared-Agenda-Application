@@ -52,7 +52,7 @@ public class RequestActivity extends MainTitleActivity implements View.OnClickLi
 
     @Override
     protected  String titleName() {
-        return getResources().getString(R.string.title_friends_calendar);
+        return "Requests";
     }
 
     @Override
@@ -92,16 +92,5 @@ public class RequestActivity extends MainTitleActivity implements View.OnClickLi
                         .PostRequest(new CallbackHandler(handler));
                 break;
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Log.d("AAA","RequestActivity1");
-        Intent intent = getIntent();
-        UserEntity friend = (UserEntity) intent.getSerializableExtra("account");
-        Log.d("AAA RequestActivity",friend.getNickname());
-        super.onCreate(savedInstanceState);
-        Log.d("AAA","RequestActivity2");
-
     }
 }

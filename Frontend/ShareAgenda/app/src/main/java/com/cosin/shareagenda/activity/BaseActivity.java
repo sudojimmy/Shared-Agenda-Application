@@ -33,8 +33,6 @@ public abstract class BaseActivity extends AppCompatActivity
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
 
-        loadContentView();
-
         // init navigationView
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
@@ -44,6 +42,8 @@ public abstract class BaseActivity extends AppCompatActivity
         poster.setText(AgendaApplication.getUserDescription());
 
         loadData();
+
+        loadContentView();
 
         initView();
     }

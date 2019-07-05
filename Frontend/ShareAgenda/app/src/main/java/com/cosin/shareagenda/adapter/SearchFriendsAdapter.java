@@ -10,12 +10,21 @@ import android.widget.TextView;
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.entity.UserEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdapter.ViewHolder> {
     private List<UserEntity> friends;
 
+    public SearchFriendsAdapter() {
+        friends = new ArrayList<>();
+    }
+
     public SearchFriendsAdapter(List<UserEntity> friends) {
+        this.friends = friends;
+    }
+
+    public void setFriends(List<UserEntity> friends) {
         this.friends = friends;
     }
 

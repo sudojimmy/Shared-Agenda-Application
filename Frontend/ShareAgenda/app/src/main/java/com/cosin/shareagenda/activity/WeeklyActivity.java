@@ -1,5 +1,6 @@
 package com.cosin.shareagenda.activity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,14 +35,12 @@ public class WeeklyActivity extends MainTitleActivity
     protected List<FriendEvent> weekEvts;
     protected int[] ids = {R.id.week_label0, R.id.week_label1, R.id.week_label2,
             R.id.week_label3, R.id.week_label4, R.id.week_label5, R.id.week_label6};
-    protected String eventDate;
-    protected String eventQuarter;
 
     GestureDetector gestureDetector;
 
     @Override
     protected  String titleName() {
-        SimpleDateFormat sdf = new SimpleDateFormat("d/M/yyyy EEEE");
+        SimpleDateFormat sdf = new SimpleDateFormat("d / M  yyyy  EEEE");
         return sdf.format(cal.getTime());
     }
 
@@ -66,7 +65,7 @@ public class WeeklyActivity extends MainTitleActivity
     }
 
     protected void refreshData(int d) {
-        //
+        // load user weekly events
         weekEvts = GenData.getNextWeeklyEvents();
     }
 
@@ -123,9 +122,9 @@ public class WeeklyActivity extends MainTitleActivity
 
         // event panel
         RecyclerView recyclerView = findViewById(R.id.recycle_week);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(llm);
-        recyclerView.setAdapter(new WeeklyEventAdapter(weekEvts, this));
+        WeeklyEventAdapter adpt = (WeeklyEventAdapter)(recyclerView.getAdapter());
+        adpt.setWeekEvts(weekEvts);
+        adpt.notifyDataSetChanged();
     }
 
     @Override
@@ -180,9 +179,8 @@ public class WeeklyActivity extends MainTitleActivity
 
     @Override
     public void dealwithItem(Object item) {
+        // item=d / M  yyyy|  EEEE|quarter
         String[] ret = ((String)item).split("\\|");
-        eventDate = ret[0];
-        eventQuarter = ret[2];
         int q = Integer.parseInt(ret[2]);
         int h, m;
         h = q / 4;
@@ -190,12 +188,14 @@ public class WeeklyActivity extends MainTitleActivity
 
         new SendEventRequestDialog(this,
                 user.getNickname(),
-                eventDate + "   " + ret[1],
+                ret[0] + ret[1],
                 String.format("%d : %02d", h, m)).show();
     }
 
     @Override
     public void receive(Object ret) {
-        Toast.makeText(this,"Sent",Toast.LENGTH_SHORT).show();
+        // to create event
+        Intent intent = new Intent(this, CreateEventAcitivty.class);
+        this.startActivity(intent);
     }
 }

@@ -32,6 +32,10 @@ public class WeeklyEventAdapter extends RecyclerView.Adapter<WeeklyEventAdapter.
         this.listener = listener;
     }
 
+    public void setWeekEvts(List<FriendEvent> weeklyEvts) {
+        this.weekEvts = weeklyEvts;
+    }
+
     @Override
     public WeeklyEventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())

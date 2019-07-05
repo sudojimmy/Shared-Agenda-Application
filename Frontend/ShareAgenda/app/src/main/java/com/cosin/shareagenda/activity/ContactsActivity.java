@@ -9,13 +9,15 @@ import android.widget.LinearLayout;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.adapter.ContactsAdapter;
+import com.cosin.shareagenda.entity.ContactEntity;
 import com.cosin.shareagenda.entity.UserEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactsActivity extends MainTitleActivity {
 
-    ArrayList<UserEntity> contactList;
+    ArrayList<ContactEntity> contactList;
 
     @Override
     protected int getContentView() {
@@ -24,7 +26,7 @@ public class ContactsActivity extends MainTitleActivity {
 
     @Override
     protected void loadData() {
-        contactList = new ArrayList<UserEntity>();
+        contactList = new ArrayList<ContactEntity>();
         contactList.add(new UserEntity("1", "Jimmy"));
         contactList.add(new UserEntity("2", "Alice"));
         contactList.add(new UserEntity("3", "Ricki"));
@@ -43,7 +45,7 @@ public class ContactsActivity extends MainTitleActivity {
     protected void initView() {
         super.initView();
 
-        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
+        RecyclerView rvContacts = findViewById(R.id.rvContacts);
         rvContacts.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvContacts.setLayoutManager(layoutManager);
