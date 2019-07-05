@@ -107,6 +107,7 @@ public class EventListUtils {
             switch (eventRepeat) {
                 case YEAR:
                     result = result && month1 == month2;
+                    // flow
                 case MONTH:
                     result = result && monthday1 == monthday2;
                     break;
