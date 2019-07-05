@@ -17,7 +17,9 @@ import utils.CalendarUtils;
 import utils.EventListUtils;
 import utils.ExceptionUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @RestController
 public class GetCalendarEventListByDateController extends BaseController {
@@ -32,8 +34,9 @@ public class GetCalendarEventListByDateController extends BaseController {
         Calendar calendar = CalendarUtils.getCalendar(request.getCalendarId());
         ExceptionUtils.assertDatabaseObjectFound(calendar, ApiConstant.CALENDAR_CALENDAR_ID);
 
-        Bson dateFilter = Filters.eq(ApiConstant.EVENT_DATE, request.getDate());
-        ArrayList<Event> eventList = EventListUtils.getEventListFromCalendarWithCond(calendar, dateFilter);
+        ArrayList<Event> eventList = EventListUtils
+                .getEventListFromCalendarWithRepeat(calendar, request.getDate());
+
         return new ResponseEntity<>(new GetCalendarEventListByDateResponse()
                 .withEventList(eventList),HttpStatus.OK);
     }

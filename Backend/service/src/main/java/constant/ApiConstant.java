@@ -78,6 +78,9 @@ public class ApiConstant {
 
     // Repeat obj
     public static final String REPEAT_CALLER_ID = "callerId";
+    public static final String REPEAT_START_DATE = "startDate";
+    public static final String REPEAT_END_DATE = "endDate";
+    public static final String REPEAT_TYPE = "type";
 
 
 }
