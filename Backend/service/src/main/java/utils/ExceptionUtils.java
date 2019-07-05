@@ -36,14 +36,14 @@ public class ExceptionUtils {
         ExceptionUtils.assertPropertyValid(repeat.getType(), ApiConstant.REPEAT_TYPE);
         ExceptionUtils.assertPropertyValid(repeat.getStartDate(), ApiConstant.REPEAT_START_DATE);
         ExceptionUtils.assertPropertyValid(repeat.getEndDate(), ApiConstant.REPEAT_END_DATE);
+        isValidDateTime(event.getRepeat().getStartDate(), true);
+        isValidDateTime(event.getRepeat().getEndDate(), true);
         if (repeat.getType().equals(EventRepeat.ONCE)) {
             DateTimeOrder(repeat.getStartDate(), repeat.getEndDate(), true, false);
         } else {
             DateTimeOrder(repeat.getStartDate(), repeat.getEndDate(), true, true);
         }
 
-        isValidDateTime(event.getRepeat().getStartDate(), true);
-        isValidDateTime(event.getRepeat().getEndDate(), true);
         ExceptionUtils.assertPropertyValid(event.getState(), ApiConstant.EVENT_STATE);
 
         ExceptionUtils.assertPropertyValid(event.getStartTime(), ApiConstant.EVENT_START_TIME);
