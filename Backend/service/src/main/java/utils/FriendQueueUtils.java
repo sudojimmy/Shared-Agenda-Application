@@ -48,6 +48,19 @@ public class FriendQueueUtils {
         }
     }
 
+    public static void removeFriendToFriendQueue(final String friendId, final String friendQueueId) {
+        FriendQueue friendQueue = getFriendQueue(friendQueueId);
+        if (friendQueue.getFriendList().contains(friendId)) {
+            friendQueue.getFriendList().remove(friendId);
+
+            Bson filter = Filters.eq(ApiConstant.FRIENDQUEUE_FRIEND_QUEUE_ID, friendQueueId);
+            Bson query = combine(
+                    set(ApiConstant.FRIENDQUEUE_FRIEND_LIST, friendQueue.getFriendList()));
+
+            dataStore.updateInCollection(filter, query, DataStore.COLLECTION_FRIENDQUEUES);
+        }
+    }
+
     public static boolean isFriend(Account account, String friendId) {
         return getFriendList(account.getFriendQueueId()).contains(friendId);
     }

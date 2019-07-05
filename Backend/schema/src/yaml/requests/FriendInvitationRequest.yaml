@@ -8,7 +8,7 @@ properties:
         description: sender account id
         type: string
     receiverId:
-        description: receiver accouny id
+        description: receiver account id
         type: string
 required:
     - senderId
