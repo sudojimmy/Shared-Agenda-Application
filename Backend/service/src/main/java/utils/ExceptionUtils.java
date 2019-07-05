@@ -7,6 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import types.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ExceptionUtils {
 
     public static Logger exceptionLogger = LoggerFactory.getLogger(ExceptionUtils.class);
@@ -25,11 +29,85 @@ public class ExceptionUtils {
         ExceptionUtils.assertPropertyValid(event.getEventname(), ApiConstant.EVENT_EVENT_NAME);
         ExceptionUtils.assertPropertyValid(event.getStarterId(), ApiConstant.EVENT_STARTER_ID);
         ExceptionUtils.assertPropertyValid(event.getType(), ApiConstant.EVENT_TYPE);
+
         ExceptionUtils.assertPropertyValid(event.getRepeat(), ApiConstant.EVENT_REPEAT);
+        // assert repeat obj
+        Repeat repeat = event.getRepeat();
+        ExceptionUtils.assertPropertyValid(repeat.getType(), ApiConstant.REPEAT_TYPE);
+        ExceptionUtils.assertPropertyValid(repeat.getStartDate(), ApiConstant.REPEAT_START_DATE);
+        ExceptionUtils.assertPropertyValid(repeat.getEndDate(), ApiConstant.REPEAT_END_DATE);
+        isValidDateTime(event.getRepeat().getStartDate(), true);
+        isValidDateTime(event.getRepeat().getEndDate(), true);
+        if (repeat.getType().equals(EventRepeat.ONCE)) {
+            DateTimeOrder(repeat.getStartDate(), repeat.getEndDate(), true, false);
+        } else {
+            DateTimeOrder(repeat.getStartDate(), repeat.getEndDate(), true, true);
+        }
+
         ExceptionUtils.assertPropertyValid(event.getState(), ApiConstant.EVENT_STATE);
+
         ExceptionUtils.assertPropertyValid(event.getStartTime(), ApiConstant.EVENT_START_TIME);
+        isValidDateTime(event.getStartTime(), false);
         ExceptionUtils.assertPropertyValid(event.getEndTime(), ApiConstant.EVENT_END_TIME);
+        isValidDateTime(event.getEndTime(), false);
+        DateTimeOrder(event.getStartTime(), event.getEndTime(), false, true);
+
     }
+
+    // order: prop1 < prop2
+    // order == false: prop1 == prop2
+    private static void DateTimeOrder(String prop1, String prop2, boolean isDate, boolean order) {
+        SimpleDateFormat dateFormat = null;
+        if (isDate) {
+            dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        } else {
+            dateFormat = new SimpleDateFormat("HH:mm");
+        }
+        try {
+            Date date1 = dateFormat.parse(prop1);
+            Date date2 = dateFormat.parse(prop2);
+
+            if (order) {
+                if (!date1.before(date2)) {
+                    if (isDate) {
+                        raise("start date need before end date", HttpStatus.BAD_REQUEST);
+                    } else {
+                        raise("start time need before end time", HttpStatus.BAD_REQUEST);
+                    }
+                }
+            } else {
+                if (!date1.equals(date2)) {
+                    if (isDate) {
+                        raise("start date need before end date", HttpStatus.BAD_REQUEST);
+                    } else {
+                        raise("start time need before end time", HttpStatus.BAD_REQUEST);
+                    }
+                }
+            }
+        } catch(ParseException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private static void isValidDateTime(String prop, boolean isDate) {
+        SimpleDateFormat dateFormat = null;
+        if(isDate){
+            dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        } else{
+            dateFormat = new SimpleDateFormat("HH:mm");
+        }
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(prop.trim());
+        } catch (ParseException pe) {
+            if(isDate) {
+                raise("Not a valid Date Format", HttpStatus.BAD_REQUEST);
+            } else {
+                raise("Not a valid Time Format", HttpStatus.BAD_REQUEST);
+            }
+        }
+    }
+
 
     public static void assertPropsEqual(final String prop1, final String prop2,
                                         final String propName1, final String propName2) {

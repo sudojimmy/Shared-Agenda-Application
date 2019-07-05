@@ -7,13 +7,17 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import store.DataStore;
 import types.*;
+import types.Calendar;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 import static controller.BaseController.dataStore;
+import static javax.swing.UIManager.put;
 
 public class EventListUtils {
 
@@ -69,6 +73,64 @@ public class EventListUtils {
         Bson filter = Filters.and(calendarToEventFilter(calendar), cond);
         Collection<Event> collection = dataStore.findManyInCollection(filter, DataStore.COLLECTION_EVENTS);
         return new ArrayList<>(collection);
+    }
+
+    private static boolean happened(final Event event, final String date) {
+        if (event.getRepeat().getStartDate().equals(date)) {
+            return true;
+        }
+
+        try {
+            Repeat repeat = event.getRepeat();
+            EventRepeat eventRepeat = repeat.getType();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = sdf.parse(repeat.getStartDate());
+            Date endDate = sdf.parse(repeat.getEndDate());
+            Date matchDate = sdf.parse(date);
+
+            if(endDate.before(matchDate) || startDate.after(matchDate)){
+                return false;
+            }
+
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.setTime(startDate);
+            int weekday1 = calendar.get(java.util.Calendar.DAY_OF_WEEK);
+            int monthday1 = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+            int month1 = calendar.get(java.util.Calendar.MONTH);
+
+            calendar.setTime(matchDate);
+            int weekday2 = calendar.get(java.util.Calendar.DAY_OF_WEEK);
+            int monthday2 = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+            int month2 = calendar.get(java.util.Calendar.MONTH);
+
+            boolean result = true;
+            switch (eventRepeat) {
+                case YEAR:
+                    result = result && month1 == month2;
+                    // flow
+                case MONTH:
+                    result = result && monthday1 == monthday2;
+                    break;
+                case WEEK:
+                    result = result && weekday1 == weekday2;
+                    break;
+                default:
+                    result = false;
+            }
+            return result;
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+            ExceptionUtils.invalidProperty("Date format");
+            return false;
+        }
+    }
+
+    public static ArrayList<Event> getEventListFromCalendarWithRepeat(final Calendar calendar, final String matchDate) {
+        if (calendar.getEventList().isEmpty()) { return new ArrayList<>(); }
+
+        ArrayList<Event> eventList = getEventListFromCalendar(calendar);
+        List<Event> eventListRt = eventList.stream().filter((e) -> happened(e, matchDate)).collect(Collectors.toList());
+        return (ArrayList<Event>) eventListRt;
     }
 
     public static boolean deleteEvent(final String eventId) {
