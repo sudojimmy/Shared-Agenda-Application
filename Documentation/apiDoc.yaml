@@ -371,3 +371,63 @@ paths:
           description: "Invalid Parameter: accountid cannot be null or empty"
         "404":
           description: "Not Found: accountid do not exist"
+# Friends
+  inviteFriend:
+    post:
+      operationId: inviteFriend
+      tags:
+        - Friends
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/FriendInvitationRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/FriendInvitationResponse.yaml'
+        "400":
+          description: "Invalid Parameter: senderId, receiverId cannot be null or empty, 
+          senderId can not equal to receiverId, senderId and receiverId are already friend"
+        "404":
+          description: "Not Found: senderId, receiverId do not exist"
+  replyFriend:
+    post:
+      operationId: replyFriend
+      tags:
+        - Friends
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/ReplyInvitationRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/ReplyInvitationResponse.yaml'
+        "400":
+          description: "Invalid Parameter: accountId, messageId and status cannot be null or empty"
+        "404":
+          description: "Not Found:  accountId, messageId and status do not exist"
+  deleteFriend:
+    post:
+      operationId: deleteFriend
+      tags:
+        - Friends
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/DeleteFriendRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/DeleteFriendResponse.yaml'
+        "400":
+          description:  "Invalid Parameter: accountId, friendId cannot be null or empty, 
+          accountId can not equal to friendId, accountId and friendId are not friend"
+        "404":
+          description: "Not Found:  accountId, friendId do not exist"
