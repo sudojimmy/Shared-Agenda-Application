@@ -12,7 +12,7 @@ properties:
     type: string
   event:
     description: create event request
-    "$ref": CreateEventRequest.yaml
+    "$ref": ../types/Event.yaml
 required:
   - senderId
   - receiverId

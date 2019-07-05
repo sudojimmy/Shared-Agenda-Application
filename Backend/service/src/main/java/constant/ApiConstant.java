@@ -16,13 +16,13 @@ public class ApiConstant {
     public static final String EVENT_STARTER_ID = "starterId";
     public static final String EVENT_TYPE = "type";
     public static final String EVENT_DATE = "date";
-    public static final String EVENT_START = "start";
-    public static final String EVENT_COUNT = "count";
     public static final String EVENT_REPEAT = "repeat";
     public static final String EVENT_LOCATION = "location";
     public static final String EVENT_STATE = "state";
     public static final String EVENT_DESCRIPTION = "description";
-    public static final String EVENT_PUBLIC = "public";
+    public static final String EVENT_PERMISSION = "permission";
+    public static final String EVENT_START_TIME = "startTime";
+    public static final String EVENT_END_TIME = "endTime";
 
     // Group
     public static final String GROUP_ID = "groupId";
@@ -72,6 +72,9 @@ public class ApiConstant {
     public static final String INVITATION_STATUS_ACCEPTED = "accepted";
     public static final String INVITATION_STATUS_DECLINED = "declined";
     public static final String INVITATION_RESPONSE_MESSAGE_ID = "responseMessageId";
+
+    // Repeat obj
+    public static final String REPEAT_CALLER_ID = "callerId";
 
 
 }

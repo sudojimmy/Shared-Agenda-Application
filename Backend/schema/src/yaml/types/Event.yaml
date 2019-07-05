@@ -16,18 +16,15 @@ properties:
   type:
     description: work, study, entertainment, appointment, etc
     "$ref": EventType.yaml
-  date:
-    description: DD/MM/YYYY
+  startTime:
+    description: "HH:MM"
     type: string
-  start:
-    description: the event start time(multiple of quarter)
-    type: integer
-  count:
-    description: the total time(multiple of quarter)
-    type: integer
+  endTime:
+    description: "HH:MM"
+    type: string
   repeat:
-    description: [once, day, week, month, year]
-    "$ref": EventRepeat.yaml
+    description: repeat Object
+    "$ref": Repeat.yaml
   location:
     description: event occurs location
     type: string
@@ -37,11 +34,14 @@ properties:
   description:
     description: event description
     type: string
-  public:
-    description: true for Public, o/w false
+  permit:
+    description: permit obj TODO
     type: boolean
 required:
   - eventname
   - starterId
   - type
-  - public
+  - startTime
+  - endTime
+  - repeat
+  - permit

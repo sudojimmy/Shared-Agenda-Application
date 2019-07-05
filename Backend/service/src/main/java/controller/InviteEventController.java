@@ -21,30 +21,21 @@ public class InviteEventController extends BaseController {
         ExceptionUtils.assertPropertyValid(request.getSenderId(), ApiConstant.EVENT_SENDER_ID);
         ExceptionUtils.assertPropertyValid(request.getReceiverId(), ApiConstant.EVENT_RECEIVER_ID);
         ExceptionUtils.assertPropertyValid(request.getEvent(), ApiConstant.EVENT_EVENT);
+        ExceptionUtils.assertEventValid(request.getEvent(), false);
 
         // Step II: check restriction (conflict, or naming rules etc.)
         Account sender = AccountUtils.getAccount(request.getSenderId(), ApiConstant.EVENT_SENDER_ID);
         Account receiver = AccountUtils.getAccount(request.getReceiverId(), ApiConstant.EVENT_RECEIVER_ID);
         ExceptionUtils.assertFriendship(sender, receiver.getAccountId());
 
-        CreateEventRequest ER = request.getEvent();
-        if(!request.getSenderId().equals(ER.getStarterId())){
+        Event event = request.getEvent();
+        if(!request.getSenderId().equals(event.getStarterId())){
             ExceptionUtils.invalidProperty("sendId need equal to starterId to invite");
         }
 
         // Note: reply's receiver and sender is opposite way of invitation
-        String messageId = EventMessageUtils.createEventMessageToDatabase(
-                null,
-                ER.getEventname(),
-                ER.getStarterId(),
-                ER.getType(),
-                ER.getStart(),
-                ER.getCount(),
-                ER.getDate(),
-                ER.getLocation(),
-                ER.getRepeat(),
-                ER.getState(),
-                ER.getDescription())
+        String messageId = EventMessageUtils
+                .createEventMessageToDatabase(event)
                 .getMessageId();
 
         MessageQueueUtils.notifyAccounts(sender, receiver, MessageType.EVENT, messageId);

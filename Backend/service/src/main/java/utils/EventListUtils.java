@@ -16,57 +16,29 @@ import static com.mongodb.client.model.Updates.set;
 import static controller.BaseController.dataStore;
 
 public class EventListUtils {
-    public static String createEventToDatabase(String eventId, final String eventname, final String starterId,
-                                               final EventType type, final int start, final int count,
-                                               final String date, final String location, final EventRepeat repeat,
-                                               final EventState state, final String description, final boolean isPublic) {
-        if (eventId == null) {
-            eventId = new ObjectId().toString();
-        }
-
-        Event p = new Event()
-                .withEventId(eventId)
-                .withEventname(eventname)
-                .withStarterId(starterId)
-                .withType(type)
-                .withStart(start)
-                .withCount(count)
-                .withDate(date)
-                .withLocation(location)
-                .withRepeat(repeat)
-                .withState(state)
-                .withDescription(description)
-                .with_public(isPublic);
-
-        dataStore.insertToCollection(p, DataStore.COLLECTION_EVENTS);
-        return eventId;
-    }
 
     public static String createEventToDatabase(final Event event) {
+        event.setEventId(new ObjectId().toString());
         dataStore.insertToCollection(event, DataStore.COLLECTION_EVENTS);
         return event.getEventId();
     }
 
-    public static boolean updateEventInDatabase(String eventId, final String eventname, final String starterId,
-                                               final EventType type, final int start, final int count,
-                                               final String date, final String location, final EventRepeat repeat,
-                                               final EventState state, final String description, final boolean isPublic) {
+    public static boolean updateEventInDatabase(final Event event) {
 
         Bson query = combine(
-                set(ApiConstant.EVENT_EVENT_NAME, eventname),
-                set(ApiConstant.EVENT_STARTER_ID, starterId),
-                set(ApiConstant.EVENT_TYPE, type),
-                set(ApiConstant.EVENT_DATE, date),
-                set(ApiConstant.EVENT_START, start),
-                set(ApiConstant.EVENT_COUNT, count),
-                set(ApiConstant.EVENT_REPEAT, repeat),
-                set(ApiConstant.EVENT_LOCATION, location),
-                set(ApiConstant.EVENT_STATE, state),
-                set(ApiConstant.EVENT_DESCRIPTION, description),
-                set(ApiConstant.EVENT_PUBLIC, isPublic));
+                set(ApiConstant.EVENT_EVENT_NAME, event.getEventname()),
+                set(ApiConstant.EVENT_STARTER_ID, event.getStarterId()),
+                set(ApiConstant.EVENT_TYPE, event.getType()),
+                set(ApiConstant.EVENT_REPEAT, event.getRepeat()),
+                set(ApiConstant.EVENT_LOCATION, event.getLocation()),
+                set(ApiConstant.EVENT_STATE, event.getState()),
+                set(ApiConstant.EVENT_START_TIME, event.getStartTime()),
+                set(ApiConstant.EVENT_END_TIME, event.getEndTime()),
+                set(ApiConstant.EVENT_DESCRIPTION, event.getDescription()),
+                set(ApiConstant.EVENT_PERMISSION, event.isPermit()));
 
 
-        Bson filter = Filters.eq(ApiConstant.EVENT_EVENT_ID, eventId);
+        Bson filter = Filters.eq(ApiConstant.EVENT_EVENT_ID, event.getEventId());
         return dataStore.updateInCollection(filter, query, DataStore.COLLECTION_EVENTS);
     }
 

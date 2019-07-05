@@ -1,0 +1,19 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: Repeat
+description: Repeat object describes event (date/time)repeat information
+type: object
+additionalProperties: false
+properties:
+  startDate:
+    description: startDate YYYY/MM//DD
+    type: string
+  endDate:
+    description: endDate YYYY/MM//DD
+    type: string
+  type:
+    description: [once, day, week, month, year]
+    "$ref": EventRepeat.yaml
+required:
+  - startTime
+  - endTime
+  - type
