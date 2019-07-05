@@ -7,42 +7,9 @@ properties:
   accountId:
     description: caller Id
     type: string
-  eventId:
-    description: eventId is unique, provided by frontend
-    type: string
-  eventname:
-    description: event name entered by user (repeatable)
-    type: string
-  type:
-    description: work, study, entertainment, appointment, etc
-    "$ref": ../types/EventType.yaml
-  date:
-    description: DD/MM/YYYY
-    type: string
-  start:
-    description: the event start time(multiple of quarter)
-    type: integer
-  count:
-    description: the total time(multiple of quarter)
-    type: integer
-  repeat:
-    description: [once, day, week, month, year]
-    "$ref": ../types/EventRepeat.yaml
-  location:
-    description: event occurs location
-    type: string
-  state:
-    description: cancelled, active
-    "$ref": ../types/EventState.yaml
-  description:
-    description: event description
-    type: string
-  public:
-    description: true for Public, o/w false
-    type: boolean
+  event:
+    description: event obj
+    "$ref": ../types/Event.yaml
 required:
-  - eventId
   - accountId
-  - eventname
-  - type
-  - public
+  - event

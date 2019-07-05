@@ -22,28 +22,19 @@ public class CreateEventController extends BaseController {
         logger.info("CreateEvent: " + request);
 
         // Step I: check parameters
-        ExceptionUtils.assertPropertyValid(request.getEventname(), ApiConstant.EVENT_EVENT_NAME);
-        ExceptionUtils.assertPropertyValid(request.getStarterId(), ApiConstant.EVENT_STARTER_ID);
-        ExceptionUtils.assertPropertyValid(request.getType(), ApiConstant.EVENT_EVENT_NAME);
+        ExceptionUtils.assertPropsEqual(
+                request.getEvent().getStarterId(),
+                request.getCallerId(),
+                ApiConstant.EVENT_STARTER_ID,
+                ApiConstant.REPEAT_CALLER_ID);
+        ExceptionUtils.assertEventValid(request.getEvent(), false);
+
 
         // Step II: check restriction (conflict, or naming rules etc.)
-        Account account = AccountUtils.getAccount(request.getStarterId(),ApiConstant.EVENT_STARTER_ID);
+        Account account = AccountUtils.getAccount(request.getCallerId(), ApiConstant.EVENT_STARTER_ID);
 
         // Step III: write to Database
-        String eventId = EventListUtils.createEventToDatabase(
-                null,
-                request.getEventname(),
-                request.getStarterId(),
-                request.getType(),
-                request.getStart(),
-                request.getCount(),
-                request.getDate(),
-                request.getLocation(),
-                request.getRepeat(),
-                request.getState(),
-                request.getDescription(),
-                request.isPublic()
-        );
+        String eventId = EventListUtils.createEventToDatabase(request.getEvent());
 
         EventListUtils.addEventIdToCalendar(eventId, account.getCalendarId());
 

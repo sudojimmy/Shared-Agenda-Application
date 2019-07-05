@@ -31,21 +31,8 @@ public class CancelEventController extends BaseController {
             // no permission to cancel the event
             ExceptionUtils.invalidProperty("Only owner can cancel the event");
         }
-
-        EventListUtils.updateEventInDatabase(
-                request.getEventId(),
-                event.getEventname(),
-                event.getStarterId(),
-                event.getType(),
-                event.getStart(),
-                event.getCount(),
-                event.getDate(),
-                event.getLocation(),
-                event.getRepeat(),
-                EventState.CANCELLED,
-                event.getDescription(),
-                event.isPublic()
-        );
+        event.setState(EventState.CANCELLED);
+        EventListUtils.updateEventInDatabase(event);
 
         return new ResponseEntity<>(new CancelEventResponse()
                 .withEventId(event.getEventId()),
