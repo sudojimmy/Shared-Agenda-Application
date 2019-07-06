@@ -1,21 +1,27 @@
 package utils;
 
 import constant.ApiConstant;
+import org.bson.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import store.DataStore;
 import types.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static controller.BaseController.dataStore;
+
 public class ExceptionUtils {
 
     public static Logger exceptionLogger = LoggerFactory.getLogger(ExceptionUtils.class);
 
-    public static void assertEventValid(final Event event, boolean eventIdShouldPresent) {
+    public static void assertEventValid(final Event event,
+                                        boolean eventIdShouldPresent,
+                                        final String accountId) {
         if (!eventIdShouldPresent && event.getEventId() != null) {
             String errMsg = String.format("Invalid! %s should not present!", ApiConstant.EVENT_EVENT_ID);
             raise(errMsg, HttpStatus.BAD_REQUEST);
@@ -52,7 +58,19 @@ public class ExceptionUtils {
         isValidDateTime(event.getEndTime(), false);
         DateTimeOrder(event.getStartTime(), event.getEndTime(), false, true);
 
+        ExceptionUtils.assertPropertyValid(event.getPermission(), ApiConstant.EVENT_PERMISSION);
+        Permission permission = event.getPermission();
+        if (permission.getType() == PermissionType.ACCOUNT) {
+            assertAccountExist(permission.getPermitToId());
+        } else if (permission.getType() == PermissionType.GROUP) {
+            assertGroupExist(permission.getPermitToId());
+            // event creater must be the group member
+            if (!GroupUtils.checkGroupMember(permission.getPermitToId(), accountId)){
+                invalidProperty("Event creater, only group members can create group Event");
+            }
+        }
     }
+
 
     // order: prop1 < prop2
     // order == false: prop1 == prop2
@@ -125,6 +143,31 @@ public class ExceptionUtils {
 
     public static void assertPropertyValid(final Object prop, final String propName) {
         if (prop == null) { ExceptionUtils.invalidProperty(propName); }
+    }
+
+    public static void assertAccountExist(final String accountId) {
+        if(!AccountUtils.checkAccountExist(accountId)){
+            raise("This accountId does not exist!",
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public static void assertEventExist(final String eventId) {
+        Document document = new Document();
+        document.put(ApiConstant.EVENT_EVENT_ID, eventId);
+        if(!dataStore.existInCollection(document, DataStore.COLLECTION_EVENTS)){
+            raise("This eventId does not exist!",
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public static void assertGroupExist(final String groupId) {
+        Document document = new Document();
+        document.put(ApiConstant.GROUP_ID, groupId);
+        if(!dataStore.existInCollection(document, DataStore.COLLECTION_GROUPS)){
+            raise("This groupId does not exist!",
+                    HttpStatus.NOT_FOUND);
+        }
     }
 
     public static void assertDatabaseObjectFound(final Object o, final String propName) {

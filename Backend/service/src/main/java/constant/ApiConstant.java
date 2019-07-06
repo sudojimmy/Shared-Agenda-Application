@@ -82,5 +82,8 @@ public class ApiConstant {
     public static final String REPEAT_END_DATE = "endDate";
     public static final String REPEAT_TYPE = "type";
 
+    // Permission obj
+    public static final String PERMISSION_TO_ID = "permitToId";
+    public static final String PERMISSION_TYPE = "type";
 
 }

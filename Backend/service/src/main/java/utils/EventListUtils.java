@@ -18,6 +18,7 @@ import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 import static controller.BaseController.dataStore;
 import static javax.swing.UIManager.put;
+import static utils.GroupUtils.checkGroupMember;
 
 public class EventListUtils {
 
@@ -39,7 +40,7 @@ public class EventListUtils {
                 set(ApiConstant.EVENT_START_TIME, event.getStartTime()),
                 set(ApiConstant.EVENT_END_TIME, event.getEndTime()),
                 set(ApiConstant.EVENT_DESCRIPTION, event.getDescription()),
-                set(ApiConstant.EVENT_PERMISSION, event.isPermit()));
+                set(ApiConstant.EVENT_PERMISSION, event.getPermission()));
 
 
         Bson filter = Filters.eq(ApiConstant.EVENT_EVENT_ID, event.getEventId());
@@ -163,5 +164,24 @@ public class EventListUtils {
         ArrayList<Bson>loFilters = new ArrayList<>();
         calendar.getEventList().forEach(e -> loFilters.add(Filters.eq(ApiConstant.EVENT_EVENT_ID, e)));
         return Filters.or(loFilters);
+    }
+
+    public static boolean checkEventPermission(final String accountId, final Event event) {
+        Permission permission = event.getPermission();
+        if ((permission.getType() == PermissionType.PUBLIC)
+                || (event.getStarterId().equals(accountId))) {
+            return true;
+        }
+
+        if ((permission.getType() == PermissionType.ACCOUNT)
+                && (permission.getPermitToId().equals(accountId))) {
+            return true;
+        }
+
+        if (permission.getType() == PermissionType.GROUP) {
+            return GroupUtils.checkGroupMember(permission.getPermitToId(), accountId);
+        }
+
+        return false;
     }
 }

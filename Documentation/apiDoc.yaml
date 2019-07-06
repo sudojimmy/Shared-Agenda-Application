@@ -86,6 +86,25 @@ paths:
           description: "Invalid Parameter: calendarId cannot be null or empty"
         "404":
           description: "Not Found: calendar corresponding to calendarId not found in database"
+  getEventListByDate:
+    post:
+      operationId: getEventListByDate
+      tags:
+        - Calendars
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/GetEventListRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/GetEventListResponse.yaml'
+        "400":
+          description: "Invalid Parameter: accountId cannot be null or empty"
+        "404":
+          description: "Not Found: account corresponding to accountId not found in database"
   createEvent:
     post:
       operationId: createEvent

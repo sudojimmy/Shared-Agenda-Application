@@ -1,0 +1,15 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: Permission
+description: permission object describes event permission information
+type: object
+additionalProperties: false
+properties:
+  permitToId:
+    description: accountId/GroupId
+    type: string
+  type:
+    description: [public, private, account, group]
+    "$ref": PermissionType.yaml
+required:
+  - permitToId
+  - type

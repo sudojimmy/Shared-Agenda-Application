@@ -1,15 +1,19 @@
 "$schema": "http://json-schema.org/draft-04/schema#"
-title: GetCalendarEventListByDateRequest
-description: get event list by calendar id and date
+title: GetEventListByDateRequest
+description: get event list by account and calendar id and date
 type: object
 additionalProperties: false
 properties:
   calendarId:
     description: calendar id
     type: string
+  callerId:
+    description: caller account id
+    type: string
   date:
     description: the date of the events
     type: string
 required:
   - calendarId
+  - callerId
   - date
