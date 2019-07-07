@@ -34,9 +34,9 @@ properties:
   description:
     description: event description
     type: string
-  permit:
-    description: permit obj TODO
-    type: boolean
+  permission:
+    description: permission obj, if not given means Public
+    "$ref": Permission.yaml
 required:
   - eventname
   - starterId
@@ -44,4 +44,4 @@ required:
   - startTime
   - endTime
   - repeat
-  - permit
+  - permission

@@ -27,7 +27,10 @@ public class CreateEventController extends BaseController {
                 request.getCallerId(),
                 ApiConstant.EVENT_STARTER_ID,
                 ApiConstant.REPEAT_CALLER_ID);
-        ExceptionUtils.assertEventValid(request.getEvent(), false);
+        ExceptionUtils.assertEventValid(
+                request.getEvent(),
+                false,
+                request.getCallerId());
 
 
         // Step II: check restriction (conflict, or naming rules etc.)

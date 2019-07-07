@@ -58,6 +58,7 @@ public class DataStore {
                     fromCodecs(new EventRepeatTypeCodec()),
                     fromCodecs(new ReplyStatusTypeCodec()),
                     fromCodecs(new MessageTypeTypeCodec()),
+                    fromCodecs(new PermissionTypeTypeCodec()),
                     fromCodecs(new EventStateTypeCodec()),
                     fromCodecs(new EventTypeTypeCodec()));
 

@@ -23,7 +23,9 @@ public class UpdateEventController extends BaseController {
         logger.info("UpdateEvent: " + request);
 
         ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
-        ExceptionUtils.assertEventValid(request.getEvent(), true);
+        ExceptionUtils.assertEventValid(request.getEvent(),
+                true,
+                request.getAccountId());
 
         Event oldEvent = EventListUtils.getEventListById(request.getEvent().getEventId());
         ExceptionUtils.assertDatabaseObjectFound(oldEvent, ApiConstant.EVENT_TYPE);

@@ -4,8 +4,12 @@ description: get eventlist by name request
 type: object
 additionalProperties: false
 properties:
+  callerId:
+    description: caller accountId
+    type: string
   eventname:
     description: eventname is not unique, return list of events
     type: string
 required:
+  - callerId
   - eventname

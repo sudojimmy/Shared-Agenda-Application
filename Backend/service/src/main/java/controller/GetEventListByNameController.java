@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import types.Event;
 import types.GetEventListByNameRequest;
 import types.GetEventListByNameResponse;
+import types.PermissionType;
 import utils.EventListUtils;
 import utils.ExceptionUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class GetEventListByNameController extends BaseController {
@@ -22,8 +24,17 @@ public class GetEventListByNameController extends BaseController {
         logger.info("GetEventListByName: " + request);
 
         ExceptionUtils.assertPropertyValid(request.getEventname(), ApiConstant.EVENT_EVENT_NAME);
+        ExceptionUtils.assertPropertyValid(request.getCallerId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         ArrayList<Event> eventList = EventListUtils.getEventListByName(request.getEventname());
-        return new ResponseEntity<>(new GetEventListByNameResponse().withEventList(eventList),HttpStatus.OK);
+
+        ArrayList<Event> finalEventList = new ArrayList<Event>();
+        for (Event event: eventList) {
+            if (EventListUtils.checkEventPermission(request.getCallerId(), event)) {
+                finalEventList.add(event);
+            }
+        }
+
+        return new ResponseEntity<>(new GetEventListByNameResponse().withEventList(finalEventList),HttpStatus.OK);
     }
 }

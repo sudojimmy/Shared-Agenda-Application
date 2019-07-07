@@ -41,6 +41,7 @@ jsonSchema2Pojo {
           "${project.projectDir}/src/yaml/types/EventState.yaml",
           "${project.projectDir}/src/yaml/types/EventRepeat.yaml",
           "${project.projectDir}/src/yaml/types/MessageType.yaml",
+          "${project.projectDir}/src/yaml/types/PermissionType.yaml",
           "${project.projectDir}/src/yaml/types/",
           "${project.projectDir}/src/yaml/requests/",
           "${project.projectDir}/src/yaml/responses/"

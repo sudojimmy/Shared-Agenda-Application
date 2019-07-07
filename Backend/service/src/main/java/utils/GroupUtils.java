@@ -11,6 +11,7 @@ import types.Group;
 
 import static controller.BaseController.dataStore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mongodb.client.model.Filters;
@@ -42,6 +43,21 @@ public class GroupUtils {
         if (!ownerId.equals(group.getOwnerId())) {
             ExceptionUtils.invalidProperty(ApiConstant.GROUP_OWNER_ID);
         }
+    }
+
+    public static boolean checkGroupMember(final String groupId, final String accountId){
+        Document document = new Document();
+        document.put(ApiConstant.GROUP_ID,groupId);
+        Group group = dataStore.findOneInCollection(document, DataStore.COLLECTION_GROUPS);
+        List<String> groupList = group.getMembers();
+
+        for(String groupMember: groupList){
+            if (groupMember.equals(accountId)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static String createGroupToDatabase(final String name, final String ownerId,
