@@ -86,7 +86,7 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
         viewHolder.viewDecline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ApiClient.replyFriend(messages.get(position).getMessageId(), ReplyStatus.ACCEPT, new CallbackHandler(handler));
+                ApiClient.replyFriend(messages.get(position).getMessageId(), ReplyStatus.DECLINE, new CallbackHandler(handler));
 
                 messages.remove(position);
                 notifyItemRemoved(position);
