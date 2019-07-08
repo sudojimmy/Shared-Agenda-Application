@@ -3,11 +3,8 @@ package com.cosin.shareagenda.activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.GestureDetector;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.adapter.EventAdapter;
@@ -136,7 +133,7 @@ public class CalendarActivity extends MainTitleActivity
     @Override
     public void receive(Object ret) {
         // to create user event by cal and quarter
-        Intent intent = new Intent(this, CreateEventAcitivty.class);
+        Intent intent = new Intent(this, CreateEventActivity.class);
         this.startActivity(intent);
     }
 
