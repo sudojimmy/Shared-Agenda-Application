@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_content"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.FriendMessageActivity">
+
+    <com.cosin.shareagenda.view.TitleBar
+        android:id="@+id/titlebar"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_width="match_parent"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvFriendsMsg"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

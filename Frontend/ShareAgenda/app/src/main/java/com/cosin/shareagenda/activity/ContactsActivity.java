@@ -3,7 +3,6 @@ package com.cosin.shareagenda.activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -13,7 +12,6 @@ import com.cosin.shareagenda.entity.ContactEntity;
 import com.cosin.shareagenda.entity.UserEntity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ContactsActivity extends MainTitleActivity {
 
@@ -65,5 +63,15 @@ public class ContactsActivity extends MainTitleActivity {
     @Override
     protected String titleName() {
         return "Contacts";
+    }
+
+    public void searchFriend(View view) {
+        Intent intent = new Intent(ContactsActivity.this, SearchFriendsActivity.class);
+        startActivity(intent);
+    }
+
+    public void getMessage(View view) {
+        Intent intent = new Intent(ContactsActivity.this, FriendMessageActivity.class);
+        startActivity(intent);
     }
 }

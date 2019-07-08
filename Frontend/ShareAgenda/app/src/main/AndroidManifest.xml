@@ -19,6 +19,7 @@
         <activity android:name=".activity.ContactsActivity" />
         <activity android:name=".activity.WeeklyFriendActivity" />
         <activity android:name=".activity.SearchFriendsActivity" />
+        <activity android:name=".activity.FriendMessageActivity" />
         <activity android:name=".activity.SignUpActivity" />
         <activity
             android:name=".activity.CalendarActivity"
