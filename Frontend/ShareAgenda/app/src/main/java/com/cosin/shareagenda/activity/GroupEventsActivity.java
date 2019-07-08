@@ -2,21 +2,16 @@ package com.cosin.shareagenda.activity;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
-import com.cosin.shareagenda.adapter.EventAdapter;
 import com.cosin.shareagenda.adapter.FriendsEventAdapter;
 import com.cosin.shareagenda.config.SystemConfig;
 import com.cosin.shareagenda.dialog.DialogReceiver;
@@ -27,7 +22,6 @@ import com.cosin.shareagenda.util.GenData;
 import com.cosin.shareagenda.view.ItemViewListener;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -169,7 +163,7 @@ public class GroupEventsActivity extends MainTitleActivity
     @Override
     public void receive(Object ret) {
         // to create group event by cal and quarter
-        Intent intent = new Intent(this, CreateEventAcitivty.class);
+        Intent intent = new Intent(this, CreateEventActivity.class);
         this.startActivity(intent);
     }
 

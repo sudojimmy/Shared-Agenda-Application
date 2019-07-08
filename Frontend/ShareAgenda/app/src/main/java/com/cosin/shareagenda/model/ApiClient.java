@@ -8,9 +8,12 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import types.CreateAccountRequest;
+import types.CreateEventRequest;
+import types.Event;
 import types.GetAccountRequest;
 
 import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_ACCOUNT;
+import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_EVENT;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_ACCOUNT;
 
 public class ApiClient {
@@ -29,6 +32,13 @@ public class ApiClient {
                 .withNickname(nickname)
                 .withDescription(description);
         makePostRequest(CREATE_ACCOUNT, gson.toJson(createAccountRequest), callback);
+    }
+
+    public static void createEvent(Event event, Callback callback) {
+        CreateEventRequest createEventRequest = new CreateEventRequest()
+                .withCallerId(getAccountId())
+                .withEvent(event);
+        makePostRequest(CREATE_EVENT, gson.toJson(createEventRequest), callback);
     }
 
     private static String getAccountId() {
