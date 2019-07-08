@@ -4,6 +4,7 @@ import com.cosin.shareagenda.entity.FriendEvent;
 import com.cosin.shareagenda.entity.SimpleEventEntity;
 import com.cosin.shareagenda.entity.WeekDayEventEntity;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -50,6 +51,44 @@ public class CalendarEventBiz {
             }
         }
         return "";
+    }
+
+    private final static Calendar calendarInstance = Calendar.getInstance();
+
+    public static String toDateString(final int year, final int month, final int dateOfMonth) {
+        return year + "-" + month + "-" + dateOfMonth;
+    }
+
+    public static String toTimeString(final int hour, final int minute) {
+        return hour + ":" + minute;
+    }
+
+    public static String getCurrentDateString() {
+        return toDateString(getCurrentYear(), getCurrentMonth(), getCurrentDayOfMonth());
+    }
+
+    public static String getCurrentTimeString() {
+        return toTimeString(getCurrentHour(), getCurrentMinute());
+    }
+
+    public static int getCurrentYear() {
+        return calendarInstance.get(Calendar.YEAR);
+    }
+
+    public static int getCurrentMonth() {
+        return calendarInstance.get(Calendar.MONDAY);
+    }
+
+    public static int getCurrentDayOfMonth() {
+        return calendarInstance.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public static int getCurrentHour() {
+        return calendarInstance.get(Calendar.HOUR_OF_DAY);
+    }
+
+    public static int getCurrentMinute() {
+        return calendarInstance.get(Calendar.MINUTE);
     }
 
 }
