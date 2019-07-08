@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <activity android:name=".activity.CreateEventAcitivty" />
+        <activity android:name=".activity.CreateEventActivity" />
         <activity android:name=".activity.CreateGroupActivity" />
         <activity android:name=".activity.GroupsActivity" />
         <activity android:name=".activity.ContactsActivity" />
