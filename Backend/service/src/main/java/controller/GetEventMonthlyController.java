@@ -14,24 +14,32 @@ import utils.ExceptionUtils;
 import java.util.ArrayList;
 
 @RestController
-public class GetEventListByDateController extends BaseController {
+public class GetEventMonthlyController extends BaseController {
 
-    @PostMapping("/getEventListByDate")
-    public ResponseEntity<GetEventListByDateResponse> handle(@RequestBody GetEventListByDateRequest request) {
-        logger.info("getCalendarEventListByDate: " + request);
+    @PostMapping("/getEventMonthly")
+    public ResponseEntity<GetEventMonthlyResponse> handle(@RequestBody GetEventMonthlyRequest request) {
+        logger.info("getCalendarEventMonthly: " + request);
 
         ExceptionUtils.assertPropertyValid(request.getCallerId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
         ExceptionUtils.assertPropertyValid(request.getCalendarId(), ApiConstant.CALENDAR_CALENDAR_ID);
-        ExceptionUtils.assertPropertyValid(request.getDate(), ApiConstant.EVENT_DATE);
+        ExceptionUtils.assertPropertyValid(request.getYear(), ApiConstant.EVENT_MONTHLY_YEAR);
+        ExceptionUtils.assertPropertyValid(request.getMonth(), ApiConstant.EVENT_MONTHLY_MONTH);
+        if ((request.getMonth() > 12) || (request.getMonth() < 1)) {
+            ExceptionUtils.invalidProperty("Month Value");
+        }
 
         AccountUtils.getAccount(request.getCallerId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
         Calendar calendar = CalendarUtils.getCalendar(request.getCalendarId());
         ExceptionUtils.assertDatabaseObjectFound(calendar, ApiConstant.CALENDAR_CALENDAR_ID);
 
         ArrayList<Event> eventList = EventListUtils
-                .getEventListFromCalendarWithRepeat(calendar, request.getDate());
+                .getEventListFromCalendarWithYearMonth(
+                        calendar,
+                        request.getYear(),
+                        request.getMonth());
 
         ArrayList<Event> finalEventList = new ArrayList<Event>();
+
         for (Event event: eventList) {
             if (!EventListUtils.checkEventPermission(request.getCallerId(), event)) {
                 // if no permission
@@ -44,7 +52,7 @@ public class GetEventListByDateController extends BaseController {
             }
         }
 
-        return new ResponseEntity<>(new GetEventListByDateResponse()
+        return new ResponseEntity<>(new GetEventMonthlyResponse()
                 .withEventList(finalEventList),HttpStatus.OK);
     }
 }

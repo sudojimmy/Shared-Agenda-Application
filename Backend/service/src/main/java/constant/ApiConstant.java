@@ -86,4 +86,10 @@ public class ApiConstant {
     public static final String PERMISSION_TO_ID = "permitToId";
     public static final String PERMISSION_TYPE = "type";
 
+    // Event Monthly
+    public static final String EVENT_MONTHLY_MONTH = "month";
+    public static final String EVENT_MONTHLY_YEAR = "year";
+
+
+
 }
