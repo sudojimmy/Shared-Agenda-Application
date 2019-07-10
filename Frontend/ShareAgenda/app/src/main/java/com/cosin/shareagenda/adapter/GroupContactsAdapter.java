@@ -15,16 +15,18 @@ import com.cosin.shareagenda.activity.GroupEventsActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupContactsAdapter extends RecyclerView.Adapter<GroupContactsAdapter.ViewHolder> {
-    private List<String> contactList = new ArrayList<>();
+import types.Group;
 
-    public GroupContactsAdapter(Context context, List<String> contactList){
+public class GroupContactsAdapter extends RecyclerView.Adapter<GroupContactsAdapter.ViewHolder> {
+    private List<Group> contactList = new ArrayList<>();
+
+    public GroupContactsAdapter(Context context, List<Group> contactList){
         this.contactList = contactList;
     }
 
     public GroupContactsAdapter(Context context){}
 
-    public void setContactList(List<String> contactList) {
+    public void setContactList(List<Group> contactList) {
         this.contactList = contactList;
         notifyDataSetChanged();
     }
@@ -47,11 +49,11 @@ public class GroupContactsAdapter extends RecyclerView.Adapter<GroupContactsAdap
 
     @Override
     public void onBindViewHolder(GroupContactsAdapter.ViewHolder holder, int position) {
-        holder.tvContactName.setText(contactList.get(position));
+        holder.tvContactName.setText(contactList.get(position).getName());
         holder.ivCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String entity = contactList.get(position);
+                Group entity = contactList.get(position);
                     Intent intent = new Intent(v.getContext(), GroupEventsActivity.class);
 //                    intent.putExtra("group", (GroupEntity)entity);
                     v.getContext().startActivity(intent);
