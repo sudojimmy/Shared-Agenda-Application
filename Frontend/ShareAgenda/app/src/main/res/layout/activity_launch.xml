@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#004B33"
+    android:background="#def"
     tools:context=".activity.LaunchActivity">
 
     <TextView
@@ -13,7 +13,8 @@
         android:gravity="center"
         android:keepScreenOn="true"
         android:text="@string/app_name"
-        android:textColor="#7DE2CA"
+        android:textColorHighlight="@color/bg_green_white"
+        android:textColor="#657"
         android:textSize="50sp"
         android:textStyle="bold" />
 

@@ -14,11 +14,7 @@ import com.cosin.shareagenda.adapter.GroupContactsAdapter;
 import com.cosin.shareagenda.model.ApiClient;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import types.GetGroupListResponse;
-import types.Group;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
@@ -49,6 +45,17 @@ public class GroupsActivity extends MainTitleActivity {
     @Override
     protected int getContentView() {
         return R.layout.activity_groups;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                loadData();
+            }
+        }, 1000); // give backend some delay to update data
     }
 
     @Override
