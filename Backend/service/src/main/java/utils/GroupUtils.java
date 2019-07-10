@@ -1,22 +1,18 @@
 package utils;
 
+import com.mongodb.client.model.Filters;
 import constant.ApiConstant;
-
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-
 import store.DataStore;
 import types.Group;
 
-import static controller.BaseController.dataStore;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
+import static controller.BaseController.dataStore;
 
 public class GroupUtils {
     // @return true if Group already in DataBase and false otherwise
@@ -60,12 +56,16 @@ public class GroupUtils {
         return false;
     }
 
-    public static String createGroupToDatabase(final String name, final String ownerId,
-     final List<String> members) {
+    public static String createGroupToDatabase(final String name, final String description, final String ownerId,
+                                               final List<String> members) {
         ObjectId groupId = new ObjectId();
         String id = groupId.toString();
-        Group p = new Group().withName(name).withGroupId(id)
-        .withMembers(members).withOwnerId(ownerId);      
+        Group p = new Group()
+                .withName(name)
+                .withDescription(description)
+                .withGroupId(id)
+                .withMembers(members)
+                .withOwnerId(ownerId);
         dataStore.insertToCollection(p, DataStore.COLLECTION_GROUPS);
         return id;
     }
