@@ -5,9 +5,9 @@ type: object
 additionalProperties: false
 properties:
   groupList:
-    description: a list of group Id
+    description: a list of group
     type: array
     items:
-      type: string
+      "$ref": ../types/Group.yaml
 required:
   - groupList
