@@ -96,9 +96,9 @@ public class ExceptionUtils {
             } else {
                 if (!date1.equals(date2)) {
                     if (isDate) {
-                        raise("start date need before end date", HttpStatus.BAD_REQUEST);
+                        raise("start date need equal end date", HttpStatus.BAD_REQUEST);
                     } else {
-                        raise("start time need before end time", HttpStatus.BAD_REQUEST);
+                        raise("start time need equal end time", HttpStatus.BAD_REQUEST);
                     }
                 }
             }

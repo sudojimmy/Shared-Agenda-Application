@@ -95,12 +95,31 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '../Backend/schema/src/yaml/requests/GetEventListRequest.yaml'
+              $ref: '../Backend/schema/src/yaml/requests/GetEventListByDateRequest.yaml'
       responses:
         "200":
           description: OK
           schema:
-            $ref: '../Backend/schema/src/yaml/responses/GetEventListResponse.yaml'
+            $ref: '../Backend/schema/src/yaml/responses/GetEventListByDateResponse.yaml'
+        "400":
+          description: "Invalid Parameter: accountId cannot be null or empty"
+        "404":
+          description: "Not Found: account corresponding to accountId not found in database"
+  getEventMonthly:
+    post:
+      operationId: getEventMonthly
+      tags:
+        - Calendars
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/GetEventMonthlyRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/GetEventMonthlyResponse.yaml'
         "400":
           description: "Invalid Parameter: accountId cannot be null or empty"
         "404":
