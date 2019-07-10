@@ -4,6 +4,7 @@ import com.cosin.shareagenda.entity.FriendEvent;
 import com.cosin.shareagenda.entity.SimpleEventEntity;
 import com.cosin.shareagenda.entity.WeekDayEventEntity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -55,16 +56,40 @@ public class CalendarEventBiz {
 
     private final static Calendar calendarInstance = Calendar.getInstance();
 
+    public static final String DETAILED_DATE_PATTERN = "YYYY-MM-dd  EEEE";
+    public static final String DATE_FORMAT = "%d-%d-%d";
+    public static final String TIME_FORMAT = "%d:%02d";
+
     public static String toDateString(final int year, final int month, final int dateOfMonth) {
-        return year + "-" + month + "-" + dateOfMonth;
+        return String.format(DATE_FORMAT, year, (month + 1), dateOfMonth);
     }
 
     public static String toTimeString(final int hour, final int minute) {
-        return hour + ":" + minute;
+        return String.format(TIME_FORMAT, hour, minute);
+    }
+
+    public static String calendarToDateString(Calendar calendar) {
+        return toDateString(getCalendarYear(calendar),
+                getCalendarMonth(calendar),
+                getCalendarDayOfMonth(calendar));
+    }
+
+    public static String calendarToTimeString(Calendar calendar) {
+        return toTimeString(getCalendarHour(calendar), getCalendarMinute(calendar));
     }
 
     public static String getCurrentDateString() {
         return toDateString(getCurrentYear(), getCurrentMonth(), getCurrentDayOfMonth());
+    }
+
+    public static String getCurrentDateStringDetailed() {
+        SimpleDateFormat sdf = new SimpleDateFormat(DETAILED_DATE_PATTERN);
+        return sdf.format(calendarInstance.getTime());
+    }
+
+    public static String getCalendarDateStringDetailed(Calendar calendar) {
+        SimpleDateFormat sdf = new SimpleDateFormat(DETAILED_DATE_PATTERN);
+        return sdf.format(calendar.getTime());
     }
 
     public static String getCurrentTimeString() {
@@ -76,7 +101,7 @@ public class CalendarEventBiz {
     }
 
     public static int getCurrentMonth() {
-        return calendarInstance.get(Calendar.MONDAY);
+        return calendarInstance.get(Calendar.MONTH); // java.util.Calendar Month start from 0
     }
 
     public static int getCurrentDayOfMonth() {
@@ -89,6 +114,26 @@ public class CalendarEventBiz {
 
     public static int getCurrentMinute() {
         return calendarInstance.get(Calendar.MINUTE);
+    }
+
+    public static int getCalendarYear(Calendar calendar) {
+        return calendar.get(Calendar.YEAR);
+    }
+
+    public static int getCalendarMonth(Calendar calendar) {
+        return calendar.get(Calendar.MONTH);
+    }
+
+    public static int getCalendarDayOfMonth(Calendar calendar) {
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public static int getCalendarHour(Calendar calendar) {
+        return calendar.get(Calendar.HOUR);
+    }
+
+    public static int getCalendarMinute(Calendar calendar) {
+        return calendar.get(Calendar.MINUTE);
     }
 
 }

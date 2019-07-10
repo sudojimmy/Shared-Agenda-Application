@@ -18,57 +18,77 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-import types.Account;
+import types.Message;
+import types.MessageType;
+import types.ReplyStatus;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
-public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdapter.ViewHolder> {
-    private List<Account> friends;
+public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdapter.ViewHolder> {
+    private List<Message> messages;
 
-    public SearchFriendsAdapter() {
-        friends = new ArrayList<>();
+    public FriendMessageAdapter() {
+        messages = new ArrayList<>();
     }
 
-    public SearchFriendsAdapter(List<Account> friends) {
-        this.friends = friends;
+    public FriendMessageAdapter(List<Message> messages) {
+        setMessages(messages);
     }
 
-    public void setFriends(List<Account> friends) {
-        this.friends = friends;
+    private boolean isFriendMessage(Message message) {
+        return message.getType().equals(MessageType.FRIEND);
+    }
+
+    public void setMessages(List<Message> messages) {
+        for (Message msg : messages) {
+            if (isFriendMessage(msg)) {
+                this.messages.add(msg);
+            }
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView viewName;
-        ImageButton viewAdd;
+        ImageButton viewAccept;
+        ImageButton viewDecline;
 
         public ViewHolder(View view) {
             super(view);
-            viewName = view.findViewById(R.id.tvSearchFriendName);
-            viewAdd = view.findViewById(R.id.imgBtnAddFriend);
+            viewName = view.findViewById(R.id.tvFriendMessage);
+            viewAccept = view.findViewById(R.id.imgBtnAcceptFriendRequest);
+            viewDecline = view.findViewById(R.id.imgBtnDeclineFriendRequest);
         }
     }
 
     @Override
-    public SearchFriendsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FriendMessageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.search_friends_item, parent, false);
-        final SearchFriendsAdapter.ViewHolder viewHolder =
-                new SearchFriendsAdapter.ViewHolder(view);
+                .inflate(R.layout.friend_message_item, parent, false);
+        final FriendMessageAdapter.ViewHolder viewHolder =
+                new FriendMessageAdapter.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(SearchFriendsAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.viewName.setText(friends.get(position).getNickname());
-        viewHolder.viewAdd.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(FriendMessageAdapter.ViewHolder viewHolder, int position) {
+        viewHolder.viewName.setText(messages.get(position).getSenderId());
+        viewHolder.viewAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ApiClient.inviteFriend(friends.get(position).getAccountId(), new CallbackHandler(handler));
-                /* Add friend here */
-                /*--------*/
+                ApiClient.replyFriend(messages.get(position).getMessageId(), ReplyStatus.ACCEPT, new CallbackHandler(handler));
 
-                friends.remove(position);
+                messages.remove(position);
+                notifyItemRemoved(position);
+                notifyDataSetChanged();
+            }
+        });
+        viewHolder.viewDecline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ApiClient.replyFriend(messages.get(position).getMessageId(), ReplyStatus.DECLINE, new CallbackHandler(handler));
+
+                messages.remove(position);
                 notifyItemRemoved(position);
                 notifyDataSetChanged();
             }
@@ -77,9 +97,8 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
 
     @Override
     public int getItemCount() {
-        return friends.size();
+        return messages.size();
     }
-
 
     Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -99,4 +118,5 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
             }
         }
     };
+
 }

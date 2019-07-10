@@ -144,16 +144,10 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     public void onAddEventClicked(Calendar startTime, Calendar endTime) {
-        // TODO modify after #PR_friend merged
-        int hh = startTime.get(Calendar.HOUR);
-        int mm = startTime.get(Calendar.MINUTE);
-        int y = startTime.get(Calendar.YEAR);
-        int m = startTime.get(Calendar.MONDAY) + 1;
-        int d = startTime.get(Calendar.DAY_OF_MONTH);
         new SendEventRequestDialog(this,
                 "My New Event",
-                CalendarEventBiz.toDateString(y, m, d),
-                CalendarEventBiz.toTimeString(hh, mm)).show();
+                CalendarEventBiz.calendarToDateString(startTime),
+                CalendarEventBiz.calendarToTimeString(startTime)).show();
     }
 
     @Override

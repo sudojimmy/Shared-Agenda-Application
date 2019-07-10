@@ -8,13 +8,22 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import types.CreateAccountRequest;
+import types.FriendInvitationRequest;
 import types.CreateEventRequest;
 import types.Event;
 import types.GetAccountRequest;
+import types.GetFriendQueueRequest;
+import types.GetMessageQueueRequest;
+import types.ReplyInvitationRequest;
+import types.ReplyStatus;
 
 import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_ACCOUNT;
 import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_EVENT;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_ACCOUNT;
+import static com.cosin.shareagenda.model.ApiEndpoint.GET_FRIEND_QUEUE;
+import static com.cosin.shareagenda.model.ApiEndpoint.GET_MESSAGE_QUEUE;
+import static com.cosin.shareagenda.model.ApiEndpoint.INVITE_FRIEND;
+import static com.cosin.shareagenda.model.ApiEndpoint.REPLY_FRIEND;
 
 public class ApiClient {
     public static final MediaType MEDOA_JSON = MediaType.parse("application/json; charset=utf-8");
@@ -39,6 +48,34 @@ public class ApiClient {
                 .withCallerId(getAccountId())
                 .withEvent(event);
         makePostRequest(CREATE_EVENT, gson.toJson(createEventRequest), callback);
+    }
+
+    public static void getMessageQueue(Callback callback) {
+        GetMessageQueueRequest createEventRequest = new GetMessageQueueRequest()
+                .withAccountId(getAccountId())
+                .withMessageQueueId(Model.model.getUser().getMessageQueueId());
+        makePostRequest(GET_MESSAGE_QUEUE, gson.toJson(createEventRequest), callback);
+    }
+
+    public static void getFriendQueue(Callback callback) {
+        GetFriendQueueRequest createEventRequest = new GetFriendQueueRequest()
+                .withAccountId(getAccountId());
+        makePostRequest(GET_FRIEND_QUEUE, gson.toJson(createEventRequest), callback);
+    }
+
+    public static void inviteFriend(String friendId, Callback callback) {
+        FriendInvitationRequest createEventRequest = new FriendInvitationRequest()
+                .withSenderId(getAccountId())
+                .withReceiverId(friendId);
+        makePostRequest(INVITE_FRIEND, gson.toJson(createEventRequest), callback);
+    }
+
+    public static void replyFriend(String msgId, ReplyStatus status, Callback callback) {
+        ReplyInvitationRequest createEventRequest = new ReplyInvitationRequest()
+                .withAccountId(getAccountId())
+                .withMessageId(msgId)
+                .withStatus(status);
+        makePostRequest(REPLY_FRIEND, gson.toJson(createEventRequest), callback);
     }
 
     private static String getAccountId() {

@@ -12,6 +12,7 @@ import com.cosin.shareagenda.config.SystemConfig;
 import com.cosin.shareagenda.dialog.DialogReceiver;
 import com.cosin.shareagenda.dialog.SendEventRequestDialog;
 import com.cosin.shareagenda.entity.EventEntity;
+import com.cosin.shareagenda.util.CalendarEventBiz;
 import com.cosin.shareagenda.util.GenData;
 import com.cosin.shareagenda.view.ItemViewListener;
 
@@ -143,11 +144,10 @@ public class CalendarActivity extends MainTitleActivity
         int h, m;
         h = quarter / 4;
         m = (quarter % 4) * 15;
-        SimpleDateFormat sdf = new SimpleDateFormat("d / M  yyyy  EEEE");
 
         new SendEventRequestDialog(this,
                 "My New Event",
-                sdf.format(cal.getTime()),
-                String.format("%d : %02d", h, m)).show();
+                CalendarEventBiz.getCalendarDateStringDetailed(cal),
+                CalendarEventBiz.toTimeString(h, m)).show();
     }
 }
