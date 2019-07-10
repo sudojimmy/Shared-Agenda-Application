@@ -1,8 +1,7 @@
 package com.cosin.shareagenda.activity;
 
+import android.content.Intent;
 import android.graphics.RectF;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -11,6 +10,9 @@ import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.cosin.shareagenda.R;
+import com.cosin.shareagenda.dialog.DialogReceiver;
+import com.cosin.shareagenda.dialog.SendEventRequestDialog;
+import com.cosin.shareagenda.util.CalendarEventBiz;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,15 +20,14 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class NewCalendarActivity extends AppCompatActivity implements WeekView.EventClickListener,
+public class NewCalendarActivity extends MainTitleActivity implements WeekView.EventClickListener,
         MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener,
-        WeekView.EmptyViewClickListener, WeekView.AddEventClickListener, WeekView.DropListener {
+        WeekView.EmptyViewClickListener, WeekView.AddEventClickListener, WeekView.DropListener, DialogReceiver {
     private WeekView mWeekView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar_new);
+    protected void initView() {
+        super.initView();
 
         mWeekView = findViewById(R.id.weekView);
 
@@ -45,6 +46,16 @@ public class NewCalendarActivity extends AppCompatActivity implements WeekView.E
         mWeekView.setDropListener(this);
 
         setupDateTimeInterpreter(false);
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_calendar_new;
+    }
+
+    @Override
+    protected void loadData() {
+
     }
 
     /**
@@ -133,11 +144,32 @@ public class NewCalendarActivity extends AppCompatActivity implements WeekView.E
 
     @Override
     public void onAddEventClicked(Calendar startTime, Calendar endTime) {
-        Toast.makeText(this, "Add event clicked.", Toast.LENGTH_SHORT).show();
+        // TODO modify after #PR_friend merged
+        int hh = startTime.get(Calendar.HOUR);
+        int mm = startTime.get(Calendar.MINUTE);
+        int y = startTime.get(Calendar.YEAR);
+        int m = startTime.get(Calendar.MONDAY) + 1;
+        int d = startTime.get(Calendar.DAY_OF_MONTH);
+        new SendEventRequestDialog(this,
+                "My New Event",
+                CalendarEventBiz.toDateString(y, m, d),
+                CalendarEventBiz.toTimeString(hh, mm)).show();
     }
 
     @Override
     public void onDrop(View view, Calendar date) {
         Toast.makeText(this, "View dropped to " + date.toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected String titleName() {
+        return "Calendar";
+    }
+
+    @Override
+    public void receive(Object ret) {
+        // to create user event by cal and quarter
+        Intent intent = new Intent(this, CreateEventActivity.class);
+        this.startActivity(intent);
     }
 }
