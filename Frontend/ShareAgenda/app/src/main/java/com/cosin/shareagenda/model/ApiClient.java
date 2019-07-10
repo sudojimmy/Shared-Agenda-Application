@@ -3,24 +3,30 @@ package com.cosin.shareagenda.model;
 import com.cosin.shareagenda.access.net.NetLoader;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import types.CreateAccountRequest;
+import types.CreateGroupRequest;
 import types.FriendInvitationRequest;
 import types.CreateEventRequest;
 import types.Event;
 import types.GetAccountRequest;
 import types.GetFriendQueueRequest;
+import types.GetGroupListRequest;
 import types.GetMessageQueueRequest;
 import types.ReplyInvitationRequest;
 import types.ReplyStatus;
 
 import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_ACCOUNT;
 import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_EVENT;
+import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_GROUP;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_ACCOUNT;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_FRIEND_QUEUE;
+import static com.cosin.shareagenda.model.ApiEndpoint.GET_GROUP_LIST;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_MESSAGE_QUEUE;
 import static com.cosin.shareagenda.model.ApiEndpoint.INVITE_FRIEND;
 import static com.cosin.shareagenda.model.ApiEndpoint.REPLY_FRIEND;
@@ -41,6 +47,22 @@ public class ApiClient {
                 .withNickname(nickname)
                 .withDescription(description);
         makePostRequest(CREATE_ACCOUNT, gson.toJson(createAccountRequest), callback);
+    }
+
+    public static void getGroupList(Callback callback) {
+        GetGroupListRequest createAccountRequest = new GetGroupListRequest()
+                .withAccountId(getAccountId());
+        makePostRequest(GET_GROUP_LIST, gson.toJson(createAccountRequest), callback);
+    }
+
+    public static void createGroup(String name, String description,
+                                   ArrayList<String> members, Callback callback) {
+        CreateGroupRequest createAccountRequest = new CreateGroupRequest()
+                .withName(name)
+                .withOwnerId(getAccountId())
+                .withDescription(description)
+                .withMembers(members);
+        makePostRequest(CREATE_GROUP, gson.toJson(createAccountRequest), callback);
     }
 
     public static void createEvent(Event event, Callback callback) {

@@ -19,6 +19,11 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
         this.members = members;
     }
 
+    public void setMembers(List<VO_Member> members) {
+        this.members = members;
+        notifyDataSetChanged();
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         LinearLayout linearLayout;
@@ -41,7 +46,7 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         VO_Member member = members.get(position);
-        viewHolder.textView.setText(member.getMember().getNickname());
+        viewHolder.textView.setText(member.getMember());
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

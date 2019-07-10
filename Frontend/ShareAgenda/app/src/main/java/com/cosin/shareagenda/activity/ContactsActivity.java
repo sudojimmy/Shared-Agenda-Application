@@ -75,7 +75,6 @@ public class ContactsActivity extends MainTitleActivity {
         startActivity(intent);
     }
 
-
     Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(android.os.Message message) {
@@ -85,7 +84,6 @@ public class ContactsActivity extends MainTitleActivity {
                     String body = (String) message.obj;
                     GetFriendQueueResponse resp = gson.fromJson(body, GetFriendQueueResponse.class);
                     conAdapter.setContactList(resp.getFriendList());
-                    conAdapter.notifyDataSetChanged();
                     break;
                 case HTTP_FAILURE:
                     ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);

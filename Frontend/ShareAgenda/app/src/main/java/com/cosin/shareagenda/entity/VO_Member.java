@@ -1,22 +1,20 @@
 package com.cosin.shareagenda.entity;
 
-import android.util.Log;
-
 public class VO_Member {
-    private UserEntity member;
+    private String  memberId;
     private boolean elected;
 
-    public VO_Member(UserEntity user) {
-        this.member = user;
+    public VO_Member(String  user) {
+        this.memberId = user;
         this.elected = false;
     }
 
-    public UserEntity getMember() {
-        return member;
+    public String  getMember() {
+        return memberId;
     }
 
-    public void setMember(UserEntity member) {
-        this.member = member;
+    public void setMember(String  memberId) {
+        this.memberId = memberId;
     }
 
     public boolean isElected() {

@@ -56,7 +56,6 @@ public class FriendMessageActivity extends MainTitleActivity {
                     String body = (String) message.obj;
                     GetMessageQueueResponse resp = gson.fromJson(body, GetMessageQueueResponse.class);
                     friendMessageAdapter.setMessages(resp.getMessageList());
-                    friendMessageAdapter.notifyDataSetChanged();
                     break;
                 case HTTP_FAILURE:
                     ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
