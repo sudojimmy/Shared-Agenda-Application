@@ -5,10 +5,10 @@ type: object
 additionalProperties: false
 properties:
   startDate:
-    description: startDate YYYY/MM//DD
+    description: startDate YYYY-MM-DD
     type: string
   endDate:
-    description: endDate YYYY/MM//DD
+    description: endDate YYYY-MM-DD
     type: string
   type:
     description: [once, day, week, month, year]

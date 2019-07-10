@@ -1,0 +1,12 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetEventMonthlyResponse
+description: get eventlist by date response
+type: object
+additionalProperties: false
+properties:
+  eventList:
+    type: array
+    items:
+      "$ref": ../types/Event.yaml
+required:
+  - eventList

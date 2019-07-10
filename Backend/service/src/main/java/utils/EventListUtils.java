@@ -11,6 +11,7 @@ import types.Calendar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -81,6 +82,8 @@ public class EventListUtils {
             return true;
         }
 
+
+
         try {
             Repeat repeat = event.getRepeat();
             EventRepeat eventRepeat = repeat.getType();
@@ -93,6 +96,11 @@ public class EventListUtils {
                 return false;
             }
 
+            // ONCE: start <= date <= end
+            if (event.getRepeat().getType() == EventRepeat.DAY) {
+                return true;
+            }
+
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTime(startDate);
             int weekday1 = calendar.get(java.util.Calendar.DAY_OF_WEEK);
@@ -103,6 +111,7 @@ public class EventListUtils {
             int weekday2 = calendar.get(java.util.Calendar.DAY_OF_WEEK);
             int monthday2 = calendar.get(java.util.Calendar.DAY_OF_MONTH);
             int month2 = calendar.get(java.util.Calendar.MONTH);
+
 
             boolean result = true;
             switch (eventRepeat) {
@@ -132,6 +141,69 @@ public class EventListUtils {
         ArrayList<Event> eventList = getEventListFromCalendar(calendar);
         List<Event> eventListRt = eventList.stream().filter((e) -> happened(e, matchDate)).collect(Collectors.toList());
         return (ArrayList<Event>) eventListRt;
+    }
+
+
+    private static Event modifiedEvent(Event event, String date){
+        Repeat newrepeat = new Repeat()
+                .withEndDate(date)
+                .withStartDate(date)
+                .withType(event.getRepeat().getType());
+
+        Event newEvent = new Event()
+                .withEventId(event.getEventId())
+                .withEventname(event.getEventname())
+                .withStarterId(event.getStarterId())
+                .withType(event.getType())
+                .withStartTime(event.getStartTime())
+                .withEndTime(event.getEndTime())
+                .withRepeat(newrepeat)
+                .withLocation(event.getLocation())
+                .withState(event.getState())
+                .withDescription(event.getDescription())
+                .withPermission(event.getPermission());
+
+        return newEvent;
+
+    }
+
+    public static ArrayList<Event> getEventListFromCalendarWithYearMonth(final Calendar calendar,
+                                                                         final int year,
+                                                                         final int month) {
+        if (calendar.getEventList().isEmpty()) { return new ArrayList<>(); }
+
+        ArrayList<Event> eventList = getEventListFromCalendar(calendar);
+
+        // Get the number of days in that month
+        YearMonth yearMonthObject = YearMonth.of(year, month);
+        int totalDayInMonth = yearMonthObject.lengthOfMonth();
+
+        ArrayList<Event> eventListRt = new ArrayList<>();
+        for(Event event: eventList){
+            for(int i = 1; i < (totalDayInMonth + 1); i++){
+                String date;
+                String monthString;
+
+                // build month string
+                if (month >= 10){
+                    monthString = Integer.toString(month);
+                } else{
+                    monthString = "0" + month;
+                }
+
+                // build day string
+                if (i >= 10) {
+                    date = year + "-" + monthString + "-" + i;
+                } else {
+                    date = year + "-" + monthString + "-0" + i;
+                }
+
+                if (happened(event, date)) {
+                    eventListRt.add(modifiedEvent(event, date));
+                }
+            }
+        }
+        return eventListRt;
     }
 
     public static boolean deleteEvent(final String eventId) {
