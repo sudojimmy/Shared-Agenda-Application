@@ -4,7 +4,6 @@ package com.cosin.shareagenda.activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -111,8 +110,6 @@ public class CreateEventActivity extends AppCompatActivity {
                 case SUCCESS:
                     String body = (String) message.obj;
                     // TODO update view
-                    Intent intent = new Intent(CreateEventActivity.this, CalendarActivity.class);
-                    startActivity(intent);
                     finish();
                     break;
                 case CallbackHandler.HTTP_FAILURE:
