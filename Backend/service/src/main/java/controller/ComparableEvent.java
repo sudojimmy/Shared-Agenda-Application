@@ -43,9 +43,9 @@ public class ComparableEvent implements ComparableEventInterface {
         }
 
         if (hours != thishours){
-            return thishours - hours;
+            return hours - thishours;
         } else {
-            return thismin - min;
+            return min - thismin;
         }
     }
 

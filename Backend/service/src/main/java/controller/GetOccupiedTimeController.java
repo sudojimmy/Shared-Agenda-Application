@@ -12,8 +12,11 @@ import utils.CalendarUtils;
 import utils.EventListUtils;
 import utils.ExceptionUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -85,52 +88,114 @@ public class GetOccupiedTimeController extends BaseController{
 
 
             // sort eventListbeforeMerge
+            // sort in decreasing order
             Collections.sort(eventListbeforeMergeComparable);
 
-//            ArrayList<Event> temp = new ArrayList<Event>();
-//
-//            while (!eventListbeforeMerge.isEmpty()) {
-//                for(int index = 0; ; index += 2) {
-//                    if ((index+1) >= eventListbeforeMerge.size()){
-//                        break;
-//                    }
-//
-//                    //merge [index] and [index+1]
-//
-//                }
-//            }
+            Stack<Event> eventsListToMergeStack = new Stack<Event>();
+
+
+            //eventListbeforeMerge = new ArrayList<Event>();
+            for(ComparableEvent comparableEvent: eventListbeforeMergeComparable) {
+                Event event = comparableEvent.event;
+                eventsListToMergeStack.push(event);
+                //eventListbeforeMerge.add(event);
+            }
+
+            ArrayList<Event> temp = new ArrayList<Event>();
+
+
+
+            while (!eventsListToMergeStack.isEmpty()) {
+
+                if (eventsListToMergeStack.size() == 1) {
+                    finalEventList.add(eventsListToMergeStack.pop());
+                    break;
+                }
+
+                Event event1 = eventsListToMergeStack.pop();
+                Event event2 = eventsListToMergeStack.pop();
+
+                //merge [index] and [index+1]
+
+                int hours1;
+                int min1;
+                int hours2;
+                int min2;
+                int hours2End;
+                int min2End;
+
+                try {
+                    SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                    Date time1 = format.parse(event1.getEndTime());
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(time1);
+                    hours1 = cal.get(Calendar.HOUR);
+                    min1 = cal.get(Calendar.MINUTE);
+
+                    Date time2 = format.parse(event2.getStartTime());
+                    cal.setTime(time2);
+                    hours2 = cal.get(Calendar.HOUR);
+                    min2 = cal.get(Calendar.MINUTE);
+
+                    Date time2End = format.parse(event2.getEndTime());
+                    cal.setTime(time2End);
+                    hours2End = cal.get(Calendar.HOUR);
+                    min2End = cal.get(Calendar.MINUTE);
+
+
+                } catch (ParseException e) {
+                    // parsing failed
+                    return new ResponseEntity<>(new GetOccupiedTimeResponse()
+                            .withEventList(new ArrayList<Event>()), HttpStatus.BAD_REQUEST);
+                }
+
+                Repeat repeat = new Repeat()
+                        .withStartDate(date)
+                        .withEndDate(date)
+                        .withType(EventRepeat.ONCE);
+
+                // h1,m1: event1 endtime
+                if ((hours1 == hours2End) && (min1 == min2End)) {
+                    // end at same time
+                    eventsListToMergeStack.push(event1);
+
+                } else if ((hours1 < hours2)
+                        || ((hours1 == hours2) && (min1 < min2))) {
+                    // [s1] [e1] [s2] [e2]
+
+                    // add e1 to rt list
+                    event1.withRepeat(repeat);
+                    finalEventList.add(event1);
+
+                    // add back e2 to stack
+                    eventsListToMergeStack.push(event2);
+
+                } else {
+
+                    Event event3 = new Event().withStartTime(event1.getStartTime()).withRepeat(repeat);
+
+
+                    if ((hours1 < hours2End) || (hours1 == hours2End) && (min1 < min2End)){
+                        // [s1] [s2] [e1] [e2]
+                        event3.withEndTime(event2.getEndTime());
+                    } else {
+                        // [s1] [s2] [e2] [e1]
+                        event3.withEndTime(event1.getEndTime());
+                    }
+
+                    eventsListToMergeStack.push(event3);
+
+                }
+
+            }
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//        for (Event event: eventList) {
-//            if (!EventListUtils.checkEventPermission(request.getCallerId(), event)) {
-//                // if no permission
-//                Event displayEvent = new Event()
-//                        .withStartTime(event.getStartTime())
-//                        .withEndTime(event.getEndTime());
-//                finalEventList.add(displayEvent);
-//            } else {
-//                finalEventList.add(event);
-//            }
-//        }
 
         return new ResponseEntity<>(new GetOccupiedTimeResponse()
                 .withEventList(finalEventList),HttpStatus.OK);
     }
 }
+
+

@@ -124,6 +124,25 @@ paths:
           description: "Invalid Parameter: accountId cannot be null or empty"
         "404":
           description: "Not Found: account corresponding to accountId not found in database"
+  getOccupiedTime:
+    post:
+      operationId: getOccupiedTime
+      tags:
+        - Calendars
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/GetOccupiedTimeRequest.yaml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/GetOccupiedTimeResponse.yaml'
+        "400":
+          description: "Invalid Parameter: accountId cannot be null or empty"
+        "404":
+          description: "Not Found: account corresponding to accountId not found in database"
   createEvent:
     post:
       operationId: createEvent
