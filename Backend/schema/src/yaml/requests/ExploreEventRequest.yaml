@@ -1,0 +1,15 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: ExploreEventRequest
+description: explore event by substring
+type: object
+additionalProperties: false
+properties:
+  callerId:
+    description: caller account id
+    type: string
+  keyword:
+    description: substring of event name
+    type: string
+required:
+  - callerId
+  - keyword
