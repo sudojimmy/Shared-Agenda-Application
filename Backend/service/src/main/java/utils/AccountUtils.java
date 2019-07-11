@@ -38,4 +38,9 @@ public class AccountUtils {
         ExceptionUtils.assertDatabaseObjectFound(account, propType);
         return account;
     }
+
+    public static ArrayList<Account> getAllAccountList() {
+
+        return new ArrayList<>(dataStore.findAllCollection(DataStore.COLLECTION_ACCOUNTS));
+    }
 }

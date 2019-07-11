@@ -94,4 +94,7 @@ public class ApiConstant {
     // explore event
     public static final String EVENT_NAME_SUBSTRING = "keyword";
 
+    // explore account
+    public static final String ACCOUNT_NAME_SUBSTRING = "keyword";
+
 }

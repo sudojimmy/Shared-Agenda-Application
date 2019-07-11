@@ -1,0 +1,12 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: Explore account Response
+description: explore account response
+type: object
+additionalProperties: false
+properties:
+  accountList:
+    type: array
+    items:
+      "$ref": ../types/Account.yaml
+required:
+  - accountList

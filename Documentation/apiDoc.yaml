@@ -67,6 +67,25 @@ paths:
           description: "Invalid Parameter: accountId and nickname cannot be null or empty"
         "404":
           description: "Not Found: target accountId not found in database"
+  exploreAccount:
+    post:
+      operationId: exploreAccount
+      tags:
+        - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/ExploreAccountRequest.yaml'
+      responses:
+        "201":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/ExploreAccountResponse.yaml'
+        "400":
+          description: "Invalid Parameter: keyword cannot be empty"
+        "404":
+          description: " "
   getCalendarEventList:
     post:
       operationId: getCalendarEventList
@@ -236,6 +255,25 @@ paths:
           description: "Invalid Parameter: eventId, accountId cannot be null or empty, accountId need be the starterId"
         "404":
           description: "Not Found: target eventId or accountId not found in database"
+  exploreEvent:
+    post:
+      operationId: exploreEvent
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../Backend/schema/src/yaml/requests/ExploreEventRequest.yaml'
+      responses:
+        "201":
+          description: OK
+          schema:
+            $ref: '../Backend/schema/src/yaml/responses/ExploreEventResponse.yaml'
+        "400":
+          description: "Invalid Parameter: keyword cannot be empty"
+        "404":
+          description: " "
 # MessageQueue
   getMessageQueue:
     post:
