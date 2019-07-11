@@ -78,9 +78,6 @@ public class EventListUtils {
     }
 
     private static boolean happened(final Event event, final String date) {
-        if (event.getRepeat().getStartDate().equals(date)) {
-            return true;
-        }
 
 
 
@@ -92,13 +89,12 @@ public class EventListUtils {
             Date endDate = sdf.parse(repeat.getEndDate());
             Date matchDate = sdf.parse(date);
 
-            if(endDate.before(matchDate) || startDate.after(matchDate)){
-                return false;
+            if (startDate.equals(matchDate)) {
+                return true;
             }
 
-            // ONCE: start <= date <= end
-            if (event.getRepeat().getType() == EventRepeat.DAY) {
-                return true;
+            if(endDate.before(matchDate) || startDate.after(matchDate)){
+                return false;
             }
 
             java.util.Calendar calendar = java.util.Calendar.getInstance();
@@ -115,6 +111,9 @@ public class EventListUtils {
 
             boolean result = true;
             switch (eventRepeat) {
+                case DAY:
+                    result = true;
+                    break;
                 case YEAR:
                     result = result && month1 == month2;
                     // flow
