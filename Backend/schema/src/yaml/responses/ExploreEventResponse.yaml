@@ -1,0 +1,12 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: Explore event Response
+description: explore event response
+type: object
+additionalProperties: false
+properties:
+  eventList:
+    type: array
+    items:
+      "$ref": ../types/Event.yaml
+required:
+  - eventList

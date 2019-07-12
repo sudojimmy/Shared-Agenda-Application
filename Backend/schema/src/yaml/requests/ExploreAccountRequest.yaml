@@ -1,0 +1,11 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: ExploreAccountRequest
+description: explore account by substring
+type: object
+additionalProperties: false
+properties:
+  keyword:
+    description: substring of account name/Id
+    type: string
+required:
+  - keyword

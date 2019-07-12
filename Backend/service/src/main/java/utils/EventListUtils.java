@@ -60,6 +60,11 @@ public class EventListUtils {
         return new ArrayList<>(dataStore.findManyInCollection(document, DataStore.COLLECTION_EVENTS));
     }
 
+    public static ArrayList<Event> getAllEventList() {
+
+        return new ArrayList<>(dataStore.findAllCollection(DataStore.COLLECTION_EVENTS));
+    }
+
     public static ArrayList<Event> getEventListFromCalendar(final Calendar calendar) {
         if (calendar.getEventList().isEmpty()) { return new ArrayList<>(); }
 
