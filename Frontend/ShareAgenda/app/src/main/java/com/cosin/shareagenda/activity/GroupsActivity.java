@@ -1,20 +1,25 @@
 package com.cosin.shareagenda.activity;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.cosin.shareagenda.R;
+import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.adapter.GroupContactsAdapter;
-import com.cosin.shareagenda.entity.ContactEntity;
-import com.cosin.shareagenda.util.GenData;
+import com.cosin.shareagenda.model.ApiClient;
+import com.google.gson.Gson;
 
-import java.util.List;
+import types.GetGroupListResponse;
+
+import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class GroupsActivity extends MainTitleActivity {
-    private List<ContactEntity> groups;
+    private GroupContactsAdapter conAdapter;
 
     @Override
     protected void initView() {
@@ -24,7 +29,7 @@ public class GroupsActivity extends MainTitleActivity {
         rvContacts.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvContacts.setLayoutManager(layoutManager);
-        GroupContactsAdapter conAdapter = new GroupContactsAdapter(this, groups);
+        conAdapter = new GroupContactsAdapter(this);
         rvContacts.setAdapter(conAdapter);
 
         LinearLayout ll = findViewById(R.id.llCreateGroup);
@@ -43,12 +48,38 @@ public class GroupsActivity extends MainTitleActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                loadData();
+            }
+        }, 1000); // give backend some delay to update data
+    }
+
+    @Override
     protected void loadData() {
-        groups = GenData.loadGroups();
+        ApiClient.getGroupList(new CallbackHandler(getGroupHandler));
     }
 
     @Override
     protected String titleName() {
         return "Groups";
     }
+
+    Handler getGroupHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(android.os.Message message) {
+            final Gson gson = new Gson();
+            switch (message.what) {
+                case SUCCESS:
+                    String body = (String) message.obj;
+                    GetGroupListResponse resp = gson.fromJson(body, GetGroupListResponse.class);
+                    conAdapter.setContactList(resp.getGroupList());
+                    break;
+            }
+        }
+    };
+
 }

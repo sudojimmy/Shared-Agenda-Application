@@ -46,6 +46,7 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
                 this.messages.add(msg);
             }
         }
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

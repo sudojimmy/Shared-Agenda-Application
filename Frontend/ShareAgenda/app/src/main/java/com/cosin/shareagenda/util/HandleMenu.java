@@ -1,5 +1,6 @@
 package com.cosin.shareagenda.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
@@ -35,6 +36,7 @@ public class HandleMenu {
             if (!c.getSimpleName().equals(context.getClass().getSimpleName())) {
                 Intent intent = new Intent(context, c);
                 context.startActivity(intent);
+                ((Activity)context).finish();
             }
         }
     }

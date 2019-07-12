@@ -28,6 +28,7 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
 
     public void setContactList(List<String> contactList) {
         this.contactList = contactList;
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
