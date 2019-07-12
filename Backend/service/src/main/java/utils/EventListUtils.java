@@ -166,6 +166,37 @@ public class EventListUtils {
 
     }
 
+    private static Event modifiedEventwithRepead(Event event, String date){
+        Repeat newrepeat = new Repeat()
+                .withEndDate(date)
+                .withStartDate(date)
+                .withType(event.getRepeat().getType());
+
+        Event newEvent = new Event()
+                .withStartTime(event.getStartTime())
+                .withEndTime(event.getEndTime())
+                .withRepeat(newrepeat);
+
+        return newEvent;
+
+    }
+
+
+
+    public static ArrayList<Event> getEventListFromCalendarWithdate(final ArrayList<Event> eventList,
+                                                                         final String date) {
+
+        ArrayList<Event> eventListRt = new ArrayList<>();
+
+        for (Event event : eventList) {
+            if (EventListUtils.happened(event, date)) {
+                eventListRt.add(modifiedEventwithRepead(event, date));
+            }
+        }
+
+        return eventListRt;
+    }
+
     public static ArrayList<Event> getEventListFromCalendarWithYearMonth(final Calendar calendar,
                                                                          final int year,
                                                                          final int month) {
@@ -180,22 +211,8 @@ public class EventListUtils {
         ArrayList<Event> eventListRt = new ArrayList<>();
         for(Event event: eventList){
             for(int i = 1; i < (totalDayInMonth + 1); i++){
-                String date;
-                String monthString;
 
-                // build month string
-                if (month >= 10){
-                    monthString = Integer.toString(month);
-                } else{
-                    monthString = "0" + month;
-                }
-
-                // build day string
-                if (i >= 10) {
-                    date = year + "-" + monthString + "-" + i;
-                } else {
-                    date = year + "-" + monthString + "-0" + i;
-                }
+                String date = constructDateByYearMonthDay(year, month, i);
 
                 if (happened(event, date)) {
                     eventListRt.add(modifiedEvent(event, date));
@@ -203,6 +220,29 @@ public class EventListUtils {
             }
         }
         return eventListRt;
+    }
+
+    public static String constructDateByYearMonthDay(final int year,
+                                                     final int month,
+                                                     final int day){
+        String date;
+        String monthString;
+
+        // build month string
+        if (month >= 10){
+            monthString = Integer.toString(month);
+        } else{
+            monthString = "0" + month;
+        }
+
+        // build day string
+        if (day >= 10) {
+            date = year + "-" + monthString + "-" + day;
+        } else {
+            date = year + "-" + monthString + "-0" + day;
+        }
+
+        return date;
     }
 
     public static boolean deleteEvent(final String eventId) {

@@ -1,0 +1,23 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetOccupiedTimeRequest
+description: get Occupied event
+type: object
+additionalProperties: false
+properties:
+  accountId:
+    description: account1 id
+    type: string
+  targetAccountId:
+    description: account2 id
+    type: string
+  year:
+    description: the year of the events
+    type: integer
+  month:
+    description: the month of the events
+    type: integer
+required:
+  - accountId
+  - targetAccountId
+  - year
+  - month
