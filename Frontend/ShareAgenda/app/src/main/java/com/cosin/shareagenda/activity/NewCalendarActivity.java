@@ -204,4 +204,10 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
         Intent intent = new Intent(this, CreateEventActivity.class);
         this.startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData();
+    }
 }

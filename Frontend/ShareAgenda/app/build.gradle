@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.cosin.shareagenda"
-        minSdkVersion 15
+        minSdkVersion 21
         multiDexEnabled true
         targetSdkVersion 28
         versionCode 1
@@ -55,7 +55,8 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.9'
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'com.github.longegit:android-SlideDateTimePicker:1.1.1'
-    implementation 'com.github.Quivr:Android-Week-View:2.3.2'
+
+    implementation project(':Android-Week-View:library')
 }
 
 configurations.all {
