@@ -21,15 +21,20 @@ public class GetEventMonthlyController extends BaseController {
         logger.info("getCalendarEventMonthly: " + request);
 
         ExceptionUtils.assertPropertyValid(request.getCallerId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
-        ExceptionUtils.assertPropertyValid(request.getCalendarId(), ApiConstant.CALENDAR_CALENDAR_ID);
+        ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
         ExceptionUtils.assertPropertyValid(request.getYear(), ApiConstant.EVENT_MONTHLY_YEAR);
         ExceptionUtils.assertPropertyValid(request.getMonth(), ApiConstant.EVENT_MONTHLY_MONTH);
         if ((request.getMonth() > 12) || (request.getMonth() < 1)) {
             ExceptionUtils.invalidProperty("Month Value");
         }
 
+        // caller account
         AccountUtils.getAccount(request.getCallerId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
-        Calendar calendar = CalendarUtils.getCalendar(request.getCalendarId());
+
+        // target account(calendar)
+        Account account = AccountUtils.getAccount(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
+        String calendarId = account.getCalendarId();
+        Calendar calendar = CalendarUtils.getCalendar(calendarId);
         ExceptionUtils.assertDatabaseObjectFound(calendar, ApiConstant.CALENDAR_CALENDAR_ID);
 
         ArrayList<Event> eventList = EventListUtils

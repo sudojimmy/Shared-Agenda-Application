@@ -4,8 +4,8 @@ description: get event list by account and calendar id and date
 type: object
 additionalProperties: false
 properties:
-  calendarId:
-    description: calendar id
+  accountId:
+    description: account id
     type: string
   callerId:
     description: caller account id
@@ -17,7 +17,7 @@ properties:
     description: the month of the events
     type: integer
 required:
-  - calendarId
+  - accountId
   - callerId
   - year
   - month
