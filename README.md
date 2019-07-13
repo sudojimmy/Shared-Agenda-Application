@@ -8,7 +8,12 @@
 Server API URL: https://sharedagendaapp.herokuapp.com/
 
 ## Frontend
-Note: please execute script ./sync.sh when backend schema is modified
+
+### Setup
+```
+git submodule update --init --recursive
+/sync.sh # synchronize frontend/backend schema
+```
 
 ## API Documentation
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a2e9ca9e-60cd-4103-a5fd-e82bb1b76458/deploy-status)](https://app.netlify.com/sites/sharedagendaappdoc/deploys)

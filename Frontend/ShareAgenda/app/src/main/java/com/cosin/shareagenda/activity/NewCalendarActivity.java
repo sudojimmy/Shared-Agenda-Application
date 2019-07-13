@@ -2,6 +2,8 @@ package com.cosin.shareagenda.activity;
 
 import android.content.Intent;
 import android.graphics.RectF;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,9 +12,14 @@ import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.cosin.shareagenda.R;
+import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.dialog.DialogReceiver;
 import com.cosin.shareagenda.dialog.SendEventRequestDialog;
+import com.cosin.shareagenda.entity.DisplayableEvent;
+import com.cosin.shareagenda.model.ApiClient;
+import com.cosin.shareagenda.model.ApiErrorResponse;
 import com.cosin.shareagenda.util.CalendarEventBiz;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,14 +27,27 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import types.Event;
+import types.GetEventMonthlyResponse;
+
+import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
+import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
+
 public class NewCalendarActivity extends MainTitleActivity implements WeekView.EventClickListener,
         MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener,
         WeekView.EmptyViewClickListener, WeekView.AddEventClickListener, WeekView.DropListener, DialogReceiver {
+    public static final String OWNER_CALENDAR_ID = "OWNER_CALENDAR_ID";
+    private String owner_calendar_id;
     private WeekView mWeekView;
+    private int currentMonth = CalendarEventBiz.getCurrentMonth() + 1;
+    private int currentYear = CalendarEventBiz.getCurrentYear();
+    private List<WeekViewEvent> events = new ArrayList<>();
+    private boolean skipAction = false;
 
     @Override
     protected void initView() {
         super.initView();
+        owner_calendar_id = getIntent().getStringExtra(OWNER_CALENDAR_ID);
 
         mWeekView = findViewById(R.id.weekView);
 
@@ -55,8 +75,35 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     protected void loadData() {
-
+        ApiClient.getEventMonthly(owner_calendar_id, currentMonth, currentYear, new CallbackHandler(handler));
     }
+
+    Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(android.os.Message message) {
+            final Gson gson = new Gson();
+            switch (message.what) {
+                case SUCCESS:
+                    String body = (String) message.obj;
+                    GetEventMonthlyResponse resp = gson.fromJson(body, GetEventMonthlyResponse.class);
+                    events.clear();
+                    for (Event e : resp.getEventList()) {
+                        DisplayableEvent de = new DisplayableEvent(e);
+                        de.setColor(0);
+                        events.add(de);
+                    }
+                    skipAction = true;
+                    mWeekView.notifyDatasetChanged();
+                    break;
+                case HTTP_FAILURE:
+                    ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
+                    Toast.makeText(NewCalendarActivity.this, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    Toast.makeText(NewCalendarActivity.this, (String) message.obj, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     /**
      * Set up a date time interpreter which will show short date values when in week view and long
@@ -104,12 +151,12 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+        loadData();
     }
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {
-        Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+        mWeekView.notifyDatasetChanged();
     }
 
     public WeekView getWeekView() {
@@ -123,23 +170,14 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        // Populate the week view with some events.
-        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-
-        Calendar startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth - 1);
-        startTime.set(Calendar.YEAR, newYear);
-        Calendar endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR, 1);
-        endTime.set(Calendar.MONTH, newMonth - 1);
-        WeekViewEvent event = new WeekViewEvent("First", getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.colorPrimary));
-        events.add(event);
-
+        if (skipAction) {
+            skipAction = false;
+            return events;
+        }
+        currentMonth = newMonth;
+        currentYear = newYear;
+        loadData();
         return events;
-
     }
 
     @Override
@@ -165,5 +203,11 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
         // to create user event by cal and quarter
         Intent intent = new Intent(this, CreateEventActivity.class);
         this.startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData();
     }
 }

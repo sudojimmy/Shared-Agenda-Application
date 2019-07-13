@@ -136,4 +136,22 @@ public class CalendarEventBiz {
         return calendar.get(Calendar.MINUTE);
     }
 
+    // @date formatted in YYYY-MM-dd
+    public static int getStringYear(String date) {
+        return Integer.valueOf(date.split("-")[0]);
+    }
+    public static int getStringMonth(String date) {
+        return Integer.valueOf(date.split("-")[1]);
+    }
+    public static int getStringDayOfMonth(String date) {
+        return Integer.valueOf(date.split("-")[2]);
+    }
+    // @time formatted in HH:mm
+    public static int getStringHour(String time) {
+        return Integer.valueOf(time.split(":")[0]);
+    }
+    public static int getStringMinute(String time) {
+        return Integer.valueOf(time.split(":")[1]);
+    }
+
 }

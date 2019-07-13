@@ -1,23 +1,19 @@
 package com.cosin.shareagenda.adapter;
 
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.config.SystemConfig;
-import com.cosin.shareagenda.entity.EventEntity;
 import com.cosin.shareagenda.entity.FriendEvent;
-import com.cosin.shareagenda.util.AppHelper;
 import com.cosin.shareagenda.util.CalendarEventBiz;
-import com.cosin.shareagenda.view.EventView;
 import com.cosin.shareagenda.view.FriendsEventsView;
 import com.cosin.shareagenda.view.ItemViewListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class FriendsEventAdapter extends RecyclerView.Adapter<FriendsEventAdapter.ViewHolder> {

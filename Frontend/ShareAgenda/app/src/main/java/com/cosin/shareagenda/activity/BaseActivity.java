@@ -1,11 +1,12 @@
 package com.cosin.shareagenda.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,11 +14,7 @@ import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.config.AgendaApplication;
-import com.cosin.shareagenda.model.Model;
-import com.cosin.shareagenda.util.AppHelper;
 import com.cosin.shareagenda.util.HandleMenu;
-
-import types.Account;
 
 public abstract class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,7 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
     // need be override in derived class
     protected void loadContentView() {
-        android.support.design.widget.CoordinatorLayout
+        CoordinatorLayout
                 coordinatorLayout = findViewById(R.id.coordinatorLayout);
         LayoutInflater inflater = getLayoutInflater();
         inflater.inflate(getContentView(), coordinatorLayout);
