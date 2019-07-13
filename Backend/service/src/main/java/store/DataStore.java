@@ -109,6 +109,18 @@ public class DataStore {
         return listT;
     }
 
+    public <T> Collection<T> findAllCollection(String collectionName) {
+        MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
+
+        Collection<T> listT = new ArrayList<T>();
+
+        Iterable <T>iterableListT = collection.find();
+        iterableListT.forEach(listT::add);
+
+        return listT;
+    }
+
+
     public <T> Collection<T> findManyInCollection(Bson filter, String collectionName) {
         MongoCollection<T> collection = (MongoCollection<T>) map.get(collectionName);
 

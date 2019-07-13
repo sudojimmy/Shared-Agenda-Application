@@ -60,6 +60,11 @@ public class EventListUtils {
         return new ArrayList<>(dataStore.findManyInCollection(document, DataStore.COLLECTION_EVENTS));
     }
 
+    public static ArrayList<Event> getAllEventList() {
+
+        return new ArrayList<>(dataStore.findAllCollection(DataStore.COLLECTION_EVENTS));
+    }
+
     public static ArrayList<Event> getEventListFromCalendar(final Calendar calendar) {
         if (calendar.getEventList().isEmpty()) { return new ArrayList<>(); }
 
@@ -78,9 +83,6 @@ public class EventListUtils {
     }
 
     private static boolean happened(final Event event, final String date) {
-        if (event.getRepeat().getStartDate().equals(date)) {
-            return true;
-        }
 
 
 
@@ -92,13 +94,12 @@ public class EventListUtils {
             Date endDate = sdf.parse(repeat.getEndDate());
             Date matchDate = sdf.parse(date);
 
-            if(endDate.before(matchDate) || startDate.after(matchDate)){
-                return false;
+            if (startDate.equals(matchDate)) {
+                return true;
             }
 
-            // ONCE: start <= date <= end
-            if (event.getRepeat().getType() == EventRepeat.DAY) {
-                return true;
+            if(endDate.before(matchDate) || startDate.after(matchDate)){
+                return false;
             }
 
             java.util.Calendar calendar = java.util.Calendar.getInstance();
@@ -115,6 +116,9 @@ public class EventListUtils {
 
             boolean result = true;
             switch (eventRepeat) {
+                case DAY:
+                    result = true;
+                    break;
                 case YEAR:
                     result = result && month1 == month2;
                     // flow
@@ -167,6 +171,37 @@ public class EventListUtils {
 
     }
 
+    private static Event modifiedEventwithRepead(Event event, String date){
+        Repeat newrepeat = new Repeat()
+                .withEndDate(date)
+                .withStartDate(date)
+                .withType(event.getRepeat().getType());
+
+        Event newEvent = new Event()
+                .withStartTime(event.getStartTime())
+                .withEndTime(event.getEndTime())
+                .withRepeat(newrepeat);
+
+        return newEvent;
+
+    }
+
+
+
+    public static ArrayList<Event> getEventListFromCalendarWithdate(final ArrayList<Event> eventList,
+                                                                         final String date) {
+
+        ArrayList<Event> eventListRt = new ArrayList<>();
+
+        for (Event event : eventList) {
+            if (EventListUtils.happened(event, date)) {
+                eventListRt.add(modifiedEventwithRepead(event, date));
+            }
+        }
+
+        return eventListRt;
+    }
+
     public static ArrayList<Event> getEventListFromCalendarWithYearMonth(final Calendar calendar,
                                                                          final int year,
                                                                          final int month) {
@@ -181,22 +216,8 @@ public class EventListUtils {
         ArrayList<Event> eventListRt = new ArrayList<>();
         for(Event event: eventList){
             for(int i = 1; i < (totalDayInMonth + 1); i++){
-                String date;
-                String monthString;
 
-                // build month string
-                if (month >= 10){
-                    monthString = Integer.toString(month);
-                } else{
-                    monthString = "0" + month;
-                }
-
-                // build day string
-                if (i >= 10) {
-                    date = year + "-" + monthString + "-" + i;
-                } else {
-                    date = year + "-" + monthString + "-0" + i;
-                }
+                String date = constructDateByYearMonthDay(year, month, i);
 
                 if (happened(event, date)) {
                     eventListRt.add(modifiedEvent(event, date));
@@ -204,6 +225,29 @@ public class EventListUtils {
             }
         }
         return eventListRt;
+    }
+
+    public static String constructDateByYearMonthDay(final int year,
+                                                     final int month,
+                                                     final int day){
+        String date;
+        String monthString;
+
+        // build month string
+        if (month >= 10){
+            monthString = Integer.toString(month);
+        } else{
+            monthString = "0" + month;
+        }
+
+        // build day string
+        if (day >= 10) {
+            date = year + "-" + monthString + "-" + day;
+        } else {
+            date = year + "-" + monthString + "-0" + day;
+        }
+
+        return date;
     }
 
     public static boolean deleteEvent(final String eventId) {

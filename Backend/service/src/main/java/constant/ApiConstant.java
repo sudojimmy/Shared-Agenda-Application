@@ -24,6 +24,7 @@ public class ApiConstant {
     public static final String EVENT_START_TIME = "startTime";
     public static final String EVENT_END_TIME = "endTime";
 
+
     // Group
     public static final String GROUP_ID = "groupId";
     public static final String GROUP_MEMBERS = "members";
@@ -90,6 +91,10 @@ public class ApiConstant {
     public static final String EVENT_MONTHLY_MONTH = "month";
     public static final String EVENT_MONTHLY_YEAR = "year";
 
+    // explore event
+    public static final String EVENT_NAME_SUBSTRING = "keyword";
 
+    // explore account
+    public static final String ACCOUNT_NAME_SUBSTRING = "keyword";
 
 }

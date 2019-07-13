@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +14,6 @@ import android.widget.TextView;
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.activity.BaseActivity;
 import com.cosin.shareagenda.activity.RequestActivity;
-import com.cosin.shareagenda.activity.WeeklyFriendActivity;
-import com.cosin.shareagenda.entity.UserEntity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
