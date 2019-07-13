@@ -2,16 +2,16 @@ package com.cosin.shareagenda.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cosin.shareagenda.R;
-import com.cosin.shareagenda.activity.WeeklyFriendActivity;
-import com.cosin.shareagenda.entity.UserEntity;
+import com.cosin.shareagenda.activity.NewCalendarActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +54,8 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
             @Override
             public void onClick(View v) {
                 String entity = contactList.get(position);
-                Intent intent = new Intent(v.getContext(), WeeklyFriendActivity.class);
-                intent.putExtra("user", (UserEntity)new UserEntity("default", ""));// TODO
+                Intent intent = new Intent(v.getContext(), NewCalendarActivity.class);
+                intent.putExtra(NewCalendarActivity.OWNER_ACCOUNT_ID, entity);
                 v.getContext().startActivity(intent);
             }
         });

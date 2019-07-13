@@ -36,8 +36,9 @@ import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 public class NewCalendarActivity extends MainTitleActivity implements WeekView.EventClickListener,
         MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener,
         WeekView.EmptyViewClickListener, WeekView.AddEventClickListener, WeekView.DropListener, DialogReceiver {
-    public static final String OWNER_CALENDAR_ID = "OWNER_CALENDAR_ID";
-    private String owner_calendar_id;
+    public static final String OWNER_ACCOUNT_ID = "OWNER_ACCOUNT_ID";
+    private static final String CALENDAR_ACTIVITY_TITLE = "My Calendar";
+    private String ownerAccountId;
     private WeekView mWeekView;
     private int currentMonth = CalendarEventBiz.getCurrentMonth() + 1;
     private int currentYear = CalendarEventBiz.getCurrentYear();
@@ -46,8 +47,8 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     protected void initView() {
+        ownerAccountId = getIntent().getStringExtra(OWNER_ACCOUNT_ID);
         super.initView();
-        owner_calendar_id = getIntent().getStringExtra(OWNER_CALENDAR_ID);
 
         mWeekView = findViewById(R.id.weekView);
 
@@ -75,7 +76,7 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     protected void loadData() {
-        ApiClient.getEventMonthly(owner_calendar_id, currentMonth, currentYear, new CallbackHandler(handler));
+        ApiClient.getEventMonthly(ownerAccountId, currentMonth, currentYear, new CallbackHandler(handler));
     }
 
     Handler handler = new Handler(Looper.getMainLooper()) {
@@ -89,7 +90,6 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
                     events.clear();
                     for (Event e : resp.getEventList()) {
                         DisplayableEvent de = new DisplayableEvent(e);
-                        de.setColor(0);
                         events.add(de);
                     }
                     skipAction = true;
@@ -195,7 +195,7 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     protected String titleName() {
-        return "Calendar";
+        return ownerAccountId == null ? CALENDAR_ACTIVITY_TITLE : ownerAccountId;
     }
 
     @Override
@@ -209,5 +209,9 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
     protected void onResume() {
         super.onResume();
         loadData();
+    }
+
+    public boolean isFriendCalendar() {
+        return ownerAccountId != null;
     }
 }

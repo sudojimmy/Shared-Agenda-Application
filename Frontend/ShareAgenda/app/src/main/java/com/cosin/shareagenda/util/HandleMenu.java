@@ -10,7 +10,6 @@ import com.cosin.shareagenda.activity.ContactsActivity;
 import com.cosin.shareagenda.activity.GroupsActivity;
 import com.cosin.shareagenda.activity.NewCalendarActivity;
 import com.cosin.shareagenda.activity.ProfileActivity;
-import com.cosin.shareagenda.activity.WeeklyActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +17,7 @@ import java.util.Map;
 public class HandleMenu {
     static final Map<Integer, Class> activity_map = new HashMap<Integer, Class>() {{
         put( R.id.nav_calendar, NewCalendarActivity.class);
-        put( R.id.nav_weekCalendar, WeeklyActivity.class);
+//        put( R.id.nav_weekCalendar, WeeklyActivity.class);
         put( R.id.nav_groups, GroupsActivity.class);
         put( R.id.nav_friends, ContactsActivity.class);
 //        put( R.id.nav_publicEvents, ProfileActivity.class);
@@ -33,11 +32,20 @@ public class HandleMenu {
         if (activity_map.containsKey(id)) {
             Class c = activity_map.get(id);
             assert c != null;
-            if (!c.getSimpleName().equals(context.getClass().getSimpleName())) {
+            if (!c.getSimpleName().equals(context.getClass().getSimpleName()) ||
+                    isFriendCalendar(context, id)) {
                 Intent intent = new Intent(context, c);
                 context.startActivity(intent);
                 ((Activity)context).finish();
             }
         }
+    }
+
+    private static boolean isFriendCalendar(Context context, int id) {
+        if (context.getClass().getSimpleName().equals(NewCalendarActivity.class.getSimpleName())) {
+            NewCalendarActivity nca = (NewCalendarActivity) context;
+            return nca.isFriendCalendar();
+        }
+        return false;
     }
 }
