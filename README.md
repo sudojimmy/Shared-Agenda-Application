@@ -11,8 +11,7 @@ Server API URL: https://sharedagendaapp.herokuapp.com/
 
 ### Setup
 ```
-git submodule init
-git submodule update
+git submodule update --init --recursive
 /sync.sh # synchronize frontend/backend schema
 ```
 
