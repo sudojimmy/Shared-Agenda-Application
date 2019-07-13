@@ -10,11 +10,12 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import types.CreateAccountRequest;
-import types.CreateGroupRequest;
-import types.FriendInvitationRequest;
 import types.CreateEventRequest;
+import types.CreateGroupRequest;
 import types.Event;
+import types.FriendInvitationRequest;
 import types.GetAccountRequest;
+import types.GetEventMonthlyRequest;
 import types.GetFriendQueueRequest;
 import types.GetGroupListRequest;
 import types.GetMessageQueueRequest;
@@ -25,6 +26,7 @@ import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_ACCOUNT;
 import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_EVENT;
 import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_GROUP;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_ACCOUNT;
+import static com.cosin.shareagenda.model.ApiEndpoint.GET_EVENT_MONTHLY;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_FRIEND_QUEUE;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_GROUP_LIST;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_MESSAGE_QUEUE;
@@ -65,6 +67,15 @@ public class ApiClient {
         makePostRequest(CREATE_GROUP, gson.toJson(createAccountRequest), callback);
     }
 
+    public static void getEventMonthly(String calendarId, int month, int year, Callback callback) {
+        GetEventMonthlyRequest createEventRequest = new GetEventMonthlyRequest()
+                .withCallerId(getAccountId())
+                .withCalendarId(calendarId == null ? getCalendarId() : calendarId)
+                .withMonth(month)
+                .withYear(year);
+        makePostRequest(GET_EVENT_MONTHLY, gson.toJson(createEventRequest), callback);
+    }
+
     public static void createEvent(Event event, Callback callback) {
         CreateEventRequest createEventRequest = new CreateEventRequest()
                 .withCallerId(getAccountId())
@@ -102,6 +113,10 @@ public class ApiClient {
 
     private static String getAccountId() {
         return Model.model.getGoogleSignInAccount().getEmail();
+    }
+
+    private static String getCalendarId() {
+        return Model.model.getUser().getCalendarId();
     }
 
     private static void makePostRequest(String endpoint, String json, Callback callback) {
