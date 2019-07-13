@@ -4,8 +4,8 @@ description: get event list by calendar id
 type: object
 additionalProperties: false
 properties:
-  calendarId:
-    description: calendar id
+  accountId:
+    description: account id
     type: string
 required:
-  - calendarId
+  - accountId
