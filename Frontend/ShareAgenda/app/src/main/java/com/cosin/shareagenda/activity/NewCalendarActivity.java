@@ -221,6 +221,10 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     public void onEmptyViewClicked(Calendar date) {
+        selectedDate = CalendarEventBiz.calendarToDateString(startTime);
+        selectedTime = CalendarEventBiz.calendarToTimeString(startTime);
+        new SendEventRequestDialog(this, "My New Event", selectedDate, selectedTime).show();
+        
         Toast.makeText(this, "Empty view" + " clicked: " + getEventTitle(date), Toast.LENGTH_SHORT).show();
     }
 

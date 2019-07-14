@@ -173,6 +173,8 @@
     <color name="BlueViolet">#8A2BE2</color>
     <color name="LightSkyBlue">#87CEFA</color>
     <color name="SkyBlue">#87CEEB</color>
+    <color name="white">#FFFFFF</color>
+
 
 
 </resources>
