@@ -32,30 +32,11 @@ public class GetEventMonthlyController extends BaseController {
         AccountUtils.getAccount(request.getCallerId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         // target account(calendar)
-        Account account = AccountUtils.getAccount(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
-        String calendarId = account.getCalendarId();
-        Calendar calendar = CalendarUtils.getCalendar(calendarId);
-        ExceptionUtils.assertDatabaseObjectFound(calendar, ApiConstant.CALENDAR_CALENDAR_ID);
-
-        ArrayList<Event> eventList = EventListUtils
-                .getEventListFromCalendarWithYearMonth(
-                        calendar,
-                        request.getYear(),
-                        request.getMonth());
-
-        ArrayList<Event> finalEventList = new ArrayList<Event>();
-
-        for (Event event: eventList) {
-            if (!EventListUtils.checkEventPermission(request.getCallerId(), event)) {
-                // if no permission
-                Event displayEvent = new Event()
-                        .withStartTime(event.getStartTime())
-                        .withEndTime(event.getEndTime());
-                finalEventList.add(displayEvent);
-            } else {
-                finalEventList.add(event);
-            }
-        }
+        ArrayList<Event> finalEventList = (EventListUtils.getMonthlyEventByAccount(
+                request.getAccountId(),
+                request.getAccountId(),
+                request.getYear(),
+                request.getMonth()));
 
         return new ResponseEntity<>(new GetEventMonthlyResponse()
                 .withEventList(finalEventList),HttpStatus.OK);

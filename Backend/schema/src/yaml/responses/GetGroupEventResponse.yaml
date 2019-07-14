@@ -1,0 +1,13 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetEventListByGroupResponse
+description: get eventlist by group response
+type: object
+additionalProperties: false
+properties:
+  eventList:
+    type: array
+    items:
+      "$ref": ../types/Event.yaml
+required:
+  - eventList
+
