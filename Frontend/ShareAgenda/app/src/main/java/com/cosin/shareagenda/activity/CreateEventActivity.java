@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import androidx.fragment.app.DialogFragment;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -17,6 +15,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
@@ -37,6 +38,9 @@ import types.Repeat;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class CreateEventActivity extends AppCompatActivity {
+    public static final String SELECTED_DATE = "SELECTED_DATE";
+    public static final String SELECTED_TIME = "SELECTED_TIME";
+
     private EditText eventName;
     private EditText eventDescription;
     private Spinner eventType;
@@ -71,10 +75,12 @@ public class CreateEventActivity extends AppCompatActivity {
         eventType.setAdapter(eventAdapter);
         repeatType.setAdapter(repeatAdapter);
 
-        startTimePicker.setText(CalendarEventBiz.getCurrentTimeString());
-        endTimePicker.setText(CalendarEventBiz.getCurrentTimeString());
-        startDatePicker.setText(CalendarEventBiz.getCurrentDateString());
-        endDatePicker.setText(CalendarEventBiz.getCurrentDateString());
+        String selectedDate = getIntent().getStringExtra(SELECTED_DATE);
+        String selectedTime = getIntent().getStringExtra(SELECTED_TIME);
+        startTimePicker.setText(selectedTime);
+        endTimePicker.setText(CalendarEventBiz.getNextHour(selectedTime));
+        startDatePicker.setText(selectedDate);
+        endDatePicker.setText(selectedDate);
     }
 
     public void showStartTimePickerDialog(View view) {

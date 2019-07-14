@@ -1,0 +1,23 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetGroupEventRequest
+description: get event list by groupId
+type: object
+additionalProperties: false
+properties:
+  callerId:
+    description: caller account id
+    type: string
+  groupId:
+    description: group id
+    type: string
+  year:
+    description: the year of the events
+    type: integer
+  month:
+    description: the month of the events
+    type: integer
+required:
+  - callerId
+  - groupId
+  - year
+  - month
