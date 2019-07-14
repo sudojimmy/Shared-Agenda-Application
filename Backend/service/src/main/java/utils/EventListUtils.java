@@ -300,4 +300,37 @@ public class EventListUtils {
 
         return false;
     }
+
+    public static ArrayList<Event> getMonthlyEventByAccount(String targetAccountId,
+                                                            String callerAccountId,
+                                                            int year,
+                                                            int month){
+        Account account = AccountUtils.getAccount(targetAccountId, ApiConstant.ACCOUNT_ACCOUNT_ID);
+        String calendarId = account.getCalendarId();
+        Calendar calendar = CalendarUtils.getCalendar(calendarId);
+        ExceptionUtils.assertDatabaseObjectFound(calendar, ApiConstant.CALENDAR_CALENDAR_ID);
+
+        ArrayList<Event> eventList = EventListUtils
+                .getEventListFromCalendarWithYearMonth(
+                        calendar,
+                        year,
+                        month);
+
+        ArrayList<Event> finalEventList = new ArrayList<Event>();
+
+        for (Event event: eventList) {
+            if (!EventListUtils.checkEventPermission(callerAccountId, event)) {
+                // if no permission
+                Event displayEvent = new Event()
+                        .withStartTime(event.getStartTime())
+                        .withEndTime(event.getEndTime());
+                finalEventList.add(displayEvent);
+            } else {
+                finalEventList.add(event);
+            }
+        }
+
+        return finalEventList;
+
+    }
 }
