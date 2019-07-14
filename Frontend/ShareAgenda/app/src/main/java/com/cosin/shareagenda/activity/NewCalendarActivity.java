@@ -21,6 +21,7 @@ import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.dialog.DialogReceiver;
 import com.cosin.shareagenda.dialog.SendEventRequestDialog;
+import com.cosin.shareagenda.dialog.displayEventRequestDialog;
 import com.cosin.shareagenda.entity.DisplayableEvent;
 import com.cosin.shareagenda.model.ApiClient;
 import com.cosin.shareagenda.model.ApiErrorResponse;
@@ -173,12 +174,33 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
     }
 
     @Override
-    public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+    public void onEventClick(WeekViewEvent wevent, RectF eventRect) {
+        // display
+        DisplayableEvent displayableEvent = (DisplayableEvent)wevent;
+        Event event = displayableEvent.getEvent();
+
+        event.getPermission().getType().toString();
+
+        new displayEventRequestDialog(
+                this,
+                event.getEventname(),
+                event.getStarterId(),
+                event.getType().toString(),
+                event.getStartTime(),
+                event.getEndTime(),
+                event.getLocation(),
+                event.getDescription(),
+                event.getPermission().toString(),
+                event.getRepeat(),
+                event.getRepeat().getStartDate(),
+                event.getRepeat().getEndDate()).show();
+
+        Toast.makeText(this, "Clicked " + wevent.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
+        // delete event
         Toast.makeText(this, "Event Long Press", Toast.LENGTH_SHORT).show();
     }
 
@@ -221,10 +243,6 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     public void onEmptyViewClicked(Calendar date) {
-        selectedDate = CalendarEventBiz.calendarToDateString(startTime);
-        selectedTime = CalendarEventBiz.calendarToTimeString(startTime);
-        new SendEventRequestDialog(this, "My New Event", selectedDate, selectedTime).show();
-        
         Toast.makeText(this, "Empty view" + " clicked: " + getEventTitle(date), Toast.LENGTH_SHORT).show();
     }
 

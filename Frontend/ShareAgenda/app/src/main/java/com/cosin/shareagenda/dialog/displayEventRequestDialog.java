@@ -6,6 +6,10 @@ import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
 
+import types.Event;
+import types.EventRepeat;
+import types.Repeat;
+
 public class displayEventRequestDialog extends BaseDialog {
     private String eventname;
     private String starterId;
@@ -15,7 +19,7 @@ public class displayEventRequestDialog extends BaseDialog {
     private String location;
     private String description;
     private String permission;
-    private String repeat;
+    private Repeat repeat;
     private String startDate;
     private String endDate;
 
@@ -28,7 +32,7 @@ public class displayEventRequestDialog extends BaseDialog {
                                      String location,
                                      String description,
                                      String permission,
-                                     String repeat,
+                                     Repeat repeat,
                                      String startDate,
                                      String endDate) {
 
@@ -61,8 +65,33 @@ public class displayEventRequestDialog extends BaseDialog {
         ((TextView)findViewById(R.id.endTime)).setText(endTime);
         ((TextView)findViewById(R.id.startDate)).setText(startDate);
         ((TextView)findViewById(R.id.endDate)).setText(endDate);
+
+        if (description.isEmpty()){
+            description = "Add Your Unique Event Description";
+        }
         ((TextView)findViewById(R.id.eventDescription)).setText(description);
-        ((TextView)findViewById(R.id.repeatTag)).setText(repeat);
+
+        EventRepeat eventRepeat = repeat.getType();
+        String repeatString;
+        if (eventRepeat.equals(EventRepeat.ONCE)) {
+            repeatString = "End On";
+        } else if (eventRepeat.equals(EventRepeat.DAY)) {
+            repeatString = "Repeat Daily";
+
+        } else if (eventRepeat.equals(EventRepeat.WEEK)) {
+            repeatString = "Repeat Weekly";
+
+        } else if (eventRepeat.equals(EventRepeat.MONTH)) {
+            repeatString = "Repeat Monthly";
+
+        } else if (eventRepeat.equals(EventRepeat.YEAR)) {
+            repeatString = "Repeat Yearly";
+
+        } else {
+            repeatString = "";
+        }
+
+        ((TextView)findViewById(R.id.repeatTag)).setText(repeatString);
         // todo
         // ((TextView)findViewById(R.id.)).setText(permission);
         // ((TextView)findViewById(R.id.)).setText(starterId);
