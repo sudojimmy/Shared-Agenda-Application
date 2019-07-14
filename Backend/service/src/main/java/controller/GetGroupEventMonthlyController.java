@@ -14,9 +14,9 @@ import java.util.ArrayList;
 @RestController
 public class GetGroupEventMonthlyController extends BaseController {
 
-    @PostMapping("/getGroupEvent")
+    @PostMapping("/getGroupEventMonthly")
     public ResponseEntity<GetGroupEventMonthlyResponse> handle(@RequestBody GetGroupEventMonthlyRequest request) {
-        logger.info("getCalendarGroupEvent: " + request);
+        logger.info("getGroupEventMonthly: " + request);
 
         ExceptionUtils.assertPropertyValid(request.getGroupId(), ApiConstant.GROUP_ID);
         ExceptionUtils.assertPropertyValid(request.getCallerId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
