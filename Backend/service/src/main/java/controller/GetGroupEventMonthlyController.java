@@ -12,11 +12,11 @@ import utils.*;
 import java.util.ArrayList;
 
 @RestController
-public class GetGroupEventController extends BaseController {
+public class GetGroupEventMonthlyController extends BaseController {
 
-    @PostMapping("/getGroupEvent")
-    public ResponseEntity<GetGroupEventResponse> handle(@RequestBody GetGroupEventRequest request) {
-        logger.info("getCalendarGroupEvent: " + request);
+    @PostMapping("/getGroupEventMonthly")
+    public ResponseEntity<GetGroupEventMonthlyResponse> handle(@RequestBody GetGroupEventMonthlyRequest request) {
+        logger.info("getGroupEventMonthly: " + request);
 
         ExceptionUtils.assertPropertyValid(request.getGroupId(), ApiConstant.GROUP_ID);
         ExceptionUtils.assertPropertyValid(request.getCallerId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
@@ -47,10 +47,7 @@ public class GetGroupEventController extends BaseController {
 
         }
 
-
-
-
-        return new ResponseEntity<>(new GetGroupEventResponse()
+        return new ResponseEntity<>(new GetGroupEventMonthlyResponse()
                 .withEventList(eventList),HttpStatus.OK);
     }
 }
