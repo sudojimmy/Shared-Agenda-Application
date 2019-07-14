@@ -154,4 +154,7 @@ public class CalendarEventBiz {
         return Integer.valueOf(time.split(":")[1]);
     }
 
+    public static String getNextHour(String time) {
+        return toTimeString(getStringHour(time)+1, getStringMinute(time));
+    }
 }
