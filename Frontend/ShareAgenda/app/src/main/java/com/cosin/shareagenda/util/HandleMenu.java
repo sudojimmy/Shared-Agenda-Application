@@ -33,7 +33,7 @@ public class HandleMenu {
             Class c = activity_map.get(id);
             assert c != null;
             if (!c.getSimpleName().equals(context.getClass().getSimpleName()) ||
-                    isFriendCalendar(context, id)) {
+                    onOtherCalendar(context)) {
                 Intent intent = new Intent(context, c);
                 context.startActivity(intent);
                 ((Activity)context).finish();
@@ -41,10 +41,10 @@ public class HandleMenu {
         }
     }
 
-    private static boolean isFriendCalendar(Context context, int id) {
+    private static boolean onOtherCalendar(Context context) {
         if (context.getClass().getSimpleName().equals(NewCalendarActivity.class.getSimpleName())) {
             NewCalendarActivity nca = (NewCalendarActivity) context;
-            return nca.isFriendCalendar();
+            return nca.onOtherCalendar();
         }
         return false;
     }

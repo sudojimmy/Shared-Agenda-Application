@@ -74,11 +74,10 @@ public class ApiClient {
         makePostRequest(CREATE_GROUP, gson.toJson(createAccountRequest), callback);
     }
 
-    // targetAccountId null means check own events
     public static void getEventMonthly(String targetAccountId, int month, int year, Callback callback) {
         GetEventMonthlyRequest createEventRequest = new GetEventMonthlyRequest()
                 .withCallerId(getAccountId())
-                .withAccountId(targetAccountId == null ? getAccountId() : targetAccountId)
+                .withAccountId(targetAccountId)
                 .withMonth(month)
                 .withYear(year);
         makePostRequest(GET_EVENT_MONTHLY, gson.toJson(createEventRequest), callback);

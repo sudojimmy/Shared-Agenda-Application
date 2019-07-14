@@ -55,7 +55,9 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
             public void onClick(View v) {
                 String entity = contactList.get(position);
                 Intent intent = new Intent(v.getContext(), NewCalendarActivity.class);
-                intent.putExtra(NewCalendarActivity.OWNER_ACCOUNT_ID, entity);
+                intent.putExtra(NewCalendarActivity.CALENDAR_TARGET_ID, entity);
+                intent.putExtra(NewCalendarActivity.CALENDAR_ACTIVITY_TYPE, NewCalendarActivity.FRIEND_CALENDAR);
+                intent.putExtra(NewCalendarActivity.CALENDAR_ACTIVITY_TITLE, entity); // TODO change to use nickname, backend /getFriendQueue return Account
                 v.getContext().startActivity(intent);
             }
         });
