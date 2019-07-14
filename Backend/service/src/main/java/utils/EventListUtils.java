@@ -321,9 +321,12 @@ public class EventListUtils {
         for (Event event: eventList) {
             if (!EventListUtils.checkEventPermission(callerAccountId, event)) {
                 // if no permission
+
                 Event displayEvent = new Event()
                         .withStartTime(event.getStartTime())
-                        .withEndTime(event.getEndTime());
+                        .withEndTime(event.getEndTime())
+                        .withRepeat(event.getRepeat());
+
                 finalEventList.add(displayEvent);
             } else {
                 finalEventList.add(event);
