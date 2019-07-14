@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_goldenrod_yellow"
+    android:layout_gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_marginLeft="20sp"
+        android:layout_marginTop="10sp"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textColor="@color/rosy_brown"
+        android:text="WORK"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_gravity="start"
+        android:gravity="center"
+        android:background="@drawable/rectangle"/>
+
+    <!--<TextView-->
+        <!--android:id="@+id/txtclose"-->
+        <!--android:layout_marginRight="10sp"-->
+        <!--android:layout_marginTop="10sp"-->
+        <!--android:layout_width="30dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:textColor="@color/txt_darkgray"-->
+        <!--android:text="X"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_gravity="end"-->
+        <!--android:gravity="center"-->
+        <!--android:background="@drawable/circle"/>-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/eventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Have Meeting"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:textColor="@color/txt_darkgray"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5sp"/>
+        <TextView
+            android:id="@+id/eventLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Montreal,Canada"
+            android:textSize="20sp"
+            android:textColor="@color/black_overlay"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5sp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="30sp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginLeft="30sp"
+                android:layout_marginRight="10sp"
+                android:layout_marginTop="10sp"
+                android:background="@color/dark_goldenrod"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="100sp">
+
+                <TextView
+                    android:id="@+id/startTimeTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="let do it!"
+                    android:textColor="@color/friends_calendar_label"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/startTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="13:30"
+                    android:textColor="@color/ivory"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="30sp"
+                android:layout_marginRight="10sp"
+                android:layout_marginTop="35sp"
+                android:layout_width="match_parent"
+                android:layout_height="100sp"
+                android:layout_weight="1"
+                android:background="@color/peru"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/startDateTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start From"
+                    android:textSize="18sp"
+                    android:textColor="@color/friends_calendar_label"/>
+                <TextView
+                    android:id="@+id/startDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12-30"
+                    android:textSize="18sp"
+                    android:textColor="@color/ivory"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="30sp"
+                android:layout_marginTop="60sp"
+                android:background="@color/dark_goldenrod"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="100sp">
+
+                <TextView
+                    android:id="@+id/endTimeTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="It ends at:"
+                    android:textSize="18sp"
+                    android:textColor="@color/friends_calendar_label"/>
+                <TextView
+                    android:id="@+id/endTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14:30"
+                    android:textSize="18sp"
+                    android:textColor="@color/ivory"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="30sp"
+                android:layout_marginTop="35sp"
+                android:layout_width="match_parent"
+                android:layout_height="100sp"
+                android:layout_weight="1"
+                android:background="@color/peru"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/repeatTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weekly Repeat"
+                    android:textSize="18sp"
+                    android:textColor="@color/friends_calendar_label"/>
+                <TextView
+                    android:id="@+id/endDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12-31"
+                    android:textSize="18sp"
+                    android:textColor="@color/ivory"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="50sp"
+        android:layout_marginRight="50sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/eventDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="      It’s not about who hurt you, and broke you down, it’s about who was always there to make you smile."
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:textColor="@color/black_overlay"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5sp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/joinButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="JOIN US"
+        android:textSize="18sp"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/beige"
+        android:textColor="@color/orange_red"/>
+
+
+</LinearLayout>
