@@ -26,6 +26,8 @@
         app:columnGap="8dp"
         app:newEventColor="#77ee77"
         app:noOfVisibleDays="1"
+        app:newEventTimeResolutionInMinutes="120"
+        app:overlappingEventGap="1sp"
         app:headerRowBackgroundColor="@color/white"
         app:dayBackgroundColor="#05000000"
         app:todayBackgroundColor="#1848adff"

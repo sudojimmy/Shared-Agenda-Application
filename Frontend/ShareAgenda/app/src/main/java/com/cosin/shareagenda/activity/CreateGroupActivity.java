@@ -2,12 +2,13 @@ package com.cosin.shareagenda.activity;
 
 import android.os.Handler;
 import android.os.Looper;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
@@ -64,7 +65,6 @@ public class CreateGroupActivity extends MainTitleActivity {
             @Override
             public void onClick(View v) {
                 CreateGroup();
-                CreateGroupActivity.this.finish();
             }
         });
     }

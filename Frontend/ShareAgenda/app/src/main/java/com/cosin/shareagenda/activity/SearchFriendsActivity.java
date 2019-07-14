@@ -2,12 +2,13 @@ package com.cosin.shareagenda.activity;
 
 import android.os.Handler;
 import android.os.Looper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import types.Account;
-import types.GetAccountResponse;
+import types.ExploreAccountResponse;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
@@ -61,7 +62,7 @@ public class SearchFriendsActivity extends MainTitleActivity {
             @Override
             public void onClick(View v) {
                 /*fetch edit*/
-                ApiClient.getAccount(etSearch.getText().toString(), new CallbackHandler(handler));
+                ApiClient.exploreAccount(etSearch.getText().toString(), new CallbackHandler(handler));
             }
         });
     }
@@ -73,13 +74,10 @@ public class SearchFriendsActivity extends MainTitleActivity {
             switch (message.what) {
                 case SUCCESS:
                     String body = (String) message.obj;
-                    GetAccountResponse resp = gson.fromJson(body, GetAccountResponse.class);
+                    Toast.makeText(SearchFriendsActivity.this, body, Toast.LENGTH_SHORT).show();
+                    ExploreAccountResponse resp = gson.fromJson(body, ExploreAccountResponse.class);
                     friends = new ArrayList<>();
-                    friends.add(new Account()
-                            .withNickname(resp.getNickname())
-                            .withAccountId(resp.getAccountId())
-                            .withDescription(resp.getDescription())
-                    );
+                    friends.addAll(resp.getAccountList());
                     searchFriendsAdapter.setFriends(friends);
                     searchFriendsAdapter.notifyDataSetChanged();
                     break;
