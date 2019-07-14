@@ -20,8 +20,8 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.dialog.DialogReceiver;
+import com.cosin.shareagenda.dialog.DisplayEventRequestDialog;
 import com.cosin.shareagenda.dialog.SendEventRequestDialog;
-import com.cosin.shareagenda.dialog.displayEventRequestDialog;
 import com.cosin.shareagenda.entity.DisplayableEvent;
 import com.cosin.shareagenda.model.ApiClient;
 import com.cosin.shareagenda.model.ApiErrorResponse;
@@ -181,7 +181,7 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
         event.getPermission().getType().toString();
 
-        new displayEventRequestDialog(
+        new DisplayEventRequestDialog(
                 this,
                 event.getEventname(),
                 event.getStarterId(),

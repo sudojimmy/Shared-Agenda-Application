@@ -10,7 +10,7 @@ import types.Event;
 import types.EventRepeat;
 import types.Repeat;
 
-public class displayEventRequestDialog extends BaseDialog {
+public class DisplayEventRequestDialog extends BaseDialog {
     private String eventname;
     private String starterId;
     private String type;
@@ -23,7 +23,7 @@ public class displayEventRequestDialog extends BaseDialog {
     private String startDate;
     private String endDate;
 
-    public displayEventRequestDialog(Context context,
+    public DisplayEventRequestDialog(Context context,
                                      String eventname,
                                      String starterId,
                                      String type,
