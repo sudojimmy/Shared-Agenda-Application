@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import types.CreateAccountRequest;
 import types.CreateGroupRequest;
+import types.DeleteEventRequest;
 import types.ExploreAccountRequest;
 import types.FriendInvitationRequest;
 import types.CreateEventRequest;
@@ -27,11 +28,12 @@ import types.ReplyStatus;
 import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_ACCOUNT;
 import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_EVENT;
 import static com.cosin.shareagenda.model.ApiEndpoint.CREATE_GROUP;
+import static com.cosin.shareagenda.model.ApiEndpoint.DELETE_EVENT;
 import static com.cosin.shareagenda.model.ApiEndpoint.EXPLORE_ACCOUNT;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_ACCOUNT;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_EVENT_MONTHLY;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_FRIEND_QUEUE;
-import static com.cosin.shareagenda.model.ApiEndpoint.GET_GROUP_EVENT;
+import static com.cosin.shareagenda.model.ApiEndpoint.GET_GROUP_EVENT_MONTHLY;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_GROUP_LIST;
 import static com.cosin.shareagenda.model.ApiEndpoint.GET_MESSAGE_QUEUE;
 import static com.cosin.shareagenda.model.ApiEndpoint.INVITE_FRIEND;
@@ -76,13 +78,13 @@ public class ApiClient {
         makePostRequest(CREATE_GROUP, gson.toJson(createAccountRequest), callback);
     }
 
-    public static void getGroupEvent(String groupId, int month, int year, Callback callback) {
+    public static void getGroupEventMonthly(String groupId, int month, int year, Callback callback) {
         GetGroupEventRequest createEventRequest = new GetGroupEventRequest()
                 .withCallerId(getAccountId())
                 .withGroupId(groupId)
                 .withMonth(month)
                 .withYear(year);
-        makePostRequest(GET_GROUP_EVENT, gson.toJson(createEventRequest), callback);
+        makePostRequest(GET_GROUP_EVENT_MONTHLY, gson.toJson(createEventRequest), callback);
     }
 
     public static void getEventMonthly(String targetAccountId, int month, int year, Callback callback) {
@@ -99,6 +101,13 @@ public class ApiClient {
                 .withCallerId(getAccountId())
                 .withEvent(event);
         makePostRequest(CREATE_EVENT, gson.toJson(createEventRequest), callback);
+    }
+
+    public static void deleteEvent(String eventId, Callback callback) {
+        DeleteEventRequest createEventRequest = new DeleteEventRequest()
+                .withAccountId(getAccountId())
+                .withEventId(eventId);
+        makePostRequest(DELETE_EVENT, gson.toJson(createEventRequest), callback);
     }
 
     public static void getMessageQueue(Callback callback) {

@@ -35,6 +35,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import types.Event;
 import types.GetEventMonthlyResponse;
 
@@ -64,6 +65,8 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
     private boolean skipAction = false;
     private String selectedDate;
     private String selectedTime;
+
+    private SweetAlertDialog alertDialog;
 
     private void loadIntentExtra() {
         calendarTargetId = getIntent().getStringExtra(CALENDAR_TARGET_ID);
@@ -106,15 +109,15 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
     @Override
     protected void loadData() {
         if (!onOtherCalendar()) {
-            ApiClient.getEventMonthly(Model.model.getUser().getAccountId(), currentMonth, currentYear, new CallbackHandler(handler));
+            ApiClient.getEventMonthly(Model.model.getUser().getAccountId(), currentMonth, currentYear, new CallbackHandler(getEventHandler));
         } else if (calendarType.equals(GROUP_CALENDAR)) {
-            ApiClient.getGroupEvent(calendarTargetId, currentMonth, currentYear, new CallbackHandler(handler));
+            ApiClient.getGroupEventMonthly(calendarTargetId, currentMonth, currentYear, new CallbackHandler(getEventHandler));
         } else if (calendarType.equals(FRIEND_CALENDAR)) {
-            ApiClient.getEventMonthly(calendarTargetId, currentMonth, currentYear, new CallbackHandler(handler));
+            ApiClient.getEventMonthly(calendarTargetId, currentMonth, currentYear, new CallbackHandler(getEventHandler));
         }
     }
 
-    Handler handler = new Handler(Looper.getMainLooper()) {
+    Handler getEventHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(android.os.Message message) {
             final Gson gson = new Gson();
@@ -198,9 +201,48 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
+        Event displayEvent = ((DisplayableEvent) event).getEvent();
         // delete event
-        Toast.makeText(this, "Event Long Press", Toast.LENGTH_SHORT).show();
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Are you sure?")
+                .setContentText("Won't be able to recover this action!")
+                .setConfirmText("Yes,delete it!")
+                .setCancelText("Cancel")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        ApiClient.deleteEvent(displayEvent.getEventId(), new CallbackHandler(deleteEventHandler));
+                        alertDialog = sDialog;
+                    }
+                })
+                .show();
+
     }
+
+    Handler deleteEventHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(android.os.Message message) {
+            final Gson gson = new Gson();
+            switch (message.what) {
+                case SUCCESS:
+                    alertDialog
+                            .setTitleText("Deleted!")
+                            .setContentText("Your event has been deleted!")
+                            .setConfirmText("OK")
+                            .showCancelButton(false)
+                            .setConfirmClickListener(null)
+                            .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                    mWeekView.notifyDatasetChanged();
+                    break;
+                case HTTP_FAILURE:
+                    ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
+                    Toast.makeText(NewCalendarActivity.this, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    Toast.makeText(NewCalendarActivity.this, (String) message.obj, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {
