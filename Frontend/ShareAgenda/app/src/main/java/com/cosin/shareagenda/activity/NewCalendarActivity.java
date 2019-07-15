@@ -107,9 +107,7 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
         if (!onOtherCalendar()) {
             ApiClient.getEventMonthly(Model.model.getUser().getAccountId(), currentMonth, currentYear, new CallbackHandler(handler));
         } else if (calendarType.equals(GROUP_CALENDAR)) {
-            for (String targetId : Model.model.getCurrentGroup().getMembers()) {
-                ApiClient.getEventMonthly(targetId, currentMonth, currentYear, new CallbackHandler(handler));
-            }
+            ApiClient.getGroupEvent(calendarTargetId, currentMonth, currentYear, new CallbackHandler(handler));
         } else if (calendarType.equals(FRIEND_CALENDAR)) {
             ApiClient.getEventMonthly(calendarTargetId, currentMonth, currentYear, new CallbackHandler(handler));
         }

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText endTimePicker;
     private EditText startDatePicker;
     private EditText endDatePicker;
+    private Switch privateEvent;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,7 @@ public class CreateEventActivity extends AppCompatActivity {
         endDatePicker = findViewById(R.id.endDatePicker);
         eventType = findViewById(R.id.typeDropDown);
         repeatType = findViewById(R.id.repeatDropDown);
+        privateEvent = findViewById(R.id.privateEvent);
 
 
         ArrayAdapter<EventType> eventAdapter = new ArrayAdapter<>(this,
@@ -129,6 +132,8 @@ public class CreateEventActivity extends AppCompatActivity {
     };
 
     public void createEvent(View view) {
+        // TODO friendCalendar -> Account; groupCalendar -> Group
+        PermissionType permissionType = privateEvent.isChecked() ? PermissionType.PRIVATE : PermissionType.PUBLIC;
         Event event = new Event()
                 .withStarterId(Model.model.getUser().getAccountId())    // starter always user
                 .withState(EventState.ACTIVE)                           // state always active
@@ -142,7 +147,7 @@ public class CreateEventActivity extends AppCompatActivity {
                         .withEndDate(endDatePicker.getText().toString()))
                 .withStartTime(startTimePicker.getText().toString())
                 .withEndTime(endTimePicker.getText().toString())
-                .withPermission(new Permission().withType(PermissionType.PUBLIC));  // TODO
+                .withPermission(new Permission().withType(permissionType));
         ApiClient.createEvent(event, new CallbackHandler(handler));
     }
 
