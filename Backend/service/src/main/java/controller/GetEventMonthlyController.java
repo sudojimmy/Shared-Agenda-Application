@@ -29,12 +29,13 @@ public class GetEventMonthlyController extends BaseController {
         }
 
         // caller account
-        AccountUtils.getAccount(request.getCallerId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
+        Account callerAccount =
+                AccountUtils.getAccount(request.getCallerId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         // target account(calendar)
         ArrayList<Event> finalEventList = (EventListUtils.getMonthlyEventByAccount(
                 request.getAccountId(),
-                request.getAccountId(),
+                callerAccount.getAccountId(),
                 request.getYear(),
                 request.getMonth()));
 
