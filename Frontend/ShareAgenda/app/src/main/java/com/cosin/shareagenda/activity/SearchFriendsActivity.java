@@ -79,7 +79,6 @@ public class SearchFriendsActivity extends MainTitleActivity {
                     friends = new ArrayList<>();
                     friends.addAll(resp.getAccountList());
                     searchFriendsAdapter.setFriends(friends);
-                    searchFriendsAdapter.notifyDataSetChanged();
                     break;
                 case HTTP_FAILURE:
                     ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);

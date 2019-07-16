@@ -12,6 +12,7 @@ import types.ExploreAccountResponse;
 import types.PermissionType;
 import utils.AccountUtils;
 import utils.ExceptionUtils;
+import utils.FriendQueueUtils;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class ExploreAccountController extends BaseController {
         logger.info("ExploreAccount: " + request);
 
         ExceptionUtils.assertPropertyValid(request.getKeyword(), ApiConstant.ACCOUNT_NAME_SUBSTRING);
+        Account callerAccount = AccountUtils.getAccount(request.getCallerId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
 
         ArrayList<Account> accountList = AccountUtils.getAllAccountList();
 
@@ -91,10 +93,30 @@ public class ExploreAccountController extends BaseController {
 
         Collections.sort(comparableAccountList);
 
-        ArrayList<Account> finalAccountList = new ArrayList<Account>();
+        ArrayList<Account> withFriendAccountList = new ArrayList<Account>();
 
         for(ComparableAccount comparableAccount: comparableAccountList){
-            finalAccountList.add(comparableAccount.account);
+            withFriendAccountList.add(comparableAccount.account);
+        }
+
+        // filer out existed friends
+
+        ArrayList<Account> finalAccountList = new ArrayList<Account>();
+
+        ArrayList<String> withFriendAccountIdList = new ArrayList<String>();
+        for(Account account: withFriendAccountList){
+            withFriendAccountIdList.add(account.getAccountId());
+        }
+
+        String friendQueueId = callerAccount.getFriendQueueId();
+        ArrayList<String> friendList = FriendQueueUtils.getFriendList(friendQueueId);
+
+
+        for(String accountId: withFriendAccountIdList){
+            if (!friendList.contains(accountId)) {
+                Account account = AccountUtils.getAccount(accountId, ApiConstant.ACCOUNT_ACCOUNT_ID);
+                finalAccountList.add(account);
+            }
         }
 
 

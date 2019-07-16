@@ -37,6 +37,7 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
 
     public void setFriends(List<Account> friends) {
         this.friends = friends;
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,6 +63,21 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
     @Override
     public void onBindViewHolder(SearchFriendsAdapter.ViewHolder viewHolder, int position) {
         viewHolder.viewName.setText(friends.get(position).getNickname());
+
+        viewHolder.viewName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                ApiClient.inviteFriend(friends.get(position).getAccountId(), new CallbackHandler(handler));
+//                /* Add friend here */
+//                /*--------*/
+//
+//                friends.remove(position);
+//                notifyItemRemoved(position);
+//                notifyDataSetChanged();
+            }
+        });
+
+
         viewHolder.viewAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -4,8 +4,12 @@ description: explore account by substring
 type: object
 additionalProperties: false
 properties:
+  callerId:
+    description: accountId
+    type: string
   keyword:
     description: substring of account name/Id
     type: string
 required:
+  - callerId
   - keyword
