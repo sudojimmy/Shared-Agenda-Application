@@ -160,11 +160,12 @@ public class CalendarEventBiz {
     }
 
     public static String getNextWeekDay(String date, int weekday) {
-        calendarInstance.set(getStringYear(date), getStringMonth(date)-1,getStringDayOfMonth(date));
-        while (calendarInstance.get(Calendar.DAY_OF_WEEK) != weekday) {
-            calendarInstance.add(Calendar.DATE, 1);
+        Calendar cal = Calendar.getInstance();
+        cal.set(getStringYear(date), getStringMonth(date)-1,getStringDayOfMonth(date));
+        while (cal.get(Calendar.DAY_OF_WEEK) != weekday) {
+            cal.add(Calendar.DATE, 1);
         }
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
-        return sdf.format(calendarInstance.getTime());
+        return sdf.format(cal.getTime());
     }
 }

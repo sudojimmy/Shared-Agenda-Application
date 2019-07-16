@@ -2,7 +2,6 @@ package com.cosin.shareagenda.activity;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -14,21 +13,26 @@ import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.adapter.ExploreEventsAdapter;
 import com.cosin.shareagenda.api.ApiClient;
 import com.cosin.shareagenda.api.ApiErrorResponse;
+import com.cosin.shareagenda.api.DefaultExploreInfo;
+import com.cosin.shareagenda.api.plugin.ExploreInfo;
+import com.cosin.shareagenda.api.plugin.uwapi.UWEventPlugin;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import types.Event;
 import types.ExploreEventResponse;
+import types.UWGetCourseRequest;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class ExploreActivity extends MainTitleActivity {
 
-    ArrayList<Event> events;
     private SearchView searchBar;
     private ExploreEventsAdapter eventAdapter;
+    private String pluginType;
 
     @Override
     protected int getContentView() {
@@ -46,19 +50,22 @@ public class ExploreActivity extends MainTitleActivity {
         rvEvent.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvEvent.setLayoutManager(layoutManager);
-        eventAdapter = new ExploreEventsAdapter();
+        eventAdapter = new ExploreEventsAdapter(this);
         rvEvent.setAdapter(eventAdapter);
         searchBar = findViewById(R.id.search);
-        searchBar.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(ExploreActivity.this, "CLICK", Toast.LENGTH_SHORT).show();
-            }
-        });
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                ApiClient.exploreEvent(s, new CallbackHandler(handler));
+                if (UWEventPlugin.isActive(s)) {
+                    boolean success = UWEventPlugin.getClient().exploreEvent(s, new CallbackHandler(handler));
+                    if (!success) {
+                        Toast.makeText(ExploreActivity.this, UWEventPlugin.getHint(), Toast.LENGTH_SHORT).show();
+                    }
+                    pluginType = UWEventPlugin.getType();
+                } else {
+                    ApiClient.exploreEvent(s, new CallbackHandler(handler));
+                    pluginType = DefaultExploreInfo.DEFAULT_TYPE;
+                }
                 return false;
             }
 
@@ -81,8 +88,19 @@ public class ExploreActivity extends MainTitleActivity {
             switch (message.what) {
                 case SUCCESS:
                     String body = (String) message.obj;
-                    ExploreEventResponse resp = gson.fromJson(body, ExploreEventResponse.class);
-                    eventAdapter.setEventList(resp.getEventList());
+                    ArrayList<ExploreInfo> infos = new ArrayList<>();
+                    if (pluginType.equals(UWEventPlugin.getType())) {
+                        UWGetCourseRequest uwResp = gson.fromJson(body, UWGetCourseRequest.class);
+                        infos.addAll(UWEventPlugin.toExploreInfo(uwResp));
+                    } else {
+                        ExploreEventResponse defaultResp = gson.fromJson(body, ExploreEventResponse.class);
+                        List<Event> events = defaultResp.getEventList();
+                        for (Event e : events) {
+                            infos.add(new DefaultExploreInfo(e.getEventname(), e.getDescription(), e));
+                        }
+                    }
+
+                    eventAdapter.setEventList(infos);
                     break;
                 case HTTP_FAILURE:
                     ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);

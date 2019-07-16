@@ -8,34 +8,40 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.api.ApiClient;
+import com.cosin.shareagenda.api.DefaultExploreInfo;
+import com.cosin.shareagenda.api.plugin.ExploreInfo;
+import com.cosin.shareagenda.api.plugin.uwapi.UWEventPlugin;
+import com.cosin.shareagenda.api.plugin.uwapi.UWExploreInfo;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import types.Event;
-
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class ExploreEventsAdapter extends RecyclerView.Adapter<ExploreEventsAdapter.ViewHolder> {
-    private List<Event> events;
+    private final Context context;
+    private List<ExploreInfo> info;
     private int removePosition;
 
-    public ExploreEventsAdapter() {
-        this.events = new ArrayList<>();
+    public ExploreEventsAdapter(Context context) {
+        this.context = context;
+        this.info = new ArrayList<>();
     }
-    public ExploreEventsAdapter(Context context, List<Event> events){
-        this.events = events;
+    public ExploreEventsAdapter(Context context, Context context1, List<ExploreInfo> info){
+        this.context = context1;
+        this.info = info;
     }
 
-    public void setEventList(List<Event> events) {
-        this.events = events;
+    public void setEventList(List<ExploreInfo> info) {
+        this.info = info;
         notifyDataSetChanged();
     }
 
@@ -59,13 +65,18 @@ public class ExploreEventsAdapter extends RecyclerView.Adapter<ExploreEventsAdap
 
     @Override
     public void onBindViewHolder(ExploreEventsAdapter.ViewHolder holder, int position) {
-        holder.tvEventTitle.setText(events.get(position).getEventname());
-        holder.tvEventDescription.setText(events.get(position).getDescription());
+        holder.tvEventTitle.setText(info.get(position).getTitle());
+        holder.tvEventDescription.setText(info.get(position).getDescription());
         holder.ivAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Event event = events.get(position);
-                ApiClient.joinEvent(event.getEventId(), new CallbackHandler(handler));
+                ExploreInfo event = info.get(position);
+                if (event instanceof UWExploreInfo) {
+                    UWEventPlugin.addClass(((UWExploreInfo)event).getUwCourse());
+                    Toast.makeText(context, "ADDED: "+ event.getTitle(), Toast.LENGTH_SHORT).show();
+                } else {
+                    ApiClient.joinEvent(((DefaultExploreInfo)event).getEvent().getEventId(), new CallbackHandler(handler));
+                }
                 removePosition = position;
             }
         });
@@ -73,7 +84,7 @@ public class ExploreEventsAdapter extends RecyclerView.Adapter<ExploreEventsAdap
 
     @Override
     public int getItemCount() {
-        return events.size();
+        return info.size();
     }
 
     Handler handler = new Handler(Looper.getMainLooper()) {
@@ -82,7 +93,7 @@ public class ExploreEventsAdapter extends RecyclerView.Adapter<ExploreEventsAdap
             final Gson gson = new Gson();
             switch (message.what) {
                 case SUCCESS:
-                    events.remove(removePosition);
+                    info.remove(removePosition);
                     notifyItemRemoved(removePosition);
                     break;
             }

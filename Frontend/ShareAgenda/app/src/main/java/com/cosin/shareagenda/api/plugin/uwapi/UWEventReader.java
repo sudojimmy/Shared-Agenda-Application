@@ -15,15 +15,22 @@ import types.PermissionType;
 import types.Repeat;
 import types.UWClass;
 import types.UWCourse;
+import types.UWDate;
 import types.UWLocation;
 
 public class UWEventReader {
 
     // 1 + last2dig year + term start month. ex. 1195 => 1 + 2019 + May(Spring Term)
+    // month start from 0
     private static String toTerm(int year, int month) {
-        month = ((month -1) % 4 + 1) + ((month - 1) / 4) * 4;
+        month = (month / 4) * 4 + 1;
         return "1" + (year % 100) + month;
     }
+
+    public static String defaultTerm() {
+        return toTerm(CalendarEventBiz.getCurrentYear(), CalendarEventBiz.getCurrentMonth());
+    }
+
     public static ArrayList<Event> courseToEvents(UWCourse uwCourse, String termStartDate, String termEndDate) {
         ArrayList<Event> events = new ArrayList<>();
         for (UWClass uwClass : uwCourse.getClasses()) {
@@ -91,8 +98,19 @@ public class UWEventReader {
     }
 
     // ex. CS446 Lec 001
-    private static String readTitle(UWCourse uwCourse) {
+    public static String readTitle(UWCourse uwCourse) {
         return uwCourse.getSubject() + uwCourse.getCatalog_number() + " " + uwCourse.getSection();
+    }
+
+    // ex. CS446 Lec 001
+    public static String readDescription(UWCourse uwCourse) {
+        StringBuilder description = new StringBuilder();
+        for (UWClass uwClass : uwCourse.getClasses()) {
+            UWDate date = uwClass.getDate();
+            description.append(String.format("%s %s-%s\n",
+                    date.getWeekdays(), date.getStart_time(), date.getEnd_time()));
+        }
+        return description.toString();
     }
 
     // split weekday by uppercase. ex. TTh => [T, Th]
