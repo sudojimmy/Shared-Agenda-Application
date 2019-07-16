@@ -36,6 +36,13 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
         notifyDataSetChanged();
     }
 
+    public void removeElementFromContactList(int position){
+        contactList.remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
+
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView tvContactName;
         ImageView ivCalendar;
@@ -56,6 +63,10 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
         return this.context;
     }
 
+    private FriendContactsAdapter getFriendContactsAdapter(){
+        return this;
+    }
+
     @Override
     public void onBindViewHolder(FriendContactsAdapter.ViewHolder holder, int position) {
         holder.tvContactName.setText(contactList.get(position));
@@ -64,7 +75,15 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
             public void onClick(View view) {
                 String entity = contactList.get(position);
                 String accountId = contactList.get(position);
-                new DisplayAccountRequestDialog(getContext(), accountId).show();
+                DisplayAccountRequestDialog displayAccountRequestDialog =
+                        new DisplayAccountRequestDialog(
+                                getContext(),
+                                accountId,
+                                position,
+                                getFriendContactsAdapter());
+                displayAccountRequestDialog.show();
+
+
             }
         });
 

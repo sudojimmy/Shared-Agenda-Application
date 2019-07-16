@@ -3,6 +3,7 @@ package com.cosin.shareagenda.dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import types.Account;
 import types.CreateAccountResponse;
 import types.GetAccountResponse;
@@ -31,10 +33,19 @@ public class DisplayAccountRequestDialog extends BaseDialog {
     private Account account;
     private DisplayAccountRequestDialog conAdapter;
 
+    private FriendContactsAdapter friendContactsAdapter;
+    private int position;
 
-    public DisplayAccountRequestDialog(Context context, String accountId) {
+
+    public DisplayAccountRequestDialog(Context context,
+                                       String accountId,
+                                       int position,
+                                       FriendContactsAdapter friendContactsAdapter) {
         super(context);
         ApiClient.getAccount(accountId, new CallbackHandler(handler));
+
+        this.friendContactsAdapter = friendContactsAdapter;
+        this.position = position;
     }
 
     @Override
@@ -42,6 +53,9 @@ public class DisplayAccountRequestDialog extends BaseDialog {
         window.setContentView(R.layout.activity_friend_account_popup);
     }
 
+    private DisplayAccountRequestDialog getDisplayAccountRequestDialog(){
+        return this;
+    }
 
 
     @Override
@@ -51,7 +65,17 @@ public class DisplayAccountRequestDialog extends BaseDialog {
             @Override
             public void onClick(View view) {
                // delete the friend
-                ApiClient.deleteFriend(account.getAccountId(), new CallbackHandler(handlerDeleteFriend));
+                new DeleteFriendDialog(
+                        context,
+                        getDisplayAccountRequestDialog(),
+                        SweetAlertDialog.WARNING_TYPE,
+                        account,
+                        position,
+                        friendContactsAdapter)
+                        .show();
+
+                // todo
+                //ApiClient.deleteFriend(account.getAccountId(), new CallbackHandler(handlerDeleteFriend));
 
             }
         });

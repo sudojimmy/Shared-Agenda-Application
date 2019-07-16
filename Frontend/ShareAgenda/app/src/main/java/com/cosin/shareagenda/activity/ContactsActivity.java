@@ -29,7 +29,7 @@ public class ContactsActivity extends MainTitleActivity {
 
     ArrayList<ContactEntity> contactList;
     private FriendContactsAdapter conAdapter;
-
+    RecyclerView rvContacts;
     @Override
     protected int getContentView() {
         return R.layout.activity_contacts;
@@ -44,12 +44,13 @@ public class ContactsActivity extends MainTitleActivity {
     protected void initView() {
         super.initView();
 
-        RecyclerView rvContacts = findViewById(R.id.rvContacts);
-        rvContacts.setHasFixedSize(true);
+
+        this.rvContacts = findViewById(R.id.rvContacts);
+        this.rvContacts.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        rvContacts.setLayoutManager(layoutManager);
+        this.rvContacts.setLayoutManager(layoutManager);
         conAdapter = new FriendContactsAdapter(this);
-        rvContacts.setAdapter(conAdapter);
+        this.rvContacts.setAdapter(conAdapter);
 
         LinearLayout ll = findViewById(R.id.llSearch);
         ll.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +61,8 @@ public class ContactsActivity extends MainTitleActivity {
             }
         });
     }
+
+
 
     @Override
     protected String titleName() {
