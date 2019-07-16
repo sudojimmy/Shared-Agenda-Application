@@ -12,14 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.activity.NewCalendarActivity;
+import com.cosin.shareagenda.dialog.DisplayAccountRequestDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import types.Account;
+
 public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAdapter.ViewHolder> {
     private List<String> contactList;
+    Context context;
 
-    public FriendContactsAdapter() {
+    public FriendContactsAdapter(Context context) {
+        this.context = context;
         this.contactList = new ArrayList<>();
     }
     public FriendContactsAdapter(Context context, List<String> contactList){
@@ -29,6 +34,13 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
     public void setContactList(List<String> contactList) {
         this.contactList = contactList;
         notifyDataSetChanged();
+    }
+
+    public void removeElementFromContactList(int position){
+        contactList.remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -47,9 +59,35 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
         return new ViewHolder(v);
     }
 
+    private Context getContext(){
+        return this.context;
+    }
+
+    private FriendContactsAdapter getFriendContactsAdapter(){
+        return this;
+    }
+
     @Override
     public void onBindViewHolder(FriendContactsAdapter.ViewHolder holder, int position) {
         holder.tvContactName.setText(contactList.get(position));
+        holder.tvContactName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String entity = contactList.get(position);
+                String accountId = contactList.get(position);
+                DisplayAccountRequestDialog displayAccountRequestDialog =
+                        new DisplayAccountRequestDialog(
+                                getContext(),
+                                accountId,
+                                position,
+                                getFriendContactsAdapter());
+                displayAccountRequestDialog.show();
+
+
+            }
+        });
+
+
         holder.ivCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
