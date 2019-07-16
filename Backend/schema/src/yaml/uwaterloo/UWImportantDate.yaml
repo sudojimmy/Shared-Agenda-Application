@@ -1,0 +1,16 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: UWImportantDate
+description: UWImportantDate
+type: object
+additionalProperties: false
+properties:
+    title:
+        type: string
+    start_date:
+        type: string
+    end_date:
+        type: string
+required:
+    - title
+    - start_date
+    - end_date

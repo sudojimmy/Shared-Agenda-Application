@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="52dp"
+    android:layout_marginLeft="12dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvEventTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_weight="7"
+                    android:text="Title"
+                    android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/tvEventDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_weight="7"
+                    android:text="Description"
+                    android:textSize="18sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivAddEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="12dp"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+</LinearLayout>

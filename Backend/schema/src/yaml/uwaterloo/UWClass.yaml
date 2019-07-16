@@ -1,0 +1,13 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: UWClass
+description: University of Waterloo Class object
+type: object
+additionalProperties: false
+properties:
+    date:
+        "$ref": UWDate.yaml
+    location:
+        "$ref": UWLocation.yaml
+required:
+    - date
+    - location

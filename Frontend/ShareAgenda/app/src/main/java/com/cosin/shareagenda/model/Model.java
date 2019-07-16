@@ -35,4 +35,23 @@ public class Model {
     public void setGoogleSignInAccount(GoogleSignInAccount googleSignInAccount) {
         this.googleSignInAccount = googleSignInAccount;
     }
+
+    private String currentTermStart;
+    private String currentTermEnd;
+
+    public String getCurrentTermStart() {
+        return currentTermStart;
+    }
+
+    public void setCurrentTermStart(String currentTermStart) {
+        this.currentTermStart = currentTermStart;
+    }
+
+    public String getCurrentTermEnd() {
+        return currentTermEnd;
+    }
+
+    public void setCurrentTermEnd(String currentTermEnd) {
+        this.currentTermEnd = currentTermEnd;
+    }
 }

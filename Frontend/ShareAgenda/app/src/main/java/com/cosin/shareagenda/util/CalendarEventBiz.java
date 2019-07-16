@@ -57,6 +57,7 @@ public class CalendarEventBiz {
     private final static Calendar calendarInstance = Calendar.getInstance();
 
     public static final String DETAILED_DATE_PATTERN = "YYYY-MM-dd  EEEE";
+    public static final String DATE_PATTERN = "YYYY-MM-dd";
     public static final String DATE_FORMAT = "%d-%d-%d";
     public static final String TIME_FORMAT = "%d:%02d";
 
@@ -156,5 +157,15 @@ public class CalendarEventBiz {
 
     public static String getNextHour(String time) {
         return toTimeString(getStringHour(time)+1, getStringMinute(time));
+    }
+
+    public static String getNextWeekDay(String date, int weekday) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(getStringYear(date), getStringMonth(date)-1,getStringDayOfMonth(date));
+        while (cal.get(Calendar.DAY_OF_WEEK) != weekday) {
+            cal.add(Calendar.DATE, 1);
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+        return sdf.format(cal.getTime());
     }
 }

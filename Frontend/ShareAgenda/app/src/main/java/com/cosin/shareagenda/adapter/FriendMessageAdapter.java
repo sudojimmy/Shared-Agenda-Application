@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
-import com.cosin.shareagenda.model.ApiClient;
-import com.cosin.shareagenda.model.ApiErrorResponse;
+import com.cosin.shareagenda.api.ApiClient;
+import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
