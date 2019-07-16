@@ -3,11 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".activity.ProfileActivity">
+    >
+
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -122,7 +123,7 @@
                         android:layout_marginTop="30dp"
                         android:background="#EEEEEE"
                         android:textColor="#CC3333"
-                        android:text="Manage(default" />
+                        android:text="DELETE" />
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>

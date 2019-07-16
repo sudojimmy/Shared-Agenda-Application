@@ -12,6 +12,7 @@ import types.CreateAccountRequest;
 import types.CreateEventRequest;
 import types.CreateGroupRequest;
 import types.DeleteEventRequest;
+import types.DeleteFriendRequest;
 import types.Event;
 import types.ExploreAccountRequest;
 import types.ExploreEventRequest;
@@ -30,6 +31,7 @@ import static com.cosin.shareagenda.api.ApiEndpoint.CREATE_ACCOUNT;
 import static com.cosin.shareagenda.api.ApiEndpoint.CREATE_EVENT;
 import static com.cosin.shareagenda.api.ApiEndpoint.CREATE_GROUP;
 import static com.cosin.shareagenda.api.ApiEndpoint.DELETE_EVENT;
+import static com.cosin.shareagenda.api.ApiEndpoint.DELETE_FRIEND;
 import static com.cosin.shareagenda.api.ApiEndpoint.EXPLORE_ACCOUNT;
 import static com.cosin.shareagenda.api.ApiEndpoint.EXPLORE_EVENT;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_ACCOUNT;
@@ -58,42 +60,42 @@ public class ApiClient extends BaseApiClient {
     }
 
     public static void exploreAccount(String keyword, Callback callback) {
-        ExploreAccountRequest getAccountRequest = new ExploreAccountRequest().withKeyword(keyword);
-        makePostRequest(EXPLORE_ACCOUNT, gson.toJson(getAccountRequest), callback);
+        ExploreAccountRequest request = new ExploreAccountRequest().withKeyword(keyword);
+        makePostRequest(EXPLORE_ACCOUNT, gson.toJson(request), callback);
     }
 
     public static void getGroupList(Callback callback) {
-        GetGroupListRequest createAccountRequest = new GetGroupListRequest()
+        GetGroupListRequest request = new GetGroupListRequest()
                 .withAccountId(getAccountId());
-        makePostRequest(GET_GROUP_LIST, gson.toJson(createAccountRequest), callback);
+        makePostRequest(GET_GROUP_LIST, gson.toJson(request), callback);
     }
 
     public static void createGroup(String name, String description,
                                    ArrayList<String> members, Callback callback) {
-        CreateGroupRequest createAccountRequest = new CreateGroupRequest()
+        CreateGroupRequest request = new CreateGroupRequest()
                 .withName(name)
                 .withOwnerId(getAccountId())
                 .withDescription(description)
                 .withMembers(members);
-        makePostRequest(CREATE_GROUP, gson.toJson(createAccountRequest), callback);
+        makePostRequest(CREATE_GROUP, gson.toJson(request), callback);
     }
 
     public static void getGroupEventMonthly(String groupId, int month, int year, Callback callback) {
-        GetGroupEventMonthlyRequest createEventRequest = new GetGroupEventMonthlyRequest()
+        GetGroupEventMonthlyRequest request = new GetGroupEventMonthlyRequest()
                 .withCallerId(getAccountId())
                 .withGroupId(groupId)
                 .withMonth(month)
                 .withYear(year);
-        makePostRequest(GET_GROUP_EVENT_MONTHLY, gson.toJson(createEventRequest), callback);
+        makePostRequest(GET_GROUP_EVENT_MONTHLY, gson.toJson(request), callback);
     }
 
     public static void getEventMonthly(String targetAccountId, int month, int year, Callback callback) {
-        GetEventMonthlyRequest createEventRequest = new GetEventMonthlyRequest()
+        GetEventMonthlyRequest request = new GetEventMonthlyRequest()
                 .withCallerId(getAccountId())
                 .withAccountId(targetAccountId)
                 .withMonth(month)
                 .withYear(year);
-        makePostRequest(GET_EVENT_MONTHLY, gson.toJson(createEventRequest), callback);
+        makePostRequest(GET_EVENT_MONTHLY, gson.toJson(request), callback);
     }
 
     public static void createEvent(Event event, Callback callback) {
@@ -104,52 +106,59 @@ public class ApiClient extends BaseApiClient {
     }
 
     public static void deleteEvent(String eventId, Callback callback) {
-        DeleteEventRequest createEventRequest = new DeleteEventRequest()
+        DeleteEventRequest request = new DeleteEventRequest()
                 .withAccountId(getAccountId())
                 .withEventId(eventId);
-        makePostRequest(DELETE_EVENT, gson.toJson(createEventRequest), callback);
+        makePostRequest(DELETE_EVENT, gson.toJson(request), callback);
     }
 
     public static void exploreEvent(String keyword, Callback callback) {
-        ExploreEventRequest getAccountRequest = new ExploreEventRequest()
+        ExploreEventRequest request = new ExploreEventRequest()
                 .withKeyword(keyword)
                 .withCallerId(getAccountId());
-        makePostRequest(EXPLORE_EVENT, gson.toJson(getAccountRequest), callback);
+        makePostRequest(EXPLORE_EVENT, gson.toJson(request), callback);
     }
 
     public static void joinEvent(String eventId, Callback callback) {
-        JoinEventRequest getAccountRequest = new JoinEventRequest()
+        JoinEventRequest request = new JoinEventRequest()
                 .withEventId(eventId)
                 .withAccountId(getAccountId());
-        makePostRequest(JOIN_EVENT, gson.toJson(getAccountRequest), callback);
+        makePostRequest(JOIN_EVENT, gson.toJson(request), callback);
     }
 
     public static void getMessageQueue(Callback callback) {
-        GetMessageQueueRequest createEventRequest = new GetMessageQueueRequest()
+        GetMessageQueueRequest request = new GetMessageQueueRequest()
                 .withAccountId(getAccountId())
                 .withMessageQueueId(Model.model.getUser().getMessageQueueId());
-        makePostRequest(GET_MESSAGE_QUEUE, gson.toJson(createEventRequest), callback);
+        makePostRequest(GET_MESSAGE_QUEUE, gson.toJson(request), callback);
     }
 
     public static void getFriendQueue(Callback callback) {
-        GetFriendQueueRequest createEventRequest = new GetFriendQueueRequest()
+        GetFriendQueueRequest request = new GetFriendQueueRequest()
                 .withAccountId(getAccountId());
-        makePostRequest(GET_FRIEND_QUEUE, gson.toJson(createEventRequest), callback);
+        makePostRequest(GET_FRIEND_QUEUE, gson.toJson(request), callback);
     }
 
     public static void inviteFriend(String friendId, Callback callback) {
-        FriendInvitationRequest createEventRequest = new FriendInvitationRequest()
+        FriendInvitationRequest friendInvitationRequest = new FriendInvitationRequest()
                 .withSenderId(getAccountId())
                 .withReceiverId(friendId);
-        makePostRequest(INVITE_FRIEND, gson.toJson(createEventRequest), callback);
+        makePostRequest(INVITE_FRIEND, gson.toJson(friendInvitationRequest), callback);
+    }
+
+    public static void deleteFriend(String friendId, Callback callback) {
+        DeleteFriendRequest deleteFriendRequest = new DeleteFriendRequest()
+                .withAccountId(getAccountId())
+                .withFriendId(friendId);
+        makePostRequest(DELETE_FRIEND, gson.toJson(deleteFriendRequest), callback);
     }
 
     public static void replyFriend(String msgId, ReplyStatus status, Callback callback) {
-        ReplyInvitationRequest createEventRequest = new ReplyInvitationRequest()
+        ReplyInvitationRequest request = new ReplyInvitationRequest()
                 .withAccountId(getAccountId())
                 .withMessageId(msgId)
                 .withStatus(status);
-        makePostRequest(REPLY_FRIEND, gson.toJson(createEventRequest), callback);
+        makePostRequest(REPLY_FRIEND, gson.toJson(request), callback);
     }
 
     private static String getAccountId() {

@@ -21,9 +21,10 @@ import types.Account;
 
 public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAdapter.ViewHolder> {
     private List<String> contactList;
-    
+    Context context;
 
     public FriendContactsAdapter(Context context) {
+        this.context = context;
         this.contactList = new ArrayList<>();
     }
     public FriendContactsAdapter(Context context, List<String> contactList){
@@ -51,8 +52,8 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
         return new ViewHolder(v);
     }
 
-    private FriendContactsAdapter getFriendContactsAdapter(){
-        return this;
+    private Context getContext(){
+        return this.context;
     }
 
     @Override
@@ -63,7 +64,7 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
             public void onClick(View view) {
                 String entity = contactList.get(position);
                 String accountId = contactList.get(position);
-                new DisplayAccountRequestDialog(getFriendContactsAdapter(), accountId).show();
+                new DisplayAccountRequestDialog(getContext(), accountId).show();
             }
         });
 
