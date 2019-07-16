@@ -47,7 +47,7 @@ public class ContactsActivity extends MainTitleActivity {
         rvContacts.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvContacts.setLayoutManager(layoutManager);
-        conAdapter = new FriendContactsAdapter();
+        conAdapter = new FriendContactsAdapter(this);
         rvContacts.setAdapter(conAdapter);
 
         LinearLayout ll = findViewById(R.id.llSearch);

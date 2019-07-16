@@ -12,14 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.activity.NewCalendarActivity;
+import com.cosin.shareagenda.dialog.DisplayAccountRequestDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import types.Account;
+
 public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAdapter.ViewHolder> {
     private List<String> contactList;
+    
 
-    public FriendContactsAdapter() {
+    public FriendContactsAdapter(Context context) {
         this.contactList = new ArrayList<>();
     }
     public FriendContactsAdapter(Context context, List<String> contactList){
@@ -47,9 +51,23 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
         return new ViewHolder(v);
     }
 
+    private FriendContactsAdapter getFriendContactsAdapter(){
+        return this;
+    }
+
     @Override
     public void onBindViewHolder(FriendContactsAdapter.ViewHolder holder, int position) {
         holder.tvContactName.setText(contactList.get(position));
+        holder.tvContactName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String entity = contactList.get(position);
+                String accountId = contactList.get(position);
+                new DisplayAccountRequestDialog(getFriendContactsAdapter(), accountId).show();
+            }
+        });
+
+
         holder.ivCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
