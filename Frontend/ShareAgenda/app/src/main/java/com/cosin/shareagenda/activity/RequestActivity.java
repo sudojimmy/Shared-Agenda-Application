@@ -1,18 +1,15 @@
 package com.cosin.shareagenda.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.access.net.NetLoader;
+import com.cosin.shareagenda.config.SystemConfig;
 import com.cosin.shareagenda.entity.UserEntity;
 import com.cosin.shareagenda.entity.net.TestResult;
 import com.cosin.shareagenda.util.AppHelper;
@@ -88,7 +85,7 @@ public class RequestActivity extends MainTitleActivity implements View.OnClickLi
                         .add("rid", "1")
                         .add("user", gson.toJson(test))
                         .build();
-                new NetLoader("test", requestBody)
+                new NetLoader(SystemConfig.SHARED_AGENDA_API_URL_TEST, "test", requestBody)
                         .PostRequest(new CallbackHandler(handler));
                 break;
         }

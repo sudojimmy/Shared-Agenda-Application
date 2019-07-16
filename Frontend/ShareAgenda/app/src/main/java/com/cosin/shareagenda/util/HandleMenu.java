@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.activity.ContactsActivity;
+import com.cosin.shareagenda.activity.ExploreActivity;
 import com.cosin.shareagenda.activity.GroupsActivity;
 import com.cosin.shareagenda.activity.NewCalendarActivity;
 import com.cosin.shareagenda.activity.ProfileActivity;
@@ -20,7 +21,7 @@ public class HandleMenu {
 //        put( R.id.nav_weekCalendar, WeeklyActivity.class);
         put( R.id.nav_groups, GroupsActivity.class);
         put( R.id.nav_friends, ContactsActivity.class);
-//        put( R.id.nav_publicEvents, ProfileActivity.class);
+        put( R.id.nav_publicEvents, ExploreActivity.class);
 //        put( R.id.nav_groupEvents, ProfileActivity.class);
 //        put( R.id.nav_events, ProfileActivity.class);
         put( R.id.nav_profile, ProfileActivity.class);

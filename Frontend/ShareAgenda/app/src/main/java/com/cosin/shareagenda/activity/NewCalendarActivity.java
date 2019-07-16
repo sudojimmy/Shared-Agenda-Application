@@ -19,12 +19,13 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
+import com.cosin.shareagenda.dialog.DeleteEventDialog;
 import com.cosin.shareagenda.dialog.DialogReceiver;
 import com.cosin.shareagenda.dialog.DisplayEventRequestDialog;
 import com.cosin.shareagenda.dialog.SendEventRequestDialog;
 import com.cosin.shareagenda.entity.DisplayableEvent;
-import com.cosin.shareagenda.model.ApiClient;
-import com.cosin.shareagenda.model.ApiErrorResponse;
+import com.cosin.shareagenda.api.ApiClient;
+import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.CalendarEventBiz;
 import com.google.gson.Gson;
@@ -203,46 +204,10 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         Event displayEvent = ((DisplayableEvent) event).getEvent();
         // delete event
-        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Are you sure?")
-                .setContentText("Won't be able to recover this action!")
-                .setConfirmText("Yes,delete it!")
-                .setCancelText("Cancel")
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        ApiClient.deleteEvent(displayEvent.getEventId(), new CallbackHandler(deleteEventHandler));
-                        alertDialog = sDialog;
-                    }
-                })
+        new DeleteEventDialog(this, SweetAlertDialog.WARNING_TYPE, mWeekView, displayEvent)
                 .show();
 
     }
-
-    Handler deleteEventHandler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(android.os.Message message) {
-            final Gson gson = new Gson();
-            switch (message.what) {
-                case SUCCESS:
-                    alertDialog
-                            .setTitleText("Deleted!")
-                            .setContentText("Your event has been deleted!")
-                            .setConfirmText("OK")
-                            .showCancelButton(false)
-                            .setConfirmClickListener(null)
-                            .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                    mWeekView.notifyDatasetChanged();
-                    break;
-                case HTTP_FAILURE:
-                    ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
-                    Toast.makeText(NewCalendarActivity.this, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    Toast.makeText(NewCalendarActivity.this, (String) message.obj, Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {

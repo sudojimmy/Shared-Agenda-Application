@@ -1,0 +1,32 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: Course
+description: University of Waterloo Course object
+type: object
+additionalProperties: false
+properties:
+    subject:
+        description: course subject
+        type: string
+    catalog_number:
+        description: course catalog number
+        type: string
+    title:
+        description: course title
+        type: string
+    section:
+        description: course section
+        type: string
+    campus:
+        description: course campus
+        type: string
+    classes:
+        type: array
+        items:
+            "$ref": UWClass.yaml
+required:
+    - subject
+    - catalog_number
+    - title
+    - section
+    - campus
+    - classes

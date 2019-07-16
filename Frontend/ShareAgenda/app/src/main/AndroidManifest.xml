@@ -15,23 +15,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <activity android:name=".activity.CreateEventActivity" />
-        <activity android:name=".activity.CreateGroupActivity" />
-        <activity android:name=".activity.GroupsActivity" />
-        <activity android:name=".activity.ContactsActivity" />
-        <activity android:name=".activity.WeeklyFriendActivity" />
-        <activity android:name=".activity.SearchFriendsActivity" />
-        <activity android:name=".activity.FriendMessageActivity" />
-        <activity android:name=".activity.SignUpActivity" />
         <activity
             android:name=".activity.CalendarActivity"
             android:launchMode="singleTask" />
+        <activity android:name=".activity.CreateEventActivity" />
+        <activity android:name=".activity.CreateGroupActivity" />
+        <activity android:name=".activity.ContactsActivity" />
+        <activity android:name=".activity.ExploreActivity" />
+        <activity android:name=".activity.FriendMessageActivity" />
         <activity android:name=".activity.GroupEventsActivity" />
-        <activity android:name=".activity.WeeklyActivity" />
-        <activity android:name=".activity.RequestActivity" />
+        <activity android:name=".activity.GroupsActivity" />
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.ProfileActivity" />
         <activity android:name=".activity.NewCalendarActivity" />
+        <activity android:name=".activity.SearchFriendsActivity" />
+        <activity android:name=".activity.SignUpActivity" />
+        <activity android:name=".activity.WeeklyActivity" />
+        <activity android:name=".activity.WeeklyFriendActivity" />
+        <activity android:name=".activity.ProfileActivity" />
+        <activity android:name=".activity.RequestActivity" />
+
         <activity android:name=".activity.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
