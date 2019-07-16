@@ -44,7 +44,13 @@ jsonSchema2Pojo {
           "${project.projectDir}/src/yaml/types/PermissionType.yaml",
           "${project.projectDir}/src/yaml/types/",
           "${project.projectDir}/src/yaml/requests/",
-          "${project.projectDir}/src/yaml/responses/"
+          "${project.projectDir}/src/yaml/responses/",
+          // school course plugins
+          "${project.projectDir}/src/yaml/uwaterloo/UWDate.yaml",
+          "${project.projectDir}/src/yaml/uwaterloo/UWLocation.yaml",
+          "${project.projectDir}/src/yaml/uwaterloo/UWMeta.yaml",
+          "${project.projectDir}/src/yaml/uwaterloo/UWImportantDate.yaml",
+          "${project.projectDir}/src/yaml/uwaterloo/"
   ])
 
   // Target directory for generated Java source files. The plugin will add this directory to the

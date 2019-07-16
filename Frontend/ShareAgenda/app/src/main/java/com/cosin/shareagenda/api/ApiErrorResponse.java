@@ -1,4 +1,4 @@
-package com.cosin.shareagenda.model;
+package com.cosin.shareagenda.api;
 
 public class ApiErrorResponse {
     private String timestamp;

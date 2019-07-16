@@ -1,7 +1,5 @@
 package com.cosin.shareagenda.access.net;
 
-import com.cosin.shareagenda.config.SystemConfig;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -9,21 +7,25 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 
 public class NetLoader {
-    private String accesssName;
+    private String url;
     private RequestBody requestBody;
     private String googleToken;
 
-    public NetLoader(String accessName) {
-        this.accesssName = SystemConfig.SHARED_AGENDA_API_URL + accessName;
+    public NetLoader(String url) {
+        this.url = url;
     }
 
-    public NetLoader(String accessName, RequestBody requestBody) {
-        this.accesssName = SystemConfig.SHARED_AGENDA_API_URL + accessName;
+    public NetLoader(String baseUrl, String accessName) {
+        this.url = baseUrl + accessName;
+    }
+
+    public NetLoader(String baseUrl, String accessName, RequestBody requestBody) {
+        this.url = baseUrl + accessName;
         this.requestBody = requestBody;
     }
 
-    public NetLoader(String accessName, RequestBody requestBody, String googleToken) {
-        this.accesssName = SystemConfig.SHARED_AGENDA_API_URL + accessName;
+    public NetLoader(String baseUrl, String accessName, RequestBody requestBody, String googleToken) {
+        this.url = baseUrl + accessName;
         this.requestBody = requestBody;
         this.googleToken = googleToken;
     }
@@ -34,7 +36,7 @@ public class NetLoader {
 
     public void PostRequest(Callback callback) {
         Request.Builder requestBuilder = new Request.Builder()
-                .url(accesssName)
+                .url(url)
                 .post(requestBody);
         if (googleToken != null) {
             requestBuilder.addHeader("google-token", googleToken);
@@ -48,7 +50,7 @@ public class NetLoader {
 
     public void GetRequest(Callback callback) {
         Request request = new Request.Builder()
-                .url(this.accesssName)
+                .url(url)
                 .build();
         OkHttpClient client = new OkHttpClient();
         Call call = client.newCall(request);

@@ -1,0 +1,20 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: UWDate
+description: University of Waterloo Date object
+type: object
+additionalProperties: false
+properties:
+    start_time:
+        type: string
+    end_time:
+        type: string
+    weekdays:
+        type: string
+    start_date:
+        type: string
+    end_date:
+        type: string
+required:
+    - start_time
+    - end_time
+    - weekdays

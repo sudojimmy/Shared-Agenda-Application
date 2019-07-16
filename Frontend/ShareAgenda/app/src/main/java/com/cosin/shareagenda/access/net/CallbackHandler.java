@@ -3,7 +3,7 @@ package com.cosin.shareagenda.access.net;
 import android.os.Handler;
 import android.os.Message;
 
-import com.cosin.shareagenda.model.ApiErrorResponse;
+import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.google.gson.Gson;
 
 import java.io.IOException;

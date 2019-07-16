@@ -1,0 +1,10 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: UWLocation
+description: University of Waterloo UWLocation object
+type: object
+additionalProperties: false
+properties:
+    building:
+        type: string
+    room:
+        type: string
