@@ -29,33 +29,32 @@ import types.GetFriendQueueResponse;
 import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
-public class DisplayAccountRequestDialog extends BaseDialog {
-    private Account account;
+public class DisplayAccountRequestDialog extends DisplayAccountBaseDialog {
+ //   private Account account;
     private DisplayAccountRequestDialog conAdapter;
-
     private FriendContactsAdapter friendContactsAdapter;
-    private int position;
+ //   private int position;
 
 
     public DisplayAccountRequestDialog(Context context,
                                        String accountId,
                                        int position,
                                        FriendContactsAdapter friendContactsAdapter) {
-        super(context);
+        super(context, accountId, position);
         ApiClient.getAccount(accountId, new CallbackHandler(handler));
 
         this.friendContactsAdapter = friendContactsAdapter;
-        this.position = position;
+//        this.position = position;
     }
 
-    @Override
-    protected void loadView() {
-        window.setContentView(R.layout.activity_friend_account_popup);
-    }
-
-    private DisplayAccountRequestDialog getDisplayAccountRequestDialog(){
-        return this;
-    }
+//    @Override
+//    protected void loadView() {
+//        window.setContentView(R.layout.activity_friend_account_popup);
+//    }
+//
+//    private DisplayAccountRequestDialog getDisplayAccountRequestDialog(){
+//        return this;
+//    }
 
 
     @Override
@@ -67,10 +66,10 @@ public class DisplayAccountRequestDialog extends BaseDialog {
                // delete the friend
                 new DeleteFriendDialog(
                         context,
-                        getDisplayAccountRequestDialog(),
+                        getDisplayAccountBaseDialog(),
                         SweetAlertDialog.WARNING_TYPE,
-                        account,
-                        position,
+                        DisplayAccountRequestDialog.super.getAccount(),
+                        DisplayAccountRequestDialog.super.getPosition(),
                         friendContactsAdapter)
                         .show();
 
@@ -83,66 +82,66 @@ public class DisplayAccountRequestDialog extends BaseDialog {
     }
 
 
-    private void updateView(){
-        ((TextView)findViewById(R.id.friendName)).setText(account.getNickname());
-        ((TextView)findViewById(R.id.profile_email)).setText(account.getAccountId());
-        ((TextView)findViewById(R.id.profile_description)).setText(account.getDescription());
-    }
-
-    @Override
-    protected Object dealwithRet() {
-        // no selected item in this dialog
-        return true;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-        updateView();
-    }
-
-    Handler handlerDeleteFriend = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(android.os.Message message) {
-            final Gson gson = new Gson();
-            switch (message.what) {
-                case SUCCESS:
-                    String body = (String) message.obj;
-//                    GetMessageQueueResponse resp = gson.fromJson(body, GetMessageQueueResponse.class);
-                    break;
-                case HTTP_FAILURE:
-                    ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
-//                    Toast.makeText(FriendMessageActivity.this, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-//                    Toast.makeText(FriendMessageActivity.this, (String) message.obj, Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
-
-    Handler handler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(android.os.Message message) {
-            final Gson gson = new Gson();
-            switch (message.what) {
-                case SUCCESS:
-                    String body = (String) message.obj;
-                    GetAccountResponse resp = gson.fromJson(body, GetAccountResponse.class);
-                    setAccount(new Account()
-                            .withAccountId(resp.getAccountId())
-                            .withCalendarId(resp.getCalendarId())
-                            .withFriendQueueId(resp.getFriendQueueId())
-                            .withGroupQueueId(resp.getGroupQueueId())
-                            .withMessageQueueId(resp.getMessageQueueId())
-                            .withNickname(resp.getNickname())
-                            .withDescription(resp.getDescription()));//setContactList(resp.getFriendList());
-                    break;
-                case HTTP_FAILURE:
-                    ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
-                    Toast.makeText(context, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    Toast.makeText(context, (String) message.obj, Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
+//    private void updateView(){
+//        ((TextView)findViewById(R.id.friendName)).setText(account.getNickname());
+//        ((TextView)findViewById(R.id.profile_email)).setText(account.getAccountId());
+//        ((TextView)findViewById(R.id.profile_description)).setText(account.getDescription());
+//    }
+//
+//    @Override
+//    protected Object dealwithRet() {
+//        // no selected item in this dialog
+//        return true;
+//    }
+//
+//    public void setAccount(Account account) {
+//        this.account = account;
+//        updateView();
+//    }
+//
+//    Handler handlerDeleteFriend = new Handler(Looper.getMainLooper()) {
+//        @Override
+//        public void handleMessage(android.os.Message message) {
+//            final Gson gson = new Gson();
+//            switch (message.what) {
+//                case SUCCESS:
+//                    String body = (String) message.obj;
+////                    GetMessageQueueResponse resp = gson.fromJson(body, GetMessageQueueResponse.class);
+//                    break;
+//                case HTTP_FAILURE:
+//                    ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
+////                    Toast.makeText(FriendMessageActivity.this, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+//                    break;
+//                default:
+////                    Toast.makeText(FriendMessageActivity.this, (String) message.obj, Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    };
+//
+//    Handler handler = new Handler(Looper.getMainLooper()) {
+//        @Override
+//        public void handleMessage(android.os.Message message) {
+//            final Gson gson = new Gson();
+//            switch (message.what) {
+//                case SUCCESS:
+//                    String body = (String) message.obj;
+//                    GetAccountResponse resp = gson.fromJson(body, GetAccountResponse.class);
+//                    setAccount(new Account()
+//                            .withAccountId(resp.getAccountId())
+//                            .withCalendarId(resp.getCalendarId())
+//                            .withFriendQueueId(resp.getFriendQueueId())
+//                            .withGroupQueueId(resp.getGroupQueueId())
+//                            .withMessageQueueId(resp.getMessageQueueId())
+//                            .withNickname(resp.getNickname())
+//                            .withDescription(resp.getDescription()));
+//                    break;
+//                case HTTP_FAILURE:
+//                    ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
+//                    Toast.makeText(context, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+//                    break;
+//                default:
+//                    Toast.makeText(context, (String) message.obj, Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    };
 }

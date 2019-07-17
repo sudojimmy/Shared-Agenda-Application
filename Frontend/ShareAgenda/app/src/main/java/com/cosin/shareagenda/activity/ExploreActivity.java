@@ -2,6 +2,7 @@ package com.cosin.shareagenda.activity;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -53,6 +54,13 @@ public class ExploreActivity extends MainTitleActivity {
         eventAdapter = new ExploreEventsAdapter(this);
         rvEvent.setAdapter(eventAdapter);
         searchBar = findViewById(R.id.search);
+        searchBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchBar.requestFocusFromTouch();
+                searchBar.onActionViewExpanded();
+            }
+        });
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {

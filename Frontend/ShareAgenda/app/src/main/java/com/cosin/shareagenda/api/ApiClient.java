@@ -59,8 +59,11 @@ public class ApiClient extends BaseApiClient {
         makePostRequest(CREATE_ACCOUNT, gson.toJson(createAccountRequest), callback);
     }
 
-    public static void exploreAccount(String keyword, Callback callback) {
-        ExploreAccountRequest request = new ExploreAccountRequest().withKeyword(keyword);
+    public static void exploreAccount(String callerId, String keyword, Callback callback) {
+        ExploreAccountRequest request =
+                new ExploreAccountRequest()
+                        .withCallerId(callerId)
+                        .withKeyword(keyword);
         makePostRequest(EXPLORE_ACCOUNT, gson.toJson(request), callback);
     }
 
