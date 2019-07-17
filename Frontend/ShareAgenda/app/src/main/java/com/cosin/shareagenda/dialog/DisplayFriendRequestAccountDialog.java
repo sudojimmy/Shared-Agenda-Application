@@ -3,6 +3,8 @@ package com.cosin.shareagenda.dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.cosin.shareagenda.R;
@@ -30,8 +32,9 @@ public class DisplayFriendRequestAccountDialog extends DisplayAccountBaseDialog 
     }
 
     @Override
-    protected void loadView(){
-        window.setContentView(R.layout.activity_friend_request_popup);
+    protected void initView() {
+        Button btn = findViewById(R.id.manage);
+        btn.setVisibility(View.GONE);
     }
 
     Handler handlerFriendRequest = new Handler(Looper.getMainLooper()) {
