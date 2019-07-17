@@ -20,7 +20,6 @@ import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class DisplayAccountBaseDialog extends BaseDialog {
     private Account account;
-    //private FriendContactsAdapter friendContactsAdapter;
     private int position;
 
 
@@ -30,12 +29,11 @@ public class DisplayAccountBaseDialog extends BaseDialog {
         super(context);
         ApiClient.getAccount(accountId, new CallbackHandler(handler));
 
-        //this.friendContactsAdapter = friendContactsAdapter;
         this.position = position;
     }
 
     @Override
-    protected void loadView() {
+    protected void loadView(){
         window.setContentView(R.layout.activity_friend_account_popup);
     }
 

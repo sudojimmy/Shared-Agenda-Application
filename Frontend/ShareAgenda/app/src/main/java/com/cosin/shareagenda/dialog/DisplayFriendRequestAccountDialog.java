@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.api.ApiClient;
 import com.cosin.shareagenda.api.ApiErrorResponse;
@@ -28,6 +29,11 @@ public class DisplayFriendRequestAccountDialog extends DisplayAccountBaseDialog 
 
     }
 
+    @Override
+    protected void loadView(){
+        window.setContentView(R.layout.activity_friend_request_popup);
+    }
+
     Handler handlerFriendRequest = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(android.os.Message message) {
@@ -44,7 +50,6 @@ public class DisplayFriendRequestAccountDialog extends DisplayAccountBaseDialog 
                             .withMessageQueueId(resp.getMessageQueueId())
                             .withNickname(resp.getNickname())
                             .withDescription(resp.getDescription()));
-                    dismiss();
                     break;
                 case HTTP_FAILURE:
                     ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
