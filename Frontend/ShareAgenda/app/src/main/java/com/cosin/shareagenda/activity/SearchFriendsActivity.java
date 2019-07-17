@@ -85,7 +85,6 @@ public class SearchFriendsActivity extends MainTitleActivity {
             switch (message.what) {
                 case SUCCESS:
                     String body = (String) message.obj;
-                    Toast.makeText(SearchFriendsActivity.this, body, Toast.LENGTH_SHORT).show();
                     ExploreAccountResponse resp = gson.fromJson(body, ExploreAccountResponse.class);
                     friends = new ArrayList<>();
                     friends.addAll(resp.getAccountList());

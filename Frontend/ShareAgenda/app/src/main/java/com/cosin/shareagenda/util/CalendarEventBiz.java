@@ -130,7 +130,7 @@ public class CalendarEventBiz {
     }
 
     public static int getCalendarHour(Calendar calendar) {
-        return calendar.get(Calendar.HOUR);
+        return calendar.get(Calendar.HOUR_OF_DAY);
     }
 
     public static int getCalendarMinute(Calendar calendar) {
