@@ -14,10 +14,8 @@ import com.cosin.shareagenda.api.ApiClient;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class DisplayAddAccountDialog extends DisplayAccountBaseDialog {
-    //   private Account account;
     private DisplayAddAccountDialog conAdapter;
     private SearchFriendsAdapter searchFriendAdapter;
-    //   private int position;
 
 
     public DisplayAddAccountDialog(Context context,
@@ -29,7 +27,6 @@ public class DisplayAddAccountDialog extends DisplayAccountBaseDialog {
 
         this.searchFriendAdapter = searchFriendAdapter;
 
-//        this.position = position;
     }
 
 

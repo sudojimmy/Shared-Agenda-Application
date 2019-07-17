@@ -3,7 +3,8 @@ package com.cosin.shareagenda.dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.cosin.shareagenda.R;
@@ -18,61 +19,25 @@ import types.GetAccountResponse;
 import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
-public class DisplayAccountBaseDialog extends BaseDialog {
-    private Account account;
-    private int position;
+public class DisplayFriendRequestAccountDialog extends DisplayAccountBaseDialog {
+    private DisplayFriendRequestAccountDialog conAdapter;
 
 
-    public DisplayAccountBaseDialog(Context context,
-                                       String accountId,
-                                       int position) {
-        super(context);
-        ApiClient.getAccount(accountId, new CallbackHandler(handler));
+    public DisplayFriendRequestAccountDialog(Context context,
+                                      String accountId,
+                                      int position) {
+        super(context, accountId, position);
+        ApiClient.getAccount(accountId, new CallbackHandler(handlerFriendRequest));
 
-        this.position = position;
     }
-
-    @Override
-    protected void loadView(){
-        window.setContentView(R.layout.activity_friend_account_popup);
-    }
-
-    protected DisplayAccountBaseDialog getDisplayAccountBaseDialog(){
-        return this;
-    }
-
 
     @Override
     protected void initView() {
-        // implemented by subclass
+        Button btn = findViewById(R.id.manage);
+        btn.setVisibility(View.GONE);
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    private void updateView(){
-        ((TextView)findViewById(R.id.friendName)).setText(account.getNickname());
-        ((TextView)findViewById(R.id.profile_email)).setText(account.getAccountId());
-        ((TextView)findViewById(R.id.profile_description)).setText(account.getDescription());
-    }
-
-    @Override
-    protected Object dealwithRet() {
-        // no selected item in this dialog
-        return true;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-        updateView();
-    }
-
-    Handler handler = new Handler(Looper.getMainLooper()) {
+    Handler handlerFriendRequest = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(android.os.Message message) {
             final Gson gson = new Gson();
@@ -98,4 +63,5 @@ public class DisplayAccountBaseDialog extends BaseDialog {
             }
         }
     };
+
 }
