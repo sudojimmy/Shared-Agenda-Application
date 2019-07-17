@@ -26,7 +26,9 @@
         <activity android:name=".activity.GroupEventsActivity" />
         <activity android:name=".activity.GroupsActivity" />
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.NewCalendarActivity" />
+        <activity android:name=".activity.NewCalendarActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="sensor" />
         <activity android:name=".activity.SearchFriendsActivity" />
         <activity android:name=".activity.SignUpActivity" />
         <activity android:name=".activity.WeeklyActivity" />
