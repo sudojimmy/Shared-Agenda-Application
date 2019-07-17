@@ -69,9 +69,9 @@ public class GetOccupiedTimeController extends BaseController{
 
             // merge 2 daily eventlist of a1 & a2 to one eventlist
             ArrayList<Event> dailyEventList1
-                    = EventListUtils.getEventListFromCalendarWithdate(eventList1, date);
+                    = EventListUtils.getEventListFromCalendarWithDate(eventList1, date);
             ArrayList<Event> dailyEventList2
-                    = EventListUtils.getEventListFromCalendarWithdate(eventList2, date);
+                    = EventListUtils.getEventListFromCalendarWithDate(eventList2, date);
 
             List<Event> eventListbeforeMerge =
                     Stream.concat(dailyEventList1.stream(), dailyEventList2.stream())

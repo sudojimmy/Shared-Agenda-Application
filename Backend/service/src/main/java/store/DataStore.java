@@ -138,11 +138,17 @@ public class DataStore {
         return collection.updateOne(filter, query).getMatchedCount() == 1;
     }
 
-
     public boolean delete(Bson filter, String collectionName) {
         MongoCollection<Document> collection = database.getCollection(collectionName);
 
         DeleteResult dr = collection.deleteOne(filter);
         return dr.getDeletedCount() == 1;
+    }
+
+    public boolean deleteAll(Bson filter, String collectionName) {
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+
+        DeleteResult dr = collection.deleteMany(filter);
+        return dr.getDeletedCount() > 0;
     }
 }
