@@ -3,6 +3,7 @@ package com.cosin.shareagenda.api;
 public final class ApiEndpoint {
     public static final String CREATE_ACCOUNT = "createAccount";
     public static final String CREATE_EVENT = "createEvent";
+    public static final String CREATE_RELATED_EVENTS = "createRelatedEvents";
     public static final String CREATE_GROUP = "createGroup";
     public static final String DELETE_EVENT = "deleteEvent";
     public static final String EXPLORE_ACCOUNT = "exploreAccount";

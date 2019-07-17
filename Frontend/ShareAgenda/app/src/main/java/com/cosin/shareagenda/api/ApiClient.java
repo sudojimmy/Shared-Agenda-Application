@@ -5,12 +5,14 @@ import com.cosin.shareagenda.config.SystemConfig;
 import com.cosin.shareagenda.model.Model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Callback;
 import okhttp3.RequestBody;
 import types.CreateAccountRequest;
 import types.CreateEventRequest;
 import types.CreateGroupRequest;
+import types.CreateRelatedEventsRequest;
 import types.DeleteEventRequest;
 import types.DeleteFriendRequest;
 import types.Event;
@@ -30,6 +32,7 @@ import types.ReplyStatus;
 import static com.cosin.shareagenda.api.ApiEndpoint.CREATE_ACCOUNT;
 import static com.cosin.shareagenda.api.ApiEndpoint.CREATE_EVENT;
 import static com.cosin.shareagenda.api.ApiEndpoint.CREATE_GROUP;
+import static com.cosin.shareagenda.api.ApiEndpoint.CREATE_RELATED_EVENTS;
 import static com.cosin.shareagenda.api.ApiEndpoint.DELETE_EVENT;
 import static com.cosin.shareagenda.api.ApiEndpoint.DELETE_FRIEND;
 import static com.cosin.shareagenda.api.ApiEndpoint.EXPLORE_ACCOUNT;
@@ -103,6 +106,14 @@ public class ApiClient extends BaseApiClient {
                 .withCallerId(getAccountId())
                 .withEvent(event);
         makePostRequest(CREATE_EVENT, gson.toJson(createEventRequest), callback);
+    }
+
+
+    public static void createRelatedEvents(List<Event> events, Callback callback) {
+        CreateRelatedEventsRequest createEventRequest = new CreateRelatedEventsRequest()
+                .withCallerId(getAccountId())
+                .withEvents(events);
+        makePostRequest(CREATE_RELATED_EVENTS, gson.toJson(createEventRequest), callback);
     }
 
     public static void deleteEvent(String eventId, Callback callback) {

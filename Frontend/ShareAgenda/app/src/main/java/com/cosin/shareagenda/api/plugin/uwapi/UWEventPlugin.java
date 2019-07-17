@@ -43,9 +43,7 @@ public class UWEventPlugin {
     public static void addClass(UWCourse course) {
         ArrayList<Event> events = UWEventReader.courseToEvents(course,
                 Model.model.getCurrentTermStart(), Model.model.getCurrentTermEnd());
-        for (Event e : events) {
-            ApiClient.createEvent(e, new CallbackHandler(handler));
-        }
+        ApiClient.createRelatedEvents(events, new CallbackHandler(handler));
     }
 
     private static Handler handler = new Handler(Looper.getMainLooper()) {
