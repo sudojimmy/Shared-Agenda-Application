@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/light_goldenrod_yellow"
     android:layout_gravity="center"
     >
@@ -219,6 +219,7 @@
 
     <Button
         android:id="@+id/joinButton"
+        android:layout_marginBottom="10sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="JOIN US"

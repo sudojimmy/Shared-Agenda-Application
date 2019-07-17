@@ -209,8 +209,6 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
                 event.getRepeat(),
                 event.getRepeat().getStartDate(),
                 event.getRepeat().getEndDate()).show();
-
-        Toast.makeText(this, "Clicked " + wevent.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -261,7 +259,6 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     public void onEmptyViewClicked(Calendar date) {
-        Toast.makeText(this, "Empty view" + " clicked: " + getEventTitle(date), Toast.LENGTH_SHORT).show();
     }
 
     @Override

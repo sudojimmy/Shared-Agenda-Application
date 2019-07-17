@@ -3,10 +3,9 @@ package com.cosin.shareagenda.activity;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +24,7 @@ import types.ExploreAccountResponse;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
+import static com.cosin.shareagenda.model.Model.model;
 
 public class SearchFriendsActivity extends MainTitleActivity {
     private List<Account> friends;
@@ -50,19 +50,30 @@ public class SearchFriendsActivity extends MainTitleActivity {
         super.initView();
 
         // recycleview
-        EditText etSearch = findViewById(R.id.edit_search_friend);
         RecyclerView recyclerView = findViewById(R.id.rvFriendsAdd);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
-        searchFriendsAdapter = new SearchFriendsAdapter();
+        searchFriendsAdapter = new SearchFriendsAdapter(this);
         recyclerView.setAdapter(searchFriendsAdapter);
 
-        ImageButton imgBtn = findViewById(R.id.imgBtnSearch);
-        imgBtn.setOnClickListener(new View.OnClickListener() {
+        SearchView search = findViewById(R.id.search);
+        search.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                /*fetch edit*/
-                ApiClient.exploreAccount(etSearch.getText().toString(), new CallbackHandler(handler));
+            public void onClick(View view) {
+                search.requestFocusFromTouch();
+                search.onActionViewExpanded();
+            }
+        });
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                ApiClient.exploreAccount(model.getUser().getAccountId(), s, new CallbackHandler(handler));
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
             }
         });
     }
@@ -74,7 +85,6 @@ public class SearchFriendsActivity extends MainTitleActivity {
             switch (message.what) {
                 case SUCCESS:
                     String body = (String) message.obj;
-                    Toast.makeText(SearchFriendsActivity.this, body, Toast.LENGTH_SHORT).show();
                     ExploreAccountResponse resp = gson.fromJson(body, ExploreAccountResponse.class);
                     friends = new ArrayList<>();
                     friends.addAll(resp.getAccountList());
