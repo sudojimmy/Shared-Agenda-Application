@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
-import com.alamkanak.weekview.WeekView;
 import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.adapter.SearchFriendsAdapter;
 import com.cosin.shareagenda.api.ApiClient;
