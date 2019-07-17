@@ -112,6 +112,11 @@ public class ExploreAccountController extends BaseController {
         ArrayList<String> friendList = FriendQueueUtils.getFriendList(friendQueueId);
 
 
+
+        // filter the caller
+        friendList.add(callerAccount.getAccountId());
+
+
         for(String accountId: withFriendAccountIdList){
             if (!friendList.contains(accountId)) {
                 Account account = AccountUtils.getAccount(accountId, ApiConstant.ACCOUNT_ACCOUNT_ID);
