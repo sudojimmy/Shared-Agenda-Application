@@ -3,6 +3,7 @@ package com.cosin.shareagenda.activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,13 +20,13 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
+import com.cosin.shareagenda.api.ApiClient;
+import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.cosin.shareagenda.dialog.DeleteEventDialog;
 import com.cosin.shareagenda.dialog.DialogReceiver;
 import com.cosin.shareagenda.dialog.DisplayEventRequestDialog;
 import com.cosin.shareagenda.dialog.SendEventRequestDialog;
 import com.cosin.shareagenda.entity.DisplayableEvent;
-import com.cosin.shareagenda.api.ApiClient;
-import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.CalendarEventBiz;
 import com.google.gson.Gson;
@@ -100,6 +101,18 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
         mWeekView.setDropListener(this);
 
         setupDateTimeInterpreter(false);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration config) {
+        super.onConfigurationChanged(config);
+        // Check for the rotation
+        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mWeekView.setNumberOfVisibleDays(5);
+        } else if (config.orientation == Configuration.ORIENTATION_PORTRAIT){
+            mWeekView.setNumberOfVisibleDays(1);
+        }
+        mWeekView.notifyDatasetChanged();
     }
 
     @Override
