@@ -11,14 +11,12 @@ import com.cosin.shareagenda.api.ApiClient;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class DisplayAccountRequestDialog extends DisplayAccountBaseDialog {
- //   private Account account;
-    private DisplayAccountRequestDialog conAdapter;
+public class DisplayFriendAccountDialog extends DisplayAccountBaseDialog {
+    private DisplayFriendAccountDialog conAdapter;
     private FriendContactsAdapter friendContactsAdapter;
- //   private int position;
 
 
-    public DisplayAccountRequestDialog(Context context,
+    public DisplayFriendAccountDialog(Context context,
                                        String accountId,
                                        int position,
                                        FriendContactsAdapter friendContactsAdapter) {
@@ -26,7 +24,6 @@ public class DisplayAccountRequestDialog extends DisplayAccountBaseDialog {
         ApiClient.getAccount(accountId, new CallbackHandler(handler));
 
         this.friendContactsAdapter = friendContactsAdapter;
-//        this.position = position;
     }
 
 
@@ -41,14 +38,10 @@ public class DisplayAccountRequestDialog extends DisplayAccountBaseDialog {
                         context,
                         getDisplayAccountBaseDialog(),
                         SweetAlertDialog.WARNING_TYPE,
-                        DisplayAccountRequestDialog.super.getAccount(),
-                        DisplayAccountRequestDialog.super.getPosition(),
+                        DisplayFriendAccountDialog.super.getAccount(),
+                        DisplayFriendAccountDialog.super.getPosition(),
                         friendContactsAdapter)
                         .show();
-
-                // todo
-                //ApiClient.deleteFriend(account.getAccountId(), new CallbackHandler(handlerDeleteFriend));
-
             }
         });
 
