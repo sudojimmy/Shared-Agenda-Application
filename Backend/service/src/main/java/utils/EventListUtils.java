@@ -18,15 +18,29 @@ import java.util.stream.Collectors;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 import static controller.BaseController.dataStore;
-import static javax.swing.UIManager.put;
-import static utils.GroupUtils.checkGroupMember;
 
 public class EventListUtils {
 
     public static String createEventToDatabase(final Event event) {
-        event.setEventId(new ObjectId().toString());
-        dataStore.insertToCollection(event, DataStore.COLLECTION_EVENTS);
+        createEventToDatabase(event, new ObjectId().toString());
         return event.getEventId();
+    }
+
+    private static void createEventToDatabase(final Event event, final String eventId) {
+        event.setEventId(eventId);
+        dataStore.insertToCollection(eventId, DataStore.COLLECTION_EVENTS);
+    }
+
+    public static String createRelatedEventsToDatabase(final List<Event> events) {
+        String eventId = null;
+        for (Event e : events) {
+            if (eventId == null) {
+                eventId = createEventToDatabase(e);
+            } else {
+                createEventToDatabase(e, eventId);
+            }
+        }
+        return eventId;
     }
 
     public static boolean updateEventInDatabase(final Event event) {
@@ -61,7 +75,6 @@ public class EventListUtils {
     }
 
     public static ArrayList<Event> getAllEventList() {
-
         return new ArrayList<>(dataStore.findAllCollection(DataStore.COLLECTION_EVENTS));
     }
 
@@ -83,9 +96,6 @@ public class EventListUtils {
     }
 
     private static boolean happened(final Event event, final String date) {
-
-
-
         try {
             Repeat repeat = event.getRepeat();
             EventRepeat eventRepeat = repeat.getType();
@@ -147,7 +157,6 @@ public class EventListUtils {
         return (ArrayList<Event>) eventListRt;
     }
 
-
     private static Event modifiedEvent(Event event, String date){
         Repeat newrepeat = new Repeat()
                 .withEndDate(date)
@@ -171,31 +180,25 @@ public class EventListUtils {
 
     }
 
-    private static Event modifiedEventwithRepead(Event event, String date){
+    private static Event modifiedEventWithRepeat(Event event, String date){
         Repeat newrepeat = new Repeat()
                 .withEndDate(date)
                 .withStartDate(date)
                 .withType(event.getRepeat().getType());
 
-        Event newEvent = new Event()
+        return new Event()
                 .withStartTime(event.getStartTime())
                 .withEndTime(event.getEndTime())
                 .withRepeat(newrepeat);
-
-        return newEvent;
-
     }
 
-
-
-    public static ArrayList<Event> getEventListFromCalendarWithdate(final ArrayList<Event> eventList,
-                                                                         final String date) {
-
+    public static ArrayList<Event> getEventListFromCalendarWithDate(final ArrayList<Event> eventList,
+                                                                    final String date) {
         ArrayList<Event> eventListRt = new ArrayList<>();
 
         for (Event event : eventList) {
             if (EventListUtils.happened(event, date)) {
-                eventListRt.add(modifiedEventwithRepead(event, date));
+                eventListRt.add(modifiedEventWithRepeat(event, date));
             }
         }
 
@@ -252,7 +255,7 @@ public class EventListUtils {
 
     public static boolean deleteEvent(final String eventId) {
         Bson filter = Filters.eq(ApiConstant.EVENT_EVENT_ID, eventId);
-        return dataStore.delete(filter, DataStore.COLLECTION_EVENTS);
+        return dataStore.deleteAll(filter, DataStore.COLLECTION_EVENTS);
     }
 
     public static void addEventIdToCalendar(final String eventId, final String calendarId) {
