@@ -28,7 +28,7 @@ public class EventListUtils {
 
     private static void createEventToDatabase(final Event event, final String eventId) {
         event.setEventId(eventId);
-        dataStore.insertToCollection(eventId, DataStore.COLLECTION_EVENTS);
+        dataStore.insertToCollection(event, DataStore.COLLECTION_EVENTS);
     }
 
     public static String createRelatedEventsToDatabase(final List<Event> events) {
