@@ -60,6 +60,7 @@ public class GroupContactsAdapter extends RecyclerView.Adapter<GroupContactsAdap
                 Group entity = contactList.get(position);
                 Intent intent = new Intent(v.getContext(), GroupMembersActivity.class);
                 intent.putExtra(GroupMembersActivity.GROUP_ID, entity.getGroupId());
+                intent.putExtra(GroupMembersActivity.GROUP_NAME, entity.getName());
                 Model.model.setCurrentGroup(entity);
                 v.getContext().startActivity(intent);
             }

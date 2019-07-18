@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,8 @@ import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.api.ApiClient;
 import com.cosin.shareagenda.api.ApiErrorResponse;
+import com.cosin.shareagenda.dialog.DisplayAddAccountDialog;
+import com.cosin.shareagenda.dialog.DisplayFriendAccountDialog;
 import com.cosin.shareagenda.dialog.DisplayFriendRequestAccountDialog;
 import com.cosin.shareagenda.model.Model;
 import com.google.gson.Gson;
@@ -29,16 +32,14 @@ import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.ViewHolder> {
-    private List<Account> memberList;
+    private List<Account> memberList = new ArrayList<>();
     private List<String> myFriendList;
     private Context context;
 
     public GroupListAdapter(Context context) {
         this.context = context;
-        memberList = new ArrayList<>();
 
-        ApiClient.getFriendQueue(Model.model.getUser().getAccountId()
-                , new CallbackHandler(handler));
+        updateFriendList();
     }
 
 //    public GroupListAdapter(List<Account> memberList, Context context) {
@@ -51,21 +52,26 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         notifyDataSetChanged();
     }
 
-    public void setMyFriendList(List<String> myFriendList) {
+    private void updateFriendList(){
+        ApiClient.getFriendQueue(Model.model.getUser().getAccountId(), new CallbackHandler(handler));
+    }
+
+    private void setMyFriendList(List<String> myFriendList) {
         this.myFriendList = myFriendList;
     }
 
-
-    // todo
-
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView viewName;
-        TextView viewDescription;
+        TextView nameTextView;
+        TextView description;
+        TextView selfIdentity;
+        RelativeLayout relativeLayout;
 
         public ViewHolder(View view) {
             super(view);
-            viewName = view.findViewById(R.id.nameTextView);
-            viewDescription = view.findViewById(R.id.description);
+            nameTextView = view.findViewById(R.id.nameTextView);
+            description = view.findViewById(R.id.description);
+            selfIdentity = view.findViewById(R.id.you);
+            relativeLayout = view.findViewById(R.id.group_list_row_id);
         }
     }
 
@@ -73,7 +79,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         return context;
     }
 
-    private GroupListAdapter getSearchFriendAdapter(){
+    private GroupListAdapter getGroupListAdapter(){
         return this;
     }
 
@@ -82,11 +88,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.grouplist_row, parent, false);
 
-        final GroupListAdapter.ViewHolder viewHolder =
-                new GroupListAdapter.ViewHolder(view);
-
-        return viewHolder;
-        // TODO different from groupContactsAdapter
+        return new ViewHolder(view);
     }
 
 //    public void removeElementFromContactList(int position){
@@ -97,56 +99,64 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
 //    }
 
     @Override
-    public void onBindViewHolder(GroupListAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(GroupListAdapter.ViewHolder holder, int position) {
         Account memberAccount = memberList.get(position);
-        viewHolder.viewName.setText(memberAccount.getNickname());
+        String memberAccountId = memberAccount.getAccountId();
+        holder.nameTextView.setText(memberAccount.getNickname());
 
-        viewHolder.viewName.setOnClickListener(new View.OnClickListener() {
+        if (!memberAccountId.equals(Model.model.getUser().getAccountId())) {
+            holder.selfIdentity.setText("");
+        }
+
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // show the group member profile
-                String memberAccountId = memberAccount.getAccountId();
-                if (myFriendList.contains(memberAccountId)) {
+                if (memberAccountId.equals(Model.model.getUser().getAccountId())) {
+                    // oneself
+                    DisplayFriendRequestAccountDialog displayFriendRequestAccountDialog =
+                            new DisplayFriendRequestAccountDialog(
+                                    getContext(),
+                                    memberAccountId,
+                                    position);
+                    displayFriendRequestAccountDialog.show();
+                } else if (myFriendList.contains(memberAccountId)) {
                     // has been friend
                     // may delete him/her
 
-                    //TODO just test purpose WRONG!!!
-                    DisplayFriendRequestAccountDialog displayFriendRequestAccountDialog =
-                            new DisplayFriendRequestAccountDialog(
+                    FriendContactsAdapter friendContactsAdapter = null;
+
+                    DisplayFriendAccountDialog displayAccountRequestDialog =
+                            new DisplayFriendAccountDialog(
                                     getContext(),
                                     memberAccountId,
-                                    position);
-                    displayFriendRequestAccountDialog.show();
-
-//                    DisplayFriendAccountDialog displayAccountRequestDialog =
-//                            new DisplayFriendAccountDialog(
-//                                    getContext(),
-//                                    memberAccountId,
-//                                    position,
-//                                    getG);
-//                    displayAccountRequestDialog.show();
+                                    position,
+                                    friendContactsAdapter);
+                    displayAccountRequestDialog.show();
 
                 } else {
                     // not friend && may want to add
-                    DisplayFriendRequestAccountDialog displayFriendRequestAccountDialog =
-                            new DisplayFriendRequestAccountDialog(
-                                    getContext(),
-                                    memberAccountId,
-                                    position);
-                    displayFriendRequestAccountDialog.show();
+                    SearchFriendsAdapter searchFriendsAdapter = null;
+                    String candidateId = memberList.get(position).getAccountId();
+                    new DisplayAddAccountDialog(
+                            getContext(),
+                            candidateId,
+                            position,
+                            searchFriendsAdapter).show();
                 }
 
 
-//                String candidateId = memberList.get(position).getAccountId();
-//                new DisplayAddAccountDialog(
-//                        getContext(),
-//                        candidateId,
-//                        position,
-//                        getSearchFriendAdapter() ).show();
+
+
+
+
+
+                notifyDataSetChanged();
+                updateFriendList();
             }
         });
 
-        viewHolder.viewDescription.setText(memberAccount.getDescription());
+        holder.description.setText(memberAccount.getDescription());
 
 
     }

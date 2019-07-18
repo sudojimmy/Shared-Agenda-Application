@@ -13,6 +13,7 @@ public final class ApiEndpoint {
     public static final String GET_FRIEND_QUEUE = "getFriendQueue";
     public static final String GET_GROUP_EVENT_MONTHLY = "getGroupEventMonthly";
     public static final String GET_GROUP_LIST = "getGroupList";
+    public static final String GET_GROUP = "getGroup";
     public static final String GET_MESSAGE_QUEUE = "getMessageQueue";
     public static final String INVITE_FRIEND = "inviteFriend";
     public static final String DELETE_FRIEND = "deleteFriend";

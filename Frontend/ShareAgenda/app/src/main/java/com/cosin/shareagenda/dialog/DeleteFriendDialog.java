@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
-import com.alamkanak.weekview.WeekView;
 import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.adapter.FriendContactsAdapter;
 import com.cosin.shareagenda.api.ApiClient;
@@ -76,7 +75,10 @@ public class DeleteFriendDialog extends SweetAlertDialog {
                             .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
 
                     displayAccountRequestDialog.dismiss();
-                    friendContactsAdapter.removeElementFromContactList(position);
+
+                    if (friendContactsAdapter != null) {
+                        friendContactsAdapter.removeElementFromContactList(position);
+                    }
                     break;
                 case HTTP_FAILURE:
                     ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);

@@ -27,7 +27,6 @@ public class GroupsActivity extends MainTitleActivity {
         super.initView();
 
         RecyclerView rvContacts = findViewById(R.id.rvGroups);
-        // TODO Thursday debug start here
         rvContacts.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvContacts.setLayoutManager(layoutManager);
@@ -55,13 +54,15 @@ public class GroupsActivity extends MainTitleActivity {
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                loadData();
+                loadGroupList();
             }
         }, 1000); // give backend some delay to update data
     }
 
     @Override
-    protected void loadData() {
+    protected void loadData() {}
+
+    protected void loadGroupList() {
         ApiClient.getGroupList(new CallbackHandler(getGroupHandler));
     }
 

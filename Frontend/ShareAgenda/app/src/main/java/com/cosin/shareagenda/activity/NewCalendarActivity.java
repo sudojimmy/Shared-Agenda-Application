@@ -287,6 +287,7 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     protected String titleName() {
+
         return calendarTitle;
     }
 

@@ -20,19 +20,22 @@ public class GroupMembersActivity extends MainTitleActivity {
 
     // intent extra parameter name
     public static final String GROUP_ID = "GROUP_ID";
+    public static final String GROUP_NAME = "GROUP_NAME";
 
     private GroupListAdapter conAdapter;
     private String groupId;
+    private String groupName;
 
     private void loadIntentExtra() {
         this.groupId = getIntent().getStringExtra(GROUP_ID);
+        this.groupName = getIntent().getStringExtra(GROUP_NAME);
     }
 
     @Override
     protected void initView() {
-        super.initView();
-
         loadIntentExtra();
+
+        super.initView();
 
         // set each member layout row
         RecyclerView rvContacts = findViewById(R.id.group_list_view);
@@ -46,19 +49,19 @@ public class GroupMembersActivity extends MainTitleActivity {
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_groups;
+        return R.layout.activity_group_popup;
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        new Handler().postDelayed(new Runnable() {
-//            public void run() {
-//                loadData();
-//            }
-//        }, 1000); // give backend some delay to update data
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                loadData();
+            }
+        }, 1000); // give backend some delay to update data
+    }
 
     @Override
     protected void loadData() {
@@ -67,7 +70,11 @@ public class GroupMembersActivity extends MainTitleActivity {
 
     @Override
     protected String titleName() {
-        return "Groups";
+        return this.groupName;
+    }
+
+    private GroupMembersActivity getGroupMemberActivity(){
+        return this;
     }
 
     Handler getGroupMemberHandler = new Handler(Looper.getMainLooper()) {
@@ -78,7 +85,6 @@ public class GroupMembersActivity extends MainTitleActivity {
                 case SUCCESS:
                     String body = (String) message.obj;
                     GetGroupResponse resp = gson.fromJson(body, GetGroupResponse.class);
-                    resp.getMembers();  //TODO
                     conAdapter.setMemberList(resp.getMembers());
                     break;
             }

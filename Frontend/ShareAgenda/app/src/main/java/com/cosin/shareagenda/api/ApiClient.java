@@ -41,6 +41,7 @@ import static com.cosin.shareagenda.api.ApiEndpoint.EXPLORE_EVENT;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_ACCOUNT;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_EVENT_MONTHLY;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_FRIEND_QUEUE;
+import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_EVENT_MONTHLY;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_LIST;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_MESSAGE_QUEUE;
@@ -80,7 +81,7 @@ public class ApiClient extends BaseApiClient {
     public static void getGroup(String groupId, Callback callback) {
         GetGroupRequest request = new GetGroupRequest()
                 .withGroupId(groupId);
-        makePostRequest(GET_GROUP_LIST, gson.toJson(request), callback);
+        makePostRequest(GET_GROUP, gson.toJson(request), callback);
     }
 
     public static void createGroup(String name, String description,
