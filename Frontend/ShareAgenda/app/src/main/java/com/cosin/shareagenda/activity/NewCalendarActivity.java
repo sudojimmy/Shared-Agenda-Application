@@ -29,6 +29,7 @@ import com.cosin.shareagenda.dialog.SendEventRequestDialog;
 import com.cosin.shareagenda.entity.DisplayableEvent;
 import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.CalendarEventBiz;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -68,7 +69,8 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
     private String selectedDate;
     private String selectedTime;
 
-    private SweetAlertDialog alertDialog;
+    private boolean mergeEvent = false;
+    private FloatingActionButton fab;
 
     private void loadIntentExtra() {
         calendarTargetId = getIntent().getStringExtra(CALENDAR_TARGET_ID);
@@ -101,6 +103,13 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
         mWeekView.setDropListener(this);
 
         setupDateTimeInterpreter(false);
+
+        fab = findViewById(R.id.fab);
+        if (calendarType == null || calendarType.equals(GROUP_CALENDAR)) {
+            fab.hide();
+        } else {
+            fab.show();
+        }
     }
 
     @Override
@@ -127,7 +136,11 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
         } else if (calendarType.equals(GROUP_CALENDAR)) {
             ApiClient.getGroupEventMonthly(calendarTargetId, currentMonth, currentYear, new CallbackHandler(getEventHandler));
         } else if (calendarType.equals(FRIEND_CALENDAR)) {
-            ApiClient.getEventMonthly(calendarTargetId, currentMonth, currentYear, new CallbackHandler(getEventHandler));
+            if (mergeEvent) {
+                ApiClient.getOccupiedTime(calendarTargetId, currentMonth, currentYear, new CallbackHandler(getEventHandler));
+            } else {
+                ApiClient.getEventMonthly(calendarTargetId, currentMonth, currentYear, new CallbackHandler(getEventHandler));
+            }
         }
     }
 
@@ -184,17 +197,14 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
         });
     }
 
-    protected String getEventTitle(Calendar time) {
-        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
-    }
-
     @Override
     public void onEventClick(WeekViewEvent wevent, RectF eventRect) {
+        if (wevent.getName() == null) { // private event or occupied time
+            return;
+        }
         // display
         DisplayableEvent displayableEvent = (DisplayableEvent)wevent;
         Event event = displayableEvent.getEvent();
-
-        event.getPermission().getType().toString();
 
         new DisplayEventRequestDialog(
                 this,
@@ -225,6 +235,19 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
         DatePickerFragment newFragment = new DatePickerFragment();
         newFragment.withWeekView(mWeekView);
         newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void occupiedTime(View view) {
+        mergeEvent = !mergeEvent;
+        if (mergeEvent) {
+            // if current is mergeEvent, then button should be shown as split to hint next touch event
+            fab.setImageResource(R.drawable.ic_call_split_black_24dp);
+            Toast.makeText(this, "Occupied Time Mode", Toast.LENGTH_SHORT).show();
+        } else {
+            fab.setImageResource(R.drawable.ic_call_merge_white_24dp);
+            Toast.makeText(this, "Event Mode", Toast.LENGTH_SHORT).show();
+        }
+        loadData();
     }
 
     public static class DatePickerFragment extends DialogFragment
