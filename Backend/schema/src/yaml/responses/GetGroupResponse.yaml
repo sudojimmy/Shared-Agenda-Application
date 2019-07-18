@@ -14,14 +14,13 @@ properties:
         description: group members
         type: array
         items:
-            type: string
+            "$ref": ../types/Account.yaml
     ownerId:
         description: owner id
         type: string
     description:
         description: description of group 
         type: string
-
 required:
     - groupId
     - name
