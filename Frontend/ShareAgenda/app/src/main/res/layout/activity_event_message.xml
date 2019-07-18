@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.EventMessagesActivity">
+
+    <com.cosin.shareagenda.view.TitleBar
+        android:id="@+id/titlebar"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_width="match_parent"
+        />
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_below="@id/titlebar"
+        android:foregroundGravity="center"
+        android:id="@+id/viewPager"
+        android:overScrollMode="never"
+        android:clipToPadding="false"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.viewpager.widget.ViewPager>
+    <TextView
+        android:id="@+id/defaultText"
+        android:gravity="center"
+        android:text="No More Event Request"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

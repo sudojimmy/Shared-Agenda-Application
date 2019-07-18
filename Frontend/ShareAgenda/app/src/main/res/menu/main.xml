@@ -28,8 +28,12 @@
             android:title="@string/menu_publicEvents" />
         <item
             android:id="@+id/nav_events"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_vibration_black_18dp"
             android:title="@string/menu_events" />
+        <item
+            android:id="@+id/nav_messages"
+            android:icon="@drawable/ic_message_black_18dp"
+            android:title="@string/menu_messages" />
     </group>
     <group
         android:id="@+id/nav_grp4"
