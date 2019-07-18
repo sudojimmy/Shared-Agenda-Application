@@ -15,6 +15,7 @@ public final class ApiEndpoint {
     public static final String GET_GROUP_EVENT_MONTHLY = "getGroupEventMonthly";
     public static final String GET_GROUP_LIST = "getGroupList";
     public static final String GET_MESSAGE_QUEUE = "getMessageQueue";
+    public static final String GET_OCCUPIED_TIME = "getOccupiedTime";
     public static final String GET_REPLY_MESSAGE_QUEUE = "getReplyMessageQueue";
     public static final String INVITE_FRIEND = "inviteFriend";
     public static final String INVITE_EVENT = "inviteEvent";

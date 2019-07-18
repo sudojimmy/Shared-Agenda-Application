@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -7,6 +7,18 @@
     android:orientation="vertical"
     android:background="#fff">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:foregroundGravity="center"
+        android:layout_width="wrap_content"
+        android:onClick="occupiedTime"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_call_merge_white_24dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_margin="30dp" />
+
     <com.cosin.shareagenda.view.TitleBar
         android:id="@+id/titlebar"
         android:layout_height="@dimen/toolbar_height"
@@ -14,6 +26,7 @@
         />
 
     <com.alamkanak.weekview.WeekView
+        android:layout_below="@id/titlebar"
         android:id="@+id/weekView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,4 +51,4 @@
         app:eventCornerRadius="6dp"
         app:todayHeaderTextColor="#222" />
 
-</LinearLayout>
+</RelativeLayout>

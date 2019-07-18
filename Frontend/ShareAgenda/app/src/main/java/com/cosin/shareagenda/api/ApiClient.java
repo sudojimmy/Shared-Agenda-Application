@@ -25,6 +25,7 @@ import types.GetFriendQueueRequest;
 import types.GetGroupEventMonthlyRequest;
 import types.GetGroupListRequest;
 import types.GetMessageQueueRequest;
+import types.GetOccupiedTimeRequest;
 import types.InviteEventRequest;
 import types.JoinEventRequest;
 import types.ReplyInvitationRequest;
@@ -45,6 +46,7 @@ import static com.cosin.shareagenda.api.ApiEndpoint.GET_FRIEND_QUEUE;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_EVENT_MONTHLY;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_LIST;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_MESSAGE_QUEUE;
+import static com.cosin.shareagenda.api.ApiEndpoint.GET_OCCUPIED_TIME;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_REPLY_MESSAGE_QUEUE;
 import static com.cosin.shareagenda.api.ApiEndpoint.INVITE_EVENT;
 import static com.cosin.shareagenda.api.ApiEndpoint.INVITE_FRIEND;
@@ -107,6 +109,15 @@ public class ApiClient extends BaseApiClient {
                 .withMonth(month)
                 .withYear(year);
         makePostRequest(GET_EVENT_MONTHLY, gson.toJson(request), callback);
+    }
+
+    public static void getOccupiedTime(String targetAccountId, int month, int year, Callback callback) {
+        GetOccupiedTimeRequest request = new GetOccupiedTimeRequest()
+                .withAccountId(getAccountId())
+                .withTargetAccountId(targetAccountId)
+                .withMonth(month)
+                .withYear(year);
+        makePostRequest(GET_OCCUPIED_TIME, gson.toJson(request), callback);
     }
 
     public static void createEvent(Event event, Callback callback) {
