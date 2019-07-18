@@ -49,24 +49,12 @@ public class GroupMembersActivity extends MainTitleActivity {
         rvContacts.setLayoutManager(layoutManager);
         conAdapter = new GroupListAdapter(this);
         rvContacts.setAdapter(conAdapter);
-
     }
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_group_popup;
+        return R.layout.activity_group_member;
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        new Handler().postDelayed(new Runnable() {
-//            public void run() {
-//                loadData();
-//            }
-//        }, 1000); // give backend some delay to update data
-//    }
 
     @Override
     protected void loadData() {
@@ -78,10 +66,6 @@ public class GroupMembersActivity extends MainTitleActivity {
         return this.groupName;
     }
 
-    private GroupMembersActivity getGroupMemberActivity(){
-        return this;
-    }
-
     Handler getGroupMemberHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(android.os.Message message) {
@@ -90,6 +74,7 @@ public class GroupMembersActivity extends MainTitleActivity {
                 case SUCCESS:
                     String body = (String) message.obj;
                     GetGroupResponse resp = gson.fromJson(body, GetGroupResponse.class);
+                    conAdapter.setOwnerId(resp.getOwnerId());
                     conAdapter.setMemberList(resp.getMembers());
                     break;
             }

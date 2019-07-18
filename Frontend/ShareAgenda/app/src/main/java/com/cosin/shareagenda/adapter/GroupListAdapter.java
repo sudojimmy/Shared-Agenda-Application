@@ -35,21 +35,33 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
     private List<Account> memberList = new ArrayList<>();
     private List<String> myFriendList;
     private Context context;
+    private String ownerId;
 
     public GroupListAdapter(Context context) {
         this.context = context;
-
         updateFriendList();
     }
 
-//    public GroupListAdapter(List<Account> memberList, Context context) {
-//        this.context = context;
-//        this.memberList = memberList;
-//    }
-
     public void setMemberList(List<Account> memberList) {
+        Account owner = null;
+        int removeIndex = -1;
+
+        for (Account member: memberList) {
+            if(member.getAccountId().equals(ownerId)) {
+                owner = member;
+                removeIndex = memberList.indexOf(member);
+                break;
+            }
+        }
+        memberList.remove(removeIndex);
+        memberList.add(0, owner);
+
         this.memberList = memberList;
         notifyDataSetChanged();
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     private void updateFriendList(){
@@ -79,10 +91,6 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         return context;
     }
 
-    private GroupListAdapter getGroupListAdapter(){
-        return this;
-    }
-
     @Override
     public GroupListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -91,22 +99,21 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         return new ViewHolder(view);
     }
 
-//    public void removeElementFromContactList(int position){
-//        memberList.remove(position);
-//        notifyItemRemoved(position);
-//        notifyDataSetChanged();
-//
-//    }
-
     @Override
     public void onBindViewHolder(GroupListAdapter.ViewHolder holder, int position) {
         Account memberAccount = memberList.get(position);
         String memberAccountId = memberAccount.getAccountId();
         holder.nameTextView.setText(memberAccount.getNickname());
 
-        if (!memberAccountId.equals(Model.model.getUser().getAccountId())) {
-            holder.selfIdentity.setText("");
+        String identity = "";
+        if (memberAccountId.equals(Model.model.getUser().getAccountId())) {
+            identity += "(YOU)";
         }
+        if (memberAccountId.equals(ownerId)) {
+            identity += "(OWNER)";
+        }
+        holder.selfIdentity.setText(identity);
+
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,20 +152,12 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
                             searchFriendsAdapter).show();
                 }
 
-
-
-
-
-
-
                 notifyDataSetChanged();
                 updateFriendList();
             }
         });
 
         holder.description.setText(memberAccount.getDescription());
-
-
     }
 
 
