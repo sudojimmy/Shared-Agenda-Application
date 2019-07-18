@@ -21,4 +21,12 @@
     <string name="title_requests">Requests</string>
     <string name="title_search_friends">Search Friends</string>
     <string name="title_friend_message">Friend Request</string>
+
+    <!--speech-->
+    <string name="speech_not_available">Speech recognition is not available on this device. Do you want to install Google app to have speech recognition?</string>
+    <string name="permission_required">You need to grant the permission to use the microphone</string>
+    <string name="enable_google_voice_typing">Please enable Google Voice Typing to use speech recognition!</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="repeat">Repeat please</string>
 </resources>
