@@ -105,7 +105,8 @@ public class EventMessagePagerAdapter extends PagerAdapter {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ApiClient.replyEvent(msg.getMessageId(), ReplyStatus.ACCEPT, new CallbackHandler(getHandler(position)));
+                ApiClient.replyEvent(msg.getMessageId(), ReplyStatus.ACCEPT,
+                        new CallbackHandler(getHandler(position, "Accepted")));
             }
         });
 
@@ -113,7 +114,8 @@ public class EventMessagePagerAdapter extends PagerAdapter {
         btnDecline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ApiClient.replyEvent(msg.getMessageId(), ReplyStatus.DECLINE, new CallbackHandler(getHandler(position)));
+                ApiClient.replyEvent(msg.getMessageId(), ReplyStatus.DECLINE,
+                        new CallbackHandler(getHandler(position, "Declined")));
             }
         });
 
@@ -126,7 +128,7 @@ public class EventMessagePagerAdapter extends PagerAdapter {
         container.removeView((View)object);
     }
 
-    private Handler getHandler(int position) {
+    private Handler getHandler(int position, String replyStatusStr) {
         return new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message message) {
@@ -134,8 +136,8 @@ public class EventMessagePagerAdapter extends PagerAdapter {
                 switch (message.what) {
                     case SUCCESS:
                         new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
-                                .setContentText("SUCCESS")
-                                .setTitleText("Reply Sent!")
+                                .setTitleText("SENT")
+                                .setContentText(replyStatusStr + " Event Request!")
                                 .setConfirmText("OK").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
