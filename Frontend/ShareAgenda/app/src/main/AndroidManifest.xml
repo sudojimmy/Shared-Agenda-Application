@@ -21,6 +21,7 @@
         <activity android:name=".activity.CreateEventActivity" />
         <activity android:name=".activity.CreateGroupActivity" />
         <activity android:name=".activity.ContactsActivity" />
+        <activity android:name=".activity.EventMessagesActivity" />
         <activity android:name=".activity.ExploreActivity" />
         <activity android:name=".activity.FriendMessageActivity" />
         <activity android:name=".activity.GroupEventsActivity" />
