@@ -17,16 +17,6 @@ import utils.FriendQueueUtils;
 import utils.GroupQueueUtils;
 import utils.MessageQueueUtils;
 
-
-/* USEFUL DOCUMENTS
-
-    Spring REST server tutorial:
-    https://spring.io/guides/gs/rest-service/
-
-    Google Authentication:
-    https://developers.google.com/identity/sign-in/android/start
-
- */
 @RestController
 public class CreateAccountController extends BaseController {
 
@@ -53,6 +43,7 @@ public class CreateAccountController extends BaseController {
                 .withNickname(request.getNickname())
                 .withAccountId(request.getAccountId())
                 .withDescription(request.getDescription())
+                .withProfileImageUrl(request.getProfileImageUrl())
                 .withCalendarId(calendarId)
                 .withMessageQueueId(messageQueueId)
                 .withFriendQueueId(friendQueueId)

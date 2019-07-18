@@ -13,6 +13,9 @@ properties:
     description:
         description: user description
         type: string
+    profileImageUrl:
+        description: user profile image url
+        type: string
 required:
     - accountId
     - nickname
