@@ -28,6 +28,7 @@ public class GetAccountController extends BaseController {
                 .withCalendarId(account.getCalendarId())
                 .withDescription(account.getDescription())
                 .withNickname(account.getNickname())
+                .withProfileImageUrl(account.getProfileImageUrl())
                 .withMessageQueueId(account.getMessageQueueId())
                 .withFriendQueueId(account.getFriendQueueId())
                 .withGroupQueueId(account.getGroupQueueId()),
