@@ -1,0 +1,13 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetEventMessageQueueResponse
+description: get queue of event message response
+type: object
+additionalProperties: false
+properties:
+  messageList:
+    description: a list of event message object
+    type: array
+    items:
+      "$ref": ../types/EventMessage.yaml
+required:
+  - messageList
