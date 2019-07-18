@@ -61,7 +61,9 @@ public class AddFriendDialog extends SweetAlertDialog {
                             .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
 
                     displayAccountRequestDialog.dismiss();
-                    searchFriendsAdapter.removeElementFromContactList(position);
+                    if(searchFriendsAdapter != null) {
+                        searchFriendsAdapter.removeElementFromContactList(position);
+                    }
                     break;
                 case HTTP_FAILURE:
                     ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);

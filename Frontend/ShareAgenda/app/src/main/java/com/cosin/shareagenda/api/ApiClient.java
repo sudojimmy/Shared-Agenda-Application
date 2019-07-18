@@ -24,6 +24,7 @@ import types.GetEventMonthlyRequest;
 import types.GetFriendQueueRequest;
 import types.GetGroupEventMonthlyRequest;
 import types.GetGroupListRequest;
+import types.GetGroupRequest;
 import types.GetMessageQueueRequest;
 import types.InviteEventRequest;
 import types.JoinEventRequest;
@@ -42,6 +43,7 @@ import static com.cosin.shareagenda.api.ApiEndpoint.GET_ACCOUNT;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_EVENT_MESSAGE_QUEUE;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_EVENT_MONTHLY;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_FRIEND_QUEUE;
+import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_EVENT_MONTHLY;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_LIST;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_MESSAGE_QUEUE;
@@ -79,6 +81,12 @@ public class ApiClient extends BaseApiClient {
         GetGroupListRequest request = new GetGroupListRequest()
                 .withAccountId(getAccountId());
         makePostRequest(GET_GROUP_LIST, gson.toJson(request), callback);
+    }
+
+    public static void getGroup(String groupId, Callback callback) {
+        GetGroupRequest request = new GetGroupRequest()
+                .withGroupId(groupId);
+        makePostRequest(GET_GROUP, gson.toJson(request), callback);
     }
 
     public static void createGroup(String name, String description,
@@ -209,6 +217,12 @@ public class ApiClient extends BaseApiClient {
                 .withMessageId(msgId)
                 .withStatus(status);
         makePostRequest(REPLY_FRIEND, gson.toJson(request), callback);
+    }
+
+    public static void getFriendQueue(String accountId, Callback callback){
+        GetFriendQueueRequest request = new GetFriendQueueRequest()
+                .withAccountId(accountId);
+        makePostRequest(GET_FRIEND_QUEUE, gson.toJson(request), callback);
     }
 
     private static String getAccountId() {
