@@ -21,6 +21,7 @@
         <activity android:name=".activity.ExploreActivity" />
         <activity android:name=".activity.FriendMessageActivity" />
         <activity android:name=".activity.GroupsActivity" />
+        <activity android:name=".activity.GroupMembersActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.NewCalendarActivity"
             android:configChanges="orientation"

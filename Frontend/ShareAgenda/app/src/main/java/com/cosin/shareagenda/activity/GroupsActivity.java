@@ -27,6 +27,7 @@ public class GroupsActivity extends MainTitleActivity {
         super.initView();
 
         RecyclerView rvContacts = findViewById(R.id.rvGroups);
+        // TODO Thursday debug start here
         rvContacts.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvContacts.setLayoutManager(layoutManager);

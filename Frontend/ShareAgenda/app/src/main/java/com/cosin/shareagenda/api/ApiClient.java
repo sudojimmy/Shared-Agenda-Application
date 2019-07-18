@@ -182,6 +182,12 @@ public class ApiClient extends BaseApiClient {
         makePostRequest(REPLY_FRIEND, gson.toJson(request), callback);
     }
 
+    public static void getFriendQueue(String accountId, Callback callback){
+        GetFriendQueueRequest request = new GetFriendQueueRequest()
+                .withAccountId(accountId);
+        makePostRequest(GET_FRIEND_QUEUE, gson.toJson(request), callback);
+    }
+
     private static String getAccountId() {
         return Model.model.getGoogleSignInAccount().getEmail();
     }
