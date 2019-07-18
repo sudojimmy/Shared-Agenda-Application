@@ -54,13 +54,16 @@ public class GroupsActivity extends MainTitleActivity {
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                loadGroupList();
+                loadData();
             }
         }, 1000); // give backend some delay to update data
     }
 
     @Override
-    protected void loadData() {}
+    protected void loadData() {
+        ApiClient.getGroupList(new CallbackHandler(getGroupHandler));
+
+    }
 
     protected void loadGroupList() {
         ApiClient.getGroupList(new CallbackHandler(getGroupHandler));

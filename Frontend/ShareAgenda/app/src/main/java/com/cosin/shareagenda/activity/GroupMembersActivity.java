@@ -1,5 +1,6 @@
 package com.cosin.shareagenda.activity;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -32,9 +33,13 @@ public class GroupMembersActivity extends MainTitleActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void onCreate(Bundle savedInstanceState) {
         loadIntentExtra();
+        super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    protected void initView() {
         super.initView();
 
         // set each member layout row
@@ -52,16 +57,16 @@ public class GroupMembersActivity extends MainTitleActivity {
         return R.layout.activity_group_popup;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                loadData();
-            }
-        }, 1000); // give backend some delay to update data
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        new Handler().postDelayed(new Runnable() {
+//            public void run() {
+//                loadData();
+//            }
+//        }, 1000); // give backend some delay to update data
+//    }
 
     @Override
     protected void loadData() {
