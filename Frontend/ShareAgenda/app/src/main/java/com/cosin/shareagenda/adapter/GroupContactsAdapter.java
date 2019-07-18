@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosin.shareagenda.R;
+import com.cosin.shareagenda.activity.GroupMembersActivity;
 import com.cosin.shareagenda.activity.NewCalendarActivity;
 import com.cosin.shareagenda.model.Model;
 
@@ -52,6 +53,18 @@ public class GroupContactsAdapter extends RecyclerView.Adapter<GroupContactsAdap
     @Override
     public void onBindViewHolder(GroupContactsAdapter.ViewHolder holder, int position) {
         holder.tvContactName.setText(contactList.get(position).getName());
+        holder.tvContactName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // todo
+                Group entity = contactList.get(position);
+                Intent intent = new Intent(v.getContext(), GroupMembersActivity.class);
+                intent.putExtra(GroupMembersActivity.GROUP_ID, entity.getGroupId());
+                Model.model.setCurrentGroup(entity);
+                v.getContext().startActivity(intent);
+            }
+        });
+
         holder.ivCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

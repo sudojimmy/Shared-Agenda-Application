@@ -24,6 +24,7 @@ import types.GetEventMonthlyRequest;
 import types.GetFriendQueueRequest;
 import types.GetGroupEventMonthlyRequest;
 import types.GetGroupListRequest;
+import types.GetGroupRequest;
 import types.GetMessageQueueRequest;
 import types.JoinEventRequest;
 import types.ReplyInvitationRequest;
@@ -73,6 +74,12 @@ public class ApiClient extends BaseApiClient {
     public static void getGroupList(Callback callback) {
         GetGroupListRequest request = new GetGroupListRequest()
                 .withAccountId(getAccountId());
+        makePostRequest(GET_GROUP_LIST, gson.toJson(request), callback);
+    }
+
+    public static void getGroup(String groupId, Callback callback) {
+        GetGroupRequest request = new GetGroupRequest()
+                .withGroupId(groupId);
         makePostRequest(GET_GROUP_LIST, gson.toJson(request), callback);
     }
 

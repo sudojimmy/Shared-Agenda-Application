@@ -3,10 +3,11 @@ package com.cosin.shareagenda.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;

@@ -14,13 +14,11 @@
         android:textSize="25sp"
         android:text="Group List" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/group_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/groupListTitle">
-
-    </ListView>
+        android:layout_below="@+id/groupListTitle"/>
 
 
 </RelativeLayout>

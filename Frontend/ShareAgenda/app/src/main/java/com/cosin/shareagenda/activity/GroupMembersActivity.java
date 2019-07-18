@@ -1,46 +1,47 @@
 package com.cosin.shareagenda.activity;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
-import com.cosin.shareagenda.adapter.GroupContactsAdapter;
+import com.cosin.shareagenda.adapter.GroupListAdapter;
 import com.cosin.shareagenda.api.ApiClient;
 import com.google.gson.Gson;
 
-import types.GetGroupListResponse;
+import types.GetGroupResponse;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class GroupMembersActivity extends MainTitleActivity {
-    private GroupContactsAdapter conAdapter;
+
+    // intent extra parameter name
+    public static final String GROUP_ID = "GROUP_ID";
+
+    private GroupListAdapter conAdapter;
+    private String groupId;
+
+    private void loadIntentExtra() {
+        this.groupId = getIntent().getStringExtra(GROUP_ID);
+    }
 
     @Override
     protected void initView() {
         super.initView();
 
-        RecyclerView rvContacts = findViewById(R.id.rvGroups);
+        loadIntentExtra();
+
+        // set each member layout row
+        RecyclerView rvContacts = findViewById(R.id.group_list_view);
         rvContacts.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvContacts.setLayoutManager(layoutManager);
-        conAdapter = new GroupContactsAdapter(this);
+        conAdapter = new GroupListAdapter(this);
         rvContacts.setAdapter(conAdapter);
 
-        LinearLayout ll = findViewById(R.id.llCreateGroup);
-        ll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GroupMembersActivity.this, CreateGroupActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -48,20 +49,20 @@ public class GroupMembersActivity extends MainTitleActivity {
         return R.layout.activity_groups;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                loadData();
-            }
-        }, 1000); // give backend some delay to update data
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        new Handler().postDelayed(new Runnable() {
+//            public void run() {
+//                loadData();
+//            }
+//        }, 1000); // give backend some delay to update data
+//    }
 
     @Override
     protected void loadData() {
-        ApiClient.getGroupList(new CallbackHandler(getGroupHandler));
+        ApiClient.getGroup(groupId, new CallbackHandler(getGroupMemberHandler));
     }
 
     @Override
@@ -69,15 +70,16 @@ public class GroupMembersActivity extends MainTitleActivity {
         return "Groups";
     }
 
-    Handler getGroupHandler = new Handler(Looper.getMainLooper()) {
+    Handler getGroupMemberHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(android.os.Message message) {
             final Gson gson = new Gson();
             switch (message.what) {
                 case SUCCESS:
                     String body = (String) message.obj;
-                    GetGroupListResponse resp = gson.fromJson(body, GetGroupListResponse.class);
-                    conAdapter.setContactList(resp.getGroupList());
+                    GetGroupResponse resp = gson.fromJson(body, GetGroupResponse.class);
+                    resp.getMembers();  //TODO
+                    conAdapter.setMemberList(resp.getMembers());
                     break;
             }
         }
