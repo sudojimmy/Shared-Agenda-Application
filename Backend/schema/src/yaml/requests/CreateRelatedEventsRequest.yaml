@@ -1,0 +1,17 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: CreateRelatedEventsRequest
+description: will create a group of events with same event ID. If delete happen, they will be deleted together
+type: object
+additionalProperties: false
+properties:
+  events:
+    description: create events
+    type: array
+    items:
+      "$ref": ../types/Event.yaml
+  callerId:
+    description: caller account Id
+    type: string
+required:
+  - events
+  - callerId

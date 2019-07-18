@@ -3,18 +3,19 @@ package com.cosin.shareagenda.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.adapter.FriendContactsAdapter;
+import com.cosin.shareagenda.api.ApiClient;
+import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.cosin.shareagenda.entity.ContactEntity;
-import com.cosin.shareagenda.model.ApiClient;
-import com.cosin.shareagenda.model.ApiErrorResponse;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class ContactsActivity extends MainTitleActivity {
 
     ArrayList<ContactEntity> contactList;
     private FriendContactsAdapter conAdapter;
-
+    RecyclerView rvContacts;
     @Override
     protected int getContentView() {
         return R.layout.activity_contacts;
@@ -43,12 +44,13 @@ public class ContactsActivity extends MainTitleActivity {
     protected void initView() {
         super.initView();
 
-        RecyclerView rvContacts = findViewById(R.id.rvContacts);
-        rvContacts.setHasFixedSize(true);
+
+        this.rvContacts = findViewById(R.id.rvContacts);
+        this.rvContacts.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        rvContacts.setLayoutManager(layoutManager);
-        conAdapter = new FriendContactsAdapter();
-        rvContacts.setAdapter(conAdapter);
+        this.rvContacts.setLayoutManager(layoutManager);
+        conAdapter = new FriendContactsAdapter(this);
+        this.rvContacts.setAdapter(conAdapter);
 
         LinearLayout ll = findViewById(R.id.llSearch);
         ll.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +61,8 @@ public class ContactsActivity extends MainTitleActivity {
             }
         });
     }
+
+
 
     @Override
     protected String titleName() {

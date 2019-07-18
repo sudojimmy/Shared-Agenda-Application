@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -31,8 +32,8 @@ import androidx.fragment.app.DialogFragment;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
-import com.cosin.shareagenda.model.ApiClient;
-import com.cosin.shareagenda.model.ApiErrorResponse;
+import com.cosin.shareagenda.api.ApiClient;
+import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.CalendarEventBiz;
 import com.google.gson.Gson;
@@ -78,6 +79,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private SpeechProgressView progress;
 
+    private Switch privateEvent;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +100,8 @@ public class CreateEventActivity extends AppCompatActivity {
         micButton.setOnClickListener(view -> onSpeakClick());
         linearLayout = findViewById(R.id.linearLayout);
         progress = findViewById(R.id.progress);
+        privateEvent = findViewById(R.id.privateEvent);
+
 
         ArrayAdapter<EventType> eventAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, EventType.values());
@@ -177,6 +181,8 @@ public class CreateEventActivity extends AppCompatActivity {
     };
 
     public void createEvent(View view) {
+        // TODO friendCalendar -> Account; groupCalendar -> Group
+        PermissionType permissionType = privateEvent.isChecked() ? PermissionType.PRIVATE : PermissionType.PUBLIC;
         Event event = new Event()
                 .withStarterId(Model.model.getUser().getAccountId())    // starter always user
                 .withState(EventState.ACTIVE)                           // state always active
@@ -190,7 +196,7 @@ public class CreateEventActivity extends AppCompatActivity {
                         .withEndDate(endDatePicker.getText().toString()))
                 .withStartTime(startTimePicker.getText().toString())
                 .withEndTime(endTimePicker.getText().toString())
-                .withPermission(new Permission().withType(PermissionType.PUBLIC));  // TODO
+                .withPermission(new Permission().withType(permissionType));
         ApiClient.createEvent(event, new CallbackHandler(handler));
     }
 

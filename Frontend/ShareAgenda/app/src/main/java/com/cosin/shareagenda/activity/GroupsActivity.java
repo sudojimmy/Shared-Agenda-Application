@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.adapter.GroupContactsAdapter;
-import com.cosin.shareagenda.model.ApiClient;
+import com.cosin.shareagenda.api.ApiClient;
 import com.google.gson.Gson;
 
 import types.GetGroupListResponse;

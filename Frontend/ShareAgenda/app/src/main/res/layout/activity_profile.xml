@@ -73,6 +73,8 @@
                         android:orientation="vertical">
                         <TextView
                             android:textSize="13sp"
+                            android:drawableStart="@drawable/ic_mail_outline_blue_18dp"
+                            android:drawablePadding="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/heading"
@@ -99,6 +101,8 @@
                         android:orientation="vertical">
                         <TextView
                             android:textSize="13sp"
+                            android:drawableStart="@drawable/ic_person_outline_blue_18dp"
+                            android:drawablePadding="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/heading"
@@ -128,6 +132,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/heading"
+                            android:drawableStart="@drawable/ic_chat_bubble_outline_blue_18dp"
+                            android:drawablePadding="5dp"
                             android:text="Description"
                             />
                         <TextView

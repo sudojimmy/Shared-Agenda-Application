@@ -8,15 +8,15 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_calendar"
-            android:icon="@drawable/ic_menu_calendar"
+            android:icon="@drawable/ic_date_range_black_24dp"
             android:title="@string/menu_calendar" />
         <item
             android:id="@+id/nav_groups"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/ic_group_black_24dp"
             android:title="@string/menu_groups" />
         <item
             android:id="@+id/nav_friends"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/menu_friends" />
     </group>
     <group
@@ -24,7 +24,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_publicEvents"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_search_black_24dp"
             android:title="@string/menu_publicEvents" />
         <item
             android:id="@+id/nav_events"

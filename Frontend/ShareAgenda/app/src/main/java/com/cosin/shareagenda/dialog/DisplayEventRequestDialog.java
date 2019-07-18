@@ -60,20 +60,11 @@ public class DisplayEventRequestDialog extends BaseDialog {
     protected void initView() {
         ((TextView)findViewById(R.id.type)).setText(type);
         ((TextView)findViewById(R.id.eventName)).setText(eventname);
-
-        if (location.isEmpty()) {
-            location = "¯\\\\_(ツ)_/¯";
-        }
         ((TextView)findViewById(R.id.eventLocation)).setText(location);
-
         ((TextView)findViewById(R.id.startTime)).setText(startTime);
         ((TextView)findViewById(R.id.endTime)).setText(endTime);
         ((TextView)findViewById(R.id.startDate)).setText(startDate);
         ((TextView)findViewById(R.id.endDate)).setText(endDate);
-
-        if (description.isEmpty()){
-            description = "Add Your Unique Event Description";
-        }
         ((TextView)findViewById(R.id.eventDescription)).setText(description);
 
         EventRepeat eventRepeat = repeat.getType();

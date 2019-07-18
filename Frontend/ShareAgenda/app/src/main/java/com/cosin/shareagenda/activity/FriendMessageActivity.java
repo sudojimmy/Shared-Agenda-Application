@@ -2,15 +2,16 @@ package com.cosin.shareagenda.activity;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.adapter.FriendMessageAdapter;
-import com.cosin.shareagenda.model.ApiClient;
-import com.cosin.shareagenda.model.ApiErrorResponse;
+import com.cosin.shareagenda.api.ApiClient;
+import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.google.gson.Gson;
 
 import types.GetMessageQueueResponse;
@@ -44,7 +45,7 @@ public class FriendMessageActivity extends MainTitleActivity {
         RecyclerView recyclerView = findViewById(R.id.rvFriendsMsg);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
-        friendMessageAdapter = new FriendMessageAdapter();
+        friendMessageAdapter = new FriendMessageAdapter(this);
         recyclerView.setAdapter(friendMessageAdapter);
     }
     Handler handler = new Handler(Looper.getMainLooper()) {

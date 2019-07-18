@@ -1,0 +1,13 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetReplyMessageQueueResponse
+description: get queue of reply message response
+type: object
+additionalProperties: false
+properties:
+  messageList:
+    description: a list of reply message object
+    type: array
+    items:
+      "$ref": ../types/ReplyMessage.yaml
+required:
+  - messageList

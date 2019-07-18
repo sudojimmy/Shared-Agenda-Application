@@ -1,0 +1,13 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: UWMeta
+description: University of Waterloo Meta object
+type: object
+additionalProperties: false
+properties:
+    status:
+        type: integer
+    message:
+        type: string
+required:
+    - status
+    - message

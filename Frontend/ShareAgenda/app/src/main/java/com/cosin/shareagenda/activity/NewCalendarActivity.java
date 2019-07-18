@@ -3,6 +3,7 @@ package com.cosin.shareagenda.activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,12 +20,13 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
+import com.cosin.shareagenda.api.ApiClient;
+import com.cosin.shareagenda.api.ApiErrorResponse;
+import com.cosin.shareagenda.dialog.DeleteEventDialog;
 import com.cosin.shareagenda.dialog.DialogReceiver;
 import com.cosin.shareagenda.dialog.DisplayEventRequestDialog;
 import com.cosin.shareagenda.dialog.SendEventRequestDialog;
 import com.cosin.shareagenda.entity.DisplayableEvent;
-import com.cosin.shareagenda.model.ApiClient;
-import com.cosin.shareagenda.model.ApiErrorResponse;
 import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.CalendarEventBiz;
 import com.google.gson.Gson;
@@ -35,6 +37,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import types.Event;
 import types.GetEventMonthlyResponse;
 
@@ -64,6 +67,8 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
     private boolean skipAction = false;
     private String selectedDate;
     private String selectedTime;
+
+    private SweetAlertDialog alertDialog;
 
     private void loadIntentExtra() {
         calendarTargetId = getIntent().getStringExtra(CALENDAR_TARGET_ID);
@@ -99,6 +104,18 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
     }
 
     @Override
+    public void onConfigurationChanged(Configuration config) {
+        super.onConfigurationChanged(config);
+        // Check for the rotation
+        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mWeekView.setNumberOfVisibleDays(5);
+        } else if (config.orientation == Configuration.ORIENTATION_PORTRAIT){
+            mWeekView.setNumberOfVisibleDays(1);
+        }
+        mWeekView.notifyDatasetChanged();
+    }
+
+    @Override
     protected int getContentView() {
         return R.layout.activity_calendar_new;
     }
@@ -106,17 +123,15 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
     @Override
     protected void loadData() {
         if (!onOtherCalendar()) {
-            ApiClient.getEventMonthly(Model.model.getUser().getAccountId(), currentMonth, currentYear, new CallbackHandler(handler));
+            ApiClient.getEventMonthly(Model.model.getUser().getAccountId(), currentMonth, currentYear, new CallbackHandler(getEventHandler));
         } else if (calendarType.equals(GROUP_CALENDAR)) {
-            for (String targetId : Model.model.getCurrentGroup().getMembers()) {
-                ApiClient.getEventMonthly(targetId, currentMonth, currentYear, new CallbackHandler(handler));
-            }
+            ApiClient.getGroupEventMonthly(calendarTargetId, currentMonth, currentYear, new CallbackHandler(getEventHandler));
         } else if (calendarType.equals(FRIEND_CALENDAR)) {
-            ApiClient.getEventMonthly(calendarTargetId, currentMonth, currentYear, new CallbackHandler(handler));
+            ApiClient.getEventMonthly(calendarTargetId, currentMonth, currentYear, new CallbackHandler(getEventHandler));
         }
     }
 
-    Handler handler = new Handler(Looper.getMainLooper()) {
+    Handler getEventHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(android.os.Message message) {
             final Gson gson = new Gson();
@@ -194,14 +209,15 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
                 event.getRepeat(),
                 event.getRepeat().getStartDate(),
                 event.getRepeat().getEndDate()).show();
-
-        Toast.makeText(this, "Clicked " + wevent.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
+        Event displayEvent = ((DisplayableEvent) event).getEvent();
         // delete event
-        Toast.makeText(this, "Event Long Press", Toast.LENGTH_SHORT).show();
+        new DeleteEventDialog(this, SweetAlertDialog.WARNING_TYPE, mWeekView, displayEvent)
+                .show();
+
     }
 
     @Override
@@ -243,7 +259,6 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
 
     @Override
     public void onEmptyViewClicked(Calendar date) {
-        Toast.makeText(this, "Empty view" + " clicked: " + getEventTitle(date), Toast.LENGTH_SHORT).show();
     }
 
     @Override

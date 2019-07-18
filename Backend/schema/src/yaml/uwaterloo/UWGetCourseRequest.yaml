@@ -1,0 +1,15 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: UWGetCourseRequest
+description: UWGetCourseRequest
+type: object
+additionalProperties: false
+properties:
+    meta:
+        "$ref": UWMeta.yaml
+    data:
+        type: array
+        items:
+            "$ref": UWCourse.yaml
+required:
+    - meta
+    - data
