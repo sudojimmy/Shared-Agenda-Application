@@ -13,6 +13,9 @@ properties:
     description:
         description: user description
         type: string
+    profileImageUrl:
+        description: user profile image url
+        type: string
     calendarId:
         description: calendar Id
         type: string
