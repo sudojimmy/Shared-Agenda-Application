@@ -25,6 +25,7 @@ import types.GetFriendQueueRequest;
 import types.GetGroupEventMonthlyRequest;
 import types.GetGroupListRequest;
 import types.GetMessageQueueRequest;
+import types.InviteEventRequest;
 import types.JoinEventRequest;
 import types.ReplyInvitationRequest;
 import types.ReplyStatus;
@@ -38,11 +39,14 @@ import static com.cosin.shareagenda.api.ApiEndpoint.DELETE_FRIEND;
 import static com.cosin.shareagenda.api.ApiEndpoint.EXPLORE_ACCOUNT;
 import static com.cosin.shareagenda.api.ApiEndpoint.EXPLORE_EVENT;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_ACCOUNT;
+import static com.cosin.shareagenda.api.ApiEndpoint.GET_EVENT_MESSAGE_QUEUE;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_EVENT_MONTHLY;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_FRIEND_QUEUE;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_EVENT_MONTHLY;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_LIST;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_MESSAGE_QUEUE;
+import static com.cosin.shareagenda.api.ApiEndpoint.GET_REPLY_MESSAGE_QUEUE;
+import static com.cosin.shareagenda.api.ApiEndpoint.INVITE_EVENT;
 import static com.cosin.shareagenda.api.ApiEndpoint.INVITE_FRIEND;
 import static com.cosin.shareagenda.api.ApiEndpoint.JOIN_EVENT;
 import static com.cosin.shareagenda.api.ApiEndpoint.REPLY_FRIEND;
@@ -140,11 +144,33 @@ public class ApiClient extends BaseApiClient {
         makePostRequest(JOIN_EVENT, gson.toJson(request), callback);
     }
 
+    public static void inviteEvent(String friendId, Event event, Callback callback) {
+        InviteEventRequest friendInvitationRequest = new InviteEventRequest()
+                .withEvent(event)
+                .withSenderId(getAccountId())
+                .withReceiverId(friendId);
+        makePostRequest(INVITE_EVENT, gson.toJson(friendInvitationRequest), callback);
+    }
+
     public static void getMessageQueue(Callback callback) {
         GetMessageQueueRequest request = new GetMessageQueueRequest()
                 .withAccountId(getAccountId())
                 .withMessageQueueId(Model.model.getUser().getMessageQueueId());
         makePostRequest(GET_MESSAGE_QUEUE, gson.toJson(request), callback);
+    }
+
+    public static void getEventMessageQueue(Callback callback) {
+        GetMessageQueueRequest request = new GetMessageQueueRequest()
+                .withAccountId(getAccountId())
+                .withMessageQueueId(Model.model.getUser().getMessageQueueId());
+        makePostRequest(GET_EVENT_MESSAGE_QUEUE, gson.toJson(request), callback);
+    }
+
+    public static void getReplyMessageQueue(Callback callback) {
+        GetMessageQueueRequest request = new GetMessageQueueRequest()
+                .withAccountId(getAccountId())
+                .withMessageQueueId(Model.model.getUser().getMessageQueueId());
+        makePostRequest(GET_REPLY_MESSAGE_QUEUE, gson.toJson(request), callback);
     }
 
     public static void getFriendQueue(Callback callback) {

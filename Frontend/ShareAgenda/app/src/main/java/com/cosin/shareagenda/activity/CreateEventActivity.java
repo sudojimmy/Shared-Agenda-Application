@@ -41,6 +41,7 @@ import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 public class CreateEventActivity extends AppCompatActivity {
     public static final String SELECTED_DATE = "SELECTED_DATE";
     public static final String SELECTED_TIME = "SELECTED_TIME";
+    public static final String SELECTED_ID = "SELECTED_ID";
 
     private EditText eventName;
     private EditText eventDescription;
@@ -52,6 +53,9 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText startDatePicker;
     private EditText endDatePicker;
     private Switch privateEvent;
+    private String calendarType;
+    private String targetId;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +84,8 @@ public class CreateEventActivity extends AppCompatActivity {
 
         String selectedDate = getIntent().getStringExtra(SELECTED_DATE);
         String selectedTime = getIntent().getStringExtra(SELECTED_TIME);
+        targetId = getIntent().getStringExtra(SELECTED_ID);
+        calendarType = getIntent().getStringExtra(NewCalendarActivity.CALENDAR_ACTIVITY_TYPE);
         startTimePicker.setText(selectedTime);
         endTimePicker.setText(CalendarEventBiz.getNextHour(selectedTime));
         startDatePicker.setText(selectedDate);
@@ -148,7 +154,14 @@ public class CreateEventActivity extends AppCompatActivity {
                 .withStartTime(startTimePicker.getText().toString())
                 .withEndTime(endTimePicker.getText().toString())
                 .withPermission(new Permission().withType(permissionType));
-        ApiClient.createEvent(event, new CallbackHandler(handler));
+        if (calendarType.equals(NewCalendarActivity.FRIEND_CALENDAR)) {
+            event.setPermission(new Permission()
+                    .withType(PermissionType.ACCOUNT)
+                    .withPermitToId(targetId));
+            ApiClient.inviteEvent(targetId, event, new CallbackHandler(handler));
+        } else { // TODO waiting for backend Group Calendar
+            ApiClient.createEvent(event, new CallbackHandler(handler));
+        }
     }
 
     public static class TimePickerFragment extends DialogFragment

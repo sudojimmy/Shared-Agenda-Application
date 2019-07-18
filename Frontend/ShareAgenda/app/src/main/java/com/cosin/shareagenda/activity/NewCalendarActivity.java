@@ -296,6 +296,8 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
         Intent intent = new Intent(this, CreateEventActivity.class);
         intent.putExtra(CreateEventActivity.SELECTED_DATE, selectedDate);
         intent.putExtra(CreateEventActivity.SELECTED_TIME, selectedTime);
+        intent.putExtra(CreateEventActivity.SELECTED_ID, calendarTargetId);
+        intent.putExtra(CALENDAR_ACTIVITY_TYPE, calendarType);
         this.startActivity(intent);
     }
 

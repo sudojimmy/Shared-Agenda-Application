@@ -15,26 +15,27 @@ import com.cosin.shareagenda.R;
 import java.util.List;
 
 import types.Event;
+import types.EventMessage;
 import types.EventRepeat;
 
 public class EventMessagePagerAdapter extends PagerAdapter {
 
-    private List<Event> events;
+    private List<EventMessage> eventMsgs;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public EventMessagePagerAdapter(List<Event> events, Context context) {
-        this.events = events;
+    public EventMessagePagerAdapter(List<EventMessage> eventMsgs, Context context) {
+        this.eventMsgs = eventMsgs;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return events.size();
+        return eventMsgs.size();
     }
 
-    public void setEvents(List<Event> events) {
-        this.events = events;
+    public void setEvents(List<EventMessage> eventMsgs) {
+        this.eventMsgs = eventMsgs;
         notifyDataSetChanged();
     }
 
@@ -49,7 +50,7 @@ public class EventMessagePagerAdapter extends PagerAdapter {
         layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.item_event_message, container, false);
 
-        Event event = events.get(position);
+        Event event = eventMsgs.get(position).getEvent();
 
         TextView tvTitle = view.findViewById(R.id.tvTitle);
         tvTitle.setText(event.getEventname());

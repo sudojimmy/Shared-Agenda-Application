@@ -15,7 +15,6 @@ import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.adapter.EventMessagePagerAdapter;
 import com.cosin.shareagenda.api.ApiClient;
 import com.cosin.shareagenda.api.ApiErrorResponse;
-import com.cosin.shareagenda.model.Model;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -24,9 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import types.Event;
+import types.EventMessage;
 import types.EventType;
-import types.GetEventMonthlyResponse;
+import types.GetEventMessageQueueResponse;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
@@ -36,7 +35,7 @@ public class EventMessagesActivity extends MainTitleActivity {
     ViewPager viewPager;
     EventMessagePagerAdapter adapter;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
-    List<Event> events = new ArrayList<>();
+    List<EventMessage> eventMsgs = new ArrayList<>();
     private TextView defaultText;
 
     @Override
@@ -46,7 +45,7 @@ public class EventMessagesActivity extends MainTitleActivity {
 
     @Override
     protected void loadData() {
-        ApiClient.getEventMonthly(Model.model.getUser().getAccountId(), 7, 2019, new CallbackHandler(getEventHandler));
+        ApiClient.getEventMessageQueue(new CallbackHandler(getEventMsgHandler));
     }
 
 
@@ -63,11 +62,11 @@ public class EventMessagesActivity extends MainTitleActivity {
     @Override
     protected void initView() {
         super.initView();
-        adapter = new EventMessagePagerAdapter(events, this);
+        adapter = new EventMessagePagerAdapter(eventMsgs, this);
 
         viewPager = findViewById(R.id.viewPager);
         defaultText = findViewById(R.id.defaultText);
-        defaultText.setVisibility(events.isEmpty() ? View.VISIBLE : View.GONE);
+        defaultText.setVisibility(eventMsgs.isEmpty() ? View.VISIBLE : View.GONE);
         viewPager.setAdapter(adapter);
         viewPager.setPadding(50, 50, 50, 50);
 
@@ -75,8 +74,8 @@ public class EventMessagesActivity extends MainTitleActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 Integer color = Color.rgb(224, 224, 224);
-                if (!events.isEmpty()) {
-                    Integer tmp = colorMap.get(events.get(position).getType());
+                if (!eventMsgs.isEmpty()) {
+                    Integer tmp = colorMap.get(eventMsgs.get(position).getEvent().getType());
                     if (tmp != null) {
                         color = tmp;
                     }
@@ -103,17 +102,17 @@ public class EventMessagesActivity extends MainTitleActivity {
         return "Explore Event";
     }
 
-    Handler getEventHandler = new Handler(Looper.getMainLooper()) {
+    Handler getEventMsgHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(android.os.Message message) {
             final Gson gson = new Gson();
             switch (message.what) {
                 case SUCCESS:
                     String body = (String) message.obj;
-                    GetEventMonthlyResponse resp = gson.fromJson(body, GetEventMonthlyResponse.class);
-                    events = resp.getEventList();
-                    adapter.setEvents(events);
-                    defaultText.setVisibility(events.isEmpty() ? View.VISIBLE : View.GONE);
+                    GetEventMessageQueueResponse resp = gson.fromJson(body, GetEventMessageQueueResponse.class);
+                    eventMsgs = resp.getMessageList();
+                    adapter.setEvents(eventMsgs);
+                    defaultText.setVisibility(eventMsgs.isEmpty() ? View.VISIBLE : View.GONE);
                     break;
                 case HTTP_FAILURE:
                     ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
