@@ -74,7 +74,7 @@ public class EventMessagesActivity extends MainTitleActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 Integer color = Color.rgb(224, 224, 224);
-                if (!eventMsgs.isEmpty()) {
+                if (eventMsgs.size() > position) {
                     Integer tmp = colorMap.get(eventMsgs.get(position).getEvent().getType());
                     if (tmp != null) {
                         color = tmp;
@@ -99,7 +99,7 @@ public class EventMessagesActivity extends MainTitleActivity {
 
     @Override
     protected String titleName() {
-        return "Explore Event";
+        return "Event Requests";
     }
 
     Handler getEventMsgHandler = new Handler(Looper.getMainLooper()) {

@@ -20,5 +20,6 @@ public final class ApiEndpoint {
     public static final String INVITE_EVENT = "inviteEvent";
     public static final String DELETE_FRIEND = "deleteFriend";
     public static final String JOIN_EVENT = "joinEvent";
+    public static final String REPLY_Event = "replyEvent";
     public static final String REPLY_FRIEND = "replyFriend";
 }

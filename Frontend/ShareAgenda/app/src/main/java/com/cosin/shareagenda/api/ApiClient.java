@@ -50,6 +50,7 @@ import static com.cosin.shareagenda.api.ApiEndpoint.INVITE_EVENT;
 import static com.cosin.shareagenda.api.ApiEndpoint.INVITE_FRIEND;
 import static com.cosin.shareagenda.api.ApiEndpoint.JOIN_EVENT;
 import static com.cosin.shareagenda.api.ApiEndpoint.REPLY_FRIEND;
+import static com.cosin.shareagenda.api.ApiEndpoint.REPLY_Event;
 
 public class ApiClient extends BaseApiClient {
 
@@ -164,6 +165,15 @@ public class ApiClient extends BaseApiClient {
                 .withAccountId(getAccountId())
                 .withMessageQueueId(Model.model.getUser().getMessageQueueId());
         makePostRequest(GET_EVENT_MESSAGE_QUEUE, gson.toJson(request), callback);
+    }
+
+    public static void replyEvent(String msgId, ReplyStatus status, Callback callback) {
+        ReplyInvitationRequest request = new ReplyInvitationRequest()
+                .withAccountId(getAccountId())
+                .withMessageId(msgId)
+//                .withDescription()
+                .withStatus(status);
+        makePostRequest(REPLY_Event, gson.toJson(request), callback);
     }
 
     public static void getReplyMessageQueue(Callback callback) {

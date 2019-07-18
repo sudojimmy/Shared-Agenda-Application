@@ -28,6 +28,7 @@ import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.CalendarEventBiz;
 import com.google.gson.Gson;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import types.Event;
 import types.EventRepeat;
 import types.EventState;
@@ -123,9 +124,16 @@ public class CreateEventActivity extends AppCompatActivity {
             final Gson gson = new Gson();
             switch (message.what) {
                 case SUCCESS:
-                    String body = (String) message.obj;
-                    // TODO update view
-                    finish();
+                    new SweetAlertDialog(CreateEventActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                            .setContentText("SUCCESS")
+                            .setTitleText(getAlertTitleText())
+                            .setConfirmText("OK").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismissWithAnimation();
+                            finish();
+                        }
+                    }).show();
                     break;
                 case CallbackHandler.HTTP_FAILURE:
                     ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
@@ -136,6 +144,14 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         }
     };
+
+    private String getAlertTitleText() {
+        if (calendarType != null && calendarType.equals(NewCalendarActivity.FRIEND_CALENDAR)) {
+            return "Event Request";
+        } else {
+            return "Create Event";
+        }
+    }
 
     public void createEvent(View view) {
         // TODO friendCalendar -> Account; groupCalendar -> Group
@@ -154,7 +170,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 .withStartTime(startTimePicker.getText().toString())
                 .withEndTime(endTimePicker.getText().toString())
                 .withPermission(new Permission().withType(permissionType));
-        if (calendarType.equals(NewCalendarActivity.FRIEND_CALENDAR)) {
+        if (calendarType != null && calendarType.equals(NewCalendarActivity.FRIEND_CALENDAR)) {
             event.setPermission(new Permission()
                     .withType(PermissionType.ACCOUNT)
                     .withPermitToId(targetId));

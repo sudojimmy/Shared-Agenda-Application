@@ -12,7 +12,8 @@
     <string name="menu_friends">Friends</string>
     <string name="menu_publicEvents">Public Events</string>
     <string name="menu_groupEvents">Group Events</string>
-    <string name="menu_events">My Events</string>
+    <string name="menu_events">Event Request</string>
+    <string name="menu_messages">Messages</string>
     <string name="menu_profile">Profile</string>
 
     <!-- activity title -->
