@@ -7,6 +7,7 @@ import com.cosin.shareagenda.entity.WeekDayEventEntity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -65,7 +66,25 @@ public class CalendarEventBiz {
         return String.format(DATE_FORMAT, year, (month + 1), dateOfMonth);
     }
 
+    public static String toDateString(final Date date) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+//Add one to month {0 - 11}
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        return String.format(DATE_FORMAT, year, (month + 1), day);
+    }
+
     public static String toTimeString(final int hour, final int minute) {
+        return String.format(TIME_FORMAT, hour, minute);
+    }
+
+    public static String toTimeString(final Date date) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
         return String.format(TIME_FORMAT, hour, minute);
     }
 
@@ -167,5 +186,12 @@ public class CalendarEventBiz {
         }
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
         return sdf.format(cal.getTime());
+    }
+
+    public static Date addHoursToDate(Date date, int hours) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, hours);
+        return calendar.getTime();
     }
 }

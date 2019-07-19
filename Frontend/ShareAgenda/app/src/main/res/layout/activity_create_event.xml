@@ -11,14 +11,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="30sp"
+            android:layout_marginTop="30sp"
+            android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create Event"
             android:layout_gravity="center"
-            android:layout_margin="40sp"
+            android:layout_margin="20sp"
             android:textSize="40sp"
             />
+
+        <ImageView
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/micButton"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_mic_blue_40dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:id="@+id/linearLayout">
+
+            <net.gotev.speech.ui.SpeechProgressView
+                android:id="@+id/progress"
+                android:layout_width="120dp"
+                android:layout_height="150dp"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -223,6 +256,7 @@
             android:background="@color/colorPrimaryDark"
             android:onClick="createEvent"
             android:text="Create" />
+
 
     </LinearLayout>
 </ScrollView>
