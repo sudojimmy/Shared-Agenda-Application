@@ -1,45 +1,23 @@
 package com.cosin.shareagenda.dialog;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosin.shareagenda.access.net.CallbackHandler;
-import com.cosin.shareagenda.adapter.FriendContactsAdapter;
 import com.cosin.shareagenda.api.ApiClient;
-import com.cosin.shareagenda.api.ApiErrorResponse;
-import com.google.gson.Gson;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import types.Account;
 
-import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
-import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
-
-public class DeleteFriendDialog extends SweetAlertDialog {
-    private final Account friendAccount;
+public class DeleteFriendDialog extends FriendDialog {
     private SweetAlertDialog alertDialog;
 
-    private DisplayAccountBaseDialog displayAccountRequestDialog;
-    private FriendContactsAdapter friendContactsAdapter;
-    private int position;
-
-    public DeleteFriendDialog(Context context,
-                              DisplayAccountBaseDialog displayAccountDialog,
-                              int alertType,
-                              Account friendAccount,
-                              int position,
-                              FriendContactsAdapter friendContactsAdapter) {
-        super(context, alertType);
-        this.displayAccountRequestDialog = displayAccountDialog;
-        this.friendAccount = friendAccount;
-
-        this.position = position;
-        this.friendContactsAdapter = friendContactsAdapter;
-
+    public DeleteFriendDialog(Context context, DisplayAccountBaseDialog displayAccountDialog, int alertType, Account friendAccount, int position, RecyclerView.Adapter adapter) {
+        super(context, displayAccountDialog, alertType, friendAccount, position, adapter);
         init();
     }
+
 
     void init() {
         setTitleText("Delete Account \"" + friendAccount.getNickname()+ "\"?");
@@ -50,7 +28,7 @@ public class DeleteFriendDialog extends SweetAlertDialog {
             @Override
             public void onClick(SweetAlertDialog sDialog) {
                 ApiClient.deleteFriend(friendAccount.getAccountId(),
-                        new CallbackHandler(deleteAccountHandler));
+                        new CallbackHandler(handler));
                 sDialog.changeAlertType(SweetAlertDialog.PROGRESS_TYPE);
                 sDialog.setContentText("Deleting ...");
                 alertDialog = sDialog;
@@ -60,39 +38,14 @@ public class DeleteFriendDialog extends SweetAlertDialog {
 
     }
 
-    private Handler deleteAccountHandler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(android.os.Message message) {
-            final Gson gson = new Gson();
-            switch (message.what) {
-                case SUCCESS:
-                    alertDialog
-                            .setTitleText("Deleted!")
-                            .setContentText("Your friendAccount has been deleted!")
-                            .setConfirmText("OK")
-                            .showCancelButton(false)
-                            .setConfirmClickListener(null)
-                            .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+    @Override
+    public String getTitleTextText() {
+        return "Deleted!";
+    }
 
-                    displayAccountRequestDialog.dismiss();
-
-                    if (friendContactsAdapter != null) {
-                        friendContactsAdapter.removeElementFromContactList(position);
-                    }
-                    break;
-                case HTTP_FAILURE:
-                    ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
-                    alertDialog
-                            .setTitleText("Error!")
-                            .setContentText(errorResponse.getMessage())
-                            .setConfirmText("OK")
-                            .showCancelButton(false)
-                            .setConfirmClickListener(null)
-                            .changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                    break;
-                default:
-                    Toast.makeText(getContext(), (String) message.obj, Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
+    @Override
+    public String getContentText() {
+        return "Your friendAccount has been deleted!";
+    }
 }
+

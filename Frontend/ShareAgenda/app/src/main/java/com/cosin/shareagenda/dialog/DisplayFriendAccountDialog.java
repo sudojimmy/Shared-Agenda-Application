@@ -4,26 +4,27 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
-import com.cosin.shareagenda.adapter.FriendContactsAdapter;
 import com.cosin.shareagenda.api.ApiClient;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class DisplayFriendAccountDialog extends DisplayAccountBaseDialog {
     private DisplayFriendAccountDialog conAdapter;
-    private FriendContactsAdapter friendContactsAdapter;
+    private RecyclerView.Adapter adapter;
 
 
     public DisplayFriendAccountDialog(Context context,
                                        String accountId,
                                        int position,
-                                       FriendContactsAdapter friendContactsAdapter) {
+                                       RecyclerView.Adapter adapter) {
         super(context, accountId, position);
         ApiClient.getAccount(accountId, new CallbackHandler(handler));
 
-        this.friendContactsAdapter = friendContactsAdapter;
+        this.adapter = adapter;
     }
 
 
@@ -40,7 +41,7 @@ public class DisplayFriendAccountDialog extends DisplayAccountBaseDialog {
                         SweetAlertDialog.WARNING_TYPE,
                         DisplayFriendAccountDialog.super.getAccount(),
                         DisplayFriendAccountDialog.super.getPosition(),
-                        friendContactsAdapter)
+                        adapter)
                         .show();
             }
         });

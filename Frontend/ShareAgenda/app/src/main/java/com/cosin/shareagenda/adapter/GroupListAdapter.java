@@ -41,7 +41,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
 
     public GroupListAdapter(Context context) {
         this.context = context;
-        updateFriendList();
+        updateInformation();
     }
 
     public void setMemberList(List<Account> memberList) {
@@ -66,12 +66,13 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         this.ownerId = ownerId;
     }
 
-    private void updateFriendList(){
+    public void updateInformation(){
         ApiClient.getFriendQueue(new CallbackHandler(handler));
     }
 
     private void setMyFriendList(List<String> myFriendList) {
         this.myFriendList = myFriendList;
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -125,39 +126,27 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
                 // show the group member profile
                 if (memberAccountId.equals(Model.model.getUser().getAccountId())) {
                     // oneself
-                    DisplayFriendRequestAccountDialog displayFriendRequestAccountDialog =
-                            new DisplayFriendRequestAccountDialog(
-                                    getContext(),
-                                    memberAccountId,
-                                    position);
-                    displayFriendRequestAccountDialog.show();
+                    new DisplayFriendRequestAccountDialog(
+                            getContext(),
+                            memberAccountId,
+                            position).show();
                 } else if (myFriendList.contains(memberAccountId)) {
                     // has been friend
                     // may delete him/her
-
-                    FriendContactsAdapter friendContactsAdapter = null;
-
-                    DisplayFriendAccountDialog displayAccountRequestDialog =
-                            new DisplayFriendAccountDialog(
-                                    getContext(),
-                                    memberAccountId,
-                                    position,
-                                    friendContactsAdapter);
-                    displayAccountRequestDialog.show();
-
+                    new DisplayFriendAccountDialog(
+                            getContext(),
+                            memberAccountId,
+                            position,
+                            GroupListAdapter.this).show();
                 } else {
                     // not friend && may want to add
-                    SearchFriendsAdapter searchFriendsAdapter = null;
                     String candidateId = memberList.get(position).getAccountId();
                     new DisplayAddAccountDialog(
                             getContext(),
                             candidateId,
                             position,
-                            searchFriendsAdapter).show();
+                            GroupListAdapter.this).show();
                 }
-
-                notifyDataSetChanged();
-                updateFriendList();
             }
         });
 
