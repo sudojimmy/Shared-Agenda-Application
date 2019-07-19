@@ -29,7 +29,7 @@ public class FriendMessageActivity extends MainTitleActivity {
 
     @Override
     protected void loadData() {
-        ApiClient.getMessageQueue(new CallbackHandler(handler));
+        ApiClient.getNewFriendMessageQueue(new CallbackHandler(handler));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class FriendMessageActivity extends MainTitleActivity {
             switch (message.what) {
                 case SUCCESS:
                     String body = (String) message.obj;
-                    GetMessageQueueResponse resp = gson.fromJson(body, GetMessageQueueResponse.class);
+                    GetNewFriendMessageQueueResponse resp = gson.fromJson(body, GetMessageQueueResponse.class);
                     friendMessageAdapter.setMessages(resp.getMessageList());
                     break;
                 case HTTP_FAILURE:

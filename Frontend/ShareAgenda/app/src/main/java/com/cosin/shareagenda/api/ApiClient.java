@@ -50,6 +50,7 @@ import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_EVENT_MONTHLY;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_LIST;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_MESSAGE_QUEUE;
+import static com.cosin.shareagenda.api.ApiEndpoint.GET_NEW_FRIEND_MESSAGE_QUEUE;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_OCCUPIED_TIME;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_REPLY_MESSAGE_QUEUE;
 import static com.cosin.shareagenda.api.ApiEndpoint.INVITE_EVENT;
@@ -183,6 +184,13 @@ public class ApiClient extends BaseApiClient {
                 .withAccountId(getAccountId())
                 .withMessageQueueId(Model.model.getUser().getMessageQueueId());
         makePostRequest(GET_MESSAGE_QUEUE, gson.toJson(request), callback);
+    }
+
+    public static void getNewFriendMessageQueue(Callback callback) {
+        GetMessageQueueRequest request = new GetMessageQueueRequest()
+                .withAccountId(getAccountId())
+                .withMessageQueueId(Model.model.getUser().getMessageQueueId());
+        makePostRequest(GET_NEW_FRIEND_MESSAGE_QUEUE, gson.toJson(request), callback);
     }
 
     public static void getEventMessageQueue(Callback callback) {

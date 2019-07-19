@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -76,10 +75,10 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
         viewHolder.viewName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String candidateId = friends.get(position).getAccountId();
+                //String candidateId = friends.get(position).getAccountId();
                 new DisplayAddAccountDialog(
                         getContext(),
-                        candidateId,
+                        friends.get(position),
                         position,
                         getSearchFriendAdapter() ).show();
             }

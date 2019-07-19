@@ -35,7 +35,7 @@ import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.ViewHolder> {
     private List<Account> memberList = new ArrayList<>();
-    private List<String> myFriendList;
+    private List<Account> myFriendList;
     private Context context;
     private String ownerId;
 
@@ -70,7 +70,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         ApiClient.getFriendQueue(new CallbackHandler(handler));
     }
 
-    private void setMyFriendList(List<String> myFriendList) {
+    private void setMyFriendList(List<Account> myFriendList) {
         this.myFriendList = myFriendList;
         notifyDataSetChanged();
     }
@@ -128,22 +128,21 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
                     // oneself
                     new DisplayFriendRequestAccountDialog(
                             getContext(),
-                            memberAccountId,
+                            memberAccount,
                             position).show();
-                } else if (myFriendList.contains(memberAccountId)) {
+                } else if (myFriendList.contains(memberAccount)) {
                     // has been friend
                     // may delete him/her
                     new DisplayFriendAccountDialog(
                             getContext(),
-                            memberAccountId,
+                            memberAccount,
                             position,
                             GroupListAdapter.this).show();
                 } else {
                     // not friend && may want to add
-                    String candidateId = memberList.get(position).getAccountId();
                     new DisplayAddAccountDialog(
                             getContext(),
-                            candidateId,
+                            memberAccount,
                             position,
                             GroupListAdapter.this).show();
                 }
