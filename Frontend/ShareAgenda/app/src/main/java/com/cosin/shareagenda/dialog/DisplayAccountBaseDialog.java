@@ -3,6 +3,7 @@ package com.cosin.shareagenda.dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,6 +12,7 @@ import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.api.ApiClient;
 import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import types.Account;
 import types.GetAccountResponse;
@@ -23,13 +25,17 @@ public class DisplayAccountBaseDialog extends BaseDialog {
     private int position;
 
 
-    public DisplayAccountBaseDialog(Context context,
-                                       String accountId,
-                                       int position) {
+    public DisplayAccountBaseDialog(Context context, String accountId, int position) {
         super(context);
         ApiClient.getAccount(accountId, new CallbackHandler(handler));
 
         this.position = position;
+    }
+
+    public DisplayAccountBaseDialog(Context context, Account account, int position) {
+        super(context);
+        this.position = position;
+        setAccount(account);
     }
 
     @Override
@@ -56,9 +62,15 @@ public class DisplayAccountBaseDialog extends BaseDialog {
     }
 
     private void updateView(){
-        ((TextView)findViewById(R.id.friendName)).setText(account.getNickname());
-        ((TextView)findViewById(R.id.profile_email)).setText(account.getAccountId());
-        ((TextView)findViewById(R.id.profile_description)).setText(account.getDescription());
+        ((TextView) findViewById(R.id.friendName)).setText(account.getNickname());
+        ((TextView) findViewById(R.id.profile_email)).setText(account.getAccountId());
+        ((TextView) findViewById(R.id.profile_description)).setText(account.getDescription());
+
+        if (account.getProfileImageUrl() != null) {
+            ImageView profileImage = findViewById(R.id.profile_image);
+            Picasso.with(getContext()).load(account.getProfileImageUrl())
+                    .centerInside().fit().into(profileImage);
+        }
     }
 
     @Override
@@ -83,6 +95,7 @@ public class DisplayAccountBaseDialog extends BaseDialog {
                     setAccount(new Account()
                             .withAccountId(resp.getAccountId())
                             .withCalendarId(resp.getCalendarId())
+                            .withProfileImageUrl(resp.getProfileImageUrl())
                             .withFriendQueueId(resp.getFriendQueueId())
                             .withGroupQueueId(resp.getGroupQueueId())
                             .withMessageQueueId(resp.getMessageQueueId())

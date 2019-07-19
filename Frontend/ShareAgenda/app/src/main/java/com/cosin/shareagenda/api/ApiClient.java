@@ -1,5 +1,7 @@
 package com.cosin.shareagenda.api;
 
+import android.net.Uri;
+
 import com.cosin.shareagenda.access.net.NetLoader;
 import com.cosin.shareagenda.config.SystemConfig;
 import com.cosin.shareagenda.model.Model;
@@ -64,10 +66,14 @@ public class ApiClient extends BaseApiClient {
     }
 
     public static void createAccount(String nickname, String description, Callback callback) {
+        Uri photoUrl = Model.model.getGoogleSignInAccount().getPhotoUrl();
         CreateAccountRequest createAccountRequest = new CreateAccountRequest()
                 .withAccountId(getAccountId())
                 .withNickname(nickname)
                 .withDescription(description);
+        if (photoUrl != null) {
+            createAccountRequest.withProfileImageUrl(photoUrl.toString());
+        }
         makePostRequest(CREATE_ACCOUNT, gson.toJson(createAccountRequest), callback);
     }
 
@@ -228,12 +234,6 @@ public class ApiClient extends BaseApiClient {
                 .withMessageId(msgId)
                 .withStatus(status);
         makePostRequest(REPLY_FRIEND, gson.toJson(request), callback);
-    }
-
-    public static void getFriendQueue(String accountId, Callback callback){
-        GetFriendQueueRequest request = new GetFriendQueueRequest()
-                .withAccountId(accountId);
-        makePostRequest(GET_FRIEND_QUEUE, gson.toJson(request), callback);
     }
 
     private static String getAccountId() {

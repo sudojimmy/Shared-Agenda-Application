@@ -5,27 +5,25 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
-import com.cosin.shareagenda.adapter.SearchFriendsAdapter;
 import com.cosin.shareagenda.api.ApiClient;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class DisplayAddAccountDialog extends DisplayAccountBaseDialog {
-    private DisplayAddAccountDialog conAdapter;
-    private SearchFriendsAdapter searchFriendAdapter;
-
+    private RecyclerView.Adapter adapter;
 
     public DisplayAddAccountDialog(Context context,
                                    String accountId,
                                    int position,
-                                   SearchFriendsAdapter searchFriendAdapter) {
+                                   RecyclerView.Adapter adapter) {
         super(context, accountId, position);
         ApiClient.getAccount(accountId, new CallbackHandler(handler));
 
-        this.searchFriendAdapter = searchFriendAdapter;
+        this.adapter = adapter;
 
     }
 
@@ -48,7 +46,7 @@ public class DisplayAddAccountDialog extends DisplayAccountBaseDialog {
                         SweetAlertDialog.PROGRESS_TYPE,
                         DisplayAddAccountDialog.super.getAccount(),
                         DisplayAddAccountDialog.super.getPosition(),
-                        searchFriendAdapter)
+                        adapter)
                         .show();
 
             }
