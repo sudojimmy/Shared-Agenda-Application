@@ -29,6 +29,7 @@ import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class CreateGroupActivity extends MainTitleActivity {
     private List<VO_Member> members = new ArrayList<>();
+    private List<Account> memberAccount = new ArrayList<>();
     private GroupMemberAdapter groupAdapter;
     private TextView groupDescription;
     private TextView groupName;
@@ -56,9 +57,9 @@ public class CreateGroupActivity extends MainTitleActivity {
         groupName = findViewById(R.id.inGroupName);
         RecyclerView rv = findViewById(R.id.rvContacts);
         StaggeredGridLayoutManager sgl =
-                new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+                new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         rv.setLayoutManager(sgl);
-        groupAdapter = new GroupMemberAdapter(members);
+        groupAdapter = new GroupMemberAdapter(members, this);
         rv.setAdapter(groupAdapter);
 
         Button btnCreateGroup = findViewById(R.id.btnCreateGroup);
@@ -97,9 +98,11 @@ public class CreateGroupActivity extends MainTitleActivity {
                     GetFriendQueueResponse resp = gson.fromJson(body, GetFriendQueueResponse.class);
                     for (Account friend: resp.getFriendList()) {
                         String friendId = friend.getAccountId();
+                        memberAccount.add(friend);
                         members.add(new VO_Member(friendId));
                     }
                     groupAdapter.setMembers(members);
+                    groupAdapter.setMembersAccount(memberAccount);
                     break;
             }
         }
