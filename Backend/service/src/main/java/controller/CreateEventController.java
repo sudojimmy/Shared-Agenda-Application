@@ -44,7 +44,7 @@ public class CreateEventController extends BaseController {
             Group group = GroupUtils.getGroup(groupId);
             EventListUtils.addEventIdToCalendar(eventId, group.getCalendarId());
         }
-        
+
         EventListUtils.addEventIdToCalendar(eventId, account.getCalendarId());
 
         // Step IV: create response object

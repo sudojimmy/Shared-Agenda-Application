@@ -37,11 +37,12 @@ public class GetGroupController extends BaseController {
         }
 
         return new ResponseEntity<>(new GetGroupResponse()
-            .withGroupId(group.getGroupId())
-            .withName(group.getName())
-            .withDescription(group.getDescription())
-            .withMembers(memberList)
-            .withOwnerId(group.getOwnerId()),
+                .withGroupId(group.getGroupId())
+                .withName(group.getName())
+                .withDescription(group.getDescription())
+                .withMembers(memberList)
+                .withOwnerId(group.getOwnerId())
+                .withCalendarId(group.getCalendarId()),
             HttpStatus.OK);
     }
 }
