@@ -1,17 +1,19 @@
 package com.cosin.shareagenda.activity;
 
 import android.content.Intent;
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.model.Model;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.pusher.pushnotifications.PushNotifications;
 import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends MainTitleActivity {
@@ -49,6 +51,12 @@ public class ProfileActivity extends MainTitleActivity {
         });
 
         setDataOnView();
+        registerNotification();
+    }
+
+    private void registerNotification() {
+        PushNotifications.start(getApplicationContext(), "3dda1e61-a4af-4f29-bca8-6ad42366e5f9");
+        PushNotifications.addDeviceInterest(Model.model.getUser().getAccountId());
     }
 
     private void setDataOnView() {

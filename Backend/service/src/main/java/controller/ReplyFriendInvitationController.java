@@ -45,6 +45,7 @@ public class ReplyFriendInvitationController extends BaseController {
             FriendQueueUtils.addFriendToFriendQueue(receiver.getAccountId(), sender.getFriendQueueId());
             FriendQueueUtils.addFriendToFriendQueue(sender.getAccountId(), receiver.getFriendQueueId());
         }
+        PushNotificationUtils.getInstance().pushNotification(replyMessage);
 
         // Step IV: create response object
         return new ResponseEntity<>(new ReplyInvitationResponse().withReplyId(replyMessage.getReplyId()),

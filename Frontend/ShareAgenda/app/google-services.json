@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "780685406520",
+    "firebase_url": "https://timespace-f9e68.firebaseio.com",
+    "project_id": "timespace-f9e68",
+    "storage_bucket": "timespace-f9e68.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780685406520:android:dbe79464e044e623",
+        "android_client_info": {
+          "package_name": "com.cosin.shareagenda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780685406520-ke1v7cqss01m6l1hgrbfodd4v80npfqk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5sGTc-H3mH51BtSk2N3MTW3qAf-u6Twc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780685406520-tlq6mna1ol1skhsjc8ijd5ss2aujjvh3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
