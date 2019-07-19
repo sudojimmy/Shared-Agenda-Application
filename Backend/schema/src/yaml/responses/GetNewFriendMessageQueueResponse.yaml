@@ -1,0 +1,13 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: GetNewFriendMessageQueueResponse
+description: get queue of new friend invitation account
+type: object
+additionalProperties: false
+properties:
+  messageList:
+    description: a list of reply message object
+    type: array
+    items:
+      "$ref": ../types/FriendMessage.yaml
+required:
+  - messageList
