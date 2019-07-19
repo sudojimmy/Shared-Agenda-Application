@@ -5,9 +5,9 @@ type: object
 additionalProperties: false
 properties:
   friendList:
-    description: a list of account Id
+    description: a list of account
     type: array
     items:
-      type: string
+      "$ref": ../types/Account.yaml
 required:
   - friendList

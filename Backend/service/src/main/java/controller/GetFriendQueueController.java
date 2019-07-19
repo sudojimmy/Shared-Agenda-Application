@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import types.Account;
 import types.GetFriendQueueRequest;
 import types.GetFriendQueueResponse;
+import utils.AccountUtils;
 import utils.ExceptionUtils;
 import utils.FriendQueueUtils;
 
@@ -29,6 +30,14 @@ public class GetFriendQueueController extends BaseController {
 
         ArrayList<String> friendList = FriendQueueUtils.getFriendList(account.getFriendQueueId());
 
-        return new ResponseEntity<>(new GetFriendQueueResponse().withFriendList(friendList),HttpStatus.OK);
+        ArrayList<Account> friendAccountList = new ArrayList<Account>();
+
+        for(String accountId: friendList) {
+            Account friend = AccountUtils.getAccount(accountId, ApiConstant.ACCOUNT_ACCOUNT_ID);
+            friendAccountList.add(friend);
+        }
+
+        return new ResponseEntity<>
+                (new GetFriendQueueResponse().withFriendList(friendAccountList), HttpStatus.OK);
     }
 }
