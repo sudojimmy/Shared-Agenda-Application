@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import types.MessageType;
 import types.ReplyMessage;
+import types.ReplyStatus;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,12 +27,7 @@ public class PushNotificationUtils {
         return instance;
     }
 
-    public void pushNotification(final String senderId, final String receiverId, MessageType type) {
-        if (secretKey == null) {
-            logger.info("Secret Key for Push Notification NOT FOUND. Skip push notification!");
-            return;
-        }
-
+    public void pushInvitationNotification(final String senderId, final String receiverId, MessageType type) {
         String title;
         String body;
         switch (type) {
@@ -43,12 +39,32 @@ public class PushNotificationUtils {
                 title = "New Event Invitation";
                 body = senderId + " invite you to an event!";
                 break;
-            case RESPONSE:
-                title = "You Got a Response";
-                body = senderId + " accepted your request!";
-                break;
             default:
                 return; // NOT SUPPORTED TYPE
+        }
+
+        push(title, body, receiverId);
+    }
+
+    public void pushFriendNotification(final ReplyMessage replyMessage) {
+        String title = "You Got a Response";
+        String body = String.format("%s %s your friend request!", replyMessage.getSenderId(),
+                replyMessage.getStatus().equals(ReplyStatus.ACCEPT) ? "accepted" : "declined");
+        push(title, body, replyMessage.getReceiverId());
+    }
+
+    public void pushEventNotification(final ReplyMessage replyMessage, final String eventname) {
+        String title = "Event Invitation Response";
+        String body = String.format("%s %s your invitation to %s!", replyMessage.getSenderId(),
+                replyMessage.getStatus().equals(ReplyStatus.ACCEPT) ? "accepted" : "declined",
+                eventname);
+        push(title, body, replyMessage.getReceiverId());
+    }
+
+    private void push(final String title, final String body, final String receiverId) {
+        if (secretKey == null) {
+            logger.info("Secret Key for Push Notification NOT FOUND. Skip push notification!");
+            return;
         }
 
         PushNotifications beamsClient = new PushNotifications(INSTANCE_ID, secretKey);
@@ -68,9 +84,5 @@ public class PushNotificationUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void pushNotification(final ReplyMessage replyMessage) {
-        pushNotification(replyMessage.getSenderId(), replyMessage.getReceiverId(), replyMessage.getType());
     }
 }
