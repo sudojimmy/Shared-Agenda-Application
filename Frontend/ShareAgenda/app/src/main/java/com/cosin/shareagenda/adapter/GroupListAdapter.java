@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.cosin.shareagenda.dialog.DisplayFriendAccountDialog;
 import com.cosin.shareagenda.dialog.DisplayFriendRequestAccountDialog;
 import com.cosin.shareagenda.model.Model;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +67,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
     }
 
     private void updateFriendList(){
-        ApiClient.getFriendQueue(Model.model.getUser().getAccountId(), new CallbackHandler(handler));
+        ApiClient.getFriendQueue(new CallbackHandler(handler));
     }
 
     private void setMyFriendList(List<String> myFriendList) {
@@ -73,10 +75,11 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nameTextView;
-        TextView description;
-        TextView selfIdentity;
-        RelativeLayout relativeLayout;
+        private final ImageView profileImage;
+        private final TextView nameTextView;
+        private final TextView description;
+        private final TextView selfIdentity;
+        private final RelativeLayout relativeLayout;
 
         public ViewHolder(View view) {
             super(view);
@@ -84,6 +87,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
             description = view.findViewById(R.id.description);
             selfIdentity = view.findViewById(R.id.you);
             relativeLayout = view.findViewById(R.id.group_list_row_id);
+            profileImage = view.findViewById(R.id.imageView);
         }
     }
 
@@ -158,6 +162,15 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         });
 
         holder.description.setText(memberAccount.getDescription());
+
+        if (memberAccount.getProfileImageUrl() != null) {
+            Picasso.with(getContext())
+                    .load(memberAccount.getProfileImageUrl())
+                    .centerInside()
+                    .fit()
+                    .into(holder.profileImage);
+        }
+
     }
 
 

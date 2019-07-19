@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="ALICECUTIE"
+            android:text="DefaultName"
             android:textSize="20sp" />
 
         <TextView
@@ -51,5 +51,5 @@
         android:layout_alignBottom="@+id/imageView"
         android:layout_marginStart="20dp"
         android:layout_toEndOf="@+id/imageView"
-        android:text="HUOHUO, MOM LOVE YOU SOOO MUCH" />
+        android:text="Default Description" />
 </RelativeLayout>

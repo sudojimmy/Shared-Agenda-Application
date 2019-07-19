@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cosin.shareagenda.R;
@@ -21,6 +22,7 @@ import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class DisplayFriendRequestAccountDialog extends DisplayAccountBaseDialog {
     private DisplayFriendRequestAccountDialog conAdapter;
+    private ImageView profileImage;
 
 
     public DisplayFriendRequestAccountDialog(Context context,
@@ -35,6 +37,8 @@ public class DisplayFriendRequestAccountDialog extends DisplayAccountBaseDialog 
     protected void initView() {
         Button btn = findViewById(R.id.manage);
         btn.setVisibility(View.GONE);
+
+        profileImage = findViewById(R.id.profile_image);
     }
 
     Handler handlerFriendRequest = new Handler(Looper.getMainLooper()) {
