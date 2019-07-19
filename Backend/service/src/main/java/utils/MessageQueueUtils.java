@@ -100,5 +100,8 @@ public class MessageQueueUtils {
 
         // add the Message(replyMessage) to messageQueue
         MessageUtils.addMessageIdToMessageQueue(reply, senderMessageQueueId);
+
+        PushNotificationUtils.getInstance()
+                .pushNotification(sender.getAccountId(), receiver.getAccountId(),type);
     }
 }
