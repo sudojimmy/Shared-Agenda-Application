@@ -14,10 +14,10 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -37,6 +37,8 @@ import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.CalendarEventBiz;
 import com.google.gson.Gson;
+import com.joestelmach.natty.DateGroup;
+import com.joestelmach.natty.Parser;
 
 import net.gotev.speech.GoogleVoiceTypingDisabledException;
 import net.gotev.speech.Speech;
@@ -45,8 +47,7 @@ import net.gotev.speech.SpeechRecognitionNotAvailable;
 import net.gotev.speech.SpeechUtil;
 import net.gotev.speech.ui.SpeechProgressView;
 
-import org.apache.commons.lang3.ObjectUtils;
-
+import java.util.Date;
 import java.util.List;
 
 import types.Event;
@@ -75,7 +76,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText endTimePicker;
     private EditText startDatePicker;
     private EditText endDatePicker;
-    private ImageButton micButton;
+    private ImageView micButton;
     private LinearLayout linearLayout;
     private SpeechProgressView progress;
 
@@ -215,17 +216,6 @@ public class CreateEventActivity extends AppCompatActivity {
     private void onRecordAudioPermissionGranted() {
         micButton.setVisibility(View.GONE);
         linearLayout.setVisibility(View.VISIBLE);
-//
-//        try {
-//            Speech.getInstance().stopTextToSpeech();
-//            Speech.getInstance().startListening(progress, CreateEventActivity.this);
-//
-//        } catch (SpeechRecognitionNotAvailable exc) {
-//            showSpeechNotSupportedDialog();
-//
-//        } catch (GoogleVoiceTypingDisabledException exc) {
-//            showEnableGoogleVoiceTyping();
-//        }
         try {
             Speech.getInstance().stopTextToSpeech();
             // you must have android.permission.RECORD_AUDIO granted at this point
@@ -256,7 +246,6 @@ public class CreateEventActivity extends AppCompatActivity {
                     micButton.setVisibility(View.VISIBLE);
                     linearLayout.setVisibility(View.GONE);
 
-//                    text.setText(result);
 
                     if (result.isEmpty()) {
                         Speech.getInstance().say(getString(R.string.repeat));
@@ -279,21 +268,53 @@ public class CreateEventActivity extends AppCompatActivity {
 
     private void processSpeech(String result) {
         String[] splits = result.split("fill |with |feel |set |field ");
+        String test = "have a meeting tommorrow 9 pm to 11 pm";
+        try {
+            List<Date> dates = new Parser().parse(result).get(0).getDates();
+            if (dates.size() >= 1) {
+                Date start = dates.get(0);
+
+                startDatePicker.setText(CalendarEventBiz.toDateString(start));
+                startTimePicker.setText(CalendarEventBiz.toTimeString(start));
+                if (dates.size() == 1) {
+                    Date end = CalendarEventBiz.addHoursToDate(start, 1);
+
+                    endDatePicker.setText(CalendarEventBiz.toDateString(end));
+                    endTimePicker.setText(CalendarEventBiz.toTimeString(end));
+                }
+            }
+            if (dates.size() >= 2) {
+                Date end = dates.get(1);
+
+                endDatePicker.setText(CalendarEventBiz.toDateString(end));
+                endTimePicker.setText(CalendarEventBiz.toTimeString(end));
+            }
+        } catch(Exception e) {
+
+        }
+
         for (int i = 0;i < splits.length; i++) {
             String str = splits[i];
             if (i+1>= splits.length) {
                 return;
             }
-            if (str.contains("location")) {
-
+            else if (str.contains("location")) {
                 eventLocation.setText(splits[i+1]);
+                i++;
             }
-//            switch (str){
-//                case "location":
-//                    eventLocation.setText(splits[i+1]);
-//                    break;
-////                case ""
-//            }
+            else if (str.contains("name")) {
+                eventName.setText(splits[i+1]);
+                i++;
+            }
+            else if (str.contains("description")) {
+                eventDescription.setText(splits[i+1]);
+                i++;
+            }
+            else if (str.contains("repeat")) {
+                String repeatType = splits[i+1];
+                eventDescription.setText(splits[i+1]);
+                i++;
+            }
         }
         return;
     }
