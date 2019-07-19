@@ -20,17 +20,15 @@ public class DisplayAddAccountDialog extends DisplayAccountBaseDialog {
                                    int position,
                                    RecyclerView.Adapter adapter) {
         super(context, account, position);
-        //ApiClient.getAccount(accountId, new CallbackHandler(handler));
 
         this.adapter = adapter;
-
     }
-
-
 
 
     @Override
     protected void initView() {
+        super.initView();
+
         Button btn = findViewById(R.id.manage);
         String add = "ADD";
         btn.setText(add);

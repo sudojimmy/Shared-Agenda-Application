@@ -14,7 +14,7 @@ import com.cosin.shareagenda.api.ApiClient;
 import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.google.gson.Gson;
 
-import types.GetMessageQueueResponse;
+import types.GetNewFriendMessageQueueResponse;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
@@ -55,7 +55,8 @@ public class FriendMessageActivity extends MainTitleActivity {
             switch (message.what) {
                 case SUCCESS:
                     String body = (String) message.obj;
-                    GetNewFriendMessageQueueResponse resp = gson.fromJson(body, GetMessageQueueResponse.class);
+                    GetNewFriendMessageQueueResponse resp
+                            = gson.fromJson(body, GetNewFriendMessageQueueResponse.class);
                     friendMessageAdapter.setMessages(resp.getMessageList());
                     break;
                 case HTTP_FAILURE:

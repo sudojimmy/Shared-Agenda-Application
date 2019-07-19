@@ -21,7 +21,6 @@ public class DisplayFriendAccountDialog extends DisplayAccountBaseDialog {
                                        int position,
                                        RecyclerView.Adapter adapter) {
         super(context, account, position);
-        //ApiClient.getAccount(account.getAccountId(), new CallbackHandler(handler));
 
         this.adapter = adapter;
     }
@@ -29,6 +28,8 @@ public class DisplayFriendAccountDialog extends DisplayAccountBaseDialog {
 
     @Override
     protected void initView() {
+        super.initView();
+
         Button btn = findViewById(R.id.manage);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -75,7 +75,6 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
         viewHolder.viewName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //String candidateId = friends.get(position).getAccountId();
                 new DisplayAddAccountDialog(
                         getContext(),
                         friends.get(position),
