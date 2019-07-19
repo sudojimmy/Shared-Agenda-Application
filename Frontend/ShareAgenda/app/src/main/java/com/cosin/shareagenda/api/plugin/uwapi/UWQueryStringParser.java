@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class UWQueryStringParser {
     public static UWCourseQueryInfo parseQueryString(String str) {
         // "+UW" + (at least one space) + (alpha+) + (optional space) + (course number) + (optional space + term)
-        String regex = "\\+UW\\p{Space}+(\\p{Alpha}+)\\p{Space}*(\\d+)\\p{Space}*(\\d+)?";
+        String regex = "\\+UW\\p{Space}+(\\p{Alpha}+)\\p{Space}*(\\d+\\p{Alpha}?)\\p{Space}*(\\d+)?";
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         Matcher m = pattern.matcher(str);
         if (!m.matches()) {
