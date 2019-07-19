@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import types.*;
-import utils.EventMessageUtils;
+import utils.AccountUtils;
 import utils.ExceptionUtils;
 import utils.MessageQueueUtils;
 
@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 import static utils.AccountUtils.getAccount;
 
 @RestController
-public class GetEventMessageQueueController extends BaseController {
+public class GetNewFriendMessageQueueController extends BaseController {
 
-    @PostMapping("/getEventMessageQueue")
-    public ResponseEntity<GetEventMessageQueueResponse> handle(@RequestBody GetMessageQueueRequest request) {
-        logger.info("GetEventMessageQueue: " + request);
+    @PostMapping("/getNewFriendMessageQueue")
+    public ResponseEntity<GetNewFriendMessageQueueResponse> handle(@RequestBody GetMessageQueueRequest request) {
+        logger.info("GetNewFriendMessageQueue: " + request);
 
         ExceptionUtils.assertPropertyValid(request.getAccountId(), ApiConstant.ACCOUNT_ACCOUNT_ID);
         ExceptionUtils.assertPropertyValid(request.getMessageQueueId(), ApiConstant.MESSAGEQUEUE_MESSAGEQUEUE_ID);
@@ -31,14 +31,15 @@ public class GetEventMessageQueueController extends BaseController {
             ExceptionUtils.invalidProperty("Can only get own's MessageQueue");
         }
 
-        final List<EventMessage> eventList = MessageQueueUtils
+        final List<FriendMessage> accountList = MessageQueueUtils
                 .getMessageList(request.getMessageQueueId())
                 .stream()
-                .filter((Message m) -> m.getType().equals(MessageType.EVENT))
-                .map(Message::getMessageId)
-                .map(EventMessageUtils::getEventMessage)
+                .filter((Message m) -> m.getType().equals(MessageType.FRIEND))
+                .map((Message m) -> new FriendMessage()
+                        .withAccount(AccountUtils.getAccount(m.getSenderId()))
+                        .withMessageId(m.getMessageId()))
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<>(new GetEventMessageQueueResponse().withMessageList(eventList),HttpStatus.OK);
+        return new ResponseEntity<>(new GetNewFriendMessageQueueResponse().withMessageList(accountList),HttpStatus.OK);
     }
 }
