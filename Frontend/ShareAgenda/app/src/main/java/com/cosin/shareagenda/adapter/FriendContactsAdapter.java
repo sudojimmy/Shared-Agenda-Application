@@ -17,19 +17,21 @@ import com.cosin.shareagenda.dialog.DisplayFriendAccountDialog;
 import java.util.ArrayList;
 import java.util.List;
 
+import types.Account;
+
 public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAdapter.ViewHolder> {
-    private List<String> contactList;
+    private List<Account> contactList;
     Context context;
 
     public FriendContactsAdapter(Context context) {
         this.context = context;
         this.contactList = new ArrayList<>();
     }
-    public FriendContactsAdapter(Context context, List<String> contactList){
+    public FriendContactsAdapter(Context context, List<Account> contactList){
         this.contactList = contactList;
     }
 
-    public void setContactList(List<String> contactList) {
+    public void setContactList(List<Account> contactList) {
         this.contactList = contactList;
         notifyDataSetChanged();
     }
@@ -67,16 +69,16 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
 
     @Override
     public void onBindViewHolder(FriendContactsAdapter.ViewHolder holder, int position) {
-        holder.tvContactName.setText(contactList.get(position));
+        holder.tvContactName.setText(contactList.get(position).getAccountId());
         holder.tvContactName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String entity = contactList.get(position);
-                String accountId = contactList.get(position);
+                //String entity = contactList.get(position);
+                Account account = contactList.get(position);
                 DisplayFriendAccountDialog displayAccountRequestDialog =
                         new DisplayFriendAccountDialog(
                                 getContext(),
-                                accountId,
+                                account,
                                 position,
                                 getFriendContactsAdapter());
                 displayAccountRequestDialog.show();
@@ -89,7 +91,7 @@ public class FriendContactsAdapter extends RecyclerView.Adapter<FriendContactsAd
         holder.ivCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String entity = contactList.get(position);
+                String entity = contactList.get(position).getAccountId();
                 Intent intent = new Intent(v.getContext(), NewCalendarActivity.class);
                 intent.putExtra(NewCalendarActivity.CALENDAR_TARGET_ID, entity);
                 intent.putExtra(NewCalendarActivity.CALENDAR_ACTIVITY_TYPE, NewCalendarActivity.FRIEND_CALENDAR);

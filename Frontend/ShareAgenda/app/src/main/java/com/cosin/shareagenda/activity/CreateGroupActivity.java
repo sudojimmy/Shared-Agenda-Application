@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import types.Account;
 import types.GetFriendQueueResponse;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
@@ -94,7 +95,8 @@ public class CreateGroupActivity extends MainTitleActivity {
                 case SUCCESS:
                     String body = (String) message.obj;
                     GetFriendQueueResponse resp = gson.fromJson(body, GetFriendQueueResponse.class);
-                    for (String friendId: resp.getFriendList()) {
+                    for (Account friend: resp.getFriendList()) {
+                        String friendId = friend.getAccountId();
                         members.add(new VO_Member(friendId));
                     }
                     groupAdapter.setMembers(members);

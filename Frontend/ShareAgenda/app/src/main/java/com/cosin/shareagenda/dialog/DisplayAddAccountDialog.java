@@ -8,30 +8,27 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosin.shareagenda.R;
-import com.cosin.shareagenda.access.net.CallbackHandler;
-import com.cosin.shareagenda.api.ApiClient;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import types.Account;
 
 public class DisplayAddAccountDialog extends DisplayAccountBaseDialog {
     private RecyclerView.Adapter adapter;
 
     public DisplayAddAccountDialog(Context context,
-                                   String accountId,
+                                   Account account,
                                    int position,
                                    RecyclerView.Adapter adapter) {
-        super(context, accountId, position);
-        ApiClient.getAccount(accountId, new CallbackHandler(handler));
+        super(context, account, position);
 
         this.adapter = adapter;
-
     }
-
-
 
 
     @Override
     protected void initView() {
+        super.initView();
+
         Button btn = findViewById(R.id.manage);
         String add = "ADD";
         btn.setText(add);

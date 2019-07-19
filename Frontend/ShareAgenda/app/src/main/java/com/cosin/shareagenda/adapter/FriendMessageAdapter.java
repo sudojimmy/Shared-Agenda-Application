@@ -21,6 +21,8 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import types.Account;
+import types.FriendMessage;
 import types.Message;
 import types.MessageType;
 import types.ReplyStatus;
@@ -29,7 +31,7 @@ import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdapter.ViewHolder> {
-    private List<Message> messages;
+    private List<FriendMessage> messages;
     private Context context;
 
     public FriendMessageAdapter(Context context) {
@@ -37,7 +39,7 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
         messages = new ArrayList<>();
     }
 
-    public FriendMessageAdapter(List<Message> messages) {
+    public FriendMessageAdapter(List<FriendMessage> messages) {
         setMessages(messages);
     }
 
@@ -45,12 +47,8 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
         return message.getType().equals(MessageType.FRIEND);
     }
 
-    public void setMessages(List<Message> messages) {
-        for (Message msg : messages) {
-            if (isFriendMessage(msg)) {
-                this.messages.add(msg);
-            }
-        }
+    public void setMessages(List<FriendMessage> messages) {
+        this.messages = messages;
         notifyDataSetChanged();
     }
 
@@ -83,18 +81,18 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
 
     @Override
     public void onBindViewHolder(FriendMessageAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.viewName.setText(messages.get(position).getSenderId());
+        viewHolder.viewName.setText(messages.get(position).getAccount().getAccountId());
 
         viewHolder.viewName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // senderId of message
-                String accountId = messages.get(position).getSenderId();
+                Account account = messages.get(position).getAccount();
 
                 DisplayFriendRequestAccountDialog displayFriendRequestAccountDialog =
                         new DisplayFriendRequestAccountDialog(
                                 getContext(),
-                                accountId,
+                                account,
                                 position);
                 displayFriendRequestAccountDialog.show();
 

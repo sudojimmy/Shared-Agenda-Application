@@ -7,10 +7,9 @@ import android.widget.Button;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosin.shareagenda.R;
-import com.cosin.shareagenda.access.net.CallbackHandler;
-import com.cosin.shareagenda.api.ApiClient;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import types.Account;
 
 public class DisplayFriendAccountDialog extends DisplayAccountBaseDialog {
     private DisplayFriendAccountDialog conAdapter;
@@ -18,11 +17,10 @@ public class DisplayFriendAccountDialog extends DisplayAccountBaseDialog {
 
 
     public DisplayFriendAccountDialog(Context context,
-                                       String accountId,
+                                       Account account,
                                        int position,
                                        RecyclerView.Adapter adapter) {
-        super(context, accountId, position);
-        ApiClient.getAccount(accountId, new CallbackHandler(handler));
+        super(context, account, position);
 
         this.adapter = adapter;
     }
@@ -30,6 +28,8 @@ public class DisplayFriendAccountDialog extends DisplayAccountBaseDialog {
 
     @Override
     protected void initView() {
+        super.initView();
+
         Button btn = findViewById(R.id.manage);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
