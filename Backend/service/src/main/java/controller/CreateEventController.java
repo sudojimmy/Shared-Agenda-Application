@@ -6,12 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import types.Account;
-import types.CreateEventRequest;
-import types.CreateEventResponse;
+import types.*;
 import utils.AccountUtils;
 import utils.EventListUtils;
 import utils.ExceptionUtils;
+import utils.GroupUtils;
 
 
 @RestController
@@ -39,6 +38,13 @@ public class CreateEventController extends BaseController {
         // Step III: write to Database
         String eventId = EventListUtils.createEventToDatabase(request.getEvent());
 
+        Permission permission = request.getEvent().getPermission();
+        if (permission.getType().equals(PermissionType.GROUP)) {
+            String groupId = permission.getPermitToId();
+            Group group = GroupUtils.getGroup(groupId);
+            EventListUtils.addEventIdToCalendar(eventId, group.getCalendarId());
+        }
+        
         EventListUtils.addEventIdToCalendar(eventId, account.getCalendarId());
 
         // Step IV: create response object

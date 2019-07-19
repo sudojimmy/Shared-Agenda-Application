@@ -56,8 +56,11 @@ public class GroupUtils {
         return false;
     }
 
-    public static String createGroupToDatabase(final String name, final String description, final String ownerId,
-                                               final List<String> members) {
+    public static String createGroupToDatabase(final String name,
+                                               final String description,
+                                               final String ownerId,
+                                               final List<String> members,
+                                               final  String calendarId) {
         ObjectId groupId = new ObjectId();
         String id = groupId.toString();
         Group p = new Group()
@@ -65,7 +68,8 @@ public class GroupUtils {
                 .withDescription(description)
                 .withGroupId(id)
                 .withMembers(members)
-                .withOwnerId(ownerId);
+                .withOwnerId(ownerId)
+                .withCalendarId(calendarId);
         dataStore.insertToCollection(p, DataStore.COLLECTION_GROUPS);
         return id;
     }

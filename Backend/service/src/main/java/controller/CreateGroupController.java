@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import types.CreateGroupRequest;
 import types.CreateGroupResponse;
-import utils.AccountUtils;
-import utils.ExceptionUtils;
-import utils.GroupQueueUtils;
-import utils.GroupUtils;
+import utils.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,11 +37,19 @@ public class CreateGroupController extends BaseController {
 
         AccountUtils.checkAccountsExist(members);
 
-        String groupId = GroupUtils.createGroupToDatabase(request.getName(),request.getDescription(), request.getOwnerId(),members);
+        String calendarId = CalendarUtils.createCalendarToDatabase().getCalendarId();
+        String groupId = GroupUtils.createGroupToDatabase(
+                request.getName(),
+                request.getDescription(),
+                request.getOwnerId(),
+                members,
+                calendarId);
 
         GroupQueueUtils.addGroupToMemebersGroupQueue(groupId, members);
 
-        return new ResponseEntity<>(new CreateGroupResponse().withGroupId(groupId),
+        return new ResponseEntity<>(new CreateGroupResponse()
+                .withGroupId(groupId)
+                .withCalendarId(calendarId),
             HttpStatus.CREATED);
     }
 }
