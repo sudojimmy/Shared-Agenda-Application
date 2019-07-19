@@ -18,6 +18,9 @@ properties:
     ownerId:
         description: owner id
         type: string
+    calendarId:
+        description: calendar id
+        type: string
     description:
         description: description of group 
         type: string
@@ -26,3 +29,4 @@ required:
     - name
     - members
     - ownerId
+    - calendarId

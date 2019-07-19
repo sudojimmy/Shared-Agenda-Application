@@ -7,5 +7,9 @@ properties:
     groupId:
         description: group id
         type: string
+    calendarId:
+        description: calendar id
+        type: string
 required:
     - groupId
+    - calendarId

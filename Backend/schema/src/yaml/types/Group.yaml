@@ -21,7 +21,11 @@ properties:
     ownerId:
         description: group owner
         type: string
+    calendarId:
+        description: calendar id
+        type: string
 required:
     - groupId
     - name
     - members
+    - calendarId
