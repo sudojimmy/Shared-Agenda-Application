@@ -16,11 +16,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -37,7 +37,6 @@ import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.CalendarEventBiz;
 import com.google.gson.Gson;
-import com.joestelmach.natty.DateGroup;
 import com.joestelmach.natty.Parser;
 
 import net.gotev.speech.GoogleVoiceTypingDisabledException;
@@ -122,6 +121,15 @@ public class CreateEventActivity extends AppCompatActivity {
         String selectedTime = getIntent().getStringExtra(SELECTED_TIME);
         targetId = getIntent().getStringExtra(SELECTED_ID);
         calendarType = getIntent().getStringExtra(NewCalendarActivity.CALENDAR_ACTIVITY_TYPE);
+        if (calendarType != null) {
+            TextView createEventPageTitle = findViewById(R.id.createEventPageTitle);
+            if (calendarType.equals(NewCalendarActivity.FRIEND_CALENDAR)) {
+                createEventPageTitle.setText("Event Invitation");
+            } else { // GROUP_CALENDAR
+                createEventPageTitle.setText("Group Event");
+            }
+            privateEvent.setVisibility(View.GONE);
+        }
         startTimePicker.setText(selectedTime);
         endTimePicker.setText(CalendarEventBiz.getNextHour(selectedTime));
         startDatePicker.setText(selectedDate);
@@ -205,7 +213,6 @@ public class CreateEventActivity extends AppCompatActivity {
 
     public void createEvent(View view) {
         // TODO friendCalendar -> Account; groupCalendar -> Group
-        PermissionType permissionType = privateEvent.isChecked() ? PermissionType.PRIVATE : PermissionType.PUBLIC;
         Event event = new Event()
                 .withStarterId(Model.model.getUser().getAccountId())    // starter always user
                 .withState(EventState.ACTIVE)                           // state always active
@@ -218,14 +225,20 @@ public class CreateEventActivity extends AppCompatActivity {
                         .withStartDate(startDatePicker.getText().toString())
                         .withEndDate(endDatePicker.getText().toString()))
                 .withStartTime(startTimePicker.getText().toString())
-                .withEndTime(endTimePicker.getText().toString())
-                .withPermission(new Permission().withType(permissionType));
-        if (calendarType != null && calendarType.equals(NewCalendarActivity.FRIEND_CALENDAR)) {
+                .withEndTime(endTimePicker.getText().toString());
+        if (calendarType == null) {
+            event.withPermission(new Permission().withType(
+                    privateEvent.isChecked() ? PermissionType.PRIVATE : PermissionType.PUBLIC));
+            ApiClient.createEvent(event, new CallbackHandler(handler));
+        } else if (calendarType.equals(NewCalendarActivity.FRIEND_CALENDAR)) {
             event.setPermission(new Permission()
                     .withType(PermissionType.ACCOUNT)
                     .withPermitToId(targetId));
             ApiClient.inviteEvent(targetId, event, new CallbackHandler(handler));
-        } else { // TODO waiting for backend Group Calendar
+        } else {
+            event.setPermission(new Permission()
+                    .withType(PermissionType.GROUP)
+                    .withPermitToId(targetId));
             ApiClient.createEvent(event, new CallbackHandler(handler));
         }
     }

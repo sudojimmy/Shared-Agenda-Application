@@ -8,47 +8,13 @@ import com.cosin.shareagenda.R;
 
 import types.Event;
 import types.EventRepeat;
-import types.Repeat;
 
 public class DisplayEventRequestDialog extends BaseDialog {
-    private String eventname;
-    private String starterId;
-    private String type;
-    private String startTime;
-    private String endTime;
-    private String location;
-    private String description;
-    private String permission;
-    private Repeat repeat;
-    private String startDate;
-    private String endDate;
+    private final Event event;
 
-    public DisplayEventRequestDialog(Context context,
-                                     String eventname,
-                                     String starterId,
-                                     String type,
-                                     String startTime,
-                                     String endTime,
-                                     String location,
-                                     String description,
-                                     String permission,
-                                     Repeat repeat,
-                                     String startDate,
-                                     String endDate) {
-
+    public DisplayEventRequestDialog(Context context, Event event) {
         super(context);
-
-        this.eventname = eventname;
-        this.starterId = starterId;
-        this.type = type;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.location = location;
-        this.description = description;
-        this.permission = permission;
-        this.repeat = repeat;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.event = event;
     }
 
     @Override
@@ -58,16 +24,16 @@ public class DisplayEventRequestDialog extends BaseDialog {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.type)).setText(type);
-        ((TextView)findViewById(R.id.eventName)).setText(eventname);
-        ((TextView)findViewById(R.id.eventLocation)).setText(location);
-        ((TextView)findViewById(R.id.startTime)).setText(startTime);
-        ((TextView)findViewById(R.id.endTime)).setText(endTime);
-        ((TextView)findViewById(R.id.startDate)).setText(startDate);
-        ((TextView)findViewById(R.id.endDate)).setText(endDate);
-        ((TextView)findViewById(R.id.eventDescription)).setText(description);
+        ((TextView)findViewById(R.id.type)).setText(event.getType().toString());
+        ((TextView)findViewById(R.id.eventName)).setText(event.getEventname());
+        ((TextView)findViewById(R.id.eventLocation)).setText(event.getLocation());
+        ((TextView)findViewById(R.id.startTime)).setText(event.getStartTime());
+        ((TextView)findViewById(R.id.endTime)).setText(event.getEndTime());
+        ((TextView)findViewById(R.id.startDate)).setText(event.getRepeat().getStartDate());
+        ((TextView)findViewById(R.id.endDate)).setText(event.getRepeat().getEndDate());
+        ((TextView)findViewById(R.id.eventDescription)).setText(event.getDescription());
 
-        EventRepeat eventRepeat = repeat.getType();
+        EventRepeat eventRepeat = event.getRepeat().getType();
         String repeatString;
         if (eventRepeat.equals(EventRepeat.ONCE)) {
             repeatString = "End On";
