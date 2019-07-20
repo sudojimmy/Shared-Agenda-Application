@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosin.shareagenda.R;
+import com.cosin.shareagenda.activity.GroupEventMessagesActivity;
 import com.cosin.shareagenda.activity.GroupMembersActivity;
 import com.cosin.shareagenda.activity.NewCalendarActivity;
 import com.cosin.shareagenda.model.Model;
@@ -35,6 +36,7 @@ public class GroupContactsAdapter extends RecyclerView.Adapter<GroupContactsAdap
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
+        ImageView ivGroupEvent;
         TextView tvContactName;
         ImageView ivCalendar;
 
@@ -42,11 +44,14 @@ public class GroupContactsAdapter extends RecyclerView.Adapter<GroupContactsAdap
             super(view);
             tvContactName = view.findViewById(R.id.tvContactName);
             ivCalendar = view.findViewById((R.id.ivCalendar));
+            ivGroupEvent = view.findViewById((R.id.ivGroupEvent));
         }
     }
     @Override
     public GroupContactsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_item,parent,false);
+        View v = LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.group_contact_item, parent,false);
         return new ViewHolder(v);
     }
 
@@ -74,6 +79,16 @@ public class GroupContactsAdapter extends RecyclerView.Adapter<GroupContactsAdap
                 intent.putExtra(NewCalendarActivity.CALENDAR_TARGET_ID, entity.getGroupId());
                 intent.putExtra(NewCalendarActivity.CALENDAR_ACTIVITY_TYPE, NewCalendarActivity.GROUP_CALENDAR);
                 Model.model.setCurrentGroup(entity);
+                v.getContext().startActivity(intent);
+            }
+        });
+
+        holder.ivGroupEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Group entity = contactList.get(position);
+                Model.model.setCurrentGroup(entity);
+                Intent intent = new Intent(v.getContext(), GroupEventMessagesActivity.class);
                 v.getContext().startActivity(intent);
             }
         });

@@ -15,14 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
+        <activity android:name=".activity.AccountEventMessageActivity" />
         <activity android:name=".activity.CreateEventActivity" />
         <activity android:name=".activity.CreateGroupActivity" />
         <activity android:name=".activity.ContactsActivity" />
-        <activity android:name=".activity.EventMessagesActivity" />
         <activity android:name=".activity.ExploreActivity" />
         <activity android:name=".activity.FriendMessageActivity" />
-        <activity android:name=".activity.GroupsActivity" />
+        <activity android:name=".activity.GroupEventMessagesActivity" />
         <activity android:name=".activity.GroupMembersActivity" />
+        <activity android:name=".activity.GroupsActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.NewCalendarActivity"
             android:configChanges="orientation"

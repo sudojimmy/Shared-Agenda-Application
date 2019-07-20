@@ -65,10 +65,6 @@ public class GroupsActivity extends MainTitleActivity {
 
     }
 
-    protected void loadGroupList() {
-        ApiClient.getGroupList(new CallbackHandler(getGroupHandler));
-    }
-
     @Override
     protected String titleName() {
         return "Groups";

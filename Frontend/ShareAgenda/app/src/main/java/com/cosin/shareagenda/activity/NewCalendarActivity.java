@@ -206,7 +206,7 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
         DisplayableEvent displayableEvent = (DisplayableEvent)wevent;
         Event event = displayableEvent.getEvent();
 
-        new DisplayEventRequestDialog(this, event).show();
+        new DisplayEventRequestDialog(this, event, calendarType!=null).show();
     }
 
     @Override

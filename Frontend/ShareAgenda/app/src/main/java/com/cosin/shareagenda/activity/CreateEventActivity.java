@@ -124,7 +124,7 @@ public class CreateEventActivity extends AppCompatActivity {
         if (calendarType != null) {
             TextView createEventPageTitle = findViewById(R.id.createEventPageTitle);
             if (calendarType.equals(NewCalendarActivity.FRIEND_CALENDAR)) {
-                createEventPageTitle.setText("Event Invitation");
+                createEventPageTitle.setText("Invitation");
             } else { // GROUP_CALENDAR
                 createEventPageTitle.setText("Group Event");
             }
