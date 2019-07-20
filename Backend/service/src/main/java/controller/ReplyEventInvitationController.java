@@ -30,6 +30,7 @@ public class ReplyEventInvitationController extends BaseController {
         ExceptionUtils.assertDatabaseObjectFound(eventMessage, ApiConstant.MESSAGE_MESSAGE_ID);
         ReplyMessage replyMessage = ReplyMessageUtils.getReplyMessage(message.getReplyId());
         ExceptionUtils.assertDatabaseObjectFound(replyMessage, ApiConstant.MESSAGE_MESSAGE_ID);
+        replyMessage.setStatus(request.getStatus()); // update replyMessage for future reference
 
         boolean updated = ReplyMessageUtils.updateReplyMessageInDatabase(
                 replyMessage.getReplyId(),
