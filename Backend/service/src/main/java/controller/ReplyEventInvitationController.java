@@ -57,7 +57,8 @@ public class ReplyEventInvitationController extends BaseController {
 
         // delete EventMessage Obj from DB
         EventMessageUtils.deleteEventMessage(eventMessage.getMessageId());
-        PushNotificationUtils.getInstance().pushNotification(replyMessage);
+        PushNotificationUtils.getInstance()
+                .pushEventNotification(replyMessage, eventMessage.getEvent().getEventname());
 
 
         // Step IV: create response object

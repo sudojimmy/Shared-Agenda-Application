@@ -102,6 +102,6 @@ public class MessageQueueUtils {
         MessageUtils.addMessageIdToMessageQueue(reply, senderMessageQueueId);
 
         PushNotificationUtils.getInstance()
-                .pushNotification(sender.getAccountId(), receiver.getAccountId(),type);
+                .pushInvitationNotification(sender.getAccountId(), receiver.getAccountId(),type);
     }
 }

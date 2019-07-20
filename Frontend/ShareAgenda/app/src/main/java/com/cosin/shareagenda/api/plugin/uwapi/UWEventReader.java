@@ -77,6 +77,8 @@ public class UWEventReader {
 
     private static Event createEvent(UWClass uwClass, String title, String description,
                                      String startDate, String endDate) {
+        startDate = readDate(uwClass.getDate().getStart_date(), startDate);
+        endDate = readDate(uwClass.getDate().getEnd_date(), endDate);
         return new Event()
                 .withStarterId(Model.model.getUser().getAccountId())    // starter always user
                 .withState(EventState.ACTIVE)                           // state always active
@@ -85,12 +87,27 @@ public class UWEventReader {
                 .withLocation(readLocation(uwClass.getLocation()))
                 .withType(EventType.STUDY)
                 .withRepeat(new Repeat()
-                        .withType(EventRepeat.WEEK)
+                        .withType(startDate.equals(endDate) ? EventRepeat.ONCE : EventRepeat.WEEK)
                         .withStartDate(startDate)
                         .withEndDate(endDate))
                 .withStartTime(uwClass.getDate().getStart_time())
                 .withEndTime(uwClass.getDate().getEnd_time())
                 .withPermission(new Permission().withType(PermissionType.PUBLIC));
+    }
+
+    private static String readDate(String endDate, String defaultDate) {
+        if (endDate == null) {
+            return defaultDate;
+        }
+
+        int year = CalendarEventBiz.getStringYear(defaultDate);
+        System.out.println(endDate);
+        System.out.println(defaultDate);
+        System.out.println(year);
+        String[] date = endDate.split("/");
+        String month = date[0];
+        String day = date[1];
+        return year + "-" + month + "-" + day;
     }
 
     private static String readLocation(UWLocation uwLocation) {
