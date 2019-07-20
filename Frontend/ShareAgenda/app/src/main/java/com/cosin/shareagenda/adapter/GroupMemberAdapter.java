@@ -20,7 +20,6 @@ import types.Account;
 
 public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.ViewHolder> {
     private List<VO_Member> members;
-    private List<Account> membersAccount;
     private Context context;
 
     public GroupMemberAdapter(List<VO_Member> members, Context context) {
@@ -30,11 +29,6 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
 
     public void setMembers(List<VO_Member> members) {
         this.members = members;
-        notifyDataSetChanged();
-    }
-
-    public void setMembersAccount (List<Account> membersAccount) {
-        this.membersAccount = membersAccount;
         notifyDataSetChanged();
     }
 
@@ -62,7 +56,7 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         VO_Member member = members.get(position);
-        Account memberAccount = membersAccount.get(position);
+        Account memberAccount = member.getMember();
 
         String nicknameAddEmail = memberAccount.getNickname() + "(" + memberAccount.getAccountId() + ")";
         viewHolder.textView.setText(nicknameAddEmail);

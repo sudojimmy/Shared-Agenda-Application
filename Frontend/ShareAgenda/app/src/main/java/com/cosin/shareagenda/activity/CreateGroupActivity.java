@@ -29,7 +29,6 @@ import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class CreateGroupActivity extends MainTitleActivity {
     private List<VO_Member> members = new ArrayList<>();
-    private List<Account> memberAccount = new ArrayList<>();
     private GroupMemberAdapter groupAdapter;
     private TextView groupDescription;
     private TextView groupName;
@@ -82,7 +81,7 @@ public class CreateGroupActivity extends MainTitleActivity {
         ArrayList<String> lst = new ArrayList();
         for (VO_Member m : members) {
             if (m.isElected()) {
-                lst.add(m.getMember());
+                lst.add(m.getMember().getAccountId());
             }
         }
         return lst;
@@ -97,12 +96,9 @@ public class CreateGroupActivity extends MainTitleActivity {
                     String body = (String) message.obj;
                     GetFriendQueueResponse resp = gson.fromJson(body, GetFriendQueueResponse.class);
                     for (Account friend: resp.getFriendList()) {
-                        String friendId = friend.getAccountId();
-                        memberAccount.add(friend);
-                        members.add(new VO_Member(friendId));
+                        members.add(new VO_Member(friend));
                     }
                     groupAdapter.setMembers(members);
-                    groupAdapter.setMembersAccount(memberAccount);
                     break;
             }
         }
