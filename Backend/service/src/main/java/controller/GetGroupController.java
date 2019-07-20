@@ -25,8 +25,6 @@ public class GetGroupController extends BaseController {
 
         ExceptionUtils.assertPropertyValid(request.getGroupId(), ApiConstant.GROUP_ID);
 
-        GroupUtils.checkGroupExist(request.getGroupId());
-
         Group group = GroupUtils.getGroup(request.getGroupId());
 
         ArrayList<Account> memberList = new ArrayList<Account>();
