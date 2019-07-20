@@ -33,18 +33,18 @@ public class GroupUtils {
     }
 
     public static void validateGroupOwner(final String groupId, final String ownerId){
-        Document document = new Document();
-        document.put(ApiConstant.GROUP_ID,groupId);
-        Group group = dataStore.findOneInCollection(document, DataStore.COLLECTION_GROUPS);
+        Group group = getGroup(groupId);
         if (!ownerId.equals(group.getOwnerId())) {
             ExceptionUtils.invalidProperty(ApiConstant.GROUP_OWNER_ID);
         }
     }
 
     public static boolean checkGroupMember(final String groupId, final String accountId){
-        Document document = new Document();
-        document.put(ApiConstant.GROUP_ID,groupId);
-        Group group = dataStore.findOneInCollection(document, DataStore.COLLECTION_GROUPS);
+        Group group = getGroup(groupId);
+        return checkGroupMember(group, accountId);
+    }
+
+    public static boolean checkGroupMember(final Group group, final String accountId){
         List<String> groupList = group.getMembers();
 
         for(String groupMember: groupList){
