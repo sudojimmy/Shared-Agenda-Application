@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
@@ -86,6 +87,7 @@ public class SignUpActivity extends AppCompatActivity {
                             .withMessageQueueId(resp.getMessageQueueId())
                             .withNickname(etNickName.getText().toString()));
 
+                    Model.model.setLoggedIn(true);
                     Intent intent = new Intent(SignUpActivity.this, ProfileActivity.class);
                     startActivity(intent);
                     finish();

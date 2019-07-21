@@ -11,6 +11,7 @@ public class Model {
     private Account user = null;
     private Group currentGroup = null;
     private GoogleSignInAccount googleSignInAccount = null;
+    private boolean isLoggedIn = false;
 
     public void setUser(Account user) {
         this.user = user;
@@ -53,5 +54,13 @@ public class Model {
 
     public void setCurrentTermEnd(String currentTermEnd) {
         this.currentTermEnd = currentTermEnd;
+    }
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
     }
 }

@@ -29,14 +29,5 @@
             android:layout_weight="1"
             android:textColor="#eee"
             android:textSize="@dimen/toolbar_text" />
-
-        <ImageView
-            android:id="@+id/toolbar_right_button1"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_menu_request" />
-
     </LinearLayout>
 </com.google.android.material.appbar.AppBarLayout>

@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                             .withMessageQueueId(resp.getMessageQueueId())
                             .withNickname(resp.getNickname()));
 
+                    Model.model.setLoggedIn(true);
                     intent = new Intent(MainActivity.this, ProfileActivity.class);
                     break;
                 case CallbackHandler.HTTP_FAILURE:

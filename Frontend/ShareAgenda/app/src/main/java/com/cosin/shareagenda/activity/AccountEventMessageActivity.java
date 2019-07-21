@@ -37,6 +37,11 @@ public class AccountEventMessageActivity extends EventMessagesActivity {
     }
 
     @Override
+    protected boolean loadMessage() {
+        return false;
+    }
+
+    @Override
     protected void initView() {
         super.initView();
     }

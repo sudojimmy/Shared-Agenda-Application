@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +12,7 @@ import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.adapter.GroupContactsAdapter;
 import com.cosin.shareagenda.api.ApiClient;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import types.GetGroupListResponse;
@@ -33,8 +33,8 @@ public class GroupsActivity extends MainTitleActivity {
         conAdapter = new GroupContactsAdapter(this);
         rvContacts.setAdapter(conAdapter);
 
-        LinearLayout ll = findViewById(R.id.llCreateGroup);
-        ll.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GroupsActivity.this, CreateGroupActivity.class);

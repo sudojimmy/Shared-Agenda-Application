@@ -33,6 +33,11 @@ public class FriendMessageActivity extends MainTitleActivity {
     }
 
     @Override
+    protected boolean loadMessage() {
+        return false;
+    }
+
+    @Override
     protected String titleName() {
         return getResources().getString(R.string.title_friend_message);
     }
