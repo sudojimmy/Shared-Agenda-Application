@@ -40,8 +40,17 @@ public class DisplayEventRequestDialog extends BaseDialog {
     protected void initView() {
         ((TextView)findViewById(R.id.type)).setText(event.getType().toString());
         ((TextView)findViewById(R.id.eventName)).setText(event.getEventname());
-        ((TextView)findViewById(R.id.eventLocation)).setText(event.getLocation());
-        ((TextView)findViewById(R.id.eventDescription)).setText(event.getDescription());
+
+
+        TextView tvLocation = findViewById(R.id.eventLocation);
+        if (!event.getLocation().isEmpty()) {
+            tvLocation.setText(event.getLocation());
+        }
+
+        TextView tvDescription = findViewById(R.id.eventDescription);
+        if (!event.getDescription().isEmpty()) {
+            tvDescription.setText(event.getDescription());
+        }
 
         TextView tvTime = findViewById(R.id.tvTime);
         tvTime.setText(String.format("%s - %s", event.getStartTime(), event.getEndTime()));
