@@ -101,7 +101,7 @@ public class GroupEventMessagePagerAdapter extends PagerAdapter {
 
         Button btnAccept = view.findViewById(R.id.btn2);
         btnAccept.setText("JOIN");
-        btnAccept.setTextColor(ContextCompat.getColor(context, R.color.orange_red));
+        btnAccept.setTextColor(ContextCompat.getColor(context, R.color.ivory));
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

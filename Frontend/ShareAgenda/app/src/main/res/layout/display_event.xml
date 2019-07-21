@@ -41,7 +41,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/llTitle"
-                    android:layout_above="@id/joinButton">
+                    android:layout_above="@id/joinButton"
+                    >
+
+
+
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
