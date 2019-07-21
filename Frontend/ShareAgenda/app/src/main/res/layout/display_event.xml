@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="@color/light_cyan"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:padding="30dp"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/llTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/eventName"
+                        android:text="Event Title"
+                        android:textStyle="bold"
+                        android:textSize="30sp"
+                        android:textColor="#262626"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/eventLocation"
+                        android:text="Location not specified"
+                        android:drawablePadding="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:drawableLeft="@drawable/ic_location_on_black_18dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/material_blue_grey_80"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/llTitle"
+                    android:layout_above="@id/joinButton"
+                    >
+
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:id="@+id/llStarter"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="Started By"
+                                android:textSize="16sp"
+                                android:layout_marginTop="5dp"
+                                android:textColor="#262626"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/tvStarterId"
+                                android:text="example@gmail.com"
+                                android:drawablePadding="5dp"
+                                android:layout_marginTop="5dp"
+                                android:drawableLeft="@drawable/ic_perm_identity_black_18dp"
+                                android:textSize="16sp"
+                                android:textColor="#262626"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="Detail"
+                                android:textSize="16sp"
+                                android:layout_marginTop="5dp"
+                                android:textColor="#262626"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/type"
+                                android:text="WORK"
+                                android:layout_marginTop="5dp"
+                                android:drawablePadding="5dp"
+                                android:drawableLeft="@drawable/ic_class_black_18dp"
+                                android:textSize="16sp"
+                                android:textColor="#262626"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/tvTime"
+                                android:text="10:00 - 13:00"
+                                android:layout_marginTop="5dp"
+                                android:drawablePadding="5dp"
+                                android:drawableLeft="@drawable/ic_access_time_black_18dp"
+                                android:textSize="16sp"
+                                android:textColor="#262626"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/tvDate"
+                                android:text="July 13th, 2019  Tuesday"
+                                android:drawablePadding="5dp"
+                                android:layout_marginTop="5dp"
+                                android:drawableLeft="@drawable/ic_date_range_black_18dp"
+                                android:textSize="16sp"
+                                android:textColor="#262626"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/tvRepeat"
+                                android:text="Every Week until May 30th, 2020"
+                                android:drawablePadding="5dp"
+                                android:layout_marginTop="5dp"
+                                android:drawableLeft="@drawable/ic_repeat_black_18dp"
+                                android:textSize="16sp"
+                                android:textColor="#262626"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/eventDescription"
+                                android:text="Event starter did not left any description for this event"
+                                android:drawablePadding="5dp"
+                                android:layout_marginTop="20dp"
+                                android:drawableLeft="@drawable/ic_message_black_18dp"
+                                android:textSize="16sp"
+                                android:textColor="#262626"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </ScrollView>
+
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/joinButton"
+                    android:text="Join US!"
+                    android:textStyle="bold"
+                    android:padding="20dp"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/orange_red"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+

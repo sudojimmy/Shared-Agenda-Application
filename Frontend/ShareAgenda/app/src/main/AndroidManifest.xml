@@ -33,7 +33,6 @@
         <activity android:name=".activity.WeeklyActivity" />
         <activity android:name=".activity.WeeklyFriendActivity" />
         <activity android:name=".activity.ProfileActivity" />
-        <activity android:name=".activity.RequestActivity" />
 
         <activity android:name=".activity.LaunchActivity">
             <intent-filter>

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.cosin.shareagenda.R;
@@ -71,11 +72,18 @@ public class GroupEventMessagePagerAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.item_event_message, container, false);
         Event event = events.get(position);
 
+        TextView tvDescription = view.findViewById(R.id.tvDescription);
+        if (!event.getDescription().isEmpty()) {
+            tvDescription.setText(event.getDescription());
+        }
+
         TextView tvTitle = view.findViewById(R.id.tvTitle);
         tvTitle.setText(event.getEventname());
 
         TextView tvLocation = view.findViewById(R.id.tvLocation);
-        tvLocation.setText(event.getLocation());
+        if (!event.getLocation().isEmpty()) {
+            tvLocation.setText(event.getLocation());
+        }
 
         TextView tvType = view.findViewById(R.id.tvType);
         tvType.setText(event.getType().toString());
@@ -100,22 +108,15 @@ public class GroupEventMessagePagerAdapter extends PagerAdapter {
 
         Button btnAccept = view.findViewById(R.id.btn2);
         btnAccept.setText("JOIN");
+        btnAccept.setTextColor(ContextCompat.getColor(context, R.color.ivory));
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ApiClient.joinEvent(event.getEventId(), new CallbackHandler(getHandler(position)));
             }
         });
-//
         Button btnDecline = view.findViewById(R.id.btn1);
         btnDecline.setVisibility(View.GONE);
-//        btnDecline.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ApiClient.replyEvent(msg.getMessageId(), ReplyStatus.DECLINE,
-//                        new CallbackHandler(getHandler(position, "Declined")));
-//            }
-//        });
 
         container.addView(view, 0);
         return view;

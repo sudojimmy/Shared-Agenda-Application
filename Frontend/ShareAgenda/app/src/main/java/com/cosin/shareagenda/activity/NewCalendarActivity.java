@@ -8,7 +8,9 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -204,7 +206,27 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
         DisplayableEvent displayableEvent = (DisplayableEvent)wevent;
         Event event = displayableEvent.getEvent();
 
-        new DisplayEventRequestDialog(this, event, calendarType!=null).show();
+        DisplayEventRequestDialog dialog =
+                new DisplayEventRequestDialog(this, event, calendarType!=null);
+        dialog.show();
+
+        // set screen size relative dialog height and weight
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int displayWidth = displayMetrics.widthPixels;
+        int displayHeight = displayMetrics.heightPixels;
+
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+
+        int dialogWindowWidth = (int) (displayWidth * 0.8f);
+        int dialogWindowHeight = (int) (displayHeight * 0.8f);
+
+        layoutParams.width = dialogWindowWidth;
+        layoutParams.height = dialogWindowHeight;
+
+        dialog.getWindow().setAttributes(layoutParams);
     }
 
     @Override
