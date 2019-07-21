@@ -7,7 +7,6 @@
     android:layout_height="70dp"
     android:clickable="true"
     android:focusable="true"
-    android:layout_marginHorizontal="12dp"
     android:paddingBottom="1dp"
     app:ios="false"
     app:leftSwipe="true"
@@ -23,7 +22,7 @@
 
     <!-- swipe item disclosure -->
     <LinearLayout
-        android:layout_width="120dp"
+        android:layout_width="140dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:background="#ddd"
@@ -32,20 +31,20 @@
         <ImageButton
             android:id="@+id/imgBtnAcceptFriendRequest"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:foregroundGravity="center"
-            android:background="#00dddddd"
+            android:background="#A5D6A7"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            app:srcCompat="@drawable/ic_check_white_40dp" />
 
         <ImageButton
             android:id="@+id/imgBtnDeclineFriendRequest"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:foregroundGravity="center"
-            android:background="#00dddddd"
+            android:background="#FFAB91"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_delete" />
+            app:srcCompat="@drawable/ic_close_white_40dp" />
     </LinearLayout>
 
 </com.mcxtzhang.swipemenulib.SwipeMenuLayout>
