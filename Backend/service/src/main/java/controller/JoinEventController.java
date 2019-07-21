@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import types.*;
 import utils.AccountUtils;
+import utils.CalendarUtils;
 import utils.EventListUtils;
 import utils.ExceptionUtils;
 
@@ -27,8 +28,13 @@ public class JoinEventController extends BaseController {
         Event event = EventListUtils.getEventListById(request.getEventId());
         ExceptionUtils.assertDatabaseObjectFound(event, ApiConstant.EVENT_EVENT_ID);
 
-        if(event.getPermission().getType() != PermissionType.PUBLIC){
-            ExceptionUtils.invalidProperty("Can only join public event");
+        if(!EventListUtils.checkEventPermission(account.getAccountId(), event)){
+            ExceptionUtils.invalidProperty("You don't have permission to join this event");
+        }
+
+        Calendar calendar = CalendarUtils.getCalendar(account.getCalendarId());
+        if (calendar.getEventList().contains(event.getEventId())) {
+            ExceptionUtils.invalidProperty("You already joined this event!");
         }
 
         EventListUtils.addEventIdToCalendar(request.getEventId(), account.getCalendarId());

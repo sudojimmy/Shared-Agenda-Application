@@ -56,9 +56,9 @@ public class CreateGroupActivity extends MainTitleActivity {
         groupName = findViewById(R.id.inGroupName);
         RecyclerView rv = findViewById(R.id.rvContacts);
         StaggeredGridLayoutManager sgl =
-                new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+                new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         rv.setLayoutManager(sgl);
-        groupAdapter = new GroupMemberAdapter(members);
+        groupAdapter = new GroupMemberAdapter(members, this);
         rv.setAdapter(groupAdapter);
 
         Button btnCreateGroup = findViewById(R.id.btnCreateGroup);
@@ -81,7 +81,7 @@ public class CreateGroupActivity extends MainTitleActivity {
         ArrayList<String> lst = new ArrayList();
         for (VO_Member m : members) {
             if (m.isElected()) {
-                lst.add(m.getMember());
+                lst.add(m.getMember().getAccountId());
             }
         }
         return lst;
@@ -96,8 +96,7 @@ public class CreateGroupActivity extends MainTitleActivity {
                     String body = (String) message.obj;
                     GetFriendQueueResponse resp = gson.fromJson(body, GetFriendQueueResponse.class);
                     for (Account friend: resp.getFriendList()) {
-                        String friendId = friend.getAccountId();
-                        members.add(new VO_Member(friendId));
+                        members.add(new VO_Member(friend));
                     }
                     groupAdapter.setMembers(members);
                     break;

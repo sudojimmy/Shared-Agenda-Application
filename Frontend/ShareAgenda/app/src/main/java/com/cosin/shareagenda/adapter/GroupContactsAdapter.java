@@ -78,6 +78,7 @@ public class GroupContactsAdapter extends RecyclerView.Adapter<GroupContactsAdap
                 Intent intent = new Intent(v.getContext(), NewCalendarActivity.class);
                 intent.putExtra(NewCalendarActivity.CALENDAR_TARGET_ID, entity.getGroupId());
                 intent.putExtra(NewCalendarActivity.CALENDAR_ACTIVITY_TYPE, NewCalendarActivity.GROUP_CALENDAR);
+                intent.putExtra(NewCalendarActivity.CALENDAR_ACTIVITY_TITLE, entity.getName());
                 Model.model.setCurrentGroup(entity);
                 v.getContext().startActivity(intent);
             }

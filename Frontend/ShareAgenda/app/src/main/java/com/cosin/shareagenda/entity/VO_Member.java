@@ -1,20 +1,22 @@
 package com.cosin.shareagenda.entity;
 
+import types.Account;
+
 public class VO_Member {
-    private String  memberId;
+    private Account member;
     private boolean elected;
 
-    public VO_Member(String  user) {
-        this.memberId = user;
+    public VO_Member(Account user) {
+        this.member = user;
         this.elected = false;
     }
 
-    public String  getMember() {
-        return memberId;
+    public Account getMember() {
+        return member;
     }
 
-    public void setMember(String  memberId) {
-        this.memberId = memberId;
+    public void setMember(Account member) {
+        this.member = member;
     }
 
     public boolean isElected() {
