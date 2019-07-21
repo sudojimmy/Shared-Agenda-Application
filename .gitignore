@@ -21,6 +21,8 @@ Frontend/ShareAgenda/app/.classpath
 Frontend/ShareAgenda/app/.project
 Frontend/ShareAgenda/app/.settings/
 Frontend/ShareAgenda/app/.settings/org.eclipse.buildship.core.prefs
-
+Frontend/ShareAgenda/app/src/main/gen/com/cosin/shareagenda/Manifest.java
+Frontend/ShareAgenda/app/src/main/gen/com/cosin/shareagenda/buildConfig.java
+Frontend/ShareAgenda/app/src/main/gen/com/cosin/shareagenda/R.java
 Frontend/ShareAgenda/Android-Week-View/
 Frontend/ShareAgenda/app/release/

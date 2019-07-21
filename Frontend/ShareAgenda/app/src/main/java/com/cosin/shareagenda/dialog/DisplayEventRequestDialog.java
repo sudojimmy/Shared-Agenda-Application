@@ -5,12 +5,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
@@ -32,12 +29,6 @@ public class DisplayEventRequestDialog extends BaseDialog {
         super(context);
         this.event = event;
         this.showJoinBtn = showJoinBtn;
-    }
-
-    @Nullable
-    @Override
-    public Window getWindow() {
-        return super.getWindow();
     }
 
     @Override
