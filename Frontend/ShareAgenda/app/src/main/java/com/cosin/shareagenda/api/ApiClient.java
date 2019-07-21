@@ -24,6 +24,7 @@ import types.FriendInvitationRequest;
 import types.GetAccountRequest;
 import types.GetEventMonthlyRequest;
 import types.GetFriendQueueRequest;
+import types.GetGroupCalendarEventListRequest;
 import types.GetGroupEventMonthlyRequest;
 import types.GetGroupListRequest;
 import types.GetGroupRequest;
@@ -47,6 +48,7 @@ import static com.cosin.shareagenda.api.ApiEndpoint.GET_EVENT_MESSAGE_QUEUE;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_EVENT_MONTHLY;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_FRIEND_QUEUE;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP;
+import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_CALENDAR_EVENT_LIST;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_EVENT_MONTHLY;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_GROUP_LIST;
 import static com.cosin.shareagenda.api.ApiEndpoint.GET_MESSAGE_QUEUE;
@@ -198,6 +200,13 @@ public class ApiClient extends BaseApiClient {
                 .withAccountId(getAccountId())
                 .withMessageQueueId(Model.model.getUser().getMessageQueueId());
         makePostRequest(GET_EVENT_MESSAGE_QUEUE, gson.toJson(request), callback);
+    }
+
+    public static void getGroupCalendarEventList(String groupId, Callback callback) {
+        GetGroupCalendarEventListRequest request = new GetGroupCalendarEventListRequest()
+                .withAccountId(getAccountId())
+                .withGroupId(groupId);
+        makePostRequest(GET_GROUP_CALENDAR_EVENT_LIST, gson.toJson(request), callback);
     }
 
     public static void replyEvent(String msgId, ReplyStatus status, Callback callback) {

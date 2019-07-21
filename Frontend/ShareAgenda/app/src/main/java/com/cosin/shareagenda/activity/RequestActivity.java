@@ -66,8 +66,6 @@ public class RequestActivity extends MainTitleActivity implements View.OnClickLi
     protected void initView() {
         super.initView();
 
-        titlebarHideRightButton();
-
         // init panel
         findViewById(R.id.button_post1).setOnClickListener(this);
 

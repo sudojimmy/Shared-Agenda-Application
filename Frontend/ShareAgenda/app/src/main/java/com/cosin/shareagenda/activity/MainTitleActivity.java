@@ -20,9 +20,4 @@ public abstract class MainTitleActivity extends BaseActivity {
         TitleBar titlebar = findViewById(R.id.titlebar);
         titlebar.setTitleText(title);
     }
-
-    protected void titlebarHideRightButton() {
-        TitleBar titlebar = findViewById(R.id.titlebar);
-        titlebar.hideRightImage();
-    }
 }

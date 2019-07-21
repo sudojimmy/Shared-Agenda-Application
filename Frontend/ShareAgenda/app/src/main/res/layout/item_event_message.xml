@@ -34,7 +34,7 @@
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/tvLocation"
-                        android:text="Waterloo, ON, Canada"
+                        android:text="Location not specified"
                         android:drawablePadding="5dp"
                         android:layout_marginBottom="10dp"
                         android:drawableLeft="@drawable/ic_location_on_black_18dp"
@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/llTitle"
-                    android:layout_above="@id/btnAccept">
+                    android:layout_above="@id/btn1">
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
@@ -131,7 +131,7 @@
                                 android:layout_height="wrap_content" />
                             <TextView
                                 android:id="@+id/tvDescription"
-                                android:text="This is a description of the event"
+                                android:text="Event starter did not left any description for this event"
                                 android:drawablePadding="5dp"
                                 android:layout_marginTop="20dp"
                                 android:drawableLeft="@drawable/ic_message_black_18dp"
@@ -147,8 +147,8 @@
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/btnAccept"
-                    android:layout_above="@id/btnDecline"
+                    android:id="@+id/btn1"
+                    android:layout_above="@id/btn2"
                     android:text="Accept"
                     android:textStyle="bold"
                     android:padding="20dp"
@@ -159,7 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:id="@+id/btnDecline"
+                    android:id="@+id/btn2"
                     android:text="Decline"
                     android:textStyle="bold"
                     android:padding="20dp"

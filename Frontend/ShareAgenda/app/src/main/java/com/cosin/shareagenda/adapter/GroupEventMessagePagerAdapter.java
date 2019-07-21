@@ -24,30 +24,28 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import types.Event;
-import types.EventMessage;
 import types.EventRepeat;
-import types.ReplyStatus;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
-public class EventMessagePagerAdapter extends PagerAdapter {
+public class GroupEventMessagePagerAdapter extends PagerAdapter {
 
-    private List<EventMessage> eventMsgs;
+    private List<Event> events;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public EventMessagePagerAdapter(List<EventMessage> eventMsgs, Context context) {
-        this.eventMsgs = eventMsgs;
+    public GroupEventMessagePagerAdapter(List<Event> events, Context context) {
+        this.events = events;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return eventMsgs.size();
+        return events.size();
     }
 
-    public void setEvents(List<EventMessage> eventMsgs) {
-        this.eventMsgs = eventMsgs;
+    public void setEvents(List<Event> events) {
+        this.events = events;
         notifyDataSetChanged();
     }
 
@@ -58,8 +56,8 @@ public class EventMessagePagerAdapter extends PagerAdapter {
 
     @Override
     public int getItemPosition(@NonNull Object object) {
-        if (eventMsgs.contains(object)) {
-            return eventMsgs.indexOf(object);
+        if (events.contains(object)) {
+            return events.indexOf(object);
         } else {
             return POSITION_NONE;
         }
@@ -71,8 +69,7 @@ public class EventMessagePagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.item_event_message, container, false);
-        EventMessage msg = eventMsgs.get(position);
-        Event event = msg.getEvent();
+        Event event = events.get(position);
 
         TextView tvTitle = view.findViewById(R.id.tvTitle);
         tvTitle.setText(event.getEventname());
@@ -101,23 +98,24 @@ public class EventMessagePagerAdapter extends PagerAdapter {
         TextView tvStarterId = view.findViewById(R.id.tvStarterId);
         tvStarterId.setText(event.getStarterId());
 
-        Button btnAccept = view.findViewById(R.id.btn1);
+        Button btnAccept = view.findViewById(R.id.btn2);
+        btnAccept.setText("JOIN");
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ApiClient.replyEvent(msg.getMessageId(), ReplyStatus.ACCEPT,
-                        new CallbackHandler(getHandler(position, "Accepted")));
+                ApiClient.joinEvent(event.getEventId(), new CallbackHandler(getHandler(position)));
             }
         });
-
-        Button btnDecline = view.findViewById(R.id.btn2);
-        btnDecline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ApiClient.replyEvent(msg.getMessageId(), ReplyStatus.DECLINE,
-                        new CallbackHandler(getHandler(position, "Declined")));
-            }
-        });
+//
+        Button btnDecline = view.findViewById(R.id.btn1);
+        btnDecline.setVisibility(View.GONE);
+//        btnDecline.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ApiClient.replyEvent(msg.getMessageId(), ReplyStatus.DECLINE,
+//                        new CallbackHandler(getHandler(position, "Declined")));
+//            }
+//        });
 
         container.addView(view, 0);
         return view;
@@ -128,7 +126,7 @@ public class EventMessagePagerAdapter extends PagerAdapter {
         container.removeView((View)object);
     }
 
-    private Handler getHandler(int position, String replyStatusStr) {
+    private Handler getHandler(int position) {
         return new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message message) {
@@ -136,12 +134,12 @@ public class EventMessagePagerAdapter extends PagerAdapter {
                 switch (message.what) {
                     case SUCCESS:
                         new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
-                                .setTitleText("SENT")
-                                .setContentText(replyStatusStr + " Event Request!")
+                                .setTitleText("SUCCESS")
+                                .setContentText("Joined Event: " + events.get(position).getEventname())
                                 .setConfirmText("OK").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                eventMsgs.remove(position);
+//                                events.remove(position);
                                 notifyDataSetChanged();
                                 sweetAlertDialog.dismissWithAnimation();
                             }

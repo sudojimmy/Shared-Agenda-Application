@@ -8,7 +8,7 @@ android {
         minSdkVersion 21
         multiDexEnabled true
         targetSdkVersion 28
-        versionCode 1
+        versionCode 3
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -70,6 +70,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
     implementation 'com.pusher:push-notifications-android:1.4.3'
+    implementation 'com.baoyz.pullrefreshlayout:library:1.2.0'
+
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':Android-Week-View:library')

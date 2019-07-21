@@ -42,6 +42,7 @@ public class ProfileActivity extends MainTitleActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         //On Succesfull signout we navigate the user back to LoginActivity
                         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                        Model.model.setLoggedIn(false);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();

@@ -23,9 +23,7 @@ import com.cosin.shareagenda.access.net.CallbackHandler;
 import com.cosin.shareagenda.api.ApiClient;
 import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.cosin.shareagenda.dialog.DeleteEventDialog;
-import com.cosin.shareagenda.dialog.DialogReceiver;
 import com.cosin.shareagenda.dialog.DisplayEventRequestDialog;
-import com.cosin.shareagenda.dialog.SendEventRequestDialog;
 import com.cosin.shareagenda.entity.DisplayableEvent;
 import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.CalendarEventBiz;
@@ -47,7 +45,7 @@ import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
 public class NewCalendarActivity extends MainTitleActivity implements WeekView.EventClickListener,
         MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener,
-        WeekView.EmptyViewClickListener, WeekView.AddEventClickListener, WeekView.DropListener, DialogReceiver {
+        WeekView.EmptyViewClickListener, WeekView.AddEventClickListener, WeekView.DropListener {
     // intent extra parameter name
     public static final String CALENDAR_TARGET_ID = "CALENDAR_TARGET_ID";
     public static final String CALENDAR_ACTIVITY_TYPE = "CALENDAR_ACTIVITY_TYPE";
@@ -206,19 +204,7 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
         DisplayableEvent displayableEvent = (DisplayableEvent)wevent;
         Event event = displayableEvent.getEvent();
 
-        new DisplayEventRequestDialog(
-                this,
-                event.getEventname(),
-                event.getStarterId(),
-                event.getType().toString(),
-                event.getStartTime(),
-                event.getEndTime(),
-                event.getLocation(),
-                event.getDescription(),
-                event.getPermission().toString(),
-                event.getRepeat(),
-                event.getRepeat().getStartDate(),
-                event.getRepeat().getEndDate()).show();
+        new DisplayEventRequestDialog(this, event, calendarType!=null).show();
     }
 
     @Override
@@ -300,7 +286,12 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
     public void onAddEventClicked(Calendar startTime, Calendar endTime) {
         selectedDate = CalendarEventBiz.calendarToDateString(startTime);
         selectedTime = CalendarEventBiz.calendarToTimeString(startTime);
-        new SendEventRequestDialog(this, "My New Event", selectedDate, selectedTime).show();
+        Intent intent = new Intent(this, CreateEventActivity.class);
+        intent.putExtra(CreateEventActivity.SELECTED_DATE, selectedDate);
+        intent.putExtra(CreateEventActivity.SELECTED_TIME, selectedTime);
+        intent.putExtra(CreateEventActivity.SELECTED_ID, calendarTargetId);
+        intent.putExtra(CALENDAR_ACTIVITY_TYPE, calendarType);
+        this.startActivity(intent);
     }
 
     @Override
@@ -312,17 +303,6 @@ public class NewCalendarActivity extends MainTitleActivity implements WeekView.E
     protected String titleName() {
 
         return calendarTitle;
-    }
-
-    @Override
-    public void receive(Object ret) {
-        // to create user event by cal and quarter
-        Intent intent = new Intent(this, CreateEventActivity.class);
-        intent.putExtra(CreateEventActivity.SELECTED_DATE, selectedDate);
-        intent.putExtra(CreateEventActivity.SELECTED_TIME, selectedTime);
-        intent.putExtra(CreateEventActivity.SELECTED_ID, calendarTargetId);
-        intent.putExtra(CALENDAR_ACTIVITY_TYPE, calendarType);
-        this.startActivity(intent);
     }
 
     @Override
