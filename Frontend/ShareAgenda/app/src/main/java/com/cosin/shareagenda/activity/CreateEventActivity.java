@@ -46,6 +46,10 @@ import net.gotev.speech.SpeechRecognitionNotAvailable;
 import net.gotev.speech.SpeechUtil;
 import net.gotev.speech.ui.SpeechProgressView;
 
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +67,16 @@ import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 public class CreateEventActivity extends AppCompatActivity {
 
     private final int PERMISSIONS_REQUEST = 1;
+    private final String[] daily = new String[]{"daily", "every day"};
+    private final String[] weekly = new String[]{"weekly", "every week"};
+    private final String[] monthly = new String[]{"monthly", "every month"};
+    private final String[] yearly = new String[]{"yearly", "every year"};
+
+
+    private final String[] work = new String[]{"work", "company"};
+    private final String[] study = new String[]{"study", "learn"};
+    private final String[] entertainment = new String[]{"entertainment", "play"};
+    private final String[] appointment = new String[]{"appointment"};
 
     public static final String SELECTED_DATE = "SELECTED_DATE";
     public static final String SELECTED_TIME = "SELECTED_TIME";
@@ -310,7 +324,25 @@ public class CreateEventActivity extends AppCompatActivity {
 
     private void processSpeech(String result) {
         String[] splits = result.split("fill |with |feel |set |field ");
-        String test = "have a meeting tommorrow 9 pm to 11 pm";
+        if (StringUtils.indexOfAny(result, daily)>=0) {
+            repeatType.setSelection(1);
+        } else if (StringUtils.indexOfAny(result, weekly)>=0) {
+            repeatType.setSelection(2);
+        } else if (StringUtils.indexOfAny(result, monthly)>=0) {
+            repeatType.setSelection(3);
+        } else if (StringUtils.indexOfAny(result, yearly)>=0) {
+            repeatType.setSelection(4);
+        }
+        if (StringUtils.indexOfAny(result, work)>=0) {
+            eventType.setSelection(0);
+        } else if (StringUtils.indexOfAny(result, study)>=0) {
+            eventType.setSelection(1);
+        } else if (StringUtils.indexOfAny(result, entertainment)>=0) {
+            eventType.setSelection(2);
+        } else if (StringUtils.indexOfAny(result, appointment)>=0) {
+            eventType.setSelection(3);
+        }
+
         try {
             List<Date> dates = new Parser().parse(result).get(0).getDates();
             if (dates.size() >= 1) {
