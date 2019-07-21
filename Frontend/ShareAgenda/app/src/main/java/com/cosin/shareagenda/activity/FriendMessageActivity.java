@@ -19,7 +19,7 @@ import types.GetNewFriendMessageQueueResponse;
 import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
-public class FriendMessageActivity extends MainTitleActivity {
+public class FriendMessageActivity extends RefreshableActivity {
     private FriendMessageAdapter friendMessageAdapter;
 
     @Override
@@ -71,6 +71,7 @@ public class FriendMessageActivity extends MainTitleActivity {
                 default:
                     Toast.makeText(FriendMessageActivity.this, (String) message.obj, Toast.LENGTH_SHORT).show();
             }
+            stopRefreshing();
         }
     };
 

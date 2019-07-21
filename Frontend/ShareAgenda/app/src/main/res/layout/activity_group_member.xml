@@ -16,11 +16,15 @@
         android:layout_height="8dp"
         android:background="?android:attr/listDivider" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/group_list_view"
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_below="@+id/titlebar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/titlebar"/>
-
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/group_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.baoyz.widget.PullRefreshLayout>
 
 </RelativeLayout>

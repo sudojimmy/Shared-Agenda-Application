@@ -25,7 +25,7 @@ import types.GetFriendQueueResponse;
 import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
-public class ContactsActivity extends MainTitleActivity {
+public class ContactsActivity extends RefreshableActivity {
 
     ArrayList<ContactEntity> contactList;
     private FriendContactsAdapter conAdapter;
@@ -43,7 +43,6 @@ public class ContactsActivity extends MainTitleActivity {
     @Override
     protected void initView() {
         super.initView();
-
 
         this.rvContacts = findViewById(R.id.rvContacts);
         this.rvContacts.setHasFixedSize(true);
@@ -96,6 +95,7 @@ public class ContactsActivity extends MainTitleActivity {
                 default:
                     Toast.makeText(ContactsActivity.this, (String) message.obj, Toast.LENGTH_SHORT).show();
             }
+            stopRefreshing();
         }
     };
 }

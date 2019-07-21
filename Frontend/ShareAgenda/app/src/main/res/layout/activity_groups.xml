@@ -20,11 +20,16 @@
         android:layout_height="8dp"
         android:background="?android:attr/listDivider" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvGroups"
-        android:layout_below="@id/divider"
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_below="@id/divider"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGroups"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.baoyz.widget.PullRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

@@ -56,9 +56,13 @@
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="?android:attr/listDivider" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvContacts"
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvContacts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.baoyz.widget.PullRefreshLayout>
 </LinearLayout>

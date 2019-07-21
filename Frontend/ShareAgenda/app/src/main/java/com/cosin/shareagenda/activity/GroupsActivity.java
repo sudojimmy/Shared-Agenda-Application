@@ -19,7 +19,7 @@ import types.GetGroupListResponse;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
-public class GroupsActivity extends MainTitleActivity {
+public class GroupsActivity extends RefreshableActivity {
     private GroupContactsAdapter conAdapter;
 
     @Override
@@ -81,6 +81,7 @@ public class GroupsActivity extends MainTitleActivity {
                     conAdapter.setContactList(resp.getGroupList());
                     break;
             }
+            stopRefreshing();
         }
     };
 

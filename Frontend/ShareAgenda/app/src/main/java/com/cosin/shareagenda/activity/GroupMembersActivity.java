@@ -17,7 +17,7 @@ import types.GetGroupResponse;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 
-public class GroupMembersActivity extends MainTitleActivity {
+public class GroupMembersActivity extends RefreshableActivity {
 
     // intent extra parameter name
     public static final String GROUP_ID = "GROUP_ID";
@@ -78,6 +78,7 @@ public class GroupMembersActivity extends MainTitleActivity {
                     conAdapter.setMemberList(resp.getMembers());
                     break;
             }
+            stopRefreshing();
         }
     };
 
