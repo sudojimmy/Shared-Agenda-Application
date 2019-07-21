@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.cosin.shareagenda.R;
@@ -100,6 +101,7 @@ public class GroupEventMessagePagerAdapter extends PagerAdapter {
 
         Button btnAccept = view.findViewById(R.id.btn2);
         btnAccept.setText("JOIN");
+        btnAccept.setTextColor(ContextCompat.getColor(context, R.color.orange_red));
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

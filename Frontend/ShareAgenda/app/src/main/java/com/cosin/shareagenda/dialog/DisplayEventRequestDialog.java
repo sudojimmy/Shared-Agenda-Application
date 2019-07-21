@@ -5,9 +5,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.cosin.shareagenda.R;
 import com.cosin.shareagenda.access.net.CallbackHandler;
@@ -31,9 +34,15 @@ public class DisplayEventRequestDialog extends BaseDialog {
         this.showJoinBtn = showJoinBtn;
     }
 
+    @Nullable
+    @Override
+    public Window getWindow() {
+        return super.getWindow();
+    }
+
     @Override
     protected void loadView() {
-        window.setContentView(R.layout.activity_event_popup);
+        window.setContentView(R.layout.display_event);
     }
 
     @Override
@@ -41,36 +50,25 @@ public class DisplayEventRequestDialog extends BaseDialog {
         ((TextView)findViewById(R.id.type)).setText(event.getType().toString());
         ((TextView)findViewById(R.id.eventName)).setText(event.getEventname());
         ((TextView)findViewById(R.id.eventLocation)).setText(event.getLocation());
-        ((TextView)findViewById(R.id.startTime)).setText(event.getStartTime());
-        ((TextView)findViewById(R.id.endTime)).setText(event.getEndTime());
-        ((TextView)findViewById(R.id.startDate)).setText(event.getRepeat().getStartDate());
-        ((TextView)findViewById(R.id.endDate)).setText(event.getRepeat().getEndDate());
         ((TextView)findViewById(R.id.eventDescription)).setText(event.getDescription());
 
-        EventRepeat eventRepeat = event.getRepeat().getType();
-        String repeatString;
-        if (eventRepeat.equals(EventRepeat.ONCE)) {
-            repeatString = "End On";
-        } else if (eventRepeat.equals(EventRepeat.DAY)) {
-            repeatString = "Repeat Daily";
+        TextView tvTime = findViewById(R.id.tvTime);
+        tvTime.setText(String.format("%s - %s", event.getStartTime(), event.getEndTime()));
 
-        } else if (eventRepeat.equals(EventRepeat.WEEK)) {
-            repeatString = "Repeat Weekly";
+        TextView tvDate = findViewById(R.id.tvDate);
+        tvDate.setText(event.getRepeat().getStartDate());
 
-        } else if (eventRepeat.equals(EventRepeat.MONTH)) {
-            repeatString = "Repeat Monthly";
-
-        } else if (eventRepeat.equals(EventRepeat.YEAR)) {
-            repeatString = "Repeat Yearly";
-
+        TextView tvRepeat = findViewById(R.id.tvRepeat);
+        if (event.getRepeat().getType().equals(EventRepeat.ONCE)) {
+            tvRepeat.setText(event.getRepeat().getType().toString());
         } else {
-            repeatString = "";
+            tvRepeat.setText(String.format("Every %s until %s",
+                    event.getRepeat().getType().toString(),
+                    event.getRepeat().getEndDate()));
         }
 
-        ((TextView)findViewById(R.id.repeatTag)).setText(repeatString);
-        // todo
-        // ((TextView)findViewById(R.id.)).setText(permission);
-        // ((TextView)findViewById(R.id.)).setText(starterId);
+        TextView tvStarterId = findViewById(R.id.tvStarterId);
+        tvStarterId.setText(event.getStarterId());
 
         Button btn = findViewById(R.id.joinButton);
         if (showJoinBtn) {
