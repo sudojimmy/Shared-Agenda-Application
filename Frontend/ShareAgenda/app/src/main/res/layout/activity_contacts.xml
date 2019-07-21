@@ -25,6 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="4"
+            android:drawableStart="@drawable/ic_mail_grey_24dp"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:textSize="16sp"
             android:onClick="getMessage"
@@ -34,22 +36,14 @@
             android:id="@+id/tvSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:drawableStart="@drawable/ic_person_add_grey_24dp"
+            android:drawablePadding="10dp"
             android:layout_weight="4"
             android:gravity="center_vertical"
             android:textSize="16sp"
             android:onClick="searchFriend"
             android:text="Search Friends" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:background="#0000"
-            android:layout_weight="1"
-            android:onClick="searchFriend"
-            app:srcCompat="@android:drawable/ic_menu_search" />
     </LinearLayout>
 
     <View
