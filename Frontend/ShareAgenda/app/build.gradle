@@ -72,7 +72,9 @@ dependencies {
     implementation 'com.pusher:push-notifications-android:1.4.3'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':Android-Week-View:library')
+    //implementation project(':Android-Week-View:library')
+    implementation 'com.github.alamkanak:android-week-view:1.2.6'
+    implementation project(':swipemenulib')
 }
 
 configurations.all {
