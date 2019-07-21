@@ -17,6 +17,7 @@ import com.cosin.shareagenda.api.ApiClient;
 import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.cosin.shareagenda.dialog.DisplayFriendRequestAccountDialog;
 import com.google.gson.Gson;
+import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
 public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdapter.ViewHolder> {
     private List<FriendMessage> messages;
     private Context context;
+    private int positionDel;
 
     public FriendMessageAdapter(Context context) {
         this.context = context;
@@ -52,13 +54,21 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
         notifyDataSetChanged();
     }
 
+    public void removeMessage() {
+        messages.remove(positionDel);
+        notifyItemRemoved(positionDel);
+        notifyDataSetChanged();
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
+        SwipeMenuLayout swipe;
         TextView viewName;
         ImageButton viewAccept;
         ImageButton viewDecline;
 
         public ViewHolder(View view) {
             super(view);
+            swipe = view.findViewById(R.id.swp);
             viewName = view.findViewById(R.id.tvFriendMessage);
             viewAccept = view.findViewById(R.id.imgBtnAcceptFriendRequest);
             viewDecline = view.findViewById(R.id.imgBtnDeclineFriendRequest);
@@ -68,7 +78,7 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
     @Override
     public FriendMessageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.friend_message_item, parent, false);
+                .inflate(R.layout.item_msg_swipe, parent, false);
         final FriendMessageAdapter.ViewHolder viewHolder =
                 new FriendMessageAdapter.ViewHolder(view);
         return viewHolder;
@@ -104,9 +114,11 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
             public void onClick(View v) {
                 ApiClient.replyFriend(messages.get(position).getMessageId(), ReplyStatus.ACCEPT, new CallbackHandler(handler));
 
-                messages.remove(position);
-                notifyItemRemoved(position);
-                notifyDataSetChanged();
+                FriendMessageAdapter.this.positionDel = position;
+                viewHolder.swipe.smoothClose();
+                //messages.remove(position);
+                //notifyItemRemoved(position);
+                //notifyDataSetChanged();
             }
         });
         viewHolder.viewDecline.setOnClickListener(new View.OnClickListener() {
@@ -114,9 +126,11 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
             public void onClick(View v) {
                 ApiClient.replyFriend(messages.get(position).getMessageId(), ReplyStatus.DECLINE, new CallbackHandler(handler));
 
-                messages.remove(position);
-                notifyItemRemoved(position);
-                notifyDataSetChanged();
+                FriendMessageAdapter.this.positionDel = position;
+                viewHolder.swipe.smoothClose();
+                //messages.remove(position);
+                //notifyItemRemoved(position);
+                //notifyDataSetChanged();
             }
         });
     }
@@ -133,6 +147,8 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
             switch (message.what) {
                 case SUCCESS:
                     String body = (String) message.obj;
+                    removeMessage();
+
 //                    GetMessageQueueResponse resp = gson.fromJson(body, GetMessageQueueResponse.class);
                     break;
                 case HTTP_FAILURE:

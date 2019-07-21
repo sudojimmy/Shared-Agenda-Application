@@ -75,6 +75,8 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':Android-Week-View:library')
+//    implementation 'com.github.alamkanak:android-week-view:1.2.6'
+    implementation project(':swipemenulib')
 }
 
 configurations.all {
