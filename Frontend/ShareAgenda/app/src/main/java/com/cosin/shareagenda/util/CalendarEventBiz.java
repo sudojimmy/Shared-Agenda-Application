@@ -4,6 +4,7 @@ import com.cosin.shareagenda.entity.FriendEvent;
 import com.cosin.shareagenda.entity.SimpleEventEntity;
 import com.cosin.shareagenda.entity.WeekDayEventEntity;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -193,5 +194,11 @@ public class CalendarEventBiz {
         calendar.setTime(date);
         calendar.add(Calendar.HOUR_OF_DAY, hours);
         return calendar.getTime();
+    }
+
+    public static String to24hr(String time) throws ParseException {
+        SimpleDateFormat inFormat = new SimpleDateFormat("h:mm a");
+        SimpleDateFormat outFormat = new SimpleDateFormat("HH:mm");
+        return outFormat.format(inFormat.parse(time));
     }
 }

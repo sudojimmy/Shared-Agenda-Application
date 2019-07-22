@@ -46,6 +46,7 @@ jsonSchema2Pojo {
           "${project.projectDir}/src/yaml/requests/",
           "${project.projectDir}/src/yaml/responses/",
           // school course plugins
+          "${project.projectDir}/src/yaml/uwaterloo/UWExamSection.yaml",
           "${project.projectDir}/src/yaml/uwaterloo/UWDate.yaml",
           "${project.projectDir}/src/yaml/uwaterloo/UWLocation.yaml",
           "${project.projectDir}/src/yaml/uwaterloo/UWMeta.yaml",

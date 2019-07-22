@@ -1,0 +1,13 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: UWGetExamRequest
+description: UWGetExamRequest
+type: object
+additionalProperties: false
+properties:
+    meta:
+        "$ref": UWMeta.yaml
+    data:
+        "$ref": UWExam.yaml
+required:
+    - meta
+    - data

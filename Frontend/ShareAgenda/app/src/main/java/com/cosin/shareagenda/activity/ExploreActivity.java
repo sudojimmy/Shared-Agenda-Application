@@ -24,7 +24,6 @@ import java.util.List;
 
 import types.Event;
 import types.ExploreEventResponse;
-import types.UWGetCourseRequest;
 
 import static com.cosin.shareagenda.access.net.CallbackHandler.HTTP_FAILURE;
 import static com.cosin.shareagenda.access.net.CallbackHandler.SUCCESS;
@@ -65,7 +64,7 @@ public class ExploreActivity extends MainTitleActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 if (UWEventPlugin.isActive(s)) {
-                    boolean success = UWEventPlugin.getClient().exploreEvent(s, new CallbackHandler(handler));
+                    boolean success = UWEventPlugin.getClient().exploreEvent(s, eventAdapter);
                     if (!success) {
                         Toast.makeText(ExploreActivity.this, UWEventPlugin.getHint(), Toast.LENGTH_SHORT).show();
                     }
@@ -79,6 +78,7 @@ public class ExploreActivity extends MainTitleActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
+                eventAdapter.clearEventList();
                 return false;
             }
         });
@@ -97,18 +97,13 @@ public class ExploreActivity extends MainTitleActivity {
                 case SUCCESS:
                     String body = (String) message.obj;
                     ArrayList<ExploreInfo> infos = new ArrayList<>();
-                    if (pluginType.equals(UWEventPlugin.getType())) {
-                        UWGetCourseRequest uwResp = gson.fromJson(body, UWGetCourseRequest.class);
-                        infos.addAll(UWEventPlugin.toExploreInfo(uwResp));
-                    } else {
-                        ExploreEventResponse defaultResp = gson.fromJson(body, ExploreEventResponse.class);
-                        List<Event> events = defaultResp.getEventList();
-                        for (Event e : events) {
-                            infos.add(new DefaultExploreInfo(e.getEventname(), e.getDescription(), e));
-                        }
+                    ExploreEventResponse defaultResp = gson.fromJson(body, ExploreEventResponse.class);
+                    List<Event> events = defaultResp.getEventList();
+                    for (Event e : events) {
+                        infos.add(new DefaultExploreInfo(e.getEventname(), e.getDescription(), e));
                     }
 
-                    eventAdapter.setEventList(infos);
+                    eventAdapter.addEventList(infos);
                     break;
                 case HTTP_FAILURE:
                     ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);

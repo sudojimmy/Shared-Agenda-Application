@@ -1,0 +1,27 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: UWExamSection
+description: UWExamSection
+type: object
+additionalProperties: false
+properties:
+    section:
+        description: exam section
+        type: string
+    date:
+        description: exam date
+        type: string
+    start_time:
+        description: exam start time
+        type: string
+    end_time:
+        description: exam end time
+        type: string
+    location:
+        description: exam location
+        type: string
+required:
+    - section
+    - date
+    - start_time
+    - end_time
+    - location
