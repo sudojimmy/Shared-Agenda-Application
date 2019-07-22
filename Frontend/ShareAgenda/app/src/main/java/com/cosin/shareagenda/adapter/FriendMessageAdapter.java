@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.cosin.shareagenda.api.ApiErrorResponse;
 import com.cosin.shareagenda.dialog.DisplayFriendRequestAccountDialog;
 import com.google.gson.Gson;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
     private List<FriendMessage> messages;
     private Context context;
     private int positionDel;
+
 
     public FriendMessageAdapter(Context context) {
         this.context = context;
@@ -65,6 +68,7 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
         TextView viewName;
         ImageButton viewAccept;
         ImageButton viewDecline;
+        private final ImageView profileImage;
 
         public ViewHolder(View view) {
             super(view);
@@ -72,6 +76,8 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
             viewName = view.findViewById(R.id.tvFriendMessage);
             viewAccept = view.findViewById(R.id.imgBtnAcceptFriendRequest);
             viewDecline = view.findViewById(R.id.imgBtnDeclineFriendRequest);
+            profileImage = view.findViewById(R.id.imageView);
+
         }
     }
 
@@ -93,11 +99,11 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
     public void onBindViewHolder(FriendMessageAdapter.ViewHolder viewHolder, int position) {
         viewHolder.viewName.setText(messages.get(position).getAccount().getAccountId());
 
+        Account account = messages.get(position).getAccount();
         viewHolder.viewName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // senderId of message
-                Account account = messages.get(position).getAccount();
 
                 DisplayFriendRequestAccountDialog displayFriendRequestAccountDialog =
                         new DisplayFriendRequestAccountDialog(
@@ -108,6 +114,14 @@ public class FriendMessageAdapter extends RecyclerView.Adapter<FriendMessageAdap
 
             }
         });
+
+        if (account.getProfileImageUrl() != null) {
+            Picasso.with(getContext())
+                    .load(account.getProfileImageUrl())
+                    .centerInside()
+                    .fit()
+                    .into(viewHolder.profileImage);
+        }
 
         viewHolder.viewAccept.setOnClickListener(new View.OnClickListener() {
             @Override
