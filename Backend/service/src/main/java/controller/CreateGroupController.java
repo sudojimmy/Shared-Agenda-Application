@@ -38,18 +38,21 @@ public class CreateGroupController extends BaseController {
         AccountUtils.checkAccountsExist(members);
 
         String calendarId = CalendarUtils.createCalendarToDatabase().getCalendarId();
+        String voteQueueId = VoteQueueUtils.createVoteQueueToDatabase().getVoteQueueId();
         String groupId = GroupUtils.createGroupToDatabase(
                 request.getName(),
                 request.getDescription(),
                 request.getOwnerId(),
                 members,
-                calendarId);
+                calendarId,
+                voteQueueId);
 
         GroupQueueUtils.addGroupToMemebersGroupQueue(groupId, members);
 
         return new ResponseEntity<>(new CreateGroupResponse()
                 .withGroupId(groupId)
-                .withCalendarId(calendarId),
+                .withCalendarId(calendarId)
+                .withVoteQueueId(voteQueueId),
             HttpStatus.CREATED);
     }
 }

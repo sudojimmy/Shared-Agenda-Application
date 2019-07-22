@@ -40,7 +40,8 @@ public class GetGroupController extends BaseController {
                 .withDescription(group.getDescription())
                 .withMembers(memberList)
                 .withOwnerId(group.getOwnerId())
-                .withCalendarId(group.getCalendarId()),
+                .withCalendarId(group.getCalendarId())
+                .withVoteQueueId(group.getVoteQueueId()),
             HttpStatus.OK);
     }
 }

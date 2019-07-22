@@ -1,0 +1,15 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: CreateVoteRequest
+description: create vote request
+type: object
+additionalProperties: false
+properties:
+  accountId:
+    description: caller Id
+    type: string
+  vote:
+    description: create vote request
+    "$ref": ../types/Vote.yaml
+required:
+  - accountId
+  - vote

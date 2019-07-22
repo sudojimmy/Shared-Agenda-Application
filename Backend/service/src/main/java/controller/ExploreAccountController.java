@@ -9,15 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import types.Account;
 import types.ExploreAccountRequest;
 import types.ExploreAccountResponse;
-import types.PermissionType;
 import utils.AccountUtils;
 import utils.ExceptionUtils;
 import utils.FriendQueueUtils;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.regex.Pattern;
 
 @RestController

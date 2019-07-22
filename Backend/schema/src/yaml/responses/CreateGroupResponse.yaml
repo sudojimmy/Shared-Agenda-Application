@@ -10,6 +10,10 @@ properties:
     calendarId:
         description: calendar id
         type: string
+    voteQueueId:
+        description: vote queue id
+        type: string
 required:
     - groupId
     - calendarId
+    - voteQueueId

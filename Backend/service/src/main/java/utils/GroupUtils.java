@@ -60,7 +60,8 @@ public class GroupUtils {
                                                final String description,
                                                final String ownerId,
                                                final List<String> members,
-                                               final  String calendarId) {
+                                               final  String calendarId,
+                                               final String voteQueueId) {
         ObjectId groupId = new ObjectId();
         String id = groupId.toString();
         Group p = new Group()
@@ -69,7 +70,8 @@ public class GroupUtils {
                 .withGroupId(id)
                 .withMembers(members)
                 .withOwnerId(ownerId)
-                .withCalendarId(calendarId);
+                .withCalendarId(calendarId)
+                .withVoteQueueId(voteQueueId);
         dataStore.insertToCollection(p, DataStore.COLLECTION_GROUPS);
         return id;
     }

@@ -1,0 +1,11 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: CreateVoteResponse
+description: create vote response
+type: object
+additionalProperties: false
+properties:
+    voteId:
+        description: vote id
+        type: string
+required:
+    - voteId

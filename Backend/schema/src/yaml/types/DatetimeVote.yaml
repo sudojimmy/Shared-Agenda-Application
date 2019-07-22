@@ -1,0 +1,21 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: DatetimeVote
+description: vote object describes vote datetime for event information
+type: object
+additionalProperties: false
+properties:
+  startTime:
+    description: "HH:MM"
+    type: string
+  endTime:
+    description: "HH:MM"
+    type: string
+  repeat:
+    description: repeat Object
+    "$ref": Repeat.yaml
+  vote:
+    description: number of votes for the datetime
+    type: int
+required:
+  - locationName
+  - vote

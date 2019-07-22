@@ -21,6 +21,9 @@ properties:
     calendarId:
         description: calendar id
         type: string
+    voteQueueId:
+        description: vote queue id
+        type: string
     description:
         description: description of group 
         type: string
@@ -30,3 +33,4 @@ required:
     - members
     - ownerId
     - calendarId
+    - voteQueueId
