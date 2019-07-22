@@ -1,9 +1,13 @@
 package com.cosin.shareagenda.dialog;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -44,7 +48,18 @@ public class DisplayEventRequestDialog extends BaseDialog {
 
         TextView tvLocation = findViewById(R.id.eventLocation);
         if (!event.getLocation().isEmpty()) {
-            tvLocation.setText(event.getLocation());
+            SpannableString content = new SpannableString(event.getLocation());
+            content.setSpan(new UnderlineSpan(), 0, event.getLocation().length(), 0);
+            tvLocation.setText(content);
+            tvLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        Uri navigation = Uri.parse("google.navigation:q="+event.getLocation());
+                        Intent navigationIntent = new Intent(Intent.ACTION_VIEW, navigation);
+                        navigationIntent.setPackage("com.google.android.apps.maps");
+                        context.startActivity(navigationIntent);
+                }
+            });
         }
 
         TextView tvDescription = findViewById(R.id.eventDescription);
