@@ -18,7 +18,8 @@ import com.cosin.shareagenda.api.ApiClient;
 import com.cosin.shareagenda.api.DefaultExploreInfo;
 import com.cosin.shareagenda.api.plugin.ExploreInfo;
 import com.cosin.shareagenda.api.plugin.uwapi.UWEventPlugin;
-import com.cosin.shareagenda.api.plugin.uwapi.UWExploreInfo;
+import com.cosin.shareagenda.api.plugin.uwapi.UWCourseExploreInfo;
+import com.cosin.shareagenda.api.plugin.uwapi.UWExamExploreInfo;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -42,6 +43,16 @@ public class ExploreEventsAdapter extends RecyclerView.Adapter<ExploreEventsAdap
 
     public void setEventList(List<ExploreInfo> info) {
         this.info = info;
+        notifyDataSetChanged();
+    }
+
+    public void addEventList(List<ExploreInfo> info) {
+        this.info.addAll(info);
+        notifyDataSetChanged();
+    }
+
+    public void clearEventList() {
+        this.info.clear();
         notifyDataSetChanged();
     }
 
@@ -71,9 +82,12 @@ public class ExploreEventsAdapter extends RecyclerView.Adapter<ExploreEventsAdap
             @Override
             public void onClick(View v) {
                 ExploreInfo event = info.get(position);
-                if (event instanceof UWExploreInfo) {
-                    UWEventPlugin.addClass(((UWExploreInfo)event).getUwCourse());
-                    Toast.makeText(context, "ADDED: "+ event.getTitle(), Toast.LENGTH_SHORT).show();
+                if (event instanceof UWCourseExploreInfo) {
+                    UWEventPlugin.addClass(((UWCourseExploreInfo) event).getUwCourse(), new CallbackHandler(handler));
+                    Toast.makeText(context, "ADDED: " + event.getTitle(), Toast.LENGTH_SHORT).show();
+                } else if (event instanceof UWExamExploreInfo) {
+                    UWEventPlugin.addExam(((UWExamExploreInfo) event), new CallbackHandler(handler));
+                    Toast.makeText(context, "ADDED: " + event.getTitle(), Toast.LENGTH_SHORT).show();
                 } else {
                     ApiClient.joinEvent(((DefaultExploreInfo)event).getEvent().getEventId(), new CallbackHandler(handler));
                 }

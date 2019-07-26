@@ -3,6 +3,7 @@ package com.cosin.shareagenda.api.plugin.uwapi;
 import com.cosin.shareagenda.model.Model;
 import com.cosin.shareagenda.util.CalendarEventBiz;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -43,6 +44,32 @@ public class UWEventReader {
             ));
         }
         return events;
+    }
+
+    public static Event examToEvent(UWExamExploreInfo examExploreInfo, String termStartDate, String termEndDate) {
+        return new Event()
+                .withStarterId(Model.model.getUser().getAccountId())    // starter always user
+                .withState(EventState.ACTIVE)                           // state always active
+                .withEventname(examExploreInfo.getTitle())
+                .withDescription(examExploreInfo.getDescription())
+                .withLocation(examExploreInfo.getExam().getLocation())
+                .withType(EventType.STUDY)
+                .withRepeat(new Repeat()
+                        .withType(EventRepeat.ONCE)
+                        .withStartDate(examExploreInfo.getExam().getDate())
+                        .withEndDate(examExploreInfo.getExam().getDate()))
+                .withStartTime(readExamTime(examExploreInfo.getExam().getStart_time()))
+                .withEndTime(readExamTime(examExploreInfo.getExam().getEnd_time()))
+                .withPermission(new Permission().withType(PermissionType.PUBLIC));
+    }
+
+    private static String readExamTime(String time) {
+        try {
+            return CalendarEventBiz.to24hr(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     private static ArrayList<Event> classToEvents(UWClass uwClass, String title, String description,

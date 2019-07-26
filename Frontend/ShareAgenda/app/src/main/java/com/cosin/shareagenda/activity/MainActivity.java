@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         GoogleSignInAccount alreadyloggedAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (alreadyloggedAccount != null) {
-            Toast.makeText(this, "Already Logged In, expired: " + alreadyloggedAccount.isExpired(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Already Logged In, expired: " + alreadyloggedAccount.isExpired(), Toast.LENGTH_SHORT).show();
             if (alreadyloggedAccount.isExpired()) {
                 googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

@@ -19,3 +19,6 @@ git submodule update --init --recursive
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a2e9ca9e-60cd-4103-a5fd-e82bb1b76458/deploy-status)](https://app.netlify.com/sites/sharedagendaappdoc/deploys)
 
 API documentation: https://sharedagendaappdoc.netlify.com/
+
+## Privacy Policy
+https://www.termsfeed.com/privacy-policy/48a30a94c19b82751a7024b11570e655

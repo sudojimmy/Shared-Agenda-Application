@@ -1,0 +1,15 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: UWExam
+description: UWExam
+type: object
+additionalProperties: false
+properties:
+    course:
+        type: string
+    sections:
+        type: array
+        items:
+            "$ref": UWExamSection.yaml
+required:
+    - course
+    - sections
