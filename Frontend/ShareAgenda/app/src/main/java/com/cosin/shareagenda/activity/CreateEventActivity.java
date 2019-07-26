@@ -209,6 +209,8 @@ public class CreateEventActivity extends AppCompatActivity {
                     break;
                 case CallbackHandler.HTTP_FAILURE:
                     ApiErrorResponse errorResponse = gson.fromJson((String) message.obj, ApiErrorResponse.class);
+
+                    Speech.getInstance().say(errorResponse.getMessage());
                     Toast.makeText(CreateEventActivity.this, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     break;
                 default:

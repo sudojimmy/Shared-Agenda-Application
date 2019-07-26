@@ -11,6 +11,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 
 import types.*;
+import utils.VoteQueueUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,6 +33,8 @@ public class DataStore {
     public static final String COLLECTION_REPLYS = "REPLYS";
     public static final String COLLECTION_FRIENDQUEUES = "FRIEND_QUEUES";
     public static final String COLLECTION_GROUPQUEUES = "GROUP_QUEUES";
+    public static final String COLLECTION_VOTES = "VOTES";
+    public static final String COLLECTION_VOTEQUEUES = "VOTE_QUEUES";
     public static final String DEFAULT_MONGODB_CONNECTION_STRING = "mongodb://localhost:27017";
     public static final String MONGODB_CONNECTION_STRING_SYS_ENV = "AGENDA_APP_DATABASE_CONN_STR";
 
@@ -78,6 +81,8 @@ public class DataStore {
         map.put(COLLECTION_MESSAGEQUEUES, database.getCollection(COLLECTION_MESSAGEQUEUES, MessageQueue.class));
         map.put(COLLECTION_FRIENDQUEUES, database.getCollection(COLLECTION_FRIENDQUEUES, FriendQueue.class));
         map.put(COLLECTION_GROUPQUEUES, database.getCollection(COLLECTION_GROUPQUEUES, GroupQueue.class));
+        map.put(COLLECTION_VOTES, database.getCollection(COLLECTION_VOTES, Vote.class));
+        map.put(COLLECTION_VOTEQUEUES, database.getCollection(COLLECTION_VOTEQUEUES, VoteQueue.class));
     }
 
     public <T>void insertToCollection(T document, String collectionName) {

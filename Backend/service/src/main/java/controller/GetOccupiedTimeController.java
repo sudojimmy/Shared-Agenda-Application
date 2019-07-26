@@ -65,8 +65,6 @@ public class GetOccupiedTimeController extends BaseController{
 
             String date = EventListUtils.constructDateByYearMonthDay(request.getYear(), request.getMonth(), i);
 
-            ArrayList<Event> dailyEventListMerge = new ArrayList<Event>();
-
             // merge 2 daily eventlist of a1 & a2 to one eventlist
             ArrayList<Event> dailyEventList1
                     = EventListUtils.getEventListFromCalendarWithDate(eventList1, date);
@@ -100,10 +98,6 @@ public class GetOccupiedTimeController extends BaseController{
                 eventsListToMergeStack.push(event);
                 //eventListbeforeMerge.add(event);
             }
-
-            ArrayList<Event> temp = new ArrayList<Event>();
-
-
 
             while (!eventsListToMergeStack.isEmpty()) {
 

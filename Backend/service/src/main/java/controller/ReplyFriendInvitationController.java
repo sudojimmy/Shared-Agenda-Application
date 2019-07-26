@@ -30,7 +30,7 @@ public class ReplyFriendInvitationController extends BaseController {
         ExceptionUtils.assertDatabaseObjectFound(replyMessage, ApiConstant.MESSAGE_MESSAGE_ID);
         replyMessage.setStatus(request.getStatus());
 
-        boolean updated = ReplyMessageUtils.updateReplyMessageInDatabase(
+        ReplyMessageUtils.updateReplyMessageInDatabase(
                 replyMessage.getReplyId(),
                 replyMessage.getSenderId(),
                 replyMessage.getReceiverId(),

@@ -9,12 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import types.Event;
 import types.ExploreEventRequest;
 import types.ExploreEventResponse;
-import types.PermissionType;
 import utils.EventListUtils;
 import utils.ExceptionUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 @RestController

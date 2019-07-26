@@ -96,5 +96,11 @@ public class ApiConstant {
 
     // explore account
     public static final String ACCOUNT_NAME_SUBSTRING = "keyword";
+    // Vote
+    public static final String VOTE_VOTERS = "voters";
+    
+    // VoteQueue
+    public static final String VOTEQUEUE_VOTE_QUEUE_ID = "voteQueueId";
+    public static final String VOTEQUEUE_VOTE_LIST = "voteList";
 
 }

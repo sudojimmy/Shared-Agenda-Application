@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import types.*;
 import utils.AccountUtils;
-import utils.CalendarUtils;
 import utils.EventListUtils;
 import utils.ExceptionUtils;
 import java.util.ArrayList;

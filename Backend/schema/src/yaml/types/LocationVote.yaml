@@ -1,0 +1,15 @@
+"$schema": "http://json-schema.org/draft-04/schema#"
+title: LocationVote
+description: vote object describes vote locations for event information
+type: object
+additionalProperties: false
+properties:
+  locationName:
+    description:  location proposed
+    type: string
+  vote:
+    description: number of votes for the location
+    type: integer
+required:
+  - locationName
+  - vote

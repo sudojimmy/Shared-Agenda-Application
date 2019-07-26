@@ -9,12 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import types.Event;
 import types.GetEventListByNameRequest;
 import types.GetEventListByNameResponse;
-import types.PermissionType;
 import utils.EventListUtils;
 import utils.ExceptionUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 public class GetEventListByNameController extends BaseController {
